@@ -14,7 +14,7 @@ import {
     VStack
 } from "@chakra-ui/react";
 
-export default function HelloWorld() {
+export default function SignUp() {
     // === === ===
     // States.
 
