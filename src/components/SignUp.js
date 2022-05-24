@@ -10,9 +10,12 @@ import {
     Heading,
     HStack,
     Input,
+    Link,
     Spacer,
+    Text,
     VStack
 } from "@chakra-ui/react";
+import {Link as RouterLink} from "react-router-dom";
 
 export default function SignUp() {
     // === === ===
@@ -100,6 +103,11 @@ export default function SignUp() {
         Create your account
     </Button>
 
+    const signInLink = <Text>
+        Already have an account?{' '}
+        <Link as={RouterLink} to='/sign-in' color="blue.500">Sign in ►</Link>
+    </Text>
+
     // === === ===
     // Form component.
 
@@ -118,7 +126,11 @@ export default function SignUp() {
                         {usernameField}
                         {passwordField}
                         <Spacer/>
-                        {submitButton}
+                        <VStack>
+                            {submitButton}
+                            <Spacer/>
+                            {signInLink}
+                        </VStack>
                     </VStack>
                 </form>
             </VStack>
