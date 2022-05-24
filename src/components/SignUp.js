@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form";
-import {useState} from "react";
+import {Link as RouterLink} from "react-router-dom";
 import Axios from "axios";
 import {
     Button,
@@ -15,29 +15,19 @@ import {
     Text,
     VStack
 } from "@chakra-ui/react";
-import {Link as RouterLink} from "react-router-dom";
 
 export default function SignUp() {
     // === === ===
-    // States.
-
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-
-    // === === ===
     // Form handling.
 
-    function signUp() {
+    function signUp(values) {
         return Axios({
             method: "POST", data: {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                username: username,
-                password: password,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+                username: values.username,
+                password: values.password,
             }, withCredentials: true, url: "http://localhost:4000/sign-up",
         }).then((res) => console.log(res));
     }
@@ -51,51 +41,58 @@ export default function SignUp() {
 
     const firstNameField = <FormControl isInvalid={errors.firstName}>
         <FormLabel htmlFor="firstName">First Name</FormLabel>
-        <Input id="firstName" placeholder="John"
-               onChange={e => setFirstName(e.target.value)} {...register("firstName", {
-            required: "Please provide your first name.",
-            pattern: {value: /^[A-Za-z ]+$/i, message: "No numbers or symbols are allowed."}
-        })}/>
+        <Input id="firstName"
+               placeholder="John"
+               {...register("firstName", {
+                   required: "Please provide your first name.",
+                   pattern: {value: /^[A-Za-z ]+$/i, message: "No numbers or symbols are allowed."}
+               })}/>
         <FormErrorMessage color="red.500">{errors.firstName && errors.firstName.message}</FormErrorMessage>
     </FormControl>
 
     const lastNameField = <FormControl isInvalid={errors.lastName}>
         <FormLabel htmlFor="lastName">Last Name</FormLabel>
-        <Input id="lastName" placeholder="Doe" onChange={e => setLastName(e.target.value)} {...register("lastName", {
-            required: "Please provide your last name.",
-            pattern: {value: /^[A-Za-z ]+$/i, message: "No numbers or symbols are allowed."}
-        })}/>
+        <Input id="lastName"
+               placeholder="Doe"
+               {...register("lastName", {
+                   required: "Please provide your last name.",
+                   pattern: {value: /^[A-Za-z ]+$/i, message: "No numbers or symbols are allowed."}
+               })}/>
         <FormErrorMessage color="red.500">{errors.lastName && errors.lastName.message}</FormErrorMessage>
     </FormControl>
 
     const emailField = <FormControl isInvalid={errors.email} w="80%">
         <FormLabel htmlFor="email">Email</FormLabel>
-        <Input id="email" placeholder="someone@example.com"
-               onChange={e => setEmail(e.target.value)} {...register("email", {
-            required: "Please provide your email address.",
-            // This regex pattern isn't a substitute for email validation, but it will stop most invalid emails from being entered.
-            // https://stackoverflow.com/questions/201323/how-can-i-validate-an-email-address-using-a-regular-expression
-            pattern: {value: /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/, message: "Invalid email address."}
-        })}/>
+        <Input id="email"
+               placeholder="someone@example.com"
+               {...register("email", {
+                   required: "Please provide your email address.",
+                   // This regex pattern isn't a substitute for email validation, but it will stop most invalid emails from being entered.
+                   // https://stackoverflow.com/questions/201323/how-can-i-validate-an-email-address-using-a-regular-expression
+                   pattern: {value: /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/, message: "Invalid email address."}
+               })}/>
         <FormErrorMessage color="red.500">{errors.email && errors.email.message}</FormErrorMessage>
     </FormControl>
 
     const usernameField = <FormControl isInvalid={errors.username} w="60%">
         <FormLabel htmlFor="username">Username</FormLabel>
-        <Input id="username" placeholder="john_doe"
-               onChange={e => setUsername(e.target.value)} {...register("username", {
-            required: "Please provide a username.",
-        })}/>
+        <Input id="username"
+               placeholder="john_doe"
+               {...register("username", {
+                   required: "Please provide a username.",
+               })}/>
         <FormErrorMessage color="red.500">{errors.username && errors.username.message}</FormErrorMessage>
     </FormControl>
 
     const passwordField = <FormControl isInvalid={errors.password} w="50%">
         <FormLabel htmlFor="password">Password</FormLabel>
-        <Input id="password" placeholder="••••••••" type="password"
-               onChange={e => setPassword(e.target.value)} {...register("password", {
-            required: "Please provide a password.",
-            minLength: {value: 8, message: "Password must be at least 8 characters long."}
-        })}/>
+        <Input id="password"
+               placeholder="••••••••"
+               type="password"
+               {...register("password", {
+                   required: "Please provide a password.",
+                   minLength: {value: 8, message: "Password must be at least 8 characters long."}
+               })}/>
         <FormErrorMessage color="red.500">{errors.password && errors.password.message}</FormErrorMessage>
     </FormControl>
 
