@@ -13,10 +13,19 @@ import {
     Link,
     Spacer,
     Text,
+    useToast,
     VStack
 } from "@chakra-ui/react";
 
 export default function SignUp() {
+    // === === ===
+    // Hooks.
+
+    const toast = useToast();
+    const {
+        setError, register, handleSubmit, formState: {errors, isSubmitting}
+    } = useForm();
+
     // === === ===
     // Form handling.
 
@@ -29,12 +38,31 @@ export default function SignUp() {
                 username: values.username,
                 password: values.password,
             }, withCredentials: true, url: "http://localhost:4000/sign-up",
-        }).then((res) => console.log(res));
+        })
+            .catch(err => errorToast(err.response.data))
+            .then(res => {
+                if (res.status === 200) successToast()
+            });
     }
 
-    const {
-        register, handleSubmit, formState: {errors, isSubmitting}
-    } = useForm();
+    function errorToast(message) {
+        toast({
+            title: message,
+            description: "Please try again.",
+            status: "error",
+            isClosable: true,
+        })
+        setError("username", {message: message})
+    }
+
+    function successToast() {
+        toast({
+            title: "Success!",
+            description: "Taking you to your dashboard...",
+            status: "success",
+            isClosable: true,
+        })
+    }
 
     // === === ===
     // Form fields.
