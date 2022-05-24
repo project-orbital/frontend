@@ -1,6 +1,5 @@
 import {useForm} from "react-hook-form";
 import {Link as RouterLink} from "react-router-dom"
-
 import Axios from "axios";
 import {
     Button,
@@ -13,10 +12,19 @@ import {
     Link,
     Spacer,
     Text,
+    useToast,
     VStack
 } from "@chakra-ui/react";
 
 export default function SignIn() {
+    // === === ===
+    // Hooks.
+
+    const toast = useToast();
+    const {
+        setError, register, handleSubmit, formState: {errors, isSubmitting}
+    } = useForm();
+
     // === === ===
     // Form handling.
 
@@ -26,12 +34,32 @@ export default function SignIn() {
                 username: values.username,
                 password: values.password,
             }, withCredentials: true, url: "http://localhost:4000/sign-in",
-        }).then((res) => console.log(res));
+        })
+            .catch(err => errorToast(err.response.data))
+            .then(res => {
+                if (res.status === 200) successToast()
+            });
     }
 
-    const {
-        register, handleSubmit, formState: {errors, isSubmitting}
-    } = useForm();
+    function errorToast(message) {
+        toast({
+            title: message,
+            description: "Please try again.",
+            status: "error",
+            isClosable: true,
+        })
+        setError("username", {message: "Invalid username/password."})
+        setError("password", {message: "Invalid username/password."})
+    }
+
+    function successToast() {
+        toast({
+            title: "Success!",
+            description: "Taking you to your dashboard...",
+            status: "success",
+            isClosable: true,
+        })
+    }
 
     // === === ===
     // Form fields.
