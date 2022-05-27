@@ -7,5 +7,6 @@ export default function App() {
         <Link as={RouterLink} to='/'>Home</Link>
         <Link as={RouterLink} to='/sign-up'>Sign up</Link>
         <Link as={RouterLink} to='/sign-in'>Sign in</Link>
+        <Link as={RouterLink} to='/dashboard'>Dashboard</Link>
     </VStack>
 }
