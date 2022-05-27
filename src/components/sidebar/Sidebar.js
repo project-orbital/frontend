@@ -25,6 +25,7 @@ export default function Sidebar() {
 
             <Spacer/>
             <SidebarLink to="/dashboard" text="Settings"/>
+            <SidebarLink to="/" text="Sign out"/>
         </VStack>
     </VStack>
 }
