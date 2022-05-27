@@ -3,9 +3,9 @@ import * as ReactDOM from "react-dom";
 import {ChakraProvider, CSSReset, extendTheme, Heading} from "@chakra-ui/react"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import App from "./App";
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
-import Dashboard from "./components/dashboard/Dashboard";
+import SignUp from "./routes/SignUp";
+import SignIn from "./routes/SignIn";
+import Dashboard from "./routes/Dashboard";
 
 const theme = extendTheme({
     // Theme extensions go here.
