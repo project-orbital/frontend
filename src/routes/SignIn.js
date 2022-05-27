@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form";
-import {Link as RouterLink} from "react-router-dom"
+import {Link as RouterLink, useNavigate} from "react-router-dom"
 import Axios from "axios";
 import {
     Button,
@@ -20,6 +20,7 @@ export default function SignIn() {
     // === === ===
     // Hooks.
 
+    const navigate = useNavigate();
     const toast = useToast();
     const {
         setError, register, handleSubmit, formState: {errors, isSubmitting}
@@ -37,7 +38,14 @@ export default function SignIn() {
         })
             .catch(err => errorToast(err.response.data))
             .then(res => {
-                if (res.status === 200) successToast()
+                if (res.status === 200) {
+                    toast.closeAll();
+                    successToast();
+                    setTimeout(() => {
+                        navigate("/dashboard")
+                        toast.closeAll();
+                    }, 800);
+                }
             });
     }
 
