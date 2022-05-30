@@ -38,7 +38,7 @@ export default function SignUp() {
                 email: values.email,
                 username: values.username,
                 password: values.password,
-            }, withCredentials: true, url: "https://www.dollarplanner.live:8443/sign-up",
+            }, withCredentials: true, url: `${process.env.REACT_APP_BACKEND}/sign-up`,
         })
             .catch(err => errorToast(err.response.data))
             .then(res => {
