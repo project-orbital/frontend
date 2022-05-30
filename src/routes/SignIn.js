@@ -34,7 +34,7 @@ export default function SignIn() {
             method: "POST", data: {
                 username: values.username,
                 password: values.password,
-            }, withCredentials: true, url: "http://localhost:4000/sign-in",
+            }, withCredentials: true, url:`${process.env.REACT_APP_BACKEND}/sign-in`,
         })
             .catch(err => errorToast(err.response.data))
             .then(res => {

@@ -1,7 +1,8 @@
-import {Stat, StatHelpText, StatLabel, StatNumber, VStack} from "@chakra-ui/react";
+import {Center, Spacer, Stat, StatHelpText, StatLabel, StatNumber, VStack} from "@chakra-ui/react";
 
 export default function Card(props) {
-    return <VStack h="100%" w="100%" p="40px" align="start" bg="white" borderRadius="20px" shadow="sm">
+    return <VStack minH="400px" minW="600px" h="100%" w="100%" p="40px" align="start" bg="white" borderRadius="20px"
+                   shadow="sm">
         <Stat>
             <StatLabel>{props.label}</StatLabel>
             <StatNumber>{props.value}</StatNumber>
@@ -10,6 +11,9 @@ export default function Card(props) {
                 {props.change}
             </StatHelpText>
         </Stat>
-        {props.body}
+        <Spacer/>
+        <Center h="100%" w="100%">
+            {props.body}
+        </Center>
     </VStack>
 }
