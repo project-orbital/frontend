@@ -26,7 +26,7 @@ not been merged.
 2. Install all the dependencies.
 
     ```
-    cd backend
+    cd frontend
     npm install
     ```
 
