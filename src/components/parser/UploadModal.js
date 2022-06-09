@@ -38,6 +38,7 @@ export default function UploadModal({uploadModal, reviewModal, files, setFiles})
         onClose={uploadModal.onClose}
         isOpen={uploadModal.isOpen}
         closeOnOverlayClick={false}
+        isCentered
         size="xl"
         motionPreset="slideInBottom"
     >
