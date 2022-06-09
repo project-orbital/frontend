@@ -14,7 +14,7 @@ import {
     ModalOverlay,
     Text
 } from "@chakra-ui/react";
-import {Field, Form, Formik} from "formik";
+import {Field, FieldArray, Form, Formik} from "formik";
 import {BsFillCaretRightFill} from "react-icons/bs";
 import {IoChevronBack} from "react-icons/io5";
 
@@ -59,6 +59,10 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
         reviewModal.onClose();
     }
 
+    const initialValues = {
+        selections: files.map(file => ({file: file, isSelected: true, password: ""}))
+    };
+
     // === === ===
     // Model sub-components.
     const CustomHeader = () => {
@@ -82,20 +86,25 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
 
     const CustomBodyFormRow = ({file, index}) => {
         return <HStack justify="space-between" gap="20px">
-            <Field as={Checkbox} name="selection" value={file} defaultChecked spacing="15px">
+            <Field as={Checkbox} name={`selections.${index}.isSelected`} defaultChecked spacing="15px">
                 <Text fontSize="sm" fontWeight="bold" mt="5px">{`#${index + 1}`}</Text>
                 <Text fontSize="xs" maxW="300px" mb="5px">{file.name}</Text>
             </Field>
-            <Field as={Input} name={`password${index}`} type="password" size="xs" placeholder="••••••••"/>
+            <Field as={Input} name={`selections.${index}.password`} type="password" size="xs" placeholder="••••••••"/>
         </HStack>
     }
 
     const CustomBody = () => {
+        console.log(initialValues);
         return <ModalBody>
-            <Formik initialValues={{selection: files}} onSubmit={handleSubmit}>
+            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 <Form id="upload">
                     <FormControl>
-                        {files.map((file, index) => <CustomBodyFormRow file={file} index={index} key={index}/>)}
+                        <FieldArray name="selections">
+                            {() => <>{files.map((file, index) => (
+                                <CustomBodyFormRow file={file} index={index} key={index}/>
+                            ))}</>}
+                        </FieldArray>
                     </FormControl>
                 </Form>
             </Formik>
