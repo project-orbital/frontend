@@ -2,7 +2,6 @@ import {
     Button,
     Checkbox,
     CheckboxGroup,
-    Flex,
     FormControl,
     Heading,
     HStack,
@@ -62,8 +61,10 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
         confirmCancelModal.onOpen();
     }
 
-    const handleSubmitButton = () => {
+    const handleSubmitButton = (data) => {
         // TODO: Send a POST request with the data.
+        console.log("submitted")
+        console.log(data);
         reviewModal.onClose();
     }
 
@@ -89,32 +90,36 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
     }
 
     const CustomBodyFormCheckboxes = ({rest}) => {
-        return <CheckboxGroup {...rest}>
-            {files.map((file, index) => {
-                return <HStack justify="space-between" gap="20px">
-                    <Checkbox value={file.name} spacing="20px">
-                        <Text fontSize="sm" fontWeight="bold"
-                              mt="5px">{`#${index + 1}`}</Text>
-                        <Text fontSize="xs" maxW="300px" mb="5px">{file.name}</Text>
-                    </Checkbox>
-                    <Input id="password" size="xs"
-                           placeholder="••••••••" type="password"
-                           {...register("password")}/>
-                </HStack>
-            })}
-        </CheckboxGroup>
+        return <CheckboxGroup {...rest}>{
+            files.map((file, index) => {
+                return <Controller
+                    control={control} name={file.name} key={index} defaultValue={true}
+                    render={({field: {onChange, value, ref}}) => (
+                        <HStack justify="space-between" gap="20px">
+                            <Checkbox
+                                onChange={onChange}
+                                ref={ref}
+                                isChecked={value}
+                                spacing={"20px"}
+                            >
+                                <Text fontSize="sm" fontWeight="bold"
+                                      mt="5px">{`#${index + 1}`}</Text>
+                                <Text fontSize="xs" maxW="300px" mb="5px">{file.name}</Text>
+                            </Checkbox>
+                            <Input id={`pwd${index.toString()}`} size="xs"
+                                   placeholder="••••••••" type="password"
+                                   {...register("password")}/>
+
+                        </HStack>
+                    )}/>
+            })
+        }</CheckboxGroup>
     }
 
     const CustomBody = () => {
         return <ModalBody>
             <FormControl>
-                <Controller
-                    name="checkboxes"
-                    control={control}
-                    defaultValue={files.map(file => file.name)}
-                    render={({field: {onChange, onBlur, value, name, ref, ...rest}}) => <CustomBodyFormCheckboxes
-                        rest={rest}/>}
-                />
+                <CustomBodyFormCheckboxes/>
             </FormControl>
         </ModalBody>
     }
@@ -139,12 +144,10 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
         <ModalOverlay/>
         <ModalContent>
             <CustomHeader/>
-            <Flex>
-                <form onSubmit={handleSubmit(handleSubmitButton)}>
-                    <CustomBody/>
-                    <CustomFooter/>
-                </form>
-            </Flex>
+            <form onSubmit={handleSubmit(handleSubmitButton)}>
+                <CustomBody/>
+                <CustomFooter/>
+            </form>
         </ModalContent>
     </Modal>
 }
