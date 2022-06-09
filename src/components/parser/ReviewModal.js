@@ -1,6 +1,7 @@
 import {
     Button,
     Checkbox,
+    FormControl,
     Heading,
     HStack,
     IconButton,
@@ -13,18 +14,11 @@ import {
     ModalOverlay,
     Text
 } from "@chakra-ui/react";
+import {Field, Form, Formik} from "formik";
 import {BsFillCaretRightFill} from "react-icons/bs";
 import {IoChevronBack} from "react-icons/io5";
-import {useEffect, useState} from "react";
 
 export default function ReviewModal({uploadModal, reviewModal, confirmCancelModal, files}) {
-    // === === ===
-    // Hooks.
-    const [selectedFiles, setSelectedFiles] = useState(files.map(() => true));
-    useEffect(() => {
-        setSelectedFiles(files.map(() => true));
-    }, [files]);
-
     // === === ===
     // Form buttons (integrated with the modal).
     const BackButton = () => {
@@ -41,9 +35,10 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
     }
 
     const SubmitButton = () => {
-        return <Button type="submit" h="60px" w="100%" colorScheme="gray" rightIcon={<BsFillCaretRightFill/>}
+        return <Button type="submit" form="upload" h="60px" w="100%" colorScheme="gray"
+                       rightIcon={<BsFillCaretRightFill/>}
                        isDisabled={files.length < 1}>
-            {`Upload ${selectedFiles.filter(sel => sel).length} selected ${selectedFiles.filter(sel => sel).length === 1 ? "file" : "files"}`}
+            {`Upload ${files.length} selected ${files.length === 1 ? "file" : "files"}`}
         </Button>
     }
 
@@ -58,19 +53,10 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
         confirmCancelModal.onOpen();
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (data) => {
         // TODO: Send a POST request with the data.
-        console.log("submitted");
+        console.log(data);
         reviewModal.onClose();
-    }
-
-    const handleCheckboxChange = (e) => {
-        setSelectedFiles(currentSelectedFiles => {
-            const newSelectedFiles = currentSelectedFiles.slice();
-            newSelectedFiles[e.target.value] = !newSelectedFiles[e.target.value];
-            console.log(selectedFiles)
-            return newSelectedFiles;
-        })
     }
 
     // === === ===
@@ -95,18 +81,24 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
     }
 
     const CustomBodyFormRow = ({file, index}) => {
-        return <HStack key={index} justify="space-between" gap="20px">
-            <Checkbox value={index} spacing={"20px"} onChange={handleCheckboxChange} isChecked={selectedFiles[index]}>
+        return <HStack justify="space-between" gap="20px">
+            <Field as={Checkbox} name="selection" value={file} defaultChecked spacing="15px">
                 <Text fontSize="sm" fontWeight="bold" mt="5px">{`#${index + 1}`}</Text>
                 <Text fontSize="xs" maxW="300px" mb="5px">{file.name}</Text>
-            </Checkbox>
-            <Input size="xs" placeholder="••••••••" type="password"/>
+            </Field>
+            <Field as={Input} name={`password${index}`} type="password" size="xs" placeholder="••••••••"/>
         </HStack>
     }
 
     const CustomBody = () => {
         return <ModalBody>
-            {files.map((file, index) => CustomBodyFormRow({file, index}))}
+            <Formik initialValues={{selection: files}} onSubmit={handleSubmit}>
+                <Form id="upload">
+                    <FormControl>
+                        {files.map((file, index) => <CustomBodyFormRow file={file} index={index} key={index}/>)}
+                    </FormControl>
+                </Form>
+            </Formik>
         </ModalBody>
     }
 
