@@ -17,6 +17,7 @@ import {
 import {Field, FieldArray, Form, Formik} from "formik";
 import {BsFillCaretRightFill} from "react-icons/bs";
 import {IoChevronBack} from "react-icons/io5";
+import axios from "axios";
 
 export default function ReviewModal({uploadModal, reviewModal, confirmCancelModal, files}) {
     // === === ===
@@ -38,7 +39,7 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
         return <Button type="submit" form="upload" h="60px" w="100%" colorScheme="gray"
                        rightIcon={<BsFillCaretRightFill/>}
                        isDisabled={files.length < 1}>
-            {`Upload ${files.length} selected ${files.length === 1 ? "file" : "files"}`}
+            {`Upload selected ${files.length === 1 ? "file" : "files"}`}
         </Button>
     }
 
@@ -54,9 +55,27 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
     }
 
     const handleSubmit = (data) => {
-        // TODO: Send a POST request with the data.
-        console.log(data);
-        reviewModal.onClose();
+        let headers = {
+            Authorization: 'token',
+            'Content-Type': 'multipart/form-data'
+        };
+
+        const submission = data.selections
+            .filter(row => row.isSelected)
+            .reduce((prev, curr) => {
+                prev.append('files', curr.file, curr.file.name);
+                prev.append('passwords', curr.password);
+                return prev;
+            }, new FormData());
+
+        return axios.post(`${process.env.REACT_APP_BACKEND}/api/upload`, submission, {headers})
+            .then(res => {
+                console.log(res);
+                reviewModal.onClose();
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     const initialValues = {
@@ -95,7 +114,6 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
     }
 
     const CustomBody = () => {
-        console.log(initialValues);
         return <ModalBody>
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 <Form id="upload">
