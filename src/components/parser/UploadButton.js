@@ -1,10 +1,10 @@
 import {Button, Center, useDisclosure} from "@chakra-ui/react";
-import UploadModal from "../components/parser/UploadModal";
+import UploadModal from "./UploadModal";
 import {useState} from "react";
-import ReviewModal from "../components/parser/ReviewModal";
-import ConfirmCancelModal from "../components/parser/ConfirmCancelModal";
+import ReviewModal from "./ReviewModal";
+import ConfirmCancelModal from "./ConfirmCancelModal";
 
-export default function Upload() {
+export default function UploadButton() {
     // === === ===
     // Hooks (states lifted).
     const uploadModal = useDisclosure();

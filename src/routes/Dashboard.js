@@ -16,8 +16,8 @@ import BarChart from "../components/charts/BarChart";
 import PieChart from "../components/charts/PieChart"
 
 import * as rand from "../utils/rand";
-import Table from "../components/table/Table";
-import {faker} from "@faker-js/faker";
+import {useState} from "react";
+import UploadButton from "../components/parser/UploadButton";
 
 // === === ===
 // Artificial data.
@@ -31,16 +31,6 @@ const assets = ["Cash", "Bonds", "Stocks", "Crypto"]
 const assetsRaw = rand.randIntArray(assets.length, 0, 100);
 const assetsTotal = assetsRaw.reduce((a, b) => a + b);
 const assetsData = assets.map((asset, i) => ({key: asset, value: Math.floor(netWorthValue * assetsRaw[i] / assetsTotal)}));
-
-function generateRandomTransaction() {
-    return [
-        faker.date.recent().toLocaleDateString(),
-        `Account ${rand.randInt(1, 4)}`,
-        faker.finance.transactionDescription().split(" using card")[0],
-        faker.finance.amount(),
-        faker.finance.amount(1000, netWorthValue)
-    ]
-}
 
 // === === ===
 // Components.
@@ -68,20 +58,12 @@ const assetAllocation = <Card
     body={<PieChart data={assetsData}/>}
 />
 
-const transactions = <Card
+const transactionsTable = <Card
     label="Recent Transactions"
     value="5"
-    body={<Table
-        headers={["Date", "Account", "Transaction", "Amount", "Balance"]}
-        rows={5}
-        body={[
-            generateRandomTransaction(),
-            generateRandomTransaction(),
-            generateRandomTransaction(),
-            generateRandomTransaction(),
-            generateRandomTransaction()
-        ]}
-    />}
+    body={
+        <UploadButton/>
+    }
 />
 
 export default function Dashboard() {
@@ -93,7 +75,7 @@ export default function Dashboard() {
             <Grid h="100%" pt="40px" gap="25px" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
                 <GridItem>{netWorth}</GridItem>
                 <GridItem>{assetAllocation}</GridItem>
-                <GridItem colSpan={2}>{transactions}</GridItem>
+                <GridItem colSpan={2}>{transactionsTable}</GridItem>
             </Grid>
         </VStack>
     </HStack>

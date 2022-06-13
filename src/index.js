@@ -6,7 +6,6 @@ import App from "./App";
 import SignUp from "./routes/SignUp";
 import SignIn from "./routes/SignIn";
 import Dashboard from "./routes/Dashboard";
-import Upload from "./routes/Upload";
 
 const theme = extendTheme({
     // Theme extensions go here.
@@ -21,7 +20,6 @@ const element = <StrictMode>
                 <Route path="sign-up" element={<SignUp/>}/>
                 <Route path="sign-in" element={<SignIn/>}/>
                 <Route path="dashboard" element={<Dashboard/>}/>
-                <Route path="upload" element={<Upload/>}/>
                 <Route path="*" element={<Heading>404 Not Found</Heading>}/>
             </Routes>
         </BrowserRouter>
