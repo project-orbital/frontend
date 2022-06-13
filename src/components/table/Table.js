@@ -1,7 +1,7 @@
 import {Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 
 /**
- * Wrapper component for creating `ChakraTable`s from with data.
+ * Wrapper component for creating `ChakraTable`s from data.
  *
  * The table is populated from an array of objects, each object forming a row,
  * with its keys contributing to the table headers and its values as cells.
