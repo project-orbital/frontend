@@ -70,7 +70,6 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
 
         return axios.post(`${process.env.REACT_APP_BACKEND}/api/upload`, submission, {headers})
             .then(res => {
-                console.log(res);
                 reviewModal.onClose();
             })
             .catch(err => {
