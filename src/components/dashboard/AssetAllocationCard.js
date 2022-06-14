@@ -1,5 +1,5 @@
 import Card from "./Card";
-import PieChart from "../charts/PieChart";
+import PieChart from "../visuals/PieChart";
 
 export default function AssetAllocationCard({data}) {
     return <Card

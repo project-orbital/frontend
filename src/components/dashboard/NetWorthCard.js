@@ -1,6 +1,6 @@
 import Card from "./Card";
 import {StatArrow} from "@chakra-ui/react";
-import BarChart from "../charts/BarChart";
+import BarChart from "../visuals/BarChart";
 
 export default function NetWorthCard({value, change, data}) {
     return <Card
