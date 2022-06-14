@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^1.8.8",
+    "@reduxjs/toolkit": "^1.8.2",
     "axios": "^0.27.2",
     "formik": "^2.2.9",
     "react": "^17.0.2",
