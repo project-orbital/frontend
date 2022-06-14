@@ -17,7 +17,7 @@ import PieChart from "../components/charts/PieChart"
 
 import * as rand from "../utils/rand";
 import {useState} from "react";
-import UploadButton from "../components/parser/UploadButton";
+import UploadButton from "../components/upload/UploadButton";
 
 // === === ===
 // Artificial data.
@@ -30,52 +30,69 @@ const netWorthChange = ((netWorthValue - netWorthData[10].value) / netWorthData[
 const assets = ["Cash", "Bonds", "Stocks", "Crypto"]
 const assetsRaw = rand.randIntArray(assets.length, 0, 100);
 const assetsTotal = assetsRaw.reduce((a, b) => a + b);
-const assetsData = assets.map((asset, i) => ({key: asset, value: Math.floor(netWorthValue * assetsRaw[i] / assetsTotal)}));
+const assetsData = assets.map((asset, i) => ({
+    key: asset,
+    value: Math.floor(netWorthValue * assetsRaw[i] / assetsTotal)
+}));
 
 // === === ===
-// Components.
-const breadcrumbs = <Breadcrumb spacing='8px' separator="/">
-    <BreadcrumbItem>
-        <BreadcrumbLink href='#'>Home</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbItem>
-        <BreadcrumbLink href='#'>Dashboard</BreadcrumbLink>
-    </BreadcrumbItem>
-</Breadcrumb>
+// Sub-components.
+const Breadcrumbs = () => <>
+    <Breadcrumb spacing='8px' separator="/">
+        <BreadcrumbItem>
+            <BreadcrumbLink href='#'>Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+            <BreadcrumbLink href='#'>Dashboard</BreadcrumbLink>
+        </BreadcrumbItem>
+    </Breadcrumb>
+</>
 
-const heading = <Heading as="h1">Dashboard</Heading>
+const Header = () => <Heading as="h1">Dashboard</Heading>
 
-const netWorth = <Card
-    label="Net Worth"
-    value={`${netWorthValue} SGD`}
-    change={`${netWorthChange}%`}
-    symbol={<StatArrow type={netWorthChange >= 0 ? "increase" : "decrease"}/>}
-    body={<BarChart data={netWorthData}/>}
-/>
+const NetWorth = () => <>
+    <Card
+        label="Net Worth"
+        value={`${netWorthValue} SGD`}
+        change={`${netWorthChange}%`}
+        symbol={<StatArrow type={netWorthChange >= 0 ? "increase" : "decrease"}/>}
+        body={<BarChart data={netWorthData}/>}
+    />
+</>
 
-const assetAllocation = <Card
-    label="Asset Allocation"
-    body={<PieChart data={assetsData}/>}
-/>
+const AssetAllocation = () => <>
+    <Card
+        label="Asset Allocation"
+        body={<PieChart data={assetsData}/>}
+    />
+</>
 
-const transactionsTable = <Card
-    label="Recent Transactions"
-    value="5"
-    body={
-        <UploadButton/>
-    }
-/>
+const Transactions = () => <>
+    <Card
+        label="Recent Transactions"
+        value="5"
+        body={
+            <UploadButton/>
+        }
+    />
+</>
 
 export default function Dashboard() {
     return <HStack minH="100vh" minW="100vw" spacing="0" display="inline-flex" align="stretch" bg="gray.200">
         <Sidebar/>
         <VStack p="40px" w="100%" align="stretch">
-            {breadcrumbs}
-            {heading}
+            <Breadcrumbs/>
+            <Header/>
             <Grid h="100%" pt="40px" gap="25px" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
-                <GridItem>{netWorth}</GridItem>
-                <GridItem>{assetAllocation}</GridItem>
-                <GridItem colSpan={2}>{transactionsTable}</GridItem>
+                <GridItem>
+                    <NetWorth/>
+                </GridItem>
+                <GridItem>
+                    <AssetAllocation/>
+                </GridItem>
+                <GridItem colSpan={2}>
+                    <Transactions/>
+                </GridItem>
             </Grid>
         </VStack>
     </HStack>
