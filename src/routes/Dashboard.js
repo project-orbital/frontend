@@ -38,7 +38,7 @@ export default function Dashboard() {
         <VStack p="40px" w="100%" align="stretch">
             <Breadcrumbs/>
             <Heading as="h1">Dashboard</Heading>
-            <Grid h="100%" pt="40px" gap="25px" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
+            <Grid h="100%" pt="40px" gap="25px">
                 <GridItem>
                     <NetWorthCard value={netWorthValue} change={netWorthChange} data={netWorthData}/>
                 </GridItem>
