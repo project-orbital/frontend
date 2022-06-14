@@ -18,8 +18,12 @@ import {Field, FieldArray, Form, Formik} from "formik";
 import {BsFillCaretRightFill} from "react-icons/bs";
 import {IoChevronBack} from "react-icons/io5";
 import axios from "axios";
+import {addTransactions} from "../../states/transactions";
+import {useDispatch} from "react-redux";
 
 export default function ReviewModal({uploadModal, reviewModal, confirmCancelModal, files}) {
+    const dispatch = useDispatch();
+
     // === === ===
     // Form buttons (integrated with the modal).
     const BackButton = () => {
@@ -70,6 +74,7 @@ export default function ReviewModal({uploadModal, reviewModal, confirmCancelModa
 
         return axios.post(`${process.env.REACT_APP_BACKEND}/api/upload`, submission, {headers})
             .then(res => {
+                dispatch(addTransactions(res.data));
                 reviewModal.onClose();
             })
             .catch(err => {
