@@ -13,7 +13,7 @@ export default function UploadButton() {
     const [files, setFiles] = useState([]);
 
     return <>
-        <Center h="100vh" w="100vw">
+        <Center>
             <Button h="60px" onClick={uploadModal.onOpen}>Upload bank statements</Button>
             <UploadModal
                 uploadModal={uploadModal}
