@@ -2,7 +2,6 @@ import Sidebar from "../components/sidebar/Sidebar";
 import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, Grid, GridItem, Heading, HStack, VStack} from "@chakra-ui/react";
 
 import * as rand from "../utils/rand";
-import {useState} from "react";
 import TransactionsCard from "../components/dashboard/TransactionsCard";
 import NetWorthCard from "../components/dashboard/NetWorthCard";
 import AssetAllocationCard from "../components/dashboard/AssetAllocationCard";
