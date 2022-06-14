@@ -17,11 +17,11 @@ import {Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} from "@c
  */
 export default function Table({values, rowLimit}) {
     // Get and de-duplicate all the keys to use them as headers.
-    const headers = [...new Set(values.map(obj => obj.keys))];
+    const headers = [...new Set(values.flatMap(obj => Object.keys(obj)))];
 
     // Converts an object to an array of its values with respect to the headers.
     // If the object does not have a header element as one of its keys, that cell will be null.
-    const objToRow = obj => headers.map(header => obj.get(header, null));
+    const objToRow = obj => headers.map(header => obj[header] || null);
 
     return <TableContainer w="100%">
         <ChakraTable size="sm" variant="striped" placement="top">
