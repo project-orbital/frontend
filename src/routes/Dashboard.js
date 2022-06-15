@@ -91,10 +91,10 @@ export default function Dashboard() {
     return <HStack w='100%' minH='100vh' align='start' spacing='0' overflow='hidden' float='left' bg='gray.200'>
         <Sidebar/>
         {/* Addition of left padding to shift the body content right by 260px, the width of the sidebar. */}
-        <VStack w='100%' p='40px' pl='300px' align='start' overflow='auto'>
+        <VStack w='100%' p='40px' pl='300px' align='stretch' overflow='auto'>
             {breadcrumbs}
             {heading}
-            <Grid pt='40px' gap='25px'>
+            <Grid w='100%' pt='40px' gap='25px' autoColumns='minmax(600px, auto)' autoFlow='row'>
                 <GridItem>{netWorth}</GridItem>
                 <GridItem>{assetAllocation}</GridItem>
                 <GridItem colSpan={2}>{transactions}</GridItem>
