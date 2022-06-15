@@ -30,7 +30,10 @@ const netWorthChange = ((netWorthValue - netWorthData[10].value) / netWorthData[
 const assets = ["Cash", "Bonds", "Stocks", "Crypto"]
 const assetsRaw = rand.randIntArray(assets.length, 0, 100);
 const assetsTotal = assetsRaw.reduce((a, b) => a + b);
-const assetsData = assets.map((asset, i) => ({key: asset, value: Math.floor(netWorthValue * assetsRaw[i] / assetsTotal)}));
+const assetsData = assets.map((asset, i) => ({
+    key: asset,
+    value: Math.floor(netWorthValue * assetsRaw[i] / assetsTotal)
+}));
 
 function generateRandomTransaction() {
     return [
@@ -85,12 +88,13 @@ const transactions = <Card
 />
 
 export default function Dashboard() {
-    return <HStack minH="100vh" minW="100vw" spacing="0" display="inline-flex" align="stretch" bg="gray.200">
+    return <HStack w='100%' minH='100vh' align='start' spacing='0' overflow='hidden' float='left' bg='gray.200'>
         <Sidebar/>
-        <VStack p="40px" w="100%" align="stretch">
+        {/* Addition of left padding to shift the body content right by 260px, the width of the sidebar. */}
+        <VStack w='100%' p='40px' pl='300px' align='start' overflow='auto'>
             {breadcrumbs}
             {heading}
-            <Grid h="100%" pt="40px" gap="25px" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
+            <Grid pt='40px' gap='25px'>
                 <GridItem>{netWorth}</GridItem>
                 <GridItem>{assetAllocation}</GridItem>
                 <GridItem colSpan={2}>{transactions}</GridItem>
