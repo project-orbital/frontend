@@ -42,13 +42,16 @@ export default function SignUp() {
         })
             .catch(err => errorToast(err.response.data))
             .then(res => {
+                //bring to emailsent page
                 if (res.status === 200) {
                     toast.closeAll();
-                    successToast();
+                    navigate("/email-sent")
+                    /*
                     setTimeout(() => {
                         navigate("/dashboard")
                         toast.closeAll();
                     }, 800);
+                    */
                 }
             });
     }
@@ -61,15 +64,6 @@ export default function SignUp() {
             isClosable: true,
         })
         setError("username", {message: message})
-    }
-
-    function successToast() {
-        toast({
-            title: "Success!",
-            description: "Taking you to your dashboard...",
-            status: "success",
-            isClosable: true,
-        })
     }
 
     // === === ===
@@ -132,8 +126,8 @@ export default function SignUp() {
         <FormErrorMessage color="red.500">{errors.password && errors.password.message}</FormErrorMessage>
     </FormControl>
 
-    const submitButton = <Button isLoading={isSubmitting} type='submit' h="60px" w="100%" bg="black" color="white">
-        Create your account
+const submitButton = <Button isLoading={isSubmitting} type='submit' h="60px" w="100%" bg="black" color="white">
+Create your account
     </Button>
 
     const signInLink = <Text>
