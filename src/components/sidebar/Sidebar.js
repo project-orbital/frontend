@@ -11,13 +11,13 @@ export default function Sidebar() {
             <SidebarLink to="/dashboard" text="Plan"/>
             <SidebarLink to="/dashboard" text="Learn"/>
             <SidebarCategory name="Bank Accounts"
-                             items={[<SidebarLink to="/dashboard" text="Account 1" size="sm"/>,
-                                 <SidebarLink to="/dashboard" text="Account 2" size="sm"/>,
-                                 <SidebarLink to="/dashboard" text="Account 3" size="sm"/>]}/>
+                             items={[<SidebarLink key='1' to="/dashboard" text="Account 1" size="sm"/>,
+                                 <SidebarLink key='2' to="/dashboard" text="Account 2" size="sm"/>,
+                                 <SidebarLink key='3' to="/dashboard" text="Account 3" size="sm"/>]}/>
 
             <SidebarCategory name="Investment Accounts"
-                             items={[<SidebarLink to="/dashboard" text="Account 1" size="sm"/>,
-                                 <SidebarLink to="/dashboard" text="Account 2" size="sm"/>,
+                             items={[<SidebarLink key='4' to="/dashboard" text="Account 1" size="sm"/>,
+                                 <SidebarLink key='5' to="/dashboard" text="Account 2" size="sm"/>,
                                  <SidebarLink to="/dashboard" text="Account 3" size="sm"/>]}/>
         </VStack>
         <Spacer/>
