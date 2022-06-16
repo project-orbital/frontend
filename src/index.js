@@ -8,9 +8,12 @@ import SignIn from "./routes/SignIn";
 import Dashboard from "./routes/Dashboard";
 import store from "./states/store";
 import {Provider} from "react-redux";
+import '@fontsource/dm-serif-display/400.css'
 
 const theme = extendTheme({
-    // Theme extensions go here.
+    fonts: {
+        heading: 'DM Serif Display, serif',
+    },
 })
 
 const element = <StrictMode>
