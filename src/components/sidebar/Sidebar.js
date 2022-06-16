@@ -57,14 +57,12 @@ export default function Sidebar({selected}) {
         <Spacer/>
         <VStack h='100%' w='100%'>
             <SidebarLink
-                isSecondary
                 isSelected={selected === 'settings'}
                 to="/settings"
                 text="settings"
                 icon={<RiSettings3Line size='25px'/>}
             />
             <SidebarLink
-                isSecondary
                 to="/"
                 text="sign out"
                 icon={<RiLogoutBoxLine size='25px'/>}
