@@ -55,7 +55,7 @@ export default function Sidebar({selected}) {
             />
         </VStack>
         <Spacer/>
-        <VStack>
+        <VStack h='100%' w='100%'>
             <SidebarLink
                 isSecondary
                 isSelected={selected === 'settings'}
