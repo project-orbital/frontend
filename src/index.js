@@ -10,6 +10,7 @@ import store from "./states/store";
 import {Provider} from "react-redux";
 import '@fontsource/dm-serif-display/400.css'
 import Accounts from "./routes/Accounts";
+import AccountCreationModal from "./components/accounts/AccountCreationModal";
 
 const theme = extendTheme({
     fonts: {
@@ -34,7 +35,9 @@ const element = <StrictMode>
                     <Route path="sign-up" element={<SignUp/>}/>
                     <Route path="sign-in" element={<SignIn/>}/>
                     <Route path="dashboard" element={<Dashboard/>}/>
-                    <Route path="accounts" element={<Accounts/>}/>
+                    <Route path="accounts" element={<Accounts/>}>
+                        <Route path="create" element={<AccountCreationModal/>}/>
+                    </Route>
                     <Route path="*" element={<Heading>404 Not Found</Heading>}/>
                 </Routes>
             </BrowserRouter>
