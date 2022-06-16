@@ -1,19 +1,29 @@
 import {Link as RouterLink} from "react-router-dom";
-import {Link, Text} from "@chakra-ui/react";
+import {Link, Text, VStack} from "@chakra-ui/react";
 
 /**
- * Wrapper component for links in the sidebar.
+ * Clickable link component with an optional icon for the sidebar.
  *
- * Props:
- * - to: The path to link to.
- * - text: The text to display.
- * - size ("lg", "sm"): The size of the text. Defaults to "lg".
+ * @param to the destination URL
+ * @param icon the optional icon to display
+ * @param text the text to display
+ * @param isSelected true if the link should be accented, false otherwise
+ * @param isSecondary true if the link should be smaller, false otherwise
+ * @return the link component
  */
-export default function SidebarLink(props) {
-    const fontWeight = !props.size || props.size === "lg" ? "semibold" : "normal";
-    const fontSize = !props.size || props.size === "lg" ? "xl" : "sm";
-
-    return <Link as={RouterLink} to={props.to} color="white">
-        <Text fontSize={fontSize} fontWeight={fontWeight}>{props.text}</Text>
+export default function SidebarLink({to, icon, text, isSelected, isSecondary}) {
+    return <Link w='100%' as={RouterLink} to={to} color='white'>
+        <VStack
+            py={isSelected ? '30px' : isSecondary ? '10px' : '20px'}
+            spacing='10px'
+            bgColor={isSelected ? 'whiteAlpha.100' : null}
+            borderLeft={isSelected ? '4px solid white' : null}>
+            {icon}
+            <Text fontSize='xs'
+                  fontWeight='semibold'
+                  casing='uppercase'>
+                {text}
+            </Text>
+        </VStack>
     </Link>
 }

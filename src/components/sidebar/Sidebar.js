@@ -1,29 +1,64 @@
 import {Heading, Spacer, VStack} from "@chakra-ui/react";
+import {AiOutlineAreaChart} from "react-icons/ai";
+import {MdSchool, MdSpaceDashboard} from "react-icons/md";
+import {RiHome3Fill, RiLogoutBoxLine, RiPieChart2Fill, RiSettings3Line} from "react-icons/ri";
 import SidebarLink from "./SidebarLink";
-import SidebarCategory from "./SidebarCategory";
 
 export default function Sidebar() {
-    return <VStack p="40px" minH="100vh" w="260px" zIndex={999} pos="fixed" bgColor="gray.800">
-        <Heading as="h1" size="lg" color="white">DollarPlanner</Heading>;
-        <VStack h="100%" pt="85px" spacing="10px" align="start" alignSelf="start">
-            <SidebarLink to="/dashboard" text="Dashboard"/>
-            <SidebarLink to="/dashboard" text="Analyze"/>
-            <SidebarLink to="/dashboard" text="Plan"/>
-            <SidebarLink to="/dashboard" text="Learn"/>
-            <SidebarCategory name="Bank Accounts"
-                             items={[<SidebarLink key='1' to="/dashboard" text="Account 1" size="sm"/>,
-                                 <SidebarLink key='2' to="/dashboard" text="Account 2" size="sm"/>,
-                                 <SidebarLink key='3' to="/dashboard" text="Account 3" size="sm"/>]}/>
-
-            <SidebarCategory name="Investment Accounts"
-                             items={[<SidebarLink key='4' to="/dashboard" text="Account 1" size="sm"/>,
-                                 <SidebarLink key='5' to="/dashboard" text="Account 2" size="sm"/>,
-                                 <SidebarLink to="/dashboard" text="Account 3" size="sm"/>]}/>
+    return <VStack minH='100vh' py='40px' w='160px' zIndex={999} pos='fixed' bgColor='gray.900'>
+        <Heading
+            as='h3'
+            size='md'
+            color='white'
+            fontWeight='black'
+            pb='20px'
+            borderBottom='1.5px solid white'
+        >
+            DollarPlanner
+        </Heading>
+        <Spacer/>
+        <VStack h='100%' w='100%'>
+            <SidebarLink
+                isSelected
+                to="/dashboard"
+                text="Dashboard"
+                icon={<RiHome3Fill size='40px'/>}
+            />
+            <SidebarLink
+                to="/accounts"
+                text="accounts"
+                icon={<MdSpaceDashboard size='40px'/>}
+            />
+            <SidebarLink
+                to="/portfolio"
+                text="portfolio"
+                icon={<AiOutlineAreaChart size='40px'/>}
+            />
+            <SidebarLink
+                to="/plan"
+                text="plan"
+                icon={<RiPieChart2Fill size='40px'/>}
+            />
+            <SidebarLink
+                to="/learn"
+                text="learn"
+                icon={<MdSchool size='40px'/>}
+            />
         </VStack>
         <Spacer/>
-        <VStack h="100%" pt="85px" spacing="10px" align="start" alignSelf="start">
-            <SidebarLink to="/dashboard" text="Settings"/>
-            <SidebarLink to="/" text="Sign out"/>
+        <VStack>
+            <SidebarLink
+                isSecondary
+                to="/settings"
+                text="settings"
+                icon={<RiSettings3Line size='25px'/>}
+            />
+            <SidebarLink
+                isSecondary
+                to="/"
+                text="sign out"
+                icon={<RiLogoutBoxLine size='25px'/>}
+            />
         </VStack>
     </VStack>
 }
