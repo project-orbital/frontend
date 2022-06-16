@@ -1,6 +1,7 @@
-import {Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text} from "@chakra-ui/react";
+import {Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text} from "@chakra-ui/react";
 import UploadForm from "./UploadForm";
-import {BsFillCaretRightFill} from "react-icons/bs";
+import CancelButton from "../buttons/CancelButton";
+import SubmitButton from "../buttons/SubmitButton";
 
 export default function UploadModal({uploadModal, reviewModal, files, setFiles}) {
     // === === ===
@@ -13,23 +14,6 @@ export default function UploadModal({uploadModal, reviewModal, files, setFiles})
     const handleSubmit = () => {
         uploadModal.onClose();
         reviewModal.onOpen();
-    }
-
-    // === === ===
-    // Modal buttons (integrated with form handling).
-    const CancelButton = () => {
-        return <Button h="60px" w="100%" colorScheme="red"
-                       onClick={handleCancel}>
-            Cancel upload
-        </Button>
-    }
-
-    const SubmitButton = () => {
-        return <Button type="submit" h="60px" w="100%" colorScheme="gray" rightIcon={<BsFillCaretRightFill/>}
-                       onClick={handleSubmit}
-                       isDisabled={files.length < 1}>
-            {`Review selected ${files.length === 1 ? "file" : "files"}`}
-        </Button>
     }
 
     // === === ===
@@ -57,8 +41,15 @@ export default function UploadModal({uploadModal, reviewModal, files, setFiles})
                 <UploadForm files={files} setFiles={setFiles}/>
             </ModalBody>
             <ModalFooter gap="20px">
-                <CancelButton/>
-                <SubmitButton/>
+                <CancelButton
+                    text='Cancel upload'
+                    onClick={handleCancel}
+                />
+                <SubmitButton
+                    onClick={handleSubmit}
+                    text={`Review selected ${files.length === 1 ? "file" : "files"}`}
+                    isDisabled={files.length < 1}
+                />
             </ModalFooter>
         </ModalContent>
     </Modal>
