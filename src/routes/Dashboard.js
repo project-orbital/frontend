@@ -36,8 +36,8 @@ const Breadcrumbs = () => <>
 export default function Dashboard() {
     return <HStack w='100%' minH='100vh' align='start' spacing='0' overflow='hidden' float='left' bg='gray.200'>
         <Sidebar/>
-        {/* Addition of left padding to shift the body content right by 260px, the width of the sidebar. */}
-        <VStack w='100%' p='40px' pl='300px' align='stretch' overflow='auto'>
+        {/* Addition of left padding to shift the body content right by 160px, the width of the sidebar. */}
+        <VStack w='100%' p='40px' pl='200px' align='stretch' overflow='auto'>
             <Breadcrumbs/>
             <Heading as="h1">Dashboard</Heading>
             <Grid w='100%' pt='40px' gap='25px' autoColumns='minmax(600px, auto)' autoFlow='row'>
