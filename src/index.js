@@ -15,6 +15,13 @@ const theme = extendTheme({
     fonts: {
         heading: 'DM Serif Display, serif',
     },
+    styles: {
+        global: () => ({
+            body: {
+                bg: 'gray.200'
+            }
+        }),
+    }
 })
 
 const element = <StrictMode>
