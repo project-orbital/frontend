@@ -1,4 +1,6 @@
 # Frontend
+[![CI](https://github.com/project-orbital/frontend/actions/workflows/node.js.yml/badge.svg)](https://github.com/project-orbital/frontend/actions/workflows/node.js.yml)
+
 This repository contains the frontend of our application, DollarPlanner.
 
 `master` is the stable branch, and should work with the corresponding `master`
