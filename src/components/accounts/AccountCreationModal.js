@@ -1,25 +1,15 @@
 import {
-    Heading,
-    HStack,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    Text,
-    useDisclosure
-} from "@chakra-ui/react";
-import CancelButton from "../buttons/CancelButton";
-import SubmitButton from "../buttons/SubmitButton";
-import BackButton from "../buttons/BackButton";
-import AccountCreationForm from "./AccountCreationForm";
-import {useNavigate} from "react-router-dom";
+    Heading, HStack, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure
+} from '@chakra-ui/react';
+import CancelButton from '../buttons/CancelButton';
+import SubmitButton from '../buttons/SubmitButton';
+import BackButton from '../buttons/BackButton';
+import AccountCreationForm from './AccountCreationForm';
+import {useNavigate} from 'react-router-dom';
 
 export default function AccountCreationModal() {
     const navigate = useNavigate();
     const {onClose} = useDisclosure();
-
     return <Modal
         onClose={onClose}
         isOpen
@@ -40,29 +30,29 @@ export default function AccountCreationModal() {
                     We need some details about this account.
                 </Text>
                 <Text fontSize="sm" fontWeight="normal" color="gray.600">
-                    Accounts are used to store your transactions.
-                    We will never ask for your account password or other sensitive information.
+                    Accounts in DollarPlanner are ledgers used to store your transactions.
+                    We will never ask for sensitive information such as your bank account password.
                 </Text>
             </ModalHeader>
             <ModalBody>
                 <AccountCreationForm afterSubmit={() => {
                     onClose();
-                    navigate("/accounts");
+                    navigate('/accounts');
                 }}/>
             </ModalBody>
             <ModalFooter gap="20px">
                 <CancelButton
                     onClick={() => {
                         onClose();
-                        navigate("/accounts");
+                        navigate('/accounts');
                     }}
-                    text='Cancel account creation'
+                    text="Cancel account creation"
                 />
                 <SubmitButton
-                    text='Create account'
-                    form='create'
+                    text="Create account"
+                    form="create"
                 />
             </ModalFooter>
         </ModalContent>
-    </Modal>
+    </Modal>;
 }
