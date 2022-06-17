@@ -1,47 +1,53 @@
-import {Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Heading, Text, VStack} from "@chakra-ui/react";
-import {Link, Outlet, useNavigate} from "react-router-dom";
-import {RiArrowRightSLine} from "react-icons/ri";
-import Sidebar from "../components/sidebar/Sidebar";
+import {Box, Button, SimpleGrid} from "@chakra-ui/react";
+import {Outlet, useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {selectAccounts} from "../states/accounts";
+import Card from "../components/visuals/Card";
+import AccountCard from "../components/accounts/AccountCard";
+import Breadcrumbs from "../components/visuals/Breadcrumbs";
+import PageTemplate from "../components/sidebar/PageTemplate";
 
+/**
+ * Route for the accounts page, which renders information for all accounts with the ability to create new accounts.
+ * Not to be confused with the `Account` route, which renders information only for a particular account.
+ */
 export default function Accounts() {
     const navigate = useNavigate();
+    const accounts = useSelector(selectAccounts);
 
-    return <Box>
-        <Sidebar selected='accounts'/>
-        <VStack
-            w='calc(100vw - 160px)'
-            h='100vh'
-            ml='160px'
-            p='40px'
-            spacing='40px'
-            align='start'
-            overflow='hidden'
-            float='left'
-        >
-            <Box>
-                <Breadcrumb spacing='2px' separator={<RiArrowRightSLine/>}>
-                    <BreadcrumbItem>
-                        <BreadcrumbLink as={Link} to='/dashboard'>Home</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbItem>
-                        <BreadcrumbLink as={Link} to='/accounts'>Accounts</BreadcrumbLink>
-                    </BreadcrumbItem>
-                </Breadcrumb>
-                <Heading as='h1' size='2xl' pt='10px'>Accounts</Heading>
-            </Box>
-            <Box
-                w='100%'
-                h='100%'
-                p='40px'
-                bg='white'
-                shadow='sm'
-                borderRadius='10px'
-            >
-                <Heading as='h2' size='xl'>No accounts to display.</Heading>
-                <Text>Get started by creating an account.</Text>
-                <Button my='40px' h="60px" onClick={() => navigate("/accounts/create")}>Create an account</Button>
-                <Outlet/>
-            </Box>
-        </VStack>
-    </Box>
+    // The default card to be displayed when no accounts have been created, and hidden otherwise.
+    const NoAccounts = () => <Card
+        isCentered
+        heading="No accounts to display."
+        subheading="Get started by creating an account."
+    >
+        <Button h="60px" onClick={() => navigate("/accounts/create")}>Create an account</Button>
+    </Card>;
+
+    // The card to display when at least 1 account is created, with a button for creating another account.
+    const AddAccount = () => <Card
+        isCentered
+        heading="Want to create another account?"
+        subheading="Click the button below!"
+    >
+        <Button h="60px" onClick={() => navigate("/accounts/create")}>
+            Create another account
+        </Button>;
+    </Card>;
+
+    return <PageTemplate page="accounts">
+        <Breadcrumbs
+            path="Home/Accounts"
+            links={["/dashboard", "/accounts"]}
+        />
+        {/* Render each account as a card in a responsive grid. */}
+        <Box w="100%" h="100%">
+            <SimpleGrid minChildWidth="400px" spacing="30px">
+                {accounts.map((account, index) => <AccountCard key={index} index={`#${index + 1}`}
+                                                               account={account}/>)}
+                {accounts.length > 0 ? <AddAccount/> : <NoAccounts/>}
+            </SimpleGrid>
+        </Box>
+        <Outlet/>
+    </PageTemplate>;
 }
