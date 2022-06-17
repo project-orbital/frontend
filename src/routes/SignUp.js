@@ -24,7 +24,7 @@ export default function SignUp() {
     const navigate = useNavigate();
     const toast = useToast();
     const {
-        setError, register, handleSubmit, formState: {errors, isSubmitting}
+        register, handleSubmit, formState: {errors, isSubmitting}
     } = useForm();
 
     // === === ===
@@ -40,30 +40,23 @@ export default function SignUp() {
                 password: values.password,
             }, withCredentials: true, url: `${process.env.REACT_APP_BACKEND}/sign-up`,
         })
-            .catch(err => errorToast(err.response.data))
+            .catch(err => {errorToast(err.response.data)})
             .then(res => {
                 //bring to emailsent page
                 if (res.status === 200) {
                     toast.closeAll();
-                    navigate("/email-sent")
-                    /*
-                    setTimeout(() => {
-                        navigate("/dashboard")
-                        toast.closeAll();
-                    }, 800);
-                    */
+                    navigate("/email-sent");
                 }
             });
     }
-
+ 
     function errorToast(message) {
         toast({
-            title: message,
-            description: "Please try again.",
+            title: "Error",
+            description: message,
             status: "error",
             isClosable: true,
         })
-        setError("username", {message: message})
     }
 
     // === === ===
@@ -114,7 +107,7 @@ export default function SignUp() {
         <FormErrorMessage color="red.500">{errors.username && errors.username.message}</FormErrorMessage>
     </FormControl>
 
-    const passwordField = <FormControl isInvalid={errors.password} w="50%">
+    const passwordField = <FormControl isInvalid={errors.password} w="60%">
         <FormLabel htmlFor="password">Password</FormLabel>
         <Input id="password"
                placeholder="••••••••"
@@ -131,8 +124,8 @@ Create your account
     </Button>
 
     const signInLink = <Text>
-        Already have an account?{' '}
-        <Link as={RouterLink} to='/sign-in' color="blue.500">Sign in ►</Link>
+        Back to homepage{' '}
+        <Link as={RouterLink} to='/' color="blue.500">Sign in ►</Link>
     </Text>
 
     // === === ===
