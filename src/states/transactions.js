@@ -1,21 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit';
 
 export const transactionsSlice = createSlice({
     name: 'transactions',
     initialState: {
-        history: [],
+        history: []
     },
     reducers: {
         addTransaction: (state, action) => {
-            state.history.push(action.payload)
+            state.history.push(action.payload);
         },
         addTransactions: (state, action) => {
-            state.history.push(...action.payload)
-        },
-    },
-})
+            state.history.push(...action.payload);
+        }
+    }
+});
 
-export const selectTransactions = state => state.transactions.history
-export const { addTransaction, addTransactions } = transactionsSlice.actions
+export const selectTransactions = state => state.transactions.history;
+export const {
+    addTransaction,
+    addTransactions
+} = transactionsSlice.actions;
 
-export default transactionsSlice.reducer
+export default transactionsSlice.reducer;
