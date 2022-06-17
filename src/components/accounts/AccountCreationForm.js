@@ -1,20 +1,18 @@
-import React from 'react';
-import * as Yup from 'yup';
-import {Field, Form, Formik} from 'formik';
-import {FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, VStack} from '@chakra-ui/react';
-import {useDispatch} from 'react-redux';
-import {addAccount} from '../../states/accounts';
+import React from "react";
+import * as Yup from "yup";
+import {Field, Form, Formik} from "formik";
+import {FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, VStack} from "@chakra-ui/react";
+import {useDispatch} from "react-redux";
+import {addAccount} from "../../states/accounts";
 
 export default function AccountCreationForm({afterSubmit}) {
     const dispatch = useDispatch();
     return <Formik
         initialValues={{
-            'name': '',
-            'nickname': ''
+            "name": "DBS Multiplier Account", "nickname": "Savings Account"
         }}
         validationSchema={Yup.object({
-            'name': Yup.string().required('Please provide a name.'),
-            'nickname': Yup.string()
+            "name": Yup.string().required("Please provide a name."), "nickname": Yup.string()
         })}
         onSubmit={values => {
             dispatch(addAccount(values));
@@ -25,8 +23,7 @@ export default function AccountCreationForm({afterSubmit}) {
             <VStack spacing="20px">
                 <Field name="name">
                     {({
-                          field,
-                          form
+                          field, form
                       }) => <FormControl isRequired isInvalid={form.errors.name && form.touched.name}>
                         <FormLabel htmlFor="name">Account Name</FormLabel>
                         <Input {...field} id="name" placeholder="DBS Multiplier Account"/>
