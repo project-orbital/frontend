@@ -1,6 +1,6 @@
 import {Center, Spacer, Stat, StatHelpText, StatLabel, StatNumber, VStack} from "@chakra-ui/react";
 
-export default function Card(props) {
+export default function StatCard(props) {
     return <VStack minH="400px" minW="600px" h="100%" w="100%" p="30px" align="start" bg="white" borderRadius="10px"
                    shadow="sm">
         <Stat>
