@@ -1,17 +1,8 @@
 import {useForm} from "react-hook-form";
-import {Link as RouterLink, useNavigate} from "react-router-dom"
+import {Link as RouterLink, useNavigate} from "react-router-dom";
 import Axios from "axios";
 import {
-    Button,
-    Center,
-    FormControl,
-    FormErrorMessage,
-    Heading,
-    Input,
-    Link,
-    Spacer,
-    useToast,
-    VStack
+    Button, Center, FormControl, FormErrorMessage, Heading, Input, Link, Spacer, useToast, VStack
 } from "@chakra-ui/react";
 
 export default function RequestPasswordReset() {
@@ -30,15 +21,15 @@ export default function RequestPasswordReset() {
     function requestPasswordReset(values) {
         return Axios({
             method: "POST", data: {
-                email: values.email,
-            }, withCredentials: true, url:`${process.env.REACT_APP_BACKEND}/request-password-reset`,
+                email: values.email
+            }, withCredentials: true, url: `${process.env.REACT_APP_BACKEND}/request-password-reset`
         })
             .catch(err => errorToast(err.response.data))
             .then(res => {
                 if (res.status === 200) {
                     toast.closeAll();
                     successToast();
-                    navigate('/password-reset-email-sent')
+                    navigate("/password-reset-email-sent");
                 }
             });
     }
@@ -48,8 +39,8 @@ export default function RequestPasswordReset() {
             title: "We could not reset your password",
             description: message,
             status: "error",
-            isClosable: true,
-        })
+            isClosable: true
+        });
     }
 
     function successToast() {
@@ -57,14 +48,14 @@ export default function RequestPasswordReset() {
             title: "Success!",
             description: "Please check your email",
             status: "success",
-            isClosable: true,
-        })
+            isClosable: true
+        });
     }
 
     // === === ===
     // Form fields.
     const emailField = <FormControl isInvalid={errors.email} w="100%">
-        <Input  id="email"
+        <Input id="email"
                placeholder="someone@example.com"
                {...register("email", {
                    required: "Please provide your email address.",
@@ -73,20 +64,20 @@ export default function RequestPasswordReset() {
                    pattern: {value: /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/, message: "Invalid email address."}
                })}/>
         <FormErrorMessage color="red.500">{errors.email && errors.email.message}</FormErrorMessage>
-    </FormControl>
+    </FormControl>;
 
-    const submitButton = <Button isLoading={isSubmitting} type='submit' h="60px" w="100%" bg="black" color="white">
+    const submitButton = <Button isLoading={isSubmitting} type="submit" h="60px" w="100%" bg="black" color="white">
         Send password reset email
-    </Button>
+    </Button>;
 
-    const HomepageLink = <Link as={RouterLink} to='/' color="blue.500">Back to homepage ►</Link>
+    const HomepageLink = <Link as={RouterLink} to="/" color="blue.500">Back to homepage ►</Link>;
 
     // === === ===
     // Form component.
 
     return <Center h="100vh" w="100vw" bg="gray.50">
         <VStack>
-        <Heading as="h1">Please enter your email</Heading>
+            <Heading as="h1">Please enter your email</Heading>
             <Spacer p="20px"/>
             <VStack p="60px" align="stretch" borderRadius="20px" bg="white" shadow="lg">
                 <form onSubmit={handleSubmit(requestPasswordReset)}>
@@ -102,5 +93,5 @@ export default function RequestPasswordReset() {
                 </form>
             </VStack>
         </VStack>
-    </Center>
+    </Center>;
 }

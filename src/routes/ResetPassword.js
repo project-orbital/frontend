@@ -1,17 +1,8 @@
 import {useForm} from "react-hook-form";
-import {useParams, Link as RouterLink, useNavigate} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {
-    Button,
-    Center,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Heading,
-    Input,
-    Spacer,
-    useToast,
-    VStack
+    Button, Center, FormControl, FormErrorMessage, FormLabel, Heading, Input, Spacer, useToast, VStack
 } from "@chakra-ui/react";
 
 export default function ResetPassword() {
@@ -32,14 +23,14 @@ export default function ResetPassword() {
             method: "POST", data: {
                 password: values.password,
                 userId: userId,
-                resetString: resetString,
-            }, withCredentials: true, url:`${process.env.REACT_APP_BACKEND}/reset-password`,
+                resetString: resetString
+            }, withCredentials: true, url: `${process.env.REACT_APP_BACKEND}/reset-password`
         })
-        .catch(err => errorToast(err.response.data))
-        .then(res => {
+            .catch(err => errorToast(err.response.data))
+            .then(res => {
                 if (res.status === 200) {
                     toast.closeAll();
-                    navigate('/reset-password-success');
+                    navigate("/reset-password-success");
                 }
             });
     }
@@ -49,17 +40,8 @@ export default function ResetPassword() {
             title: "We could not reset your password",
             description: message,
             status: "error",
-            isClosable: true,
-        })
-    }
-
-    function successToast() {
-        toast({
-            title: "Success!",
-            description: "Please re-login",
-            status: "success",
-            isClosable: true,
-        })
+            isClosable: true
+        });
     }
 
     // === === ===
@@ -74,17 +56,17 @@ export default function ResetPassword() {
                    minLength: {value: 8, message: "Password must be at least 8 characters long."}
                })}/>
         <FormErrorMessage color="red.500">{errors.password && errors.password.message}</FormErrorMessage>
-    </FormControl>    
+    </FormControl>;
 
     // === === ===
     // Form component.
-    const submitButton = <Button isLoading={isSubmitting} type='submit' h="60px" w="100%" bg="black" color="white">
+    const submitButton = <Button isLoading={isSubmitting} type="submit" h="60px" w="100%" bg="black" color="white">
         Submit
-    </Button>
+    </Button>;
 
     return <Center h="100vh" w="100vw" bg="gray.50">
         <VStack>
-        <Heading as="h1">Please enter a new password</Heading>
+            <Heading as="h1">Please enter a new password</Heading>
             <Spacer p="20px"/>
             <VStack p="60px" align="stretch" borderRadius="20px" bg="white" shadow="lg">
                 <form onSubmit={handleSubmit(resetPassword)}>
@@ -99,5 +81,5 @@ export default function ResetPassword() {
                 </form>
             </VStack>
         </VStack>
-    </Center>
+    </Center>;
 }

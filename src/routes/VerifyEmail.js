@@ -11,21 +11,15 @@ export default function VerifyEmail() {
     useEffect(() => {
         function errorToast(message) {
             toast({
-                title: "We couldn't verify your email.",
-                description: message,
-                status: "error",
-                duration: null,
-                isClosable: false,
-            })
+                title: "We couldn't verify your email.", description: message, status: "error", duration: null,
+                isClosable: false
+            });
         }
 
         function successToast() {
             toast({
-                title: "Success!",
-                description: "Taking you to your dashboard...",
-                status: "success",
-                isClosable: true,
-            })
+                title: "Success!", description: "Taking you to your dashboard...", status: "success", isClosable: true
+            });
         }
 
         axios.post(`${process.env.REACT_APP_BACKEND}/verify`, {"userId": userId, "uniqueString": uniqueString})
@@ -37,17 +31,17 @@ export default function VerifyEmail() {
                 console.log("Successfully verified email.");
                 if (res.status === 200) {
                     successToast();
-                    navigate('/email-verified');
+                    navigate("/email-verified");
                 } else {
                     errorToast(res.data.message);
                 }
-            })
+            });
     });
 
-    return <VStack h='100vh' w='100vw' justify='center' bg='gray.200'>
-        <VStack p='60px' align='center' borderRadius="20px" bg="white" shadow="sm">
+    return <VStack h="100vh" w="100vw" justify="center" bg="gray.200">
+        <VStack p="60px" align="center" borderRadius="20px" bg="white" shadow="sm">
             <Heading as="h1">Give us a moment...</Heading>
             <Text>We're checking the validity of this link.</Text>
         </VStack>
-    </VStack>
+    </VStack>;
 }
