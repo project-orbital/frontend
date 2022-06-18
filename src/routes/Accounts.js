@@ -32,7 +32,7 @@ export default function Accounts() {
     >
         <Button h="60px" onClick={() => navigate("/accounts/create")}>
             Create another account
-        </Button>;
+        </Button>
     </Card>;
 
     return <PageTemplate page="accounts">
