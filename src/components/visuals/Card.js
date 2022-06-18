@@ -1,4 +1,4 @@
-import {Badge, Heading, LinkBox, LinkOverlay, Text, VStack} from "@chakra-ui/react";
+import {Badge, Box, Heading, LinkBox, LinkOverlay, SimpleGrid, Text, VStack} from "@chakra-ui/react";
 import {Link} from "react-router-dom";
 
 /**
@@ -37,7 +37,7 @@ export default function Card({info, heading, subheading, link, children, isNeste
             as="h2"
             align={isCentered ? "center" : "start"}
             size={isNested ? "md" : "lg"}
-            pb={subheading ? "0px" : "20px"}
+            pb={subheading || children ? "0px" : "20px"}
         >
             {heading}
         </Heading>}
@@ -49,9 +49,11 @@ export default function Card({info, heading, subheading, link, children, isNeste
         </Text>}
     </VStack>;
 
-    const body = <VStack align="start">
-        {children}
-    </VStack>;
+    const body = <Box h={isCentered ? null : "100%"} w="100%">
+        <SimpleGrid spacing="20px">
+            {children}
+        </SimpleGrid>
+    </Box>;
 
     const card = <VStack
         align={isCentered ? "center" : "start"}
