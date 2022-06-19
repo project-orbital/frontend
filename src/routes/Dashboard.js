@@ -1,23 +1,10 @@
 import Sidebar from "../components/sidebar/Sidebar";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    Grid,
-    GridItem,
-    Heading,
-    HStack,
-    StatArrow,
-    VStack
-} from "@chakra-ui/react";
-
-import Card from "../components/dashboard/Card";
-import BarChart from "../components/charts/BarChart";
-import PieChart from "../components/charts/PieChart"
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, Grid, GridItem, Heading, HStack, VStack} from "@chakra-ui/react";
 
 import * as rand from "../utils/rand";
-import Table from "../components/table/Table";
-import {faker} from "@faker-js/faker";
+import TransactionsCard from "../components/dashboard/TransactionsCard";
+import NetWorthCard from "../components/dashboard/NetWorthCard";
+import AssetAllocationCard from "../components/dashboard/AssetAllocationCard";
 
 // === === ===
 // Artificial data.
@@ -35,69 +22,34 @@ const assetsData = assets.map((asset, i) => ({
     value: Math.floor(netWorthValue * assetsRaw[i] / assetsTotal)
 }));
 
-function generateRandomTransaction() {
-    return [
-        faker.date.recent().toLocaleDateString(),
-        `Account ${rand.randInt(1, 4)}`,
-        faker.finance.transactionDescription().split(" using card")[0],
-        faker.finance.amount(),
-        faker.finance.amount(1000, netWorthValue)
-    ]
-}
-
-// === === ===
-// Components.
-const breadcrumbs = <Breadcrumb spacing='8px' separator="/">
-    <BreadcrumbItem>
-        <BreadcrumbLink href='#'>Home</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbItem>
-        <BreadcrumbLink href='#'>Dashboard</BreadcrumbLink>
-    </BreadcrumbItem>
-</Breadcrumb>
-
-const heading = <Heading as="h1">Dashboard</Heading>
-
-const netWorth = <Card
-    label="Net Worth"
-    value={`${netWorthValue} SGD`}
-    change={`${netWorthChange}%`}
-    symbol={<StatArrow type={netWorthChange >= 0 ? "increase" : "decrease"}/>}
-    body={<BarChart data={netWorthData}/>}
-/>
-
-const assetAllocation = <Card
-    label="Asset Allocation"
-    body={<PieChart data={assetsData}/>}
-/>
-
-const transactions = <Card
-    label="Recent Transactions"
-    value="5"
-    body={<Table
-        headers={["Date", "Account", "Transaction", "Amount", "Balance"]}
-        rows={5}
-        body={[
-            generateRandomTransaction(),
-            generateRandomTransaction(),
-            generateRandomTransaction(),
-            generateRandomTransaction(),
-            generateRandomTransaction()
-        ]}
-    />}
-/>
+const Breadcrumbs = () => <>
+    <Breadcrumb spacing='8px' separator="/">
+        <BreadcrumbItem>
+            <BreadcrumbLink href='#'>Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+            <BreadcrumbLink href='#'>Dashboard</BreadcrumbLink>
+        </BreadcrumbItem>
+    </Breadcrumb>
+</>
 
 export default function Dashboard() {
     return <HStack w='100%' minH='100vh' align='start' spacing='0' overflow='hidden' float='left' bg='gray.200'>
         <Sidebar/>
         {/* Addition of left padding to shift the body content right by 260px, the width of the sidebar. */}
         <VStack w='100%' p='40px' pl='300px' align='stretch' overflow='auto'>
-            {breadcrumbs}
-            {heading}
+            <Breadcrumbs/>
+            <Heading as="h1">Dashboard</Heading>
             <Grid w='100%' pt='40px' gap='25px' autoColumns='minmax(600px, auto)' autoFlow='row'>
-                <GridItem>{netWorth}</GridItem>
-                <GridItem>{assetAllocation}</GridItem>
-                <GridItem colSpan={2}>{transactions}</GridItem>
+                <GridItem>
+                    <NetWorthCard value={netWorthValue} change={netWorthChange} data={netWorthData}/>
+                </GridItem>
+                <GridItem>
+                    <AssetAllocationCard data={assetsData}/>
+                </GridItem>
+                <GridItem colSpan={2}>
+                    <TransactionsCard/>
+                </GridItem>
             </Grid>
         </VStack>
     </HStack>
