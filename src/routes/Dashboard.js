@@ -21,7 +21,7 @@ const assetsData = assets.map((asset, i) => ({
 }));
 
 export default function Dashboard() {
-    return <PageTemplate>
+    return <PageTemplate page="dashboard">
         <Breadcrumbs
             path="Home/Dashboard"
             links={["/dashboard", "/dashboard"]}
