@@ -47,11 +47,16 @@ export default function Account() {
                 >
                     <Card isNested heading="Name" subheading={name} link="./rename"/>
                     <Card isNested heading="Nickname" subheading={nickname} link="./rename"/>
-                    <Card isNested heading="Created"
-                          subheading={`${formatDistanceToNow(createdAt)} ago, at ${format(createdAt, "MMM d, yyyy h:mm a")}`}/>
+                    <Card
+                        isNested
+                        heading="Created"
+                        link="./delete"
+                        subheading={`${formatDistanceToNow(createdAt)} ago, at ${format(createdAt, "MMM d, yyyy h:mm a")}`}
+                    />
                 </Card>
             </SimpleGrid>
         </Box>
         <Outlet context={[id, name, nickname]}/>
     </PageTemplate>;
+
 }

@@ -16,13 +16,16 @@ export const accountsSlice = createSlice({
             const {id, name, nickname} = action.payload;
             const index = state.list.findIndex(acc => acc.id === id);
             state.list[index] = {...state.list[index], name, nickname};
+        }, deleteAccount: (state, action) => {
+            const index = state.list.findIndex(acc => acc.id === action.payload.id);
+            state.list.splice(index, 1);
         }
     }
 });
 
 export const selectAccounts = state => state.accounts.list;
 export const {
-    addAccount, addAccounts, renameAccount
+    addAccount, addAccounts, renameAccount, deleteAccount
 } = accountsSlice.actions;
 
 export default accountsSlice.reducer;
