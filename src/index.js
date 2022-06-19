@@ -6,6 +6,8 @@ import App from "./App";
 import SignUp from "./routes/SignUp";
 import SignIn from "./routes/SignIn";
 import Dashboard from "./routes/Dashboard";
+import store from "./states/store";
+import { Provider } from "react-redux";
 import EmailSent from "./routes/EmailSent";
 import VerifyEmail from "./routes/VerifyEmail";
 import EmailVerified from "./routes/EmailVerified";
@@ -19,25 +21,27 @@ const theme = extendTheme({
 })
 
 const element = <StrictMode>
-    <ChakraProvider theme={theme}>
-        <CSSReset />
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<App />} />
-                <Route path="sign-up" element={<SignUp />} />
-                <Route path="sign-in" element={<SignIn />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="email-sent" element={<EmailSent />} />
-                <Route path="email-verified" element={<EmailVerified />} />
-                <Route path="request-password-reset" element={<RequestPasswordReset />} />
-                <Route path="verify/:userId/:uniqueString" element={<VerifyEmail />} />
-                <Route path="*" element={<Heading>404 Not Found</Heading>} />
-                <Route path="reset-password/:userId/:resetString" element={<ResetPassword />} />
-                <Route path="password-reset-email-sent" element={<PasswordResetEmailSent />} />
-                <Route path="reset-password-success" element={<ResetPasswordSuccess />} />
-            </Routes>
-        </BrowserRouter>
-    </ChakraProvider>
+    <Provider store={store}>
+        <ChakraProvider theme={theme}>
+            <CSSReset />
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<App />} />
+                    <Route path="sign-up" element={<SignUp />} />
+                    <Route path="sign-in" element={<SignIn />} />
+                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="email-sent" element={<EmailSent />} />
+                    <Route path="email-verified" element={<EmailVerified />} />
+                    <Route path="request-password-reset" element={<RequestPasswordReset />} />
+                    <Route path="verify/:userId/:uniqueString" element={<VerifyEmail />} />
+                    <Route path="*" element={<Heading>404 Not Found</Heading>} />
+                    <Route path="reset-password/:userId/:resetString" element={<ResetPassword />} />
+                    <Route path="password-reset-email-sent" element={<PasswordResetEmailSent />} />
+                    <Route path="reset-password-success" element={<ResetPasswordSuccess />} />
+                </Routes>
+            </BrowserRouter>
+        </ChakraProvider>
+    </Provider>
 </StrictMode>;
 
 ReactDOM.render(element, document.getElementById('root'));
