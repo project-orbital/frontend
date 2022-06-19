@@ -34,6 +34,7 @@ export default function SignIn() {
             method: "POST", data: {
                 username: values.username,
                 password: values.password,
+                verified: values.verified,
             }, withCredentials: true, url:`${process.env.REACT_APP_BACKEND}/sign-in`,
         })
             .catch(err => errorToast(err.response.data))
@@ -101,6 +102,11 @@ export default function SignIn() {
         <Link as={RouterLink} to='/sign-up' color="blue.500">Create an account ►</Link>
     </Text>
 
+    const forgetPasswordLink = <Text>
+        Forgotten Password?{' '}
+        <Link as={RouterLink} to='/request-password-reset' color="blue.500">Reset password ►</Link>
+    </Text> 
+
     // === === ===
     // Form component.
 
@@ -118,6 +124,7 @@ export default function SignIn() {
                             {submitButton}
                             <Spacer/>
                             {signUpLink}
+                            {forgetPasswordLink}
                         </VStack>
                     </VStack>
                 </form>
