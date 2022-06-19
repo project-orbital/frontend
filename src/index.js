@@ -14,6 +14,13 @@ import AccountCreationModal from "./components/accounts/AccountCreationModal";
 import Account from "./routes/Account";
 import AccountRenameModal from "./components/accounts/AccountRenameModal";
 import AccountDeleteModal from "./components/accounts/AccountDeleteModal";
+import EmailSent from "./routes/EmailSent";
+import VerifyEmail from "./routes/VerifyEmail";
+import EmailVerified from "./routes/EmailVerified";
+import RequestPasswordReset from "./routes/RequestPasswordReset";
+import PasswordResetEmailSent from "./routes/PasswordResetEmailSent";
+import ResetPasswordSuccess from "./routes/ResetPasswordSuccess";
+import ResetPassword from "./routes/ResetPassword";
 
 const theme = extendTheme({
     fonts: {
@@ -38,6 +45,13 @@ const element = <StrictMode>
                     <Route path="sign-up" element={<SignUp/>}/>
                     <Route path="sign-in" element={<SignIn/>}/>
                     <Route path="dashboard" element={<Dashboard/>}/>
+                    <Route path="email-sent" element={<EmailSent/>}/>
+                    <Route path="email-verified" element={<EmailVerified/>}/>
+                    <Route path="request-password-reset" element={<RequestPasswordReset/>}/>
+                    <Route path="verify/:userId/:uniqueString" element={<VerifyEmail/>}/>
+                    <Route path="reset-password/:userId/:resetString" element={<ResetPassword/>}/>
+                    <Route path="password-reset-email-sent" element={<PasswordResetEmailSent/>}/>
+                    <Route path="reset-password-success" element={<ResetPasswordSuccess/>}/>
                     <Route path="accounts/:id" element={<Account/>}>
                         <Route path="rename" element={<AccountRenameModal/>}/>
                         <Route path="delete" element={<AccountDeleteModal/>}/>
