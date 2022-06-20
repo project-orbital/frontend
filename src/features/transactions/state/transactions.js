@@ -53,6 +53,13 @@ export const selectTransactions = (state) => {
         };
     });
 };
+
+export const selectLastTransactionFromAccount = (accountId) => (state) => {
+    return state.transactions.history
+        .filter((transaction) => transaction.accountId === accountId)
+        .reduce((a, b) => (a === null || b.date > a.date ? b : a), null);
+};
+
 export const { addTransaction, addTransactions } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
