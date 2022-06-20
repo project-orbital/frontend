@@ -1,4 +1,5 @@
 # Frontend
+
 [![CI](https://github.com/project-orbital/frontend/actions/workflows/node.js.yml/badge.svg)](https://github.com/project-orbital/frontend/actions/workflows/node.js.yml)
 
 This repository contains the frontend of our application, DollarPlanner.
@@ -15,9 +16,11 @@ not been merged.
 ## Developer Setup
 
 ### System requirements
+
 1. [Node.js](https://nodejs.dev/download/) 18.0.0 or higher
 
 ### Setting up your local environment
+
 1. Clone the repository to your local machine.
 
     ```
@@ -39,5 +42,5 @@ not been merged.
     ```
 
 4. Open a new tab in your browser and navigate to http://localhost:3000.
-   If the [backend](https://github.com/project-orbital/backend) is up and running, you should be able to sign up at http://localhost:3000/sign-up 
+   If the [backend](https://github.com/project-orbital/backend) is up and running, you should be able to sign up at http://localhost:3000/sign-up
    and sign in at http://localhost:3000/sign-in.
