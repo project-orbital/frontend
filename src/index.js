@@ -26,6 +26,7 @@ import RequestPasswordReset from "./features/user/password-reset/RequestPassword
 import PasswordResetEmailSent from "./features/user/password-reset/PasswordResetEmailSent";
 import ResetPasswordSuccess from "./features/user/password-reset/ResetPasswordSuccess";
 import ResetPassword from "./features/user/password-reset/ResetPassword";
+import TransactionCreationModal from "./features/transactions/components/TransactionCreationModal";
 
 const theme = extendTheme({
     fonts: {
@@ -84,6 +85,10 @@ const element = (
                             <Route
                                 path="delete"
                                 element={<AccountDeleteModal />}
+                            />
+                            <Route
+                                path="create-transaction"
+                                element={<TransactionCreationModal />}
                             />
                         </Route>
                         <Route path="accounts" element={<Accounts />}>
