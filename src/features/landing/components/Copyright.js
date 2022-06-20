@@ -14,7 +14,7 @@ export default function Copyright() {
             </Text>
             <Spacer />
             <Text fontSize="xs" color="white">
-                An Orbital 2022 Project @ NUS
+                An Orbital 2022 Project @ NUS School of Computing
             </Text>
         </HStack>
     );

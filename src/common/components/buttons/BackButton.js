@@ -2,7 +2,7 @@ import { IconButton } from "@chakra-ui/react";
 import { IoChevronBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-export default function BackButton() {
+export default function BackButton(isDisabled) {
     const navigate = useNavigate();
 
     return (
@@ -11,6 +11,7 @@ export default function BackButton() {
             icon={<IoChevronBack />}
             mr="10px"
             onClick={() => navigate(-1)}
+            isDisabled={isDisabled || false}
         />
     );
 }
