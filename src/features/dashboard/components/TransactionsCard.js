@@ -3,9 +3,16 @@ import { selectTransactions } from "../../transactions/state/transactions";
 import { useSelector } from "react-redux";
 import Table from "../../../common/components/visuals/Table";
 import Card from "../../../common/components/Card";
+import { format } from "date-fns";
 
 export default function TransactionsCard() {
-    const transactions = useSelector(selectTransactions);
+    const transactions = useSelector(selectTransactions).map((transaction) => {
+        const { date } = transaction;
+        return {
+            ...transaction,
+            date: format(date, "dd LLLL yyyy"),
+        };
+    });
 
     const NoTransactions = () => (
         <Card

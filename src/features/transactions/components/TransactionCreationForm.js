@@ -11,7 +11,7 @@ import FormTextField from "../../../common/components/FormTextField";
 export default function TransactionCreationForm({ afterSubmit }) {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const today = format(new Date(2022, 1, 1), "dd/MM/yyyy");
+    const today = format(new Date(), "dd/MM/yyyy");
     return (
         <Formik
             initialValues={{
@@ -43,11 +43,8 @@ export default function TransactionCreationForm({ afterSubmit }) {
                 dispatch(
                     addTransaction({
                         ...values,
-                        date: format(
-                            parse(date, "dd/MM/yyyy", new Date()),
-                            "dd LLLL yyyy"
-                        ),
-                        accountId: id,
+                        date: parse(date, "dd/MM/yyyy", new Date()),
+                        accountId: parseInt(id),
                     })
                 );
                 afterSubmit();
