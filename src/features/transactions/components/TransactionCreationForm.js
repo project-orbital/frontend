@@ -5,9 +5,11 @@ import { VStack } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { addTransaction } from "../state/transactions";
 import { format, isMatch, parse } from "date-fns";
+import { useParams } from "react-router-dom";
 import FormTextField from "../../../common/components/FormTextField";
 
 export default function TransactionCreationForm({ afterSubmit }) {
+    const { id } = useParams();
     const dispatch = useDispatch();
     const today = format(new Date(2022, 1, 1), "dd/MM/yyyy");
     return (
@@ -45,6 +47,7 @@ export default function TransactionCreationForm({ afterSubmit }) {
                             parse(date, "dd/MM/yyyy", new Date()),
                             "dd LLLL yyyy"
                         ),
+                        accountId: id,
                     })
                 );
                 afterSubmit();
