@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { formatISO, parseISO } from "date-fns";
+import { compareAsc, formatISO, isSameMonth, parseISO } from "date-fns";
 
 /*
  * Transaction schema:
@@ -65,6 +65,39 @@ export const selectLastTransactionFromAccount = (accountId) => (state) => {
         ...result,
         date: parseISO(result.date),
     };
+};
+
+/**
+ * Selects the balances for the given account and the end of each month.
+ * If there are no transactions for the month, that month is skipped in the returned array.
+ * The elements of the array are objects { date, balance } and sorted by date in ascending order.
+ *
+ * @param accountId (number) the ID of the account to select balances for
+ * @return a function that accepts the ID of the account to select balances for
+ * which is curried and then returns the month-end balances
+ */
+// Remove the other fields because they aren't needed.
+export const selectMonthEndBalancesFromAccount = (accountId) => (state) => {
+    return state.transactions.history
+        .filter((transaction) => transaction.accountId === accountId)
+        .map((transaction) => ({
+            date: parseISO(transaction.date),
+            balance: transaction.balance,
+        }))
+        .sort((a, b) => compareAsc(a.date, b.date))
+        .reduce((acc, transaction) => {
+            if (acc.length === 0) {
+                acc.push(transaction);
+                return acc;
+            }
+            const last = acc[acc.length - 1];
+            if (isSameMonth(last.date, transaction.date)) {
+                acc[acc.length - 1] = transaction;
+            } else {
+                acc.push(transaction);
+            }
+            return acc;
+        }, []);
 };
 
 export const { addTransaction, addTransactions } = transactionsSlice.actions;
