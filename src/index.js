@@ -1,11 +1,6 @@
 import { StrictMode } from "react";
 import * as ReactDOM from "react-dom";
-import {
-    ChakraProvider,
-    CSSReset,
-    extendTheme,
-    Heading,
-} from "@chakra-ui/react";
+import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./app/App";
 import SignUp from "./features/user/authentication/SignUp";
@@ -26,6 +21,7 @@ import RequestPasswordReset from "./features/user/password-reset/RequestPassword
 import PasswordResetEmailSent from "./features/user/password-reset/PasswordResetEmailSent";
 import ResetPasswordSuccess from "./features/user/password-reset/ResetPasswordSuccess";
 import ResetPassword from "./features/user/password-reset/ResetPassword";
+import PageNotFound from "./features/errors/PageNotFound";
 
 const theme = extendTheme({
     fonts: {
@@ -92,10 +88,7 @@ const element = (
                                 element={<AccountCreationModal />}
                             />
                         </Route>
-                        <Route
-                            path="*"
-                            element={<Heading>404 Not Found</Heading>}
-                        />
+                        <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </BrowserRouter>
             </ChakraProvider>
