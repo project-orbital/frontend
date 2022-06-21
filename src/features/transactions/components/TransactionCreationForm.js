@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 import { VStack } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { addTransaction } from "../state/transactions";
-import { format, isMatch, parse } from "date-fns";
+import { format, formatISO, isMatch, parse } from "date-fns";
 import { useParams } from "react-router-dom";
 import FormTextField from "../../../common/components/FormTextField";
 
@@ -43,7 +43,8 @@ export default function TransactionCreationForm({ afterSubmit }) {
                 dispatch(
                     addTransaction({
                         ...values,
-                        date: parse(date, "dd/MM/yyyy", new Date()),
+                        // Store dates as formatted ISO strings because Date objects aren't serializable.
+                        date: formatISO(parse(date, "dd/MM/yyyy", new Date())),
                         accountId: parseInt(id),
                     })
                 );

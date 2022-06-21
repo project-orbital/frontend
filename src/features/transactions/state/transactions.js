@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { compareAsc, formatISO, isSameMonth, parseISO } from "date-fns";
+import { compareAsc, isSameMonth, parseISO } from "date-fns";
 
 /*
  * Transaction schema:
@@ -19,21 +19,15 @@ export const transactionsSlice = createSlice({
     },
     reducers: {
         addTransaction: (state, action) => {
-            const { date } = action.payload;
             state.history.push({
                 ...action.payload,
-                // Store dates as formatted ISO strings because Date objects aren't serializable.
-                date: formatISO(date),
                 id: state.counter++,
             });
         },
         addTransactions: (state, action) => {
             const transactions = action.payload.map((transaction, index) => {
-                const { date } = transaction;
                 return {
                     ...transaction,
-                    // Store dates as formatted ISO strings because Date objects aren't serializable.
-                    date: formatISO(date),
                     id: state.counter + index,
                 };
             });
