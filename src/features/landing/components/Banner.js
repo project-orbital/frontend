@@ -7,6 +7,7 @@ import {
     Spacer,
     Text,
 } from "@chakra-ui/react";
+import OrbitalLogo from "../../../common/components/Images/OrbitalLogo.jpeg";
 
 export default function Banner(props) {
     return (
