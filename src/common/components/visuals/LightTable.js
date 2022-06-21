@@ -30,7 +30,7 @@ export default function LightTable({
             spacing={isVertical ? "20px" : "50px"}
         >
             {headers.map((header, index) => (
-                <VStack maxW="40%" align="start" spacing="2px">
+                <VStack key={index} maxW="40%" align="start" spacing="2px">
                     <Text fontWeight="bold" fontSize="xs" casing="uppercase">
                         {header}
                     </Text>
