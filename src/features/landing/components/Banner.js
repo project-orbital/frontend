@@ -18,11 +18,7 @@ export default function Banner(props) {
             shadow="2xl"
         >
             <HStack>
-                <Image
-                    borderRadius="full"
-                    boxSize="180px"
-                    src="/OrbitalLogo.jpeg"
-                />
+                <Image borderRadius="full" boxSize="180px" src={OrbitalLogo} />
                 <Spacer />
                 <VStack>
                     <Heading fontSize="4xl">
