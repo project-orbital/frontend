@@ -2,7 +2,7 @@ import { VStack } from "@chakra-ui/react";
 import Header from "../features/landing/components/Header";
 import Hero from "../features/landing/components/Hero";
 import FeatureCard from "../features/landing/components/FeatureCard";
-import Footer from "../features/landing/components/Footer";
+import Banner from "../features/landing/components/Banner";
 import Copyright from "../features/landing/components/Copyright";
 import { faker } from "@faker-js/faker";
 
@@ -35,7 +35,7 @@ export default function App() {
                     link={`- ${faker.name.findName()}, student.`}
                 />
             </VStack>
-            <Footer text="This is entire page is a work in progress. Stay tuned!" />
+            <Banner />
             <Copyright />
         </VStack>
     );
