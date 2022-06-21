@@ -12,25 +12,23 @@ import { Box, Heading, Text } from "@chakra-ui/react";
  * @return a suitable Page Not Found that depends on the login status of the user.
  */
 export default function PageNotFound({ IsLoggedIn }) {
-    IsLoggedIn = true;
     const navigate = useNavigate();
 
     if (IsLoggedIn) {
         return (
             <PageTemplate>
                 <Breadcrumbs
-                    path="Home/404"
-                    links={["/404", "/404"]}
-                    title={"Page not Found"}
+                    path="Home/Page Not Found"
+                    links={["/dashboard", "/404"]}
+                    title={" "}
                 />
                 <VStack h="full" w="full" spacing="0px">
                     <Box textAlign="center" py={10} px={6}>
                         <Heading
+                            color="black.500"
                             display="inline-block"
                             as="h2"
                             size="4xl"
-                            bgGradient="linear(to-r, red.400, red.600)"
-                            backgroundClip="text"
                         >
                             404
                         </Heading>
@@ -43,12 +41,11 @@ export default function PageNotFound({ IsLoggedIn }) {
 
                         <Button
                             colorScheme="teal"
-                            bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
                             color="white"
                             variant="solid"
                             onClick={() => navigate("/dashboard")}
                         >
-                            Go to dashboard
+                            Back to dashboard
                         </Button>
                     </Box>
                 </VStack>
@@ -63,8 +60,7 @@ export default function PageNotFound({ IsLoggedIn }) {
                         display="inline-block"
                         as="h2"
                         size="4xl"
-                        bgGradient="linear(to-r, red.400, red.600)"
-                        backgroundClip="text"
+                        color="black.500"
                     >
                         404
                     </Heading>
@@ -76,7 +72,6 @@ export default function PageNotFound({ IsLoggedIn }) {
                     </Text>
                     <Button
                         colorScheme="teal"
-                        bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
                         color="white"
                         variant="solid"
                         onClick={() => navigate("/")}
