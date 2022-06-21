@@ -13,15 +13,25 @@ import {
 import {
     selectLastTransactionFromAccount,
     selectMonthEndBalancesFromAccount,
+    selectTransactions,
 } from "../transactions/state/transactions";
 import AreaChart from "../../common/components/visuals/AreaChart";
 import AccountNotFound from "./AccountNotFound";
 import NavButton from "../../common/components/buttons/NavButton";
+import Table from "../../common/components/visuals/Table";
 
 export default function Account() {
     const params = useParams();
     const accountId = parseInt(params.id);
+
     const accounts = useSelector(selectAccounts);
+    const transactions = useSelector(selectTransactions).map((t) => ({
+        date: format(t.date, "dd LLLL yyyy"),
+        description: t.description,
+        amount: t.amount.toFixed(2),
+        balance: t.balance.toFixed(2),
+    }));
+
     const monthEndBalances = useSelector(
         selectMonthEndBalancesFromAccount(accountId)
     );
@@ -40,15 +50,34 @@ export default function Account() {
         y: balance,
     }));
 
-    const NoTransactions = () => (
-        <Card
-            isCentered
-            heading="No transactions to display."
-            subheading="Get started by creating a transaction."
-        >
-            <NavButton to="./create-transaction" text="Create a transaction" />
-        </Card>
-    );
+    const TransactionCard = () => {
+        if (transactions.length === 0) {
+            return (
+                <Card
+                    isCentered
+                    heading="No transactions to display."
+                    subheading="Get started by creating a transaction."
+                >
+                    <NavButton
+                        to="./create-transaction"
+                        text="Create a transaction"
+                    />
+                </Card>
+            );
+        } else {
+            return (
+                <Card heading="All Transactions">
+                    <Card isNested>
+                        <Table values={transactions} />
+                    </Card>
+                    <NavButton
+                        to="./create-transaction"
+                        text="Create a transaction"
+                    />
+                </Card>
+            );
+        }
+    };
 
     const BalanceCard = () => {
         if (lastTransaction === null) {
@@ -101,7 +130,7 @@ export default function Account() {
             <Box h="100%" w="100%">
                 <SimpleGrid minChildWidth="500px" spacing="30px">
                     <BalanceCard />
-                    <NoTransactions />
+                    <TransactionCard />
                     <Card
                         heading="Account Details"
                         subheading="You can modify some of these details at any time by clicking on them."

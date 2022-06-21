@@ -7,10 +7,11 @@ import { format } from "date-fns";
 
 export default function TransactionsCard() {
     const transactions = useSelector(selectTransactions).map((transaction) => {
-        const { date } = transaction;
         return {
-            ...transaction,
-            date: format(date, "dd LLLL yyyy"),
+            date: format(transaction.date, "dd LLLL yyyy"),
+            description: transaction.description,
+            amount: transaction.amount.toFixed(2),
+            balance: transaction.balance.toFixed(2),
         };
     });
 
