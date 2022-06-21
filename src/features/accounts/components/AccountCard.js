@@ -21,13 +21,13 @@ export default function AccountCard({ account, index }) {
                     amount >= 0 ? "deposit" : "withdrawal",
                     "balance",
                 ]}
-                firstRow={[
+                primary={[
                     format(date, "dd LLLL yyyy"),
                     lines[0] || "None",
                     `SGD ${amount.toFixed(2)}`,
                     `SGD ${balance.toFixed(2)}`,
                 ]}
-                secondRow={[
+                secondary={[
                     formatDistanceToNowStrict(date, {
                         addSuffix: true,
                         unit: "day",

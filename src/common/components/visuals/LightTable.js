@@ -1,4 +1,4 @@
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { Stack, Text, VStack } from "@chakra-ui/react";
 
 /**
  * A lightly formatted table with at most two rows.
@@ -7,27 +7,43 @@ import { HStack, Text, VStack } from "@chakra-ui/react";
  * Elements of the first and second rows populate the columns, unless
  * they are null, in which case nothing is displayed in that cell.
  *
+ * If the `isVertical` prop is passed, each column in the original table
+ * is stacked vertically, such that the table is a single column.
+ *
+ * @param isVertical `true` if the table should be displayed vertically, `false` otherwise
  * @param headers an array of strings to create headers from
- * @param firstRow an array of strings to populate the first row
- * @param secondRow an array of strings to populate the second row
+ * @param primary an array of strings to populate the first row
+ * @param secondRow an optional array of strings to populate the second row
  * @return the `<TableContainer>` table container JSX element
  */
-export default function LightTable({ headers, firstRow, secondRow }) {
+export default function LightTable({
+    isVertical,
+    headers,
+    primary,
+    secondary,
+}) {
     return (
-        <HStack px="2px" justify="space-between" align="start">
+        <Stack
+            px="2px"
+            align="start"
+            direction={isVertical ? "column" : "row"}
+            spacing={isVertical ? "20px" : "50px"}
+        >
             {headers.map((header, index) => (
                 <VStack maxW="40%" align="start" spacing="2px">
                     <Text fontWeight="bold" fontSize="xs" casing="uppercase">
                         {header}
                     </Text>
                     <Text w="100%" fontSize="sm">
-                        {firstRow[index]}
+                        {primary[index]}
                     </Text>
-                    <Text w="100%" fontSize="xs" fontWeight="medium">
-                        {secondRow[index]}
-                    </Text>
+                    {secondary && (
+                        <Text w="100%" fontSize="xs" fontWeight="medium">
+                            {secondary[index]}
+                        </Text>
+                    )}
                 </VStack>
             ))}
-        </HStack>
+        </Stack>
     );
 }
