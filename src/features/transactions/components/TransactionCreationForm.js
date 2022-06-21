@@ -37,12 +37,15 @@ export default function TransactionCreationForm({ afterSubmit }) {
                 description: Yup.string(),
             })}
             onSubmit={(values) => {
-                const { date } = values;
+                const { date, amount, balance } = values;
                 // Store date object a string so it can be serialized, otherwise Redux will complain.
                 // We get the date as dd/mm/yyyy, and we want to store it as `<day> <month> <year>`.
                 dispatch(
                     addTransaction({
                         ...values,
+                        // Store monetary values as numbers.
+                        amount: parseFloat(amount),
+                        balance: parseFloat(balance),
                         // Store dates as formatted ISO strings because Date objects aren't serializable.
                         date: formatISO(parse(date, "dd/MM/yyyy", new Date())),
                         accountId: parseInt(id),
