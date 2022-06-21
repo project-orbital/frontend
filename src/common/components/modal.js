@@ -26,7 +26,7 @@ export default function AModal(
         return (
             <ModalHeader>
                 <HStack align="center">
-                    <BackButton isDisabled={hasBackButton} />
+                    {hasBackButton && <BackButton />}
                     <Heading as="h3" size="md" fontWeight="semibold">
                         {heading}
                     </Heading>
