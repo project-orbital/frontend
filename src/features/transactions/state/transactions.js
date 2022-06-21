@@ -48,6 +48,19 @@ export const selectTransactions = (state) => {
     });
 };
 
+export const selectTransactionsFromAccount = (accountId) => (state) => {
+    // Convert ISO strings back into Date objects.
+    return state.transactions.history
+        .filter((transaction) => transaction.accountId === accountId)
+        .map((transaction) => {
+            const { date } = transaction;
+            return {
+                ...transaction,
+                date: parseISO(date),
+            };
+        });
+};
+
 export const selectLastTransactionFromAccount = (accountId) => (state) => {
     const result = state.transactions.history
         .filter((transaction) => transaction.accountId === accountId)
