@@ -13,6 +13,7 @@ import {
 import {
     selectLastTransactionFromAccount,
     selectMonthEndBalancesFromAccount,
+    selectTransactionsFromAccount,
 } from "../transactions/state/transactions";
 import AreaChart from "../../common/components/visuals/AreaChart";
 import AccountNotFound from "./AccountNotFound";
@@ -25,7 +26,7 @@ export default function Account() {
 
     const accounts = useSelector(selectAccounts);
     const transactions = useSelector(
-        selectLastTransactionFromAccount(accountId)
+        selectTransactionsFromAccount(accountId)
     ).map((t) => ({
         date: format(t.date, "dd LLLL yyyy"),
         description: t.description,
