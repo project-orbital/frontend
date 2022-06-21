@@ -49,7 +49,7 @@ export default function Accounts() {
             />
             {/* Render each account as a card in a responsive grid. */}
             <Box w="100%" h="100%">
-                <SimpleGrid minChildWidth="400px" spacing="30px">
+                <SimpleGrid minChildWidth="500px" spacing="30px">
                     {accounts.map((account, index) => (
                         <AccountCard
                             key={index}
