@@ -17,12 +17,13 @@ import SidebarLink from "./SidebarLink";
 export default function Sidebar({ selected }) {
     return (
         <VStack
-            minH="100vh"
+            h="100vh"
             py="40px"
             w="160px"
             zIndex={999}
             pos="fixed"
             bgColor="gray.900"
+            overflow="auto"
         >
             <Heading
                 as="h3"
@@ -35,52 +36,48 @@ export default function Sidebar({ selected }) {
                 DollarPlanner
             </Heading>
             <Spacer />
-            <VStack h="100%" w="100%">
-                <SidebarLink
-                    isSelected={selected === "dashboard"}
-                    to="/dashboard"
-                    text="dashboard"
-                    icon={<RiHome3Fill size="40px" />}
-                />
-                <SidebarLink
-                    isSelected={selected === "accounts"}
-                    to="/accounts"
-                    text="accounts"
-                    icon={<MdSpaceDashboard size="40px" />}
-                />
-                <SidebarLink
-                    isSelected={selected === "portfolio"}
-                    to="/portfolio"
-                    text="portfolio"
-                    icon={<AiOutlineAreaChart size="40px" />}
-                />
-                <SidebarLink
-                    isSelected={selected === "plan"}
-                    to="/plan"
-                    text="plan"
-                    icon={<RiPieChart2Fill size="40px" />}
-                />
-                <SidebarLink
-                    isSelected={selected === "learn"}
-                    to="/learn"
-                    text="learn"
-                    icon={<MdSchool size="40px" />}
-                />
-            </VStack>
+            <SidebarLink
+                isSelected={selected === "dashboard"}
+                to="/dashboard"
+                text="dashboard"
+                icon={<RiHome3Fill size="32px" />}
+            />
+            <SidebarLink
+                isSelected={selected === "accounts"}
+                to="/accounts"
+                text="accounts"
+                icon={<MdSpaceDashboard size="32px" />}
+            />
+            <SidebarLink
+                isSelected={selected === "portfolio"}
+                to="/portfolio"
+                text="portfolio"
+                icon={<AiOutlineAreaChart size="32px" />}
+            />
+            <SidebarLink
+                isSelected={selected === "plan"}
+                to="/plan"
+                text="plan"
+                icon={<RiPieChart2Fill size="32px" />}
+            />
+            <SidebarLink
+                isSelected={selected === "learn"}
+                to="/learn"
+                text="learn"
+                icon={<MdSchool size="32px" />}
+            />
             <Spacer />
-            <VStack h="100%" w="100%">
-                <SidebarLink
-                    isSelected={selected === "settings"}
-                    to="/settings"
-                    text="settings"
-                    icon={<RiSettings3Line size="25px" />}
-                />
-                <SidebarLink
-                    to="/"
-                    text="sign out"
-                    icon={<RiLogoutBoxLine size="25px" />}
-                />
-            </VStack>
+            <SidebarLink
+                isSelected={selected === "settings"}
+                to="/settings"
+                text="settings"
+                icon={<RiSettings3Line size="24px" />}
+            />
+            <SidebarLink
+                to="/"
+                text="sign out"
+                icon={<RiLogoutBoxLine size="24px" />}
+            />
         </VStack>
     );
 }

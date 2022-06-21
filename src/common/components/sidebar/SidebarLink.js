@@ -14,8 +14,8 @@ export default function SidebarLink({ to, icon, text, isSelected }) {
     return (
         <Link w="100%" as={RouterLink} to={to} color="white">
             <VStack
-                py="20px"
-                spacing="10px"
+                py="18px"
+                spacing="8px"
                 bgColor={isSelected ? "whiteAlpha.100" : null}
                 borderLeft={isSelected ? "4px solid white" : null}
             >

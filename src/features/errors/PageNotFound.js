@@ -1,9 +1,8 @@
 import Breadcrumbs from "../../common/components/Breadcrumbs";
 import PageTemplate from "../../common/components/PageTemplate";
 import Header from "../landing/components/Header";
-import { Button, VStack } from "@chakra-ui/react";
+import { Box, Button, Heading, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { Box, Heading, Text } from "@chakra-ui/react";
 
 /**
  * Page Not Found
