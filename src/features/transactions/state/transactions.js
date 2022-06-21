@@ -55,9 +55,16 @@ export const selectTransactions = (state) => {
 };
 
 export const selectLastTransactionFromAccount = (accountId) => (state) => {
-    return state.transactions.history
+    const result = state.transactions.history
         .filter((transaction) => transaction.accountId === accountId)
         .reduce((a, b) => (a === null || b.date > a.date ? b : a), null);
+    if (result === null) {
+        return null;
+    }
+    return {
+        ...result,
+        date: parseISO(result.date),
+    };
 };
 
 export const { addTransaction, addTransactions } = transactionsSlice.actions;
