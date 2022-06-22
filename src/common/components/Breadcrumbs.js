@@ -32,7 +32,7 @@ export default function Breadcrumbs({ path, links, title }) {
             <Breadcrumb spacing="2px" separator={<RiArrowRightSLine />}>
                 {crumbs.map((crumb, index) => (
                     <BreadcrumbItem key={index}>
-                        <BreadcrumbLink as={Link} to={links[index]} trans>
+                        <BreadcrumbLink as={Link} to={links[index]}>
                             {crumb}
                         </BreadcrumbLink>
                     </BreadcrumbItem>

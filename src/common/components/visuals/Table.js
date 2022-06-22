@@ -52,7 +52,9 @@ function createTableHeaders(headers) {
         <Thead>
             <Tr>
                 {headers.map((header, x) => (
-                    <Th key={x}>{header}</Th>
+                    <Th key={x} fontFamily="body">
+                        {header}
+                    </Th>
                 ))}
             </Tr>
         </Thead>

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { formatISO, parseISO } from "date-fns";
 
 export const accountsSlice = createSlice({
     name: "accounts",
@@ -10,7 +11,8 @@ export const accountsSlice = createSlice({
         addAccount: (state, action) => {
             state.list.push({
                 id: state.counter,
-                createdAt: new Date(),
+                // Store dates as formatted ISO strings because Date objects aren't serializable.
+                createdAt: formatISO(new Date()),
                 ...action.payload,
             });
             state.counter++;
@@ -19,7 +21,7 @@ export const accountsSlice = createSlice({
             for (const account of action.payload) {
                 state.list.push({
                     id: state.counter,
-                    createdAt: new Date(),
+                    createdAt: formatISO(new Date()),
                     ...account,
                 });
                 state.counter++;
@@ -39,7 +41,17 @@ export const accountsSlice = createSlice({
     },
 });
 
-export const selectAccounts = (state) => state.accounts.list;
+export const selectAccounts = (state) => {
+    // Convert ISO strings back into Date objects.
+    return state.accounts.list.map((account) => {
+        const { createdAt } = account;
+        return {
+            ...account,
+            createdAt: parseISO(createdAt),
+        };
+    });
+};
+
 export const { addAccount, addAccounts, renameAccount, deleteAccount } =
     accountsSlice.actions;
 
