@@ -16,7 +16,6 @@ export default function BlogPostCard({ Header, Summary, Link, Picture }) {
             <LinkBox
                 as="article"
                 maxW={"445px"}
-                w={"full"}
                 bg={useColorModeValue("white", "gray.900")}
                 boxShadow={"2xl"}
                 rounded={"md"}
