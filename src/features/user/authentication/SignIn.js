@@ -35,7 +35,7 @@ export default function SignIn() {
     async function signIn(values) {
         const url = `${process.env.REACT_APP_BACKEND}/users/sign-in`;
         try {
-            await ky.post(url, { json: values });
+            await ky.post(url, { json: values, credentials: "include" });
             navigate("/dashboard");
         } catch (error) {
             if (!error.response) {
