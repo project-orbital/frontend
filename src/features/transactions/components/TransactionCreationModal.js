@@ -14,9 +14,10 @@ import CancelButton from "../../../common/components/buttons/CancelButton";
 import SubmitButton from "../../../common/components/buttons/SubmitButton";
 import BackButton from "../../../common/components/buttons/BackButton";
 import { useNavigate } from "react-router-dom";
-import TransactionCreationForm from "./TransactionCreationForm";
+import SpendingTransactionCreationForm from "./SpendingTransactionCreationForm";
+import ReceivingTransactionCreationForm from "./ReceivingTransactionCreationForm";
 
-export default function TransactionCreationModal() {
+export default function TransactionCreationModal({ isSpending }) {
     const navigate = useNavigate();
     const { onClose } = useDisclosure();
     return (
@@ -46,12 +47,21 @@ export default function TransactionCreationModal() {
                     </Text>
                 </ModalHeader>
                 <ModalBody>
-                    <TransactionCreationForm
-                        afterSubmit={() => {
-                            onClose();
-                            navigate("../");
-                        }}
-                    />
+                    {isSpending ? (
+                        <SpendingTransactionCreationForm
+                            afterSubmit={() => {
+                                onClose();
+                                navigate("../");
+                            }}
+                        />
+                    ) : (
+                        <ReceivingTransactionCreationForm
+                            afterSubmit={() => {
+                                onClose();
+                                navigate("../");
+                            }}
+                        />
+                    )}
                 </ModalBody>
                 <ModalFooter gap="20px">
                     <CancelButton

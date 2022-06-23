@@ -30,6 +30,7 @@ export default function Account() {
     ).map((t) => ({
         date: format(t.date, "dd LLLL yyyy"),
         description: t.description,
+        category: t.category,
         amount: t.amount.toFixed(2),
         balance: t.balance.toFixed(2),
     }));
@@ -61,8 +62,12 @@ export default function Account() {
                     subheading="Get started by creating a transaction."
                 >
                     <NavButton
-                        to="./create-transaction"
-                        text="Create a transaction"
+                        to="./create-spending-transaction"
+                        text="Create a spending transaction"
+                    />
+                    <NavButton
+                        to="./create-receiving-transaction"
+                        text="Create a receiving transaction"
                     />
                 </Card>
             );
@@ -73,8 +78,12 @@ export default function Account() {
                         <Table values={transactions} />
                     </Card>
                     <NavButton
-                        to="./create-transaction"
-                        text="Create a transaction"
+                        to="./create-spending-transaction"
+                        text="Create a spending transaction"
+                    />
+                    <NavButton
+                        to="./create-receiving-transaction"
+                        text="Create a receiving transaction"
                     />
                 </Card>
             );
@@ -87,13 +96,8 @@ export default function Account() {
                 <Card
                     isCentered
                     heading="No balance information."
-                    subheading="We infer your account balance from your transactions."
-                >
-                    <NavButton
-                        to="./create-transaction"
-                        text="Create a transaction"
-                    />
-                </Card>
+                    subheading="Please update your transaction history."
+                ></Card>
             );
         }
         return (

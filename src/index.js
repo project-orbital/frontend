@@ -24,6 +24,7 @@ import ResetPassword from "./features/user/password-reset/ResetPassword";
 import TransactionCreationModal from "./features/transactions/components/TransactionCreationModal";
 import PageNotFound from "./features/errors/PageNotFound";
 import Learn from "./features/learn/Learn";
+//import Plan from "./features/planbudget/Plan";
 
 const theme = extendTheme({
     fonts: {
@@ -84,8 +85,20 @@ const element = (
                                 element={<AccountDeleteModal />}
                             />
                             <Route
-                                path="create-transaction"
-                                element={<TransactionCreationModal />}
+                                path="create-spending-transaction"
+                                element={
+                                    <TransactionCreationModal
+                                        isSpending={true}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="create-receiving-transaction"
+                                element={
+                                    <TransactionCreationModal
+                                        isSpending={false}
+                                    />
+                                }
                             />
                         </Route>
                         <Route path="accounts" element={<Accounts />}>

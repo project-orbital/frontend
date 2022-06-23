@@ -8,7 +8,7 @@ import { format, formatISO, isMatch, parse } from "date-fns";
 import { useParams } from "react-router-dom";
 import FormTextField from "../../../common/components/FormTextField";
 
-export default function TransactionCreationForm({ afterSubmit }) {
+export default function SpendingTransactionCreationForm({ afterSubmit }) {
     const { id } = useParams();
     const dispatch = useDispatch();
     const today = format(new Date(), "dd/MM/yyyy");
@@ -18,7 +18,7 @@ export default function TransactionCreationForm({ afterSubmit }) {
                 date: today,
                 amount: 123.9,
                 balance: 4567.89,
-                description: "No description.",
+                description: "Receiving",
             }}
             validationSchema={Yup.object({
                 date: Yup.string()
