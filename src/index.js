@@ -58,66 +58,75 @@ const theme = extendTheme({
     },
 });
 
+const routes = (
+    <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="sign-up" element={<SignUp />} />
+        <Route path="sign-in" element={<SignIn />} />
+        <Route path="sign-out" element={<SignOut />} />
+        <Route path="email-sent" element={<EmailSent />} />
+        <Route path="email-verified" element={<EmailVerified />} />
+        <Route
+            path="request-password-reset"
+            element={<RequestPasswordReset />}
+        />
+        <Route path="verify/:userId/:uniqueString" element={<VerifyEmail />} />
+        <Route
+            path="reset-password/:userId/:resetString"
+            element={<ResetPassword />}
+        />
+        <Route
+            path="password-reset-email-sent"
+            element={<PasswordResetEmailSent />}
+        />
+        <Route
+            path="reset-password-success"
+            element={<ResetPasswordSuccess />}
+        />
+        <Route
+            path="dashboard"
+            element={
+                <RequireAuth>
+                    <Dashboard />
+                </RequireAuth>
+            }
+        />
+        <Route
+            path="accounts/:id"
+            element={
+                <RequireAuth>
+                    <Account />
+                </RequireAuth>
+            }
+        >
+            <Route path="rename" element={<AccountRenameModal />} />
+            <Route path="delete" element={<AccountDeleteModal />} />
+            <Route
+                path="create-transaction"
+                element={<TransactionCreationModal />}
+            />
+        </Route>
+        <Route
+            path="accounts"
+            element={
+                <RequireAuth>
+                    <Accounts />
+                </RequireAuth>
+            }
+        >
+            <Route path="create" element={<AccountCreationModal />} />
+        </Route>
+        <Route path="*" element={<PageNotFound />} />
+    </Routes>
+);
+
 const element = (
     <StrictMode>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <ChakraProvider theme={theme}>
                     <CSSReset />
-                    <BrowserRouter>
-                        <Routes>
-                            <Route path="/" element={<App />} />
-                            <Route path="sign-up" element={<SignUp />} />
-                            <Route path="sign-in" element={<SignIn />} />
-                            <Route path="dashboard" element={<Dashboard />} />
-                            <Route path="email-sent" element={<EmailSent />} />
-                            <Route
-                                path="email-verified"
-                                element={<EmailVerified />}
-                            />
-                            <Route
-                                path="request-password-reset"
-                                element={<RequestPasswordReset />}
-                            />
-                            <Route
-                                path="verify/:userId/:uniqueString"
-                                element={<VerifyEmail />}
-                            />
-                            <Route
-                                path="reset-password/:userId/:resetString"
-                                element={<ResetPassword />}
-                            />
-                            <Route
-                                path="password-reset-email-sent"
-                                element={<PasswordResetEmailSent />}
-                            />
-                            <Route
-                                path="reset-password-success"
-                                element={<ResetPasswordSuccess />}
-                            />
-                            <Route path="accounts/:id" element={<Account />}>
-                                <Route
-                                    path="rename"
-                                    element={<AccountRenameModal />}
-                                />
-                                <Route
-                                    path="delete"
-                                    element={<AccountDeleteModal />}
-                                />
-                                <Route
-                                    path="create-transaction"
-                                    element={<TransactionCreationModal />}
-                                />
-                            </Route>
-                            <Route path="accounts" element={<Accounts />}>
-                                <Route
-                                    path="create"
-                                    element={<AccountCreationModal />}
-                                />
-                            </Route>
-                            <Route path="*" element={<PageNotFound />} />
-                        </Routes>
-                    </BrowserRouter>
+                    <BrowserRouter>{routes}</BrowserRouter>
                 </ChakraProvider>
             </PersistGate>
         </Provider>
