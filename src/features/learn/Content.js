@@ -63,7 +63,7 @@ export default function Content() {
                     <Stack direction={"row"} spacing={10} align={"center"}>
                         <BlogPostCard
                             Header="For newbies"
-                            Summary="It's important to know you what you are doing."
+                            Summary="It's important to know you what you are doing even before you get started."
                             Link="https://www.strawberryinvest.com/knowledge-hub/top-10-tips-for-first-time-investors/"
                             Picture={newbie}
                         />
