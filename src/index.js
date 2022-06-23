@@ -2,6 +2,7 @@ import { StrictMode, useEffect, useState } from "react";
 import * as ReactDOM from "react-dom";
 import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import ky from "ky";
 import App from "./app/App";
 import SignUp from "./features/user/authentication/SignUp";
 import SignIn from "./features/user/authentication/SignIn";
@@ -24,8 +25,8 @@ import ResetPassword from "./features/user/password-reset/ResetPassword";
 import TransactionCreationModal from "./features/transactions/components/TransactionCreationModal";
 import PageNotFound from "./features/errors/PageNotFound";
 import { PersistGate } from "redux-persist/integration/react";
-import ky from "ky";
 import SignOut from "./features/user/authentication/SignOut";
+import Learn from "./features/learn/Learn";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -111,6 +112,16 @@ const routes = (
             element={
                 <RequireAuth>
                     <Accounts />
+                </RequireAuth>
+            }
+        >
+            <Route path="create" element={<AccountCreationModal />} />
+        </Route>
+        <Route
+            path="learn"
+            element={
+                <RequireAuth>
+                    <Learn />
                 </RequireAuth>
             }
         >
