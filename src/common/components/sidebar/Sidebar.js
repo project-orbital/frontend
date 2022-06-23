@@ -74,7 +74,7 @@ export default function Sidebar({ selected }) {
                 icon={<RiSettings3Line size="24px" />}
             />
             <SidebarLink
-                to="/"
+                to="/sign-out"
                 text="sign out"
                 icon={<RiLogoutBoxLine size="24px" />}
             />
