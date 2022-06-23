@@ -9,9 +9,9 @@ import {
     ModalOverlay,
     Text,
 } from "@chakra-ui/react";
-import { BackButton } from "../components/buttons/BackButton";
-import { CancelButton } from "../components/buttons/CancelButton";
-import { SubmitButton } from "../components/buttons/SubmitButton";
+import BackButton from "../components/buttons/BackButton";
+import CancelButton from "../components/buttons/CancelButton";
+import SubmitButton from "../components/buttons/SubmitButton";
 
 export default function AModal(
     hasBackButton,

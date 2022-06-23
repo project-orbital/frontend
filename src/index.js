@@ -23,6 +23,7 @@ import ResetPasswordSuccess from "./features/user/password-reset/ResetPasswordSu
 import ResetPassword from "./features/user/password-reset/ResetPassword";
 import TransactionCreationModal from "./features/transactions/components/TransactionCreationModal";
 import PageNotFound from "./features/errors/PageNotFound";
+import Learn from "./features/learn/Learn";
 
 const theme = extendTheme({
     fonts: {
@@ -93,6 +94,7 @@ const element = (
                                 element={<AccountCreationModal />}
                             />
                         </Route>
+                        <Route path="learn" element={<Learn />}></Route>
                         <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </BrowserRouter>
