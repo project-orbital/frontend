@@ -1,20 +1,20 @@
 import {
-    Stack,
-    TabList,
-    TabPanels,
-    Tab,
-    Tabs,
-    TabPanel,
     Button,
+    Stack,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
 } from "@chakra-ui/react";
 import BlogPostCard from "./BlogPostCard";
-import CollegeStudent from "../learn/Pictures/collegestudent.jpeg";
-import YoungAdult from "../learn/Pictures/youngadult.jpeg";
-import WorkingAdult from "../learn/Pictures/workingadult.jpeg";
-import Parents from "../learn/Pictures/parents.jpeg";
-import newbie from "../learn/Pictures/newbie.jpeg";
-import WarrenBuffett from "../learn/Pictures/warrenbuffett.png";
-import Longterm from "../learn/Pictures/longterm.jpeg";
+import CollegeStudent from "./assets/collegestudent.jpeg";
+import YoungAdult from "./assets/youngadult.jpeg";
+import WorkingAdult from "./assets/workingadult.jpeg";
+import Parents from "./assets/parents.jpeg";
+import newbie from "./assets/newbie.jpeg";
+import WarrenBuffett from "./assets/warrenbuffett.png";
+import Longterm from "./assets/longterm.jpeg";
 
 export default function Content() {
     return (

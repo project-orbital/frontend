@@ -1,13 +1,13 @@
 import {
     Center,
     Heading,
-    VStack,
     HStack,
     Image,
     Spacer,
     Text,
+    VStack,
 } from "@chakra-ui/react";
-import OrbitalLogo from "../../../common/components/Images/OrbitalLogo.jpeg";
+import OrbitalLogo from "../../../common/components/assets/OrbitalLogo.jpeg";
 
 export default function Banner(props) {
     return (
