@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import Axios from "axios";
 import {
     Button,
     Center,
@@ -15,6 +14,7 @@ import {
     useToast,
     VStack,
 } from "@chakra-ui/react";
+import ky from "ky";
 
 export default function SignIn() {
     // === === ===
@@ -32,48 +32,41 @@ export default function SignIn() {
     // === === ===
     // Form handling.
 
-    function signIn(values) {
-        return Axios({
-            method: "POST",
-            data: {
-                username: values.username,
-                password: values.password,
-                verified: values.verified,
-            },
-            withCredentials: true,
-            url: `${process.env.REACT_APP_BACKEND}/sign-in`,
-        })
-            .catch((err) => errorToast(err.response.data))
-            .then((res) => {
-                if (res.status === 200) {
-                    toast.closeAll();
-                    successToast();
-                    setTimeout(() => {
-                        navigate("/dashboard");
-                        toast.closeAll();
-                    }, 800);
-                }
+    async function signIn(values) {
+        const url = `${process.env.REACT_APP_BACKEND}/users/sign-in`;
+        try {
+            await ky.post(url, { json: values });
+            navigate("/dashboard");
+        } catch (error) {
+            if (!error.response) {
+                toast({
+                    title: "Something went wrong.",
+                    description: "Please try again.",
+                    status: "error",
+                    isClosable: true,
+                });
+                return;
+            }
+            const { cause, reason, resolution } = await error.response.json();
+            toast({
+                title: reason,
+                description: resolution,
+                status: "error",
+                isClosable: true,
             });
-    }
-
-    function errorToast(message) {
-        toast({
-            title: message,
-            description: "Please try again.",
-            status: "error",
-            isClosable: true,
-        });
-        setError("username", { message: "Invalid username/password." });
-        setError("password", { message: "Invalid username/password." });
-    }
-
-    function successToast() {
-        toast({
-            title: "Success!",
-            description: "Taking you to your dashboard...",
-            status: "success",
-            isClosable: true,
-        });
+            if (cause === "credentials") {
+                setError("username", {
+                    message: reason,
+                });
+                setError("password", {
+                    message: reason,
+                });
+            } else if (cause === "username") {
+                setError("username", {
+                    message: reason,
+                });
+            }
+        }
     }
 
     // === === ===
