@@ -1,42 +1,26 @@
 import { VStack } from "@chakra-ui/react";
-import Header from "./components/Header";
 import Hero from "./components/Hero";
-import FeatureCard from "./components/FeatureCard";
-import { faker } from "@faker-js/faker";
-import Banner from "./components/Banner";
+import Header from "./components/Header";
+import Features from "./components/Features";
 import Copyright from "./components/Copyright";
+import About from "./components/About";
 
 export default function LandingPage() {
     return (
-        <VStack h="full" w="full" spacing="0px">
+        <VStack spacing="0">
             <Header />
-            <Hero
-                title="Welcome to DollarPlanner."
-                subtitle="DollarPlanner is your one-stop web application to manage and analyze your multiple bank accounts,
-                allowing you take charge of your personal finances!"
-            />
-            <VStack p="50px 25%" bg="white" spacing="25px">
-                <FeatureCard
-                    heading="Convenient."
-                    body="“I never have to switch between banking apps to check how my various bank accounts are
-                    doing again. DollarPlanner is very convenient.”"
-                    link={`- ${faker.name.findName()}, working adult.`}
-                />
-                <FeatureCard
-                    heading="Insightful."
-                    body="“The analyze feature provides simple yet insightful graphical breakdowns of my asset and investments!”"
-                    link={`- ${faker.name.findName()}, trader.`}
-                />
-                <FeatureCard
-                    heading="Budgeting."
-                    body="“Overspending is a recurring problem for many students like myself. I like to create and track my
-                    budgeting plan on DollarPlanner as I can create plans for varying durations and understand my
-                    spending patterns better.”"
-                    link={`- ${faker.name.findName()}, student.`}
-                />
+            <VStack
+                w="100%"
+                pt="90px"
+                h="calc(100vh - 90px)"
+                bg="bg"
+                spacing="0"
+            >
+                <Hero />
+                <Features />
+                <About />
+                <Copyright />
             </VStack>
-            <Banner />
-            <Copyright />
         </VStack>
     );
 }

@@ -1,34 +1,64 @@
-import { Avatar, Heading, HStack, Link, Spacer } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { HStack, IconButton, Spacer, useColorMode } from "@chakra-ui/react";
+import Logo from "./Logo";
+import NavButton from "../../../common/components/buttons/NavButton";
+import { CgDarkMode } from "react-icons/cg";
 
 export default function Header() {
+    const { toggleColorMode } = useColorMode();
+
+    const SignIn = () => {
+        return (
+            <NavButton
+                to="/sign-in"
+                text="Sign in"
+                h="40px"
+                fw="normal"
+                fs="sm"
+                bg="none"
+                c="fg-light"
+                zIndex={2}
+            />
+        );
+    };
+
+    const SignUp = () => {
+        return (
+            <NavButton
+                to="/sign-up"
+                text="Sign up"
+                h="40px"
+                fw="semibold"
+                fs="sm"
+                bg="fg"
+                c="bg"
+                zIndex={2}
+            />
+        );
+    };
+
     return (
         <HStack
             w="100%"
-            p="1.5em 20%"
-            justify="space-between"
-            bg="black"
-            shadow="2xl"
+            h="90px"
+            px="20%"
+            pt="25px"
+            pb="20px"
+            pos="fixed"
+            bg="bg-translucent"
+            zIndex={1}
         >
-            <Avatar size="sm" name="D P" bg="white" color="black" />
-            <Heading as="h3" size="lg" color="white">
-                DollarPlanner
-            </Heading>
+            <Logo />
             <Spacer />
-            <Link as={RouterLink} to="/sign-in" p="0 20px" color="white">
-                Sign in
-            </Link>
-            <Link
-                as={RouterLink}
-                to="/sign-up"
-                p="6px 10px"
-                fontWeight="semibold"
-                color="white"
-                border="1px solid white"
-                borderRadius="5px"
-            >
-                Sign up
-            </Link>
+            <SignIn />
+            <SignUp />
+            <HStack position="absolute" justifyContent="end" w="75%">
+                <IconButton
+                    bg="none"
+                    aria-label="Toggle dark mode"
+                    onClick={toggleColorMode}
+                    icon={<CgDarkMode size="25px" />}
+                />
+            </HStack>
         </HStack>
     );
 }
