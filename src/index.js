@@ -104,8 +104,12 @@ const routes = (
             <Route path="rename" element={<AccountRenameModal />} />
             <Route path="delete" element={<AccountDeleteModal />} />
             <Route
-                path="create-transaction"
-                element={<TransactionCreationModal />}
+                path="create-spending-transaction"
+                element={<TransactionCreationModal isSpending={true} />}
+            />
+            <Route
+                path="create-receiving-transaction"
+                element={<TransactionCreationModal isSpending={false} />}
             />
         </Route>
         <Route
@@ -127,6 +131,7 @@ const routes = (
             }
         >
             <Route path="create" element={<AccountCreationModal />} />
+            <Route path="plan" element={<Plan />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
     </Routes>
