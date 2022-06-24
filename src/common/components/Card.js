@@ -26,22 +26,28 @@ import { Link } from "react-router-dom";
  * Nested clickable components such as buttons will still work even though the entire card is clickable.
  *
  * @param info an optional information text, e.g. an index number, to display in a badge above the heading
+ * @param icon an optional icon to display above the heading
  * @param heading the optional heading text
  * @param subheading the optional subheading text
  * @param link an optional link to redirect to when any part of the card is clicked
  * @param children the body content
  * @param isNested `true` if this card is nested inside another card, `false` otherwise
  * @param isCentered `true` if the contents of this card should be centered, `false` otherwise
+ * @param isDarkModeReady `true` if this card should be respond to color mode toggles, `false` otherwise
+ * @param isExternalLink `true` if this card's link is an external link, `false` otherwise
  * @return the card component
  */
 export default function Card({
     info,
+    icon,
     heading,
     subheading,
     link,
     children,
     isNested,
     isCentered,
+    isDarkModeReady,
+    isExternalLink,
 }) {
     const header = (
         <VStack
@@ -50,6 +56,7 @@ export default function Card({
             align={isCentered ? "center" : "start"}
             borderBottom={isNested || isCentered ? "none" : "1px solid black"}
         >
+            {icon && <Box color="fg">{icon}</Box>}
             {info && <Badge fontWeight="bold">{info}</Badge>}
             {heading && (
                 <Heading
@@ -62,7 +69,11 @@ export default function Card({
                 </Heading>
             )}
             {subheading && (
-                <Text fontSize={isNested ? "md" : "sm"} mb="20px">
+                <Text
+                    fontSize={isNested ? "md" : "sm"}
+                    mb="20px"
+                    align={isCentered ? "center" : "start"}
+                >
                     {subheading}
                 </Text>
             )}
@@ -81,7 +92,7 @@ export default function Card({
             align={isCentered ? "center" : "start"}
             justify={isCentered ? "center" : "start"}
             p={isNested ? "20px" : "30px"}
-            bg={isNested ? "gray.50" : "white"}
+            bg={isDarkModeReady ? "bg-light" : isNested ? "gray.50" : "white"}
             borderRadius="10px"
             shadow="sm"
         >
@@ -104,8 +115,16 @@ export default function Card({
                 shadow: "md",
             }}
         >
-            <LinkOverlay as={Link} to={link} />
-            {card}
+            {isExternalLink ? (
+                <LinkOverlay href={link} isExternal>
+                    {card}
+                </LinkOverlay>
+            ) : (
+                <LinkOverlay as={Link} to={link}>
+                    {" "}
+                    {card}
+                </LinkOverlay>
+            )}
         </LinkBox>
     );
 }
