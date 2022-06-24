@@ -55,6 +55,35 @@ const theme = extendTheme({
     fonts: {
         heading: "DM Serif Display, serif",
     },
+    semanticTokens: {
+        colors: {
+            error: "red.500",
+            fg: {
+                default: "#2a2a2a",
+                _dark: "#e1e1e1",
+            },
+            "fg-light": {
+                default: "#4a4a4a",
+                _dark: "#e1e1e1",
+            },
+            bg: {
+                default: "#f8f8f8",
+                _dark: "#0a0a0a",
+            },
+            "bg-translucent": {
+                default: "#f8f8f8f1",
+                _dark: "#0a0a0af1",
+            },
+            "bg-light": {
+                default: "#f3f3f3",
+                _dark: "#131313",
+            },
+            accent: {
+                default: "#662B42",
+                _dark: "#662B42",
+            },
+        },
+    },
     styles: {
         global: () => ({
             body: {
