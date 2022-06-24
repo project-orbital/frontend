@@ -1,12 +1,12 @@
 import { VStack } from "@chakra-ui/react";
-import Header from "../features/landing/components/Header";
-import Hero from "../features/landing/components/Hero";
-import FeatureCard from "../features/landing/components/FeatureCard";
-import Banner from "../features/landing/components/Banner";
-import Copyright from "../features/landing/components/Copyright";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import FeatureCard from "./components/FeatureCard";
 import { faker } from "@faker-js/faker";
+import Banner from "./components/Banner";
+import Copyright from "./components/Copyright";
 
-export default function App() {
+export default function LandingPage() {
     return (
         <VStack h="full" w="full" spacing="0px">
             <Header />

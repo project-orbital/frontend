@@ -3,7 +3,6 @@ import * as ReactDOM from "react-dom";
 import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ky from "ky";
-import App from "./app/App";
 import SignUp from "./features/user/authentication/SignUp";
 import SignIn from "./features/user/authentication/SignIn";
 import Dashboard from "./features/dashboard/Dashboard";
@@ -27,6 +26,8 @@ import PageNotFound from "./features/errors/PageNotFound";
 import { PersistGate } from "redux-persist/integration/react";
 import SignOut from "./features/user/authentication/SignOut";
 import Learn from "./features/learn/Learn";
+import LandingPage from "./features/landing/LandingPage";
+import * as PropTypes from "prop-types";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -61,7 +62,7 @@ const theme = extendTheme({
 
 const routes = (
     <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="sign-up" element={<SignUp />} />
         <Route path="sign-in" element={<SignIn />} />
         <Route path="sign-out" element={<SignOut />} />
