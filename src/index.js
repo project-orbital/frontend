@@ -1,6 +1,11 @@
 import { StrictMode, useEffect, useState } from "react";
 import * as ReactDOM from "react-dom";
-import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
+import {
+    ChakraProvider,
+    ColorModeScript,
+    CSSReset,
+    extendTheme,
+} from "@chakra-ui/react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ky from "ky";
 import SignUp from "./features/user/authentication/SignUp";
@@ -27,7 +32,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import SignOut from "./features/user/authentication/SignOut";
 import Learn from "./features/learn/Learn";
 import LandingPage from "./features/landing/LandingPage";
-import * as PropTypes from "prop-types";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -57,6 +61,10 @@ const theme = extendTheme({
                 bg: "gray.200",
             },
         }),
+    },
+    config: {
+        initialColorMode: "light",
+        useSystemColorMode: true,
     },
 });
 
@@ -138,6 +146,9 @@ const element = (
             <PersistGate loading={null} persistor={persistor}>
                 <ChakraProvider theme={theme}>
                     <CSSReset />
+                    <ColorModeScript
+                        initialColorMode={theme.config.initialColorMode}
+                    />
                     <BrowserRouter>{routes}</BrowserRouter>
                 </ChakraProvider>
             </PersistGate>
