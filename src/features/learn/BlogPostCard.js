@@ -1,13 +1,14 @@
 import {
+    Box,
     Center,
     Heading,
+    Image,
+    LinkBox,
+    LinkOverlay,
     Text,
     useColorModeValue,
     VStack,
-    Image,
-    Box,
 } from "@chakra-ui/react";
-import { LinkBox, LinkOverlay } from "@chakra-ui/react";
 
 //need to make the cards stretch when browser size changes
 export default function BlogPostCard({ Header, Summary, Link, Picture }) {

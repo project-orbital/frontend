@@ -134,7 +134,7 @@ export default function Account() {
                 title={""}
             />
             <Box h="100%" w="100%">
-                <SimpleGrid minChildWidth="500px" spacing="30px">
+                <SimpleGrid minChildWidth="500px" spacing="30px" mb="40px">
                     <BalanceCard />
                     <TransactionCard />
                     <Card

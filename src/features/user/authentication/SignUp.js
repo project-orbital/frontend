@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import Axios from "axios";
 import {
     Button,
     Center,
@@ -16,6 +15,7 @@ import {
     useToast,
     VStack,
 } from "@chakra-ui/react";
+import ky from "ky";
 
 export default function SignUp() {
     // === === ===
@@ -24,6 +24,7 @@ export default function SignUp() {
     const navigate = useNavigate();
     const toast = useToast();
     const {
+        setError,
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
@@ -32,38 +33,40 @@ export default function SignUp() {
     // === === ===
     // Form handling.
 
-    function signUp(values) {
-        return Axios({
-            method: "POST",
-            data: {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                email: values.email,
-                username: values.username,
-                password: values.password,
-            },
-            withCredentials: true,
-            url: `${process.env.REACT_APP_BACKEND}/sign-up`,
-        })
-            .catch((err) => {
-                errorToast(err.response.data);
-            })
-            .then((res) => {
-                //bring to emailsent page
-                if (res.status === 200) {
-                    toast.closeAll();
-                    navigate("/email-sent");
-                }
+    async function signUp(values) {
+        const url = `${process.env.REACT_APP_BACKEND}/users/sign-up`;
+        try {
+            const message = await ky.post(url, { json: values }).text();
+            toast({
+                title: "Success!",
+                description: message,
+                status: "success",
+                isClosable: true,
             });
-    }
-
-    function errorToast(message) {
-        toast({
-            title: "Error",
-            description: message,
-            status: "error",
-            isClosable: true,
-        });
+            setTimeout(() => {
+                navigate("/email-sent");
+            }, 800);
+        } catch (error) {
+            if (!error.response) {
+                toast({
+                    title: "Something went wrong.",
+                    description: "Please try again.",
+                    status: "error",
+                    isClosable: true,
+                });
+                return;
+            }
+            const { cause, reason, resolution } = await error.response.json();
+            toast({
+                title: reason,
+                description: resolution,
+                status: "error",
+                isClosable: true,
+            });
+            if (cause === "email") {
+                setError("email", { message: resolution });
+            }
+        }
     }
 
     // === === ===
@@ -116,8 +119,7 @@ export default function SignUp() {
                 id="email"
                 placeholder="someone@example.com"
                 {...register("email", {
-                    required: "Please provide your email address.",
-                    // This regex pattern isn't a substitute for email validation, but it will stop most invalid emails from being entered.
+                    required: "Please provide your email address.", // This regex pattern isn't a substitute for email validation, but it will stop most invalid emails from being entered.
                     // https://stackoverflow.com/questions/201323/how-can-i-validate-an-email-address-using-a-regular-expression
                     pattern: {
                         value: /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/,
