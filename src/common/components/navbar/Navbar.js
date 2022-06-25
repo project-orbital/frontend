@@ -1,9 +1,15 @@
-import { HStack, IconButton, Spacer, useColorMode } from "@chakra-ui/react";
+import {
+    Box,
+    HStack,
+    IconButton,
+    Spacer,
+    useColorMode,
+} from "@chakra-ui/react";
 import Logo from "./Logo";
-import NavButton from "../../../common/components/buttons/NavButton";
+import NavButton from "../buttons/NavButton";
 import { CgDarkMode } from "react-icons/cg";
 
-export default function Header() {
+export default function Navbar({ hasSignInButton, hasSignUpButton }) {
     const { toggleColorMode } = useColorMode();
 
     const SignIn = () => {
@@ -38,27 +44,25 @@ export default function Header() {
 
     return (
         <HStack
+            position="absolute"
             w="100%"
             h="90px"
-            px="20%"
-            pt="25px"
-            pb="20px"
-            pos="fixed"
+            px="5%"
             bg="bg-translucent"
             zIndex={1}
         >
             <Logo />
             <Spacer />
-            <SignIn />
-            <SignUp />
-            <HStack position="absolute" justifyContent="end" w="75%">
+            {hasSignInButton && <SignIn />}
+            {hasSignUpButton && <SignUp />}
+            <Box pl="40px">
                 <IconButton
                     bg="none"
                     aria-label="Toggle dark mode"
                     onClick={toggleColorMode}
                     icon={<CgDarkMode size="25px" />}
                 />
-            </HStack>
+            </Box>
         </HStack>
     );
 }
