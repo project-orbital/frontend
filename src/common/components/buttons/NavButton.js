@@ -27,7 +27,7 @@ export default function NavButton({
         <Button
             h={h || "60px"}
             w={w}
-            bg={bg}
+            bg={bg || "accent"}
             onClick={() => navigate(to)}
             zIndex={zIndex}
             rightIcon={withArrow && <BsFillCaretRightFill />}
@@ -36,7 +36,7 @@ export default function NavButton({
                 transform: "scale(1.08)",
             }}
         >
-            <Text color={c} fontWeight={fw} fontSize={fs}>
+            <Text color={c || "white"} fontWeight={fw} fontSize={fs}>
                 {text}
             </Text>
         </Button>
