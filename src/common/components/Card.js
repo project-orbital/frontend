@@ -76,6 +76,7 @@ export default function Card({
                     size={isNested ? "md" : isStandalone ? "4xl" : "lg"}
                     pb={subheading || children ? "0px" : "20px"}
                     lineHeight={isStandalone ? "1.25em" : null}
+                    color={isStandalone ? null : "fg"}
                     bgGradient={isStandalone ? accentGradient : null}
                     bgClip={isStandalone ? "text" : null}
                 >
@@ -114,11 +115,11 @@ export default function Card({
                     : isDarkModeReady
                     ? "bg-light"
                     : isNested
-                    ? "gray.50"
-                    : "white"
+                    ? "bg"
+                    : "bg-light"
             }
             borderRadius="10px"
-            shadow={isStandalone ? null : "sm"}
+            shadow={isStandalone ? null : isNested ? "sm" : "md"}
         >
             {(heading || subheading) && header}
             {children && body}
