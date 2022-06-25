@@ -6,12 +6,16 @@ import {
     LinkOverlay,
     SimpleGrid,
     Text,
+    useColorModeValue,
     VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 /**
- * A dynamically-sized card component designed to be used in a grid.
+ * A dynamically-sized card component designed to be used in a grid or on its own.
+ *
+ * If the card is meant to be used on its own, pass the `isStandalone` prop.
+ * This makes the header bigger, and removes the background color and drop shadow from the card.
  *
  * A card is expected to have at least a heading.
  * A subheading and an information badge are optional and can be passed in as props as strings.
@@ -33,6 +37,7 @@ import { Link } from "react-router-dom";
  * @param children the body content
  * @param isNested `true` if this card is nested inside another card, `false` otherwise
  * @param isCentered `true` if the contents of this card should be centered, `false` otherwise
+ * @param isStandalone `true` if this card should be displayed on its own, `false` otherwise
  * @param isDarkModeReady `true` if this card should be respond to color mode toggles, `false` otherwise
  * @param isExternalLink `true` if this card's link is an external link, `false` otherwise
  * @return the card component
@@ -46,9 +51,15 @@ export default function Card({
     children,
     isNested,
     isCentered,
+    isStandalone,
     isDarkModeReady,
     isExternalLink,
 }) {
+    const accentGradient = useColorModeValue(
+        "linear(to-t, accent, fg)",
+        "linear(to-t, fg, fg)"
+    );
+
     const header = (
         <VStack
             pb={children ? "20px" : "0px"}
@@ -62,8 +73,11 @@ export default function Card({
                 <Heading
                     as="h2"
                     align={isCentered ? "center" : "start"}
-                    size={isNested ? "md" : "lg"}
+                    size={isNested ? "md" : isStandalone ? "4xl" : "lg"}
                     pb={subheading || children ? "0px" : "20px"}
+                    lineHeight={isStandalone ? "1.25em" : null}
+                    bgGradient={isStandalone ? accentGradient : null}
+                    bgClip={isStandalone ? "text" : null}
                 >
                     {heading}
                 </Heading>
@@ -80,7 +94,9 @@ export default function Card({
         </VStack>
     );
 
-    const body = (
+    const body = isStandalone ? (
+        children
+    ) : (
         <Box h={isCentered ? null : "100%"} w="100%">
             <SimpleGrid spacing="20px">{children}</SimpleGrid>
         </Box>
@@ -92,9 +108,17 @@ export default function Card({
             align={isCentered ? "center" : "start"}
             justify={isCentered ? "center" : "start"}
             p={isNested ? "20px" : "30px"}
-            bg={isDarkModeReady ? "bg-light" : isNested ? "gray.50" : "white"}
+            bg={
+                isStandalone
+                    ? "none"
+                    : isDarkModeReady
+                    ? "bg-light"
+                    : isNested
+                    ? "gray.50"
+                    : "white"
+            }
             borderRadius="10px"
-            shadow="sm"
+            shadow={isStandalone ? null : "sm"}
         >
             {(heading || subheading) && header}
             {children && body}
