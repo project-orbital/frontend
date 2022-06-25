@@ -35,16 +35,8 @@ export default function SignUp() {
     async function signUp(values) {
         const url = `${process.env.REACT_APP_BACKEND}/users/sign-up`;
         try {
-            const message = await ky.post(url, { json: values }).text();
-            toast({
-                title: "Success!",
-                description: message,
-                status: "success",
-                isClosable: true,
-            });
-            setTimeout(() => {
-                navigate("/email-sent");
-            }, 800);
+            await ky.post(url, { json: values });
+            navigate("/email-sent");
         } catch (error) {
             if (!error.response) {
                 toast({
