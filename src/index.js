@@ -33,6 +33,7 @@ import SignOut from "./features/user/authentication/SignOut";
 import Learn from "./features/learn/Learn";
 import LandingPage from "./features/landing/LandingPage";
 import Portfolio from "./features/portfolio/Portfolio";
+import Settings from "./features/settings/Settings";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -181,7 +182,15 @@ const routes = (
                     <Portfolio />
                 </RequireAuth>
             }
-        ></Route>
+        />
+        <Route
+            path="settings"
+            element={
+                <RequireAuth>
+                    <Settings />
+                </RequireAuth>
+            }
+        />
         <Route path="*" element={<PageNotFound />} />
     </Routes>
 );
