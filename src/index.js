@@ -34,8 +34,6 @@ import SignOut from "./features/user/authentication/SignOut";
 import Learn from "./features/learn/Learn";
 import WorkInProgress from "./features/errors/WorkInProgress";
 import LandingPage from "./features/landing/LandingPage";
-import Portfolio from "./features/portfolio/Portfolio";
-import Settings from "./features/settings/Settings";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -178,8 +176,7 @@ const routes = (
             }
         ></Route>
         >
-            <Route path="create" element={<AccountCreationModal />} />
-        </Route>
+        <Route path="create" element={<AccountCreationModal />} />
         <Route
             path="portfolio"
             element={
@@ -188,10 +185,6 @@ const routes = (
                 </RequireAuth>
             }
         ></Route>
-                    <Portfolio />
-                </RequireAuth>
-            }
-        />
         <Route
             path="settings"
             element={
@@ -202,10 +195,6 @@ const routes = (
         ></Route>
         <Route path="create" element={<AccountCreationModal />} />
         <Route path="plan" element={<Plan />} />
-                    <Settings />
-                </RequireAuth>
-            }
-        />
         <Route path="*" element={<PageNotFound />} />
     </Routes>
 );
