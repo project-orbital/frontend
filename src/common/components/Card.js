@@ -29,7 +29,8 @@ import { Link } from "react-router-dom";
  * which accepts a URL to navigate to when any part of the card is clicked.
  * Nested clickable components such as buttons will still work even though the entire card is clickable.
  *
- * @param info an optional information text, e.g. an index number, to display in a badge above the heading
+ * @param info [DEPRECATED] an optional information text, e.g. an index number, to display in a badge above the heading
+ * @param badge a badge to display on the card above the heading and icon (if any)
  * @param icon an optional icon to display above the heading
  * @param heading the optional heading text
  * @param subheading the optional subheading text
@@ -44,6 +45,7 @@ import { Link } from "react-router-dom";
  */
 export default function Card({
     info,
+    badge,
     icon,
     heading,
     subheading,
@@ -68,6 +70,7 @@ export default function Card({
             borderBottom={isNested || isCentered ? "none" : "1px solid black"}
         >
             {icon && <Box color="fg">{icon}</Box>}
+            {badge}
             {info && <Badge fontWeight="bold">{info}</Badge>}
             {heading && (
                 <Heading
