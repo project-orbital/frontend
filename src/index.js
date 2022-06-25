@@ -69,26 +69,30 @@ const theme = extendTheme({
             },
             bg: {
                 default: "#f8f8f8",
-                _dark: "#0a0a0a",
+                _dark: "#050203",
             },
             "bg-translucent": {
                 default: "#f8f8f8f1",
-                _dark: "#0a0a0af1",
+                _dark: "#050203f1",
             },
             "bg-light": {
                 default: "#f3f3f3",
-                _dark: "#131313",
+                _dark: "#12070B",
             },
             accent: {
                 default: "#662B42",
-                _dark: "#662B42",
+                _dark: "#4A1E30",
+            },
+            "accent-dark": {
+                default: "#331D25",
+                _dark: "#24141A",
             },
         },
     },
     styles: {
         global: () => ({
             body: {
-                bg: "gray.200",
+                bg: "bg",
             },
         }),
     },
