@@ -1,4 +1,4 @@
-import { Box, Heading, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Badge, Box, Heading, SimpleGrid, VStack } from "@chakra-ui/react";
 import Card from "../../../common/components/Card";
 import {
     MdDarkMode,
@@ -35,6 +35,7 @@ export default function FeatureCard() {
                         isCentered
                         isDarkModeReady
                         icon={<MdDocumentScanner size="80px" />}
+                        badge={<Badge>Experimental</Badge>}
                         heading="Document parsing."
                         subheading="Let our document parser do the heavy lifting. No data entry needed."
                     />
@@ -42,6 +43,7 @@ export default function FeatureCard() {
                         isCentered
                         isDarkModeReady
                         icon={<MdPhonelink size="80px" />}
+                        badge={<Badge>Beta</Badge>}
                         heading="Responsive design."
                         subheading="Use DollarPlanner anywhere — even on your phone!"
                     />
@@ -56,6 +58,7 @@ export default function FeatureCard() {
                         isCentered
                         isDarkModeReady
                         icon={<MdDarkMode size="80px" />}
+                        badge={<Badge>Beta</Badge>}
                         heading="Dark mode."
                         subheading="Planning your finances in the dark? No problem!"
                     />
