@@ -32,6 +32,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import SignOut from "./features/user/authentication/SignOut";
 import Learn from "./features/learn/Learn";
 import LandingPage from "./features/landing/LandingPage";
+import Portfolio from "./features/portfolio/Portfolio";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -165,6 +166,14 @@ const routes = (
         >
             <Route path="create" element={<AccountCreationModal />} />
         </Route>
+        <Route
+            path="portfolio"
+            element={
+                <RequireAuth>
+                    <Portfolio />
+                </RequireAuth>
+            }
+        ></Route>
         <Route path="*" element={<PageNotFound />} />
     </Routes>
 );
