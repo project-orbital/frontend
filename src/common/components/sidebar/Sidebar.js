@@ -22,7 +22,7 @@ export default function Sidebar({ selected }) {
             w="160px"
             zIndex={999}
             pos="fixed"
-            bgColor="gray.900"
+            bgColor="accent-dark"
             overflow="auto"
         >
             <Heading
