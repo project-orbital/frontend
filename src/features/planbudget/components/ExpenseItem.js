@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { AppContext } from "../context/BudgetPlannerContext";
 import {
     Spacer,
-    Flex,
     Box,
     ButtonGroup,
     Button,
-    Heading,
+    Text,
+    HStack,
 } from "@chakra-ui/react";
 
 const ExpenseItem = (props) => {
@@ -20,28 +20,39 @@ const ExpenseItem = (props) => {
     };
 
     return (
-        <Box>
-            <Flex minWidth="max-content" alignItems="center" gap="2">
-                <Box p="2">
-                    <Heading size="md">{props.name}</Heading>
-                </Box>
+        <Box
+            size="xl"
+            bg="grey.300"
+            borderRadius="md"
+            fontSize="xl"
+            BorderColor="lime"
+        >
+            <HStack>
+                <Text w="100%" p="5px" borderRadius="lg" cursor="pointer">
+                    {props.name}
+                </Text>
                 <Spacer />
                 <ButtonGroup gap="2">
                     <Box
                         as="button"
                         borderRadius="md"
-                        bg="tomato"
+                        bg="orange.400"
                         color="white"
                         px={15}
-                        h={8}
+                        h={9}
+                        w={200}
                     >
                         ${props.cost}
                     </Box>
-                    <Button colorScheme="teal" onClick={handleDeleteExpense}>
+                    <Button
+                        h={9}
+                        colorScheme="red"
+                        onClick={handleDeleteExpense}
+                    >
                         Delete
                     </Button>
                 </ButtonGroup>
-            </Flex>
+            </HStack>
         </Box>
     );
 };

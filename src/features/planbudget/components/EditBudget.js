@@ -1,26 +1,46 @@
 import React, { useState } from "react";
+import {
+    Box,
+    Container,
+    Button,
+    Spacer,
+    HStack,
+    Input,
+    Text,
+} from "@chakra-ui/react";
 
-const EditBudget = (props) => {
+export default function EditBudget(props) {
     const [value, setValue] = useState(props.budget);
     return (
-        <>
-            <input
-                required="required"
-                type="number"
-                class="form-control mr-3"
-                id="name"
-                value={value}
-                onChange={(event) => setValue(event.target.value)}
-            />
-            <button
-                type="button"
-                class="btn btn-primary"
-                onClick={() => props.handleSaveClick(value)}
-            >
-                Save
-            </button>
-        </>
+        <HStack>
+            <Box borderRadius={"3xl"} border="4px" borderColor="gray.500">
+                <HStack>
+                    <Container>
+                        <HStack>
+                            <Text fontSize={25}> Budget: </Text>
+                            <Input
+                                fontSize={25}
+                                id="name"
+                                value={value}
+                                onChange={(event) =>
+                                    setValue(event.target.value)
+                                }
+                            />
+                        </HStack>
+                    </Container>
+                    <Spacer />
+                    <Button
+                        onClick={() => props.handleSaveClick(value)}
+                        borderRadius={"3xl"}
+                        border="4px"
+                        borderColor="gray.500"
+                        colorScheme="blue"
+                    >
+                        Save
+                    </Button>
+                    <Spacer />
+                </HStack>
+            </Box>
+        </HStack>
     );
-};
-
-export default EditBudget;
+}
