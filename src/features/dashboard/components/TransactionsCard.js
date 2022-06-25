@@ -25,7 +25,7 @@ export default function TransactionsCard() {
     );
 
     const Transactions = () => (
-        <Card heading="Recent Transactions">
+        <Card heading="Transactions">
             <Table values={transactions} />
         </Card>
     );

@@ -90,10 +90,12 @@ export const selectNetWorth = (state) => {
     for (const { accountId, balance } of transactions) {
         worth[accountId] = balance;
     }
-    return {
-        netWorth: Object.values(worth).reduce((a, b) => a + b, 0),
-        asOf: transactions[transactions.length - 1].date,
-    };
+    return transactions.length === 0
+        ? null
+        : {
+              netWorth: Object.values(worth).reduce((a, b) => a + b, 0),
+              asOf: transactions[transactions.length - 1].date,
+          };
 };
 
 /**

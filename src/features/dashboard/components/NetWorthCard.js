@@ -1,15 +1,21 @@
 import BarChart from "../../../common/components/visuals/BarChart";
 import Card from "../../../common/components/Card";
-import { AspectRatio, Text, VStack } from "@chakra-ui/react";
+import { AspectRatio, Badge, Text, VStack } from "@chakra-ui/react";
 import { format, formatDistanceToNowStrict } from "date-fns";
 import { useSelector } from "react-redux";
 import { selectNetWorth } from "../../transactions/state/transactions";
 
 export default function NetWorthCard({ data }) {
-    const { netWorth, asOf } = useSelector(selectNetWorth);
+    const netWorth = useSelector(selectNetWorth);
+    const value = netWorth?.netWorth || 0;
+    const duration = netWorth
+        ? formatDistanceToNowStrict(netWorth.asOf, { addSuffix: true })
+        : "";
+    const date = netWorth ? format(netWorth.asOf, "dd LLLL yyyy") : "";
 
     return (
         <Card
+            badge={<Badge colorScheme="blue">Preview</Badge>}
             heading="Net Worth"
             subheading="The bar chart will be patched in an update real soon."
         >
@@ -18,11 +24,10 @@ export default function NetWorthCard({ data }) {
                     <Text
                         fontWeight="bold"
                         fontSize="2xl"
-                    >{`SGD ${netWorth.toFixed(2)}`}</Text>
-                    <Text fontSize="sm">{`as of ${formatDistanceToNowStrict(
-                        asOf,
-                        { addSuffix: true }
-                    )}, on ${format(asOf, "dd LLLL yyyy")}`}</Text>
+                    >{`SGD ${value.toFixed(2)}`}</Text>
+                    {netWorth && (
+                        <Text fontSize="sm">{`as of ${duration}, on ${date}`}</Text>
+                    )}
                 </VStack>
             </Card>
             <Card isNested>
