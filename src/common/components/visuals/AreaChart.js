@@ -21,12 +21,12 @@ export default function AreaChart({ data }) {
                         <linearGradient id="colory" x1="0" y1="0" x2="0" y2="1">
                             <stop
                                 offset="5%"
-                                stopColor="#8884d8"
+                                stopColor="#662B42"
                                 stopOpacity={0.8}
                             />
                             <stop
                                 offset="95%"
-                                stopColor="#8884d8"
+                                stopColor="#662B42"
                                 stopOpacity={0}
                             />
                         </linearGradient>
@@ -39,12 +39,12 @@ export default function AreaChart({ data }) {
                         >
                             <stop
                                 offset="5%"
-                                stopColor="#82ca9d"
+                                stopColor="#662B42"
                                 stopOpacity={0.8}
                             />
                             <stop
                                 offset="95%"
-                                stopColor="#82ca9d"
+                                stopColor="#662B42"
                                 stopOpacity={0}
                             />
                         </linearGradient>
@@ -68,7 +68,7 @@ export default function AreaChart({ data }) {
                     <Area
                         type="monotone"
                         dataKey="y"
-                        stroke="#8884d8"
+                        stroke="#662B42"
                         fillOpacity={1}
                         fill="url(#colory)"
                     />

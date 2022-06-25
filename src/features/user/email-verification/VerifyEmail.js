@@ -1,7 +1,8 @@
-import { Heading, Text, useToast, VStack } from "@chakra-ui/react";
+import { Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import PageTemplate from "../../../common/components/PageTemplate";
 
 export default function VerifyEmail() {
     const navigate = useNavigate();
@@ -9,22 +10,14 @@ export default function VerifyEmail() {
     const { userId, uniqueString } = useParams();
 
     useEffect(() => {
-        function errorToast(message) {
+        function errorToast() {
             toast({
-                title: "We couldn't verify your email.",
-                description: message,
+                title: "Something went wrong.",
+                description:
+                    "We couldn't verify your email. Please check your have the correct link and try again.",
                 status: "error",
                 duration: null,
                 isClosable: false,
-            });
-        }
-
-        function successToast() {
-            toast({
-                title: "Success!",
-                description: "Taking you to your dashboard...",
-                status: "success",
-                isClosable: true,
             });
         }
 
@@ -33,33 +26,28 @@ export default function VerifyEmail() {
                 userId: userId,
                 uniqueString: uniqueString,
             })
-            .catch((err) => {
-                console.log(err);
-                errorToast(err.response.data || "Something went wrong.");
-            })
+            .catch(() => errorToast())
             .then((res) => {
-                console.log("Successfully verified email.");
                 if (res.status === 200) {
-                    successToast();
+                    toast.closeAll();
                     navigate("/email-verified");
-                } else {
-                    errorToast(res.data.message);
                 }
             });
     });
 
     return (
-        <VStack h="100vh" w="100vw" justify="center" bg="gray.200">
-            <VStack
-                p="60px"
-                align="center"
-                borderRadius="20px"
-                bg="white"
-                shadow="sm"
+        <PageTemplate variant="auth" heading="Verifying your email...">
+            <Text
+                fontSize={["xl", null, "2xl", null, "3xl"]}
+                fontWeight="medium"
+                color="fg"
             >
-                <Heading as="h1">Give us a moment...</Heading>
-                <Text>We're checking the validity of this link.</Text>
-            </VStack>
-        </VStack>
+                Please give us a moment while we verify your email.
+            </Text>
+            <Text fontSize={["sm", null, "md", null, "lg"]} color="fg">
+                You will be redirected to a new page when your email has been
+                verified.
+            </Text>
+        </PageTemplate>
     );
 }

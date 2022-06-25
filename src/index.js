@@ -1,9 +1,13 @@
 import { StrictMode, useEffect, useState } from "react";
 import * as ReactDOM from "react-dom";
-import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
+import {
+    ChakraProvider,
+    ColorModeScript,
+    CSSReset,
+    extendTheme,
+} from "@chakra-ui/react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ky from "ky";
-import App from "./app/App";
 import SignUp from "./features/user/authentication/SignUp";
 import SignIn from "./features/user/authentication/SignIn";
 import Dashboard from "./features/dashboard/Dashboard";
@@ -27,6 +31,9 @@ import PageNotFound from "./features/errors/PageNotFound";
 import { PersistGate } from "redux-persist/integration/react";
 import SignOut from "./features/user/authentication/SignOut";
 import Learn from "./features/learn/Learn";
+import LandingPage from "./features/landing/LandingPage";
+import Portfolio from "./features/portfolio/Portfolio";
+import Settings from "./features/settings/Settings";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -50,18 +57,59 @@ const theme = extendTheme({
     fonts: {
         heading: "DM Serif Display, serif",
     },
+    semanticTokens: {
+        colors: {
+            error: "red.500",
+            fg: {
+                default: "#2a2a2a",
+                _dark: "#e1e1e1",
+            },
+            "fg-light": {
+                default: "#4a4a4a",
+                _dark: "#e1e1e1",
+            },
+            bg: {
+                default: "#f8f8f8",
+                _dark: "#050203",
+            },
+            "bg-translucent": {
+                default: "#f8f8f8f1",
+                _dark: "#050203f1",
+            },
+            "bg-light": {
+                default: "#f3f3f3",
+                _dark: "#12070B",
+            },
+            accent: {
+                default: "#662B42",
+                _dark: "#4A1E30",
+            },
+            "accent-dark": {
+                default: "#331D25",
+                _dark: "#24141A",
+            },
+            dim: {
+                default: "#E8E8E8",
+                _dark: "#211318",
+            },
+        },
+    },
     styles: {
         global: () => ({
             body: {
-                bg: "gray.200",
+                bg: "bg",
             },
         }),
+    },
+    config: {
+        initialColorMode: "light",
+        useSystemColorMode: true,
     },
 });
 
 const routes = (
     <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="sign-up" element={<SignUp />} />
         <Route path="sign-in" element={<SignIn />} />
         <Route path="sign-out" element={<SignOut />} />
@@ -127,6 +175,22 @@ const routes = (
         >
             <Route path="create" element={<AccountCreationModal />} />
         </Route>
+        <Route
+            path="portfolio"
+            element={
+                <RequireAuth>
+                    <Portfolio />
+                </RequireAuth>
+            }
+        />
+        <Route
+            path="settings"
+            element={
+                <RequireAuth>
+                    <Settings />
+                </RequireAuth>
+            }
+        />
         <Route path="*" element={<PageNotFound />} />
     </Routes>
 );
@@ -137,6 +201,9 @@ const element = (
             <PersistGate loading={null} persistor={persistor}>
                 <ChakraProvider theme={theme}>
                     <CSSReset />
+                    <ColorModeScript
+                        initialColorMode={theme.config.initialColorMode}
+                    />
                     <BrowserRouter>{routes}</BrowserRouter>
                 </ChakraProvider>
             </PersistGate>

@@ -6,12 +6,16 @@ import {
     LinkOverlay,
     SimpleGrid,
     Text,
+    useColorModeValue,
     VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 /**
- * A dynamically-sized card component designed to be used in a grid.
+ * A dynamically-sized card component designed to be used in a grid or on its own.
+ *
+ * If the card is meant to be used on its own, pass the `isStandalone` prop.
+ * This makes the header bigger, and removes the background color and drop shadow from the card.
  *
  * A card is expected to have at least a heading.
  * A subheading and an information badge are optional and can be passed in as props as strings.
@@ -25,24 +29,39 @@ import { Link } from "react-router-dom";
  * which accepts a URL to navigate to when any part of the card is clicked.
  * Nested clickable components such as buttons will still work even though the entire card is clickable.
  *
- * @param info an optional information text, e.g. an index number, to display in a badge above the heading
+ * @param info [DEPRECATED] an optional information text, e.g. an index number, to display in a badge above the heading
+ * @param badge a badge to display on the card above the heading and icon (if any)
+ * @param icon an optional icon to display above the heading
  * @param heading the optional heading text
  * @param subheading the optional subheading text
  * @param link an optional link to redirect to when any part of the card is clicked
  * @param children the body content
  * @param isNested `true` if this card is nested inside another card, `false` otherwise
  * @param isCentered `true` if the contents of this card should be centered, `false` otherwise
+ * @param isStandalone `true` if this card should be displayed on its own, `false` otherwise
+ * @param isDarkModeReady `true` if this card should be respond to color mode toggles, `false` otherwise
+ * @param isExternalLink `true` if this card's link is an external link, `false` otherwise
  * @return the card component
  */
 export default function Card({
     info,
+    badge,
+    icon,
     heading,
     subheading,
     link,
     children,
     isNested,
     isCentered,
+    isStandalone,
+    isDarkModeReady,
+    isExternalLink,
 }) {
+    const accentGradient = useColorModeValue(
+        "linear(to-t, accent, fg)",
+        "linear(to-t, fg, fg)"
+    );
+
     const header = (
         <VStack
             pb={children ? "20px" : "0px"}
@@ -50,26 +69,38 @@ export default function Card({
             align={isCentered ? "center" : "start"}
             borderBottom={isNested || isCentered ? "none" : "1px solid black"}
         >
+            {icon && <Box color="fg">{icon}</Box>}
+            {badge}
             {info && <Badge fontWeight="bold">{info}</Badge>}
             {heading && (
                 <Heading
                     as="h2"
                     align={isCentered ? "center" : "start"}
-                    size={isNested ? "md" : "lg"}
+                    size={isNested ? "md" : isStandalone ? "4xl" : "lg"}
                     pb={subheading || children ? "0px" : "20px"}
+                    lineHeight={isStandalone ? "1.25em" : null}
+                    color={isStandalone ? null : "fg"}
+                    bgGradient={isStandalone ? accentGradient : null}
+                    bgClip={isStandalone ? "text" : null}
                 >
                     {heading}
                 </Heading>
             )}
             {subheading && (
-                <Text fontSize={isNested ? "md" : "sm"} mb="20px">
+                <Text
+                    fontSize={isNested ? "md" : "sm"}
+                    mb="20px"
+                    align={isCentered ? "center" : "start"}
+                >
                     {subheading}
                 </Text>
             )}
         </VStack>
     );
 
-    const body = (
+    const body = isStandalone ? (
+        children
+    ) : (
         <Box h={isCentered ? null : "100%"} w="100%">
             <SimpleGrid spacing="20px">{children}</SimpleGrid>
         </Box>
@@ -81,9 +112,17 @@ export default function Card({
             align={isCentered ? "center" : "start"}
             justify={isCentered ? "center" : "start"}
             p={isNested ? "20px" : "30px"}
-            bg={isNested ? "gray.50" : "white"}
+            bg={
+                isStandalone
+                    ? "none"
+                    : isDarkModeReady
+                    ? "bg-light"
+                    : isNested
+                    ? "bg"
+                    : "bg-light"
+            }
             borderRadius="10px"
-            shadow="sm"
+            shadow={isStandalone ? null : isNested ? "sm" : "md"}
         >
             {(heading || subheading) && header}
             {children && body}
@@ -104,8 +143,16 @@ export default function Card({
                 shadow: "md",
             }}
         >
-            <LinkOverlay as={Link} to={link} />
-            {card}
+            {isExternalLink ? (
+                <LinkOverlay href={link} isExternal>
+                    {card}
+                </LinkOverlay>
+            ) : (
+                <LinkOverlay as={Link} to={link}>
+                    {" "}
+                    {card}
+                </LinkOverlay>
+            )}
         </LinkBox>
     );
 }

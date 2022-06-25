@@ -2,11 +2,9 @@ import { useForm } from "react-hook-form";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
     Button,
-    Center,
     FormControl,
     FormErrorMessage,
     FormLabel,
-    Heading,
     Input,
     Link,
     Spacer,
@@ -15,6 +13,7 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import ky from "ky";
+import PageTemplate from "../../../common/components/PageTemplate";
 
 export default function SignIn() {
     // === === ===
@@ -111,8 +110,12 @@ export default function SignIn() {
             type="submit"
             h="60px"
             w="100%"
-            bg="black"
+            bg="accent"
             color="white"
+            transition="transform .1s"
+            _hover={{
+                transform: "scale(1.08)",
+            }}
         >
             Sign in
         </Button>
@@ -121,7 +124,7 @@ export default function SignIn() {
     const signUpLink = (
         <Text>
             New to DollarPlanner?{" "}
-            <Link as={RouterLink} to="/sign-up" color="blue.500">
+            <Link as={RouterLink} to="/sign-up">
                 Create an account ►
             </Link>
         </Text>
@@ -129,8 +132,8 @@ export default function SignIn() {
 
     const forgetPasswordLink = (
         <Text>
-            Forgotten Password?{" "}
-            <Link as={RouterLink} to="/request-password-reset" color="blue.500">
+            Forgot your password?{" "}
+            <Link as={RouterLink} to="/request-password-reset">
                 Reset password ►
             </Link>
         </Text>
@@ -140,32 +143,23 @@ export default function SignIn() {
     // Form component.
 
     return (
-        <Center h="100vh" w="100vw" bg="gray.50">
-            <VStack>
-                <Heading as="h1">Sign in to your DollarPlanner account</Heading>
-                <Spacer p="20px" />
-                <VStack
-                    p="60px"
-                    align="stretch"
-                    borderRadius="20px"
-                    bg="white"
-                    shadow="lg"
-                >
-                    <form onSubmit={handleSubmit(signIn)}>
-                        <VStack spacing="20px" align="stretch">
-                            {usernameField}
-                            {passwordField}
-                            <Spacer />
-                            <VStack>
-                                {submitButton}
-                                <Spacer />
-                                {signUpLink}
-                                {forgetPasswordLink}
-                            </VStack>
-                        </VStack>
-                    </form>
+        <PageTemplate
+            variant="auth"
+            heading="Sign in to your DollarPlanner account."
+        >
+            <form onSubmit={handleSubmit(signIn)}>
+                <VStack spacing="20px">
+                    {usernameField}
+                    {passwordField}
+                    <Spacer />
+                    <VStack>
+                        {submitButton}
+                        <Spacer />
+                        {signUpLink}
+                        {forgetPasswordLink}
+                    </VStack>
                 </VStack>
-            </VStack>
-        </Center>
+            </form>
+        </PageTemplate>
     );
 }

@@ -1,51 +1,30 @@
-import {
-    Button,
-    Center,
-    Heading,
-    Spacer,
-    Text,
-    VStack,
-} from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import PageTemplate from "../../../common/components/PageTemplate";
+import { Center, Text } from "@chakra-ui/react";
+import NavButton from "../../../common/components/buttons/NavButton";
 
 export default function EmailSent() {
-    // === === ===
-    // Form component.
-
     return (
-        <Center h="100vh" w="100vw" bg="gray.50">
-            <VStack>
-                <Spacer p="20px" />
-                <VStack
-                    p="60px"
-                    align="stretch"
-                    borderRadius="20px"
-                    bg="white"
-                    shadow="lg"
-                >
-                    <form>
-                        <Heading as="h1">Account Confirmation</Heading>
-                        <Text>
-                            {" "}
-                            An account verification email will be sent to you
-                            shortly.
-                        </Text>
-                        <VStack spacing="20px" align="stretch">
-                            <Button
-                                as={RouterLink}
-                                to="/"
-                                type="submit"
-                                h="60px"
-                                w="100%"
-                                bg="black"
-                                color="white"
-                            >
-                                Homepage
-                            </Button>
-                        </VStack>
-                    </form>
-                </VStack>
-            </VStack>
-        </Center>
+        <PageTemplate variant="auth" heading="Verification email sent.">
+            <Text
+                fontSize={["xl", null, "2xl", null, "3xl"]}
+                fontWeight="medium"
+                color="fg"
+            >
+                Please check your email for a verification link.
+            </Text>
+            <Text fontSize={["sm", null, "md", null, "lg"]} color="fg">
+                If you do not receive the email after a few minutes, please
+                check the junk folder in your email.
+            </Text>
+            <Center w="100%" pt="50px">
+                <NavButton
+                    to="/sign-in"
+                    text="Sign in"
+                    w="100%"
+                    bg="accent"
+                    c="white"
+                ></NavButton>
+            </Center>
+        </PageTemplate>
     );
 }

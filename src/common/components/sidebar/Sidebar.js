@@ -1,4 +1,4 @@
-import { Heading, Spacer, VStack } from "@chakra-ui/react";
+import { Spacer, VStack } from "@chakra-ui/react";
 import { AiOutlineAreaChart } from "react-icons/ai";
 import { MdSchool, MdSpaceDashboard } from "react-icons/md";
 import {
@@ -8,6 +8,7 @@ import {
     RiSettings3Line,
 } from "react-icons/ri";
 import SidebarLink from "./SidebarLink";
+import Logo from "../navbar/Logo";
 
 /**
  * A header, and two vertical stacks of links.
@@ -22,19 +23,16 @@ export default function Sidebar({ selected }) {
             w="160px"
             zIndex={999}
             pos="fixed"
-            bgColor="gray.900"
+            bgColor="accent-dark"
             overflow="auto"
         >
-            <Heading
-                as="h3"
-                size="md"
+            <Logo
+                direction="column"
                 color="white"
-                fontWeight="black"
-                pb="20px"
-                borderBottom="1.5px solid white"
-            >
-                DollarPlanner
-            </Heading>
+                size="md"
+                link="/dashboard"
+                hasBorder
+            />
             <Spacer />
             <SidebarLink
                 isSelected={selected === "dashboard"}
