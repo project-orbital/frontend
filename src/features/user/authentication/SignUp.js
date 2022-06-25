@@ -2,11 +2,9 @@ import { useForm } from "react-hook-form";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
     Button,
-    Center,
     FormControl,
     FormErrorMessage,
     FormLabel,
-    Heading,
     HStack,
     Input,
     Link,
@@ -16,6 +14,7 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import ky from "ky";
+import PageTemplate from "../../../common/components/PageTemplate";
 
 export default function SignUp() {
     // === === ===
@@ -176,7 +175,7 @@ export default function SignUp() {
             type="submit"
             h="60px"
             w="100%"
-            bg="black"
+            bg="accent"
             color="white"
         >
             Create your account
@@ -185,8 +184,8 @@ export default function SignUp() {
 
     const signInLink = (
         <Text>
-            Back to homepage{" "}
-            <Link as={RouterLink} to="/" color="blue.500">
+            Already have an account?{" "}
+            <Link as={RouterLink} to="/sign-in">
                 Sign in ►
             </Link>
         </Text>
@@ -196,38 +195,27 @@ export default function SignUp() {
     // Form component.
 
     return (
-        <Center h="100vh" w="100vw" bg="gray.50">
-            <VStack>
-                <Heading as="h1" noOfLines="1">
-                    Create your DollarPlanner account
-                </Heading>
-                <Spacer p="20px" />
-                <VStack
-                    p="60px"
-                    align="stretch"
-                    borderRadius="20px"
-                    bg="white"
-                    shadow="lg"
-                >
-                    <form onSubmit={handleSubmit(signUp)}>
-                        <VStack spacing="20px" align="stretch">
-                            <HStack spacing="20px" align="flex-start">
-                                {firstNameField}
-                                {lastNameField}
-                            </HStack>
-                            {emailField}
-                            {usernameField}
-                            {passwordField}
-                            <Spacer />
-                            <VStack>
-                                {submitButton}
-                                <Spacer />
-                                {signInLink}
-                            </VStack>
-                        </VStack>
-                    </form>
+        <PageTemplate
+            variant="auth"
+            heading="Create your DollarPlanner account"
+        >
+            <form onSubmit={handleSubmit(signUp)}>
+                <VStack spacing="20px" align="stretch">
+                    <HStack spacing="20px" align="flex-start">
+                        {firstNameField}
+                        {lastNameField}
+                    </HStack>
+                    {emailField}
+                    {usernameField}
+                    {passwordField}
+                    <Spacer />
+                    <VStack>
+                        {submitButton}
+                        <Spacer />
+                        {signInLink}
+                    </VStack>
                 </VStack>
-            </VStack>
-        </Center>
+            </form>
+        </PageTemplate>
     );
 }
