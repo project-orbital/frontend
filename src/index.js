@@ -87,6 +87,10 @@ const theme = extendTheme({
                 default: "#331D25",
                 _dark: "#24141A",
             },
+            dim: {
+                default: "#E8E8E8",
+                _dark: "#211318",
+            },
         },
     },
     styles: {
