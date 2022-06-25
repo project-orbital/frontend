@@ -177,6 +177,10 @@ export default function SignUp() {
             w="100%"
             bg="accent"
             color="white"
+            transition="transform .1s"
+            _hover={{
+                transform: "scale(1.08)",
+            }}
         >
             Create your account
         </Button>
