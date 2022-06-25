@@ -64,6 +64,7 @@ export default function FeatureCard() {
                     />
                 </SimpleGrid>
             </Box>
+            <Heading pt="40px">...and much more.</Heading>
         </VStack>
     );
 }
