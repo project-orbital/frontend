@@ -1,23 +1,18 @@
 import { useForm } from "react-hook-form";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import {
     Button,
-    Center,
     FormControl,
     FormErrorMessage,
-    Heading,
+    FormLabel,
     Input,
-    Link,
-    Spacer,
     useToast,
     VStack,
 } from "@chakra-ui/react";
+import PageTemplate from "../../../common/components/PageTemplate";
 
 export default function RequestPasswordReset() {
-    // === === ===
-    // Hooks.
-
     const navigate = useNavigate();
     const toast = useToast();
     const {
@@ -25,9 +20,6 @@ export default function RequestPasswordReset() {
         handleSubmit,
         formState: { errors, isSubmitting },
     } = useForm();
-
-    // === === ===
-    // Form handling.
 
     function requestPasswordReset(values) {
         return Axios({
@@ -38,38 +30,28 @@ export default function RequestPasswordReset() {
             withCredentials: true,
             url: `${process.env.REACT_APP_BACKEND}/request-password-reset`,
         })
-            .catch((err) => errorToast(err.response.data))
+            .catch(() => errorToast())
             .then((res) => {
                 if (res.status === 200) {
                     toast.closeAll();
-                    successToast();
                     navigate("/password-reset-email-sent");
                 }
             });
     }
 
-    function errorToast(message) {
+    function errorToast() {
         toast({
-            title: "We could not reset your password",
-            description: message,
+            title: "Something went wrong.",
+            description:
+                "We couldn't send you an email with a link to reset your password. Please try again.",
             status: "error",
             isClosable: true,
         });
     }
 
-    function successToast() {
-        toast({
-            title: "Success!",
-            description: "Please check your email",
-            status: "success",
-            isClosable: true,
-        });
-    }
-
-    // === === ===
-    // Form fields.
-    const emailField = (
+    const EmailField = () => (
         <FormControl isInvalid={errors.email} w="100%">
+            <FormLabel htmlFor="email">Email Address</FormLabel>
             <Input
                 id="email"
                 placeholder="someone@example.com"
@@ -89,53 +71,31 @@ export default function RequestPasswordReset() {
         </FormControl>
     );
 
-    const submitButton = (
+    const SubmitButton = () => (
         <Button
             isLoading={isSubmitting}
             type="submit"
             h="60px"
             w="100%"
-            bg="black"
+            bg="accent"
             color="white"
+            transition="transform .1s"
+            _hover={{
+                transform: "scale(1.08)",
+            }}
         >
             Send password reset email
         </Button>
     );
 
-    const HomepageLink = (
-        <Link as={RouterLink} to="/" color="blue.500">
-            Back to homepage ►
-        </Link>
-    );
-
-    // === === ===
-    // Form component.
-
     return (
-        <Center h="100vh" w="100vw" bg="gray.50">
-            <VStack>
-                <Heading as="h1">Please enter your email</Heading>
-                <Spacer p="20px" />
-                <VStack
-                    p="60px"
-                    align="stretch"
-                    borderRadius="20px"
-                    bg="white"
-                    shadow="lg"
-                >
-                    <form onSubmit={handleSubmit(requestPasswordReset)}>
-                        <VStack align="stretch">
-                            {emailField}
-                            <Spacer />
-                            <VStack>
-                                {submitButton}
-                                <Spacer />
-                                {HomepageLink}
-                            </VStack>
-                        </VStack>
-                    </form>
+        <PageTemplate variant="auth" heading="Request a password reset.">
+            <form onSubmit={handleSubmit(requestPasswordReset)}>
+                <VStack spacing="40px">
+                    <EmailField />
+                    <SubmitButton />
                 </VStack>
-            </VStack>
-        </Center>
+            </form>
+        </PageTemplate>
     );
 }

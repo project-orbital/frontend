@@ -3,20 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import {
     Button,
-    Center,
     FormControl,
     FormErrorMessage,
     FormLabel,
-    Heading,
     Input,
-    Spacer,
     useToast,
     VStack,
 } from "@chakra-ui/react";
+import PageTemplate from "../../../common/components/PageTemplate";
 
 export default function ResetPassword() {
-    // === === ===
-    // Hooks.
     const { userId, resetString } = useParams();
     const navigate = useNavigate();
     const toast = useToast();
@@ -25,9 +21,6 @@ export default function ResetPassword() {
         handleSubmit,
         formState: { errors, isSubmitting },
     } = useForm();
-
-    // === === ===
-    // Form handling.
 
     function resetPassword(values) {
         return axios({
@@ -40,7 +33,7 @@ export default function ResetPassword() {
             withCredentials: true,
             url: `${process.env.REACT_APP_BACKEND}/reset-password`,
         })
-            .catch((err) => errorToast(err.response.data))
+            .catch(() => errorToast())
             .then((res) => {
                 if (res.status === 200) {
                     toast.closeAll();
@@ -49,20 +42,19 @@ export default function ResetPassword() {
             });
     }
 
-    function errorToast(message) {
+    function errorToast() {
         toast({
-            title: "We could not reset your password",
-            description: message,
+            title: "We couldn't reset your password.",
+            description:
+                "Please try again, and check that you have the correct link.",
             status: "error",
             isClosable: true,
         });
     }
 
-    // === === ===
-    // Form fields.
     const passwordField = (
-        <FormControl isInvalid={errors.password} w="60%">
-            <FormLabel htmlFor="password">Password</FormLabel>
+        <FormControl isInvalid={errors.password} w="100%">
+            <FormLabel htmlFor="password">New Password</FormLabel>
             <Input
                 id="password"
                 placeholder="••••••••"
@@ -81,45 +73,31 @@ export default function ResetPassword() {
         </FormControl>
     );
 
-    // === === ===
-    // Form component.
     const submitButton = (
         <Button
             isLoading={isSubmitting}
             type="submit"
             h="60px"
             w="100%"
-            bg="black"
+            bg="accent"
             color="white"
+            transition="transform .1s"
+            _hover={{
+                transform: "scale(1.08)",
+            }}
         >
-            Submit
+            Reset password
         </Button>
     );
 
     return (
-        <Center h="100vh" w="100vw" bg="gray.50">
-            <VStack>
-                <Heading as="h1">Please enter a new password</Heading>
-                <Spacer p="20px" />
-                <VStack
-                    p="60px"
-                    align="stretch"
-                    borderRadius="20px"
-                    bg="white"
-                    shadow="lg"
-                >
-                    <form onSubmit={handleSubmit(resetPassword)}>
-                        <VStack align="stretch">
-                            {passwordField}
-                            <Spacer />
-                            <VStack>
-                                {submitButton}
-                                <Spacer />
-                            </VStack>
-                        </VStack>
-                    </form>
+        <PageTemplate variant="auth" heading="Choose a new password.">
+            <form onSubmit={handleSubmit(resetPassword)}>
+                <VStack spacing="40px">
+                    {passwordField}
+                    {submitButton}
                 </VStack>
-            </VStack>
-        </Center>
+            </form>
+        </PageTemplate>
     );
 }
