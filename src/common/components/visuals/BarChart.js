@@ -22,7 +22,7 @@ export default function BarChart(props) {
                 <XAxis dataKey="key" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="value" fill={props.color || "#8884d8"} />
+                <Bar dataKey="value" fill={props.color || "#662B42"} />
             </Chart>
         </ResponsiveContainer>
     );

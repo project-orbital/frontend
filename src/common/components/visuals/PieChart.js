@@ -95,7 +95,7 @@ export default function PieChart(props) {
                     cy="50%"
                     innerRadius={40}
                     outerRadius={90}
-                    fill={props.color || "#8884d8"}
+                    fill={props.color || "#662B42"}
                     nameKey="key"
                     dataKey="value"
                     onMouseEnter={onPieEnter}
