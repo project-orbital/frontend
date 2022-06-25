@@ -21,13 +21,14 @@ export default function Hero() {
                 align="center"
                 bgGradient={value}
                 bgClip="text"
-                fontSize="120px"
+                fontSize={["60px", null, "80px", null, "100px"]}
                 lineHeight="1.05em"
             >
                 Take charge of your personal finances.
             </Heading>
             <Text
                 w="60%"
+                minW="300px"
                 pt="50px"
                 align="center"
                 color="fg-light"
