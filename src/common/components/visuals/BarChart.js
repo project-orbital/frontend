@@ -1,6 +1,7 @@
 import {
     Bar,
     BarChart as Chart,
+    CartesianGrid,
     ResponsiveContainer,
     Tooltip,
     XAxis,
@@ -19,9 +20,22 @@ export default function BarChart(props) {
     return (
         <ResponsiveContainer width="100%" height="100%">
             <Chart data={props.data} margin={{ top: 40 }}>
-                <XAxis dataKey="key" />
-                <YAxis />
+                <XAxis
+                    dataKey="key"
+                    tickLine={false}
+                    style={{
+                        fontSize: "0.75rem",
+                    }}
+                />
+                <YAxis
+                    tickCount={4}
+                    tickLine={false}
+                    style={{
+                        fontSize: "0.75rem",
+                    }}
+                />
                 <Tooltip />
+                <CartesianGrid strokeDasharray="4 1 2" />
                 <Bar dataKey="value" fill={props.color || "#662B42"} />
             </Chart>
         </ResponsiveContainer>
