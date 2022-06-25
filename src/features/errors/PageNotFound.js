@@ -1,7 +1,8 @@
 import Breadcrumbs from "../../common/components/Breadcrumbs";
 import PageTemplate from "../../common/components/PageTemplate";
 import Header from "../landing/components/Header";
-import { Button, VStack, Box, Heading, Text } from "@chakra-ui/react";
+import Navbar from "../../common/components/navbar/Navbar";
+import { Box, Button, Heading, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 /**
@@ -53,7 +54,7 @@ export default function PageNotFound({ IsLoggedIn }) {
     } else {
         return (
             <VStack h="full" w="full" spacing="0px">
-                <Header />
+                <Navbar />
                 <Box textAlign="center" py={10} px={6}>
                     <Heading
                         display="inline-block"

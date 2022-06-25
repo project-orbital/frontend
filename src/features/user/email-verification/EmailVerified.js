@@ -1,30 +1,29 @@
-import { Button, Heading, Spacer, Text, VStack } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Center, Text } from "@chakra-ui/react";
+import PageTemplate from "../../../common/components/PageTemplate";
+import NavButton from "../../../common/components/buttons/NavButton";
 
 export default function EmailVerified() {
     return (
-        <VStack h="100vh" w="100vw" justify="center" bg="gray.200">
-            <VStack
-                p="60px"
-                align="center"
-                borderRadius="20px"
-                bg="white"
-                shadow="sm"
+        <PageTemplate variant="auth" heading="Welcome to DollarPlanner!">
+            <Text
+                fontSize={["xl", null, "2xl", null, "3xl"]}
+                fontWeight="medium"
+                color="fg"
             >
-                <Heading as="h1">Account verified!</Heading>
-                <Text>Please proceed to log in.</Text>
-                <Spacer py="20px" />
-                <Button
-                    as={RouterLink}
+                Your email has been verified.
+            </Text>
+            <Text fontSize={["sm", null, "md", null, "lg"]} color="fg">
+                You may now sign in.
+            </Text>
+            <Center w="100%" pt="50px">
+                <NavButton
                     to="/sign-in"
-                    h="60px"
+                    text="Sign in"
                     w="100%"
-                    bg="black"
-                    color="white"
-                >
-                    Click here to sign in
-                </Button>
-            </VStack>
-        </VStack>
+                    bg="accent"
+                    c="white"
+                ></NavButton>
+            </Center>
+        </PageTemplate>
     );
 }

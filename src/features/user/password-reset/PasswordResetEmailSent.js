@@ -1,48 +1,30 @@
-import {
-    Button,
-    Center,
-    Heading,
-    Spacer,
-    Text,
-    VStack,
-} from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Center, Text } from "@chakra-ui/react";
+import PageTemplate from "../../../common/components/PageTemplate";
+import NavButton from "../../../common/components/buttons/NavButton";
 
-export default function EmailSent() {
+export default function PasswordResetEmailSent() {
     return (
-        <Center h="100vh" w="100vw" bg="gray.50">
-            <VStack>
-                <Spacer p="20px" />
-                <VStack
-                    p="60px"
-                    align="stretch"
-                    borderRadius="20px"
-                    bg="white"
-                    shadow="lg"
-                >
-                    <form>
-                        <Heading as="h1">Password Reset</Heading>
-                        <Text>
-                            {" "}
-                            A password reset request will be sent to your email
-                            shortly.
-                        </Text>
-                        <VStack spacing="20px" align="stretch">
-                            <Button
-                                as={RouterLink}
-                                to="/"
-                                type="submit"
-                                h="60px"
-                                w="100%"
-                                bg="black"
-                                color="white"
-                            >
-                                Homepage
-                            </Button>
-                        </VStack>
-                    </form>
-                </VStack>
-            </VStack>
-        </Center>
+        <PageTemplate variant="auth" heading="Password reset email sent.">
+            <Text
+                fontSize={["xl", null, "2xl", null, "3xl"]}
+                fontWeight="medium"
+                color="fg"
+            >
+                Please check your email for the link to reset your password.
+            </Text>
+            <Text fontSize={["sm", null, "md", null, "lg"]} color="fg">
+                If you do not receive the email after a few minutes, please
+                check the junk folder in your email.
+            </Text>
+            <Center w="100%" pt="50px">
+                <NavButton
+                    to="/sign-in"
+                    text="Sign in"
+                    w="100%"
+                    bg="accent"
+                    c="white"
+                ></NavButton>
+            </Center>
+        </PageTemplate>
     );
 }

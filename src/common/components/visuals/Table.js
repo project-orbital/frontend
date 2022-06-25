@@ -33,7 +33,7 @@ export default function Table({ values, rowLimit }) {
 
     return (
         <TableContainer w="100%">
-            <ChakraTable size="sm" variant="striped" placement="top">
+            <ChakraTable size="sm" placement="top">
                 {createTableHeaders(headers)}
                 {createTableBody(values.map(objToRow), rowLimit)}
             </ChakraTable>
@@ -75,7 +75,9 @@ function createTableBody(body, rowLimit) {
     const rowToJSX = (row, y) => (
         <Tr key={y}>
             {row.map((cell, x) => (
-                <Td key={x}>{cell}</Td>
+                <Td key={x} bg={y % 2 === 0 ? "dim" : "bg-light"}>
+                    {cell}
+                </Td>
             ))}
         </Tr>
     );

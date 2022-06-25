@@ -1,43 +1,62 @@
-import { Heading, Link, Spacer, Text, VStack } from "@chakra-ui/react";
+import {
+    Heading,
+    Link,
+    Text,
+    useColorModeValue,
+    VStack,
+} from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
+import NavButton from "../../../common/components/buttons/NavButton";
 
-export default function Hero(props) {
+export default function Hero() {
+    const value = useColorModeValue(
+        "linear(to-t, accent, fg)",
+        "linear(to-t, fg, fg)"
+    );
+
     return (
-        <VStack w="100%" p="100px 25%" bg="gray.800" spacing="40px">
-            <Heading as="h1" size="4xl" align="center" color="white">
-                {props.title}
+        <VStack w="100%" px="25%" py="50px" bg="bg">
+            <Heading
+                as="h1"
+                align="center"
+                bgGradient={value}
+                bgClip="text"
+                fontSize={["60px", null, "80px", null, "100px"]}
+                lineHeight="1.05em"
+            >
+                Take charge of your personal finances.
             </Heading>
             <Text
-                fontSize="2xl"
                 w="60%"
-                lineHeight="1.35em"
+                minW="300px"
+                pt="50px"
                 align="center"
-                color="white"
+                color="fg-light"
+                fontSize="2xl"
+                lineHeight="1.35em"
             >
-                {props.subtitle}
+                DollarPlanner is your one-stop web application to manage and
+                analyze your multiple bank accounts!
             </Text>
-            <VStack>
-                <Link
-                    as={RouterLink}
+            <VStack pt="40px">
+                <NavButton
                     to="/sign-up"
-                    p="10px 80px"
-                    bg="white"
-                    fontSize="lg"
-                    fontWeight="semibold"
-                    color="black"
-                    border="1px solid white"
-                    borderRadius="5px"
-                >
-                    Sign up
-                </Link>
-                <Spacer />
-                <Text color="white">
+                    text="Sign up"
+                    h="60px"
+                    w="300px"
+                    fw="semibold"
+                    fs="lg"
+                    bg="accent"
+                    c="white"
+                />
+                <Text pt="10px" color="fg-light">
                     Already have an account?{" "}
                     <Link
                         as={RouterLink}
                         to="/sign-in"
                         fontWeight="semibold"
-                        color="white"
+                        color="fg-light"
+                        zIndex={2}
                     >
                         Sign in ►
                     </Link>
