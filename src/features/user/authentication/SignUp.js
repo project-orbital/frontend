@@ -193,7 +193,7 @@ export default function SignUp() {
     return (
         <PageTemplate
             variant="auth"
-            heading="Create your DollarPlanner account"
+            heading="Create your DollarPlanner account."
         >
             <form onSubmit={handleSubmit(signUp)}>
                 <VStack spacing="20px" align="stretch">

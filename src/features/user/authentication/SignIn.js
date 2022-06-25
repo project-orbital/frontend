@@ -145,7 +145,7 @@ export default function SignIn() {
     return (
         <PageTemplate
             variant="auth"
-            heading="Sign in to your DollarPlanner account"
+            heading="Sign in to your DollarPlanner account."
         >
             <form onSubmit={handleSubmit(signIn)}>
                 <VStack spacing="20px">
