@@ -1,9 +1,10 @@
 import { BsCurrencyExchange } from "react-icons/bs";
 import { Box, Heading, HStack } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export default function Logo() {
     return (
-        <HStack>
+        <HStack as={Link} to="/">
             <Box color="fg">
                 <BsCurrencyExchange size="30px" />
             </Box>
