@@ -45,7 +45,7 @@ jobs:
                   git switch -c deploy 
                   git add .
                   git commit -m "Build for deployment" --allow-empty
-                  git push origin master
+                  git push origin deploy
 
             - name: Stop the server
               run: ssh staging 'sudo service nginx stop'
