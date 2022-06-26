@@ -56,6 +56,8 @@ export default function SignUp() {
             });
             if (cause === "email") {
                 setError("email", { message: resolution });
+            } else if (cause === "username") {
+                setError("username", { message: resolution });
             }
         }
     }
