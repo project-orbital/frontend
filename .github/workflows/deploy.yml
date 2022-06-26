@@ -42,6 +42,7 @@ jobs:
               run: |
                   git config --global user.email "dollarplanner2022@gmail.com"
                   git config --global user.name "DollarPlanner"
+                  git switch -c deploy 
                   git add .
                   git commit -m "Build for deployment" --allow-empty
                   git push origin master
@@ -49,8 +50,8 @@ jobs:
             - name: Stop the server
               run: ssh staging 'sudo service nginx stop'
 
-            - name: Checkout the latest master branch
-              run: ssh staging 'cd ~/frontend && git fetch && git reset --hard origin/master'
+            - name: Checkout the branch to deploy
+              run: ssh staging 'cd ~/frontend && git fetch && git reset --hard origin/deploy'
 
             - name: Copy the files to the deployment directory
               run: ssh staging 'cp -r ~/frontend/build ~/frontend/deployed && mkdir ~/frontend/server_logs'
