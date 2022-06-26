@@ -43,7 +43,7 @@ jobs:
                   git config --global user.email "dollarplanner2022@gmail.com"
                   git config --global user.name "DollarPlanner"
                   git add .
-                  git commit -m "Build for deployment"
+                  git commit -m "Build for deployment" --allow-empty
                   git push origin master
 
             - name: Stop the server
