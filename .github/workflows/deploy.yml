@@ -1,16 +1,16 @@
 name: CD
 on:
-    push:
-        branches: ["master"]
-    pull_request:
-        branches: ["master"]
+    workflow_run:
+        workflows: ["CI"]
+        branches: [master]
+        types:
+            - completed
     workflow_dispatch:
 jobs:
     deploy:
         name: "Deploy to AWS EC2"
         runs-on: ubuntu-latest
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        needs: CI
         steps:
             - name: Checkout the master branch
               uses: actions/checkout@v3
