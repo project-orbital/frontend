@@ -2,45 +2,23 @@ import {
     Button,
     Checkbox,
     FormControl,
-    Heading,
     HStack,
-    IconButton,
     Input,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
     Text,
 } from "@chakra-ui/react";
 import { Field, FieldArray, Form, Formik } from "formik";
 import { BsFillCaretRightFill } from "react-icons/bs";
-import { IoChevronBack } from "react-icons/io5";
 import axios from "axios";
 import { addTransactions } from "../../transactions/state/transactions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAllFiles, selectFiles } from "../state/files";
+import { useNavigate } from "react-router-dom";
+import Modal from "../../../common/components/Modal";
 
-export default function ReviewModal({
-    uploadModal,
-    reviewModal,
-    confirmCancelModal,
-    files,
-}) {
+export default function ReviewModal() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    // === === ===
-    // Form buttons (integrated with the modal).
-    const BackButton = () => {
-        return (
-            <IconButton
-                aria-label="Back to uploading"
-                icon={<IoChevronBack />}
-                mr="10px"
-                onClick={handleBack}
-            />
-        );
-    };
+    const files = useSelector(selectFiles);
 
     const CancelButton = () => {
         return (
@@ -66,15 +44,9 @@ export default function ReviewModal({
         );
     };
 
-    // === === ===
-    // Form handling.
-    const handleBack = () => {
-        uploadModal.onOpen();
-        reviewModal.onClose();
-    };
-
     const handleCancel = () => {
-        confirmCancelModal.onOpen();
+        dispatch(deleteAllFiles());
+        navigate("../");
     };
 
     const handleSubmit = (data) => {
@@ -97,42 +69,12 @@ export default function ReviewModal({
             })
             .then((res) => {
                 dispatch(addTransactions(res.data));
-                reviewModal.onClose();
+                dispatch(deleteAllFiles());
+                navigate("../");
             })
             .catch((err) => {
                 console.log(err);
             });
-    };
-
-    const initialValues = {
-        selections: files.map((file) => ({
-            file: file,
-            isSelected: true,
-            password: "",
-        })),
-    };
-
-    // === === ===
-    // Model sub-components.
-    const CustomHeader = () => {
-        return (
-            <ModalHeader>
-                <HStack align="center">
-                    <BackButton />
-                    <Heading as="h3" size="md" fontWeight="semibold">
-                        Getting your transactions...
-                    </Heading>
-                </HStack>
-                <Text fontSize="md" fontWeight="medium" mt="20px">
-                    Confirm the statements you wish to upload.
-                </Text>
-                <Text fontSize="sm" fontWeight="normal" color="gray.600">
-                    If your files are password-protected, you will need to enter
-                    their passwords to decrypt them below. We will not store
-                    your passwords.
-                </Text>
-            </ModalHeader>
-        );
     };
 
     const CustomBodyFormRow = ({ file, index }) => {
@@ -162,59 +104,44 @@ export default function ReviewModal({
         );
     };
 
-    const CustomBody = () => {
-        return (
-            <ModalBody>
-                <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-                    <Form id="upload">
-                        <FormControl>
-                            <FieldArray name="selections">
-                                {() => (
-                                    <>
-                                        {files.map((file, index) => (
-                                            <CustomBodyFormRow
-                                                file={file}
-                                                index={index}
-                                                key={index}
-                                            />
-                                        ))}
-                                    </>
-                                )}
-                            </FieldArray>
-                        </FormControl>
-                    </Form>
-                </Formik>
-            </ModalBody>
-        );
+    const initialValues = {
+        selections: files.map((file) => ({
+            file: file,
+            isSelected: true,
+            password: "",
+        })),
     };
 
-    const CustomFooter = () => {
-        return (
-            <ModalFooter mt="20px" gap="20px">
-                <CancelButton />
-                <SubmitButton />
-            </ModalFooter>
-        );
-    };
-
-    // === === ===
     // Modal component.
     return (
         <Modal
-            onClose={reviewModal.onClose}
-            isOpen={reviewModal.isOpen}
-            closeOnOverlayClick={false}
-            scrollBehavior="inside"
-            isCentered
-            size="xl"
-            motionPreset="slideInBottom"
+            title="Getting your transactions..."
+            heading="Confirm the statements you wish to upload."
+            subheading="If your files are password-protected, you will need to enter
+                    their passwords to decrypt them below. We will not store
+                    your passwords."
+            cancelButton={<CancelButton />}
+            submitButton={<SubmitButton />}
         >
-            <ModalOverlay />
-            <ModalContent>
-                <CustomHeader />
-                <CustomBody />
-                <CustomFooter />
-            </ModalContent>
+            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+                <Form id="upload">
+                    <FormControl>
+                        <FieldArray name="selections">
+                            {() => (
+                                <>
+                                    {files.map((file, index) => (
+                                        <CustomBodyFormRow
+                                            file={file}
+                                            index={index}
+                                            key={index}
+                                        />
+                                    ))}
+                                </>
+                            )}
+                        </FieldArray>
+                    </FormControl>
+                </Form>
+            </Formik>
         </Modal>
     );
 }

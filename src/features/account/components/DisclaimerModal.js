@@ -1,7 +1,6 @@
 import Modal from "../../../common/components/Modal";
 import { Image, Text, VStack } from "@chakra-ui/react";
 import DBS from "../assets/dbs.png";
-import UploadButton from "../../transactions/components/UploadButton";
 
 export default function DisclaimerModal() {
     return (
@@ -11,7 +10,8 @@ export default function DisclaimerModal() {
             heading="If the app crashes, clear your browser's cache and offline data, then refresh the page."
             subheading="We've done extensive testing to ensure the parser fails gracefully instead of crashing, but unlike text, bank statements are a very uncontrollable input."
             cancelText="Back to safety"
-            submitButton={<UploadButton />}
+            submitText="Continue"
+            submitLink="../upload-files"
         >
             <VStack align="start">
                 <Text>

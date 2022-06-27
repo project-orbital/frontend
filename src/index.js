@@ -36,6 +36,9 @@ import LandingPage from "./features/landing/LandingPage";
 import Settings from "./features/settings/Settings";
 import Portfolio from "./features/portfolio/Portfolio";
 import DisclaimerModal from "./features/account/components/DisclaimerModal";
+import UploadModal from "./features/account/components/UploadModal";
+import ReviewModal from "./features/account/components/ReviewModal";
+import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -161,6 +164,9 @@ const routes = (
             }
         >
             <Route path="upload-disclaimer" element={<DisclaimerModal />} />
+            <Route path="upload-files" element={<UploadModal />} />
+            <Route path="upload-review" element={<ReviewModal />} />
+            <Route path="upload-cancel" element={<ConfirmCancelModal />} />
             <Route path="rename" element={<AccountRenameModal />} />
             <Route path="delete" element={<AccountDeleteModal />} />
             <Route

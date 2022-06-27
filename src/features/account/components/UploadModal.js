@@ -1,71 +1,45 @@
-import {
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    Text,
-} from "@chakra-ui/react";
 import UploadForm from "./UploadForm";
 import CancelButton from "../../../common/components/buttons/CancelButton";
 import SubmitButton from "../../../common/components/buttons/SubmitButton";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAllFiles, selectFiles } from "../state/files";
+import { useNavigate } from "react-router-dom";
+import Modal from "../../../common/components/Modal";
 
-export default function UploadModal({
-    uploadModal,
-    reviewModal,
-    files,
-    setFiles,
-}) {
-    // === === ===
-    // Form handling.
+export default function UploadModal() {
+    const files = useSelector(selectFiles);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleCancel = () => {
-        setFiles([]);
-        uploadModal.onClose();
+        dispatch(deleteAllFiles);
+        navigate("../");
     };
 
     const handleSubmit = () => {
-        uploadModal.onClose();
-        reviewModal.onOpen();
+        navigate("../upload-review");
     };
 
-    // === === ===
-    // Modal component.
     return (
         <Modal
-            onClose={uploadModal.onClose}
-            isOpen={uploadModal.isOpen}
-            closeOnOverlayClick={false}
-            isCentered
-            size="xl"
-            motionPreset="slideInBottom"
+            title="Getting your transactions..."
+            heading="Upload your bank statements."
+            subheading="Your files will be sent to our server to parse your
+                        transaction history, but we will not store them."
+            cancelButton={
+                <CancelButton text="Cancel upload" onClick={handleCancel} />
+            }
+            submitButton={
+                <SubmitButton
+                    onClick={handleSubmit}
+                    text={`Review selected ${
+                        files.left === 1 ? "file" : "files"
+                    }`}
+                    isDisabled={files.length < 1}
+                />
+            }
         >
-            <ModalOverlay />
-            <ModalContent>
-                <ModalHeader>
-                    Getting your transactions...
-                    <Text mt="20px" fontSize="md" fontWeight="medium">
-                        Upload your bank statements.
-                    </Text>
-                    <Text fontSize="sm" fontWeight="normal" color="gray.600">
-                        Your files will be sent to our server to parse your
-                        transaction history, but we will not store them.
-                    </Text>
-                </ModalHeader>
-                <ModalBody>
-                    <UploadForm files={files} setFiles={setFiles} />
-                </ModalBody>
-                <ModalFooter gap="20px">
-                    <CancelButton text="Cancel upload" onClick={handleCancel} />
-                    <SubmitButton
-                        onClick={handleSubmit}
-                        text={`Review selected ${
-                            files.length === 1 ? "file" : "files"
-                        }`}
-                        isDisabled={files.length < 1}
-                    />
-                </ModalFooter>
-            </ModalContent>
+            <UploadForm />
         </Modal>
     );
 }

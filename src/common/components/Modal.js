@@ -14,6 +14,7 @@ import BackButton from "../components/buttons/BackButton";
 import CancelButton from "../components/buttons/CancelButton";
 import SubmitButton from "../components/buttons/SubmitButton";
 import NavButton from "./buttons/NavButton";
+import { useNavigate } from "react-router-dom";
 
 export default function Modal({
     hasBackButton,
@@ -21,12 +22,15 @@ export default function Modal({
     heading,
     subheading,
     cancelText,
+    cancelLink,
+    cancelButton,
     submitText,
     submitLink,
     submitButton,
     children,
 }) {
     const { onClose } = useDisclosure();
+    const navigate = useNavigate();
 
     const Header = () => {
         return (
@@ -54,7 +58,12 @@ export default function Modal({
     const Footer = () => {
         return (
             <ModalFooter mt="20px" gap="20px">
-                <CancelButton text={cancelText} />
+                {cancelButton || (
+                    <CancelButton
+                        text={cancelText}
+                        onClick={() => navigate(cancelLink || -1)}
+                    />
+                )}
                 {submitButton ||
                     (submitLink ? (
                         <NavButton to={submitLink} text={submitText} w="100%" />
@@ -70,6 +79,7 @@ export default function Modal({
             onClose={onClose}
             isOpen
             closeOnOverlayClick={false}
+            scrollBehavior="inside"
             isCentered
             size="xl"
             motionPreset="slideInBottom"
