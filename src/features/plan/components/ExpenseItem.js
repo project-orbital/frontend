@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/BudgetPlannerContext";
 import {
-    Spacer,
     Box,
-    ButtonGroup,
     Button,
-    Text,
+    ButtonGroup,
     HStack,
+    Spacer,
+    Text,
 } from "@chakra-ui/react";
 
 const ExpenseItem = (props) => {

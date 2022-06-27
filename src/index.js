@@ -28,7 +28,7 @@ import ResetPasswordSuccess from "./features/user/password-reset/ResetPasswordSu
 import ResetPassword from "./features/user/password-reset/ResetPassword";
 import TransactionCreationModal from "./features/transactions/components/TransactionCreationModal";
 import PageNotFound from "./features/errors/PageNotFound";
-import Plan from "./features/planbudget/Plan";
+import Plan from "./features/plan/Plan";
 import { PersistGate } from "redux-persist/integration/react";
 import SignOut from "./features/user/authentication/SignOut";
 import Learn from "./features/learn/Learn";

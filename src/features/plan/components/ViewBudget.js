@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Button, Spacer, HStack } from "@chakra-ui/react";
+import { Box, Button, Container, HStack, Spacer } from "@chakra-ui/react";
 
 export default function ViewBudget(props) {
     return (
