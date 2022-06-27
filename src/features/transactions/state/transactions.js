@@ -26,8 +26,16 @@ export const transactionsSlice = createSlice({
         },
         addTransactions: (state, action) => {
             const transactions = action.payload.map((transaction, index) => {
+                // TODO: This is a stopgap solution to handle null balances until the parser is fixed.
+                // TODO: Remove the hardcoded accountId.
                 return {
                     ...transaction,
+                    amount: parseFloat(transaction.amount),
+                    balance:
+                        transaction.balance === null
+                            ? 0
+                            : parseFloat(transaction.balance),
+                    accountId: 0,
                     id: state.counter + index,
                 };
             });

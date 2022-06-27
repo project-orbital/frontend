@@ -8,13 +8,13 @@ import {
     Tabs,
 } from "@chakra-ui/react";
 import BlogPostCard from "./BlogPostCard";
-import CollegeStudent from "./assets/collegestudent.jpeg";
-import YoungAdult from "./assets/youngadult.jpeg";
-import WorkingAdult from "./assets/workingadult.jpeg";
-import Parents from "./assets/parents.jpeg";
-import newbie from "./assets/newbie.jpeg";
-import WarrenBuffett from "./assets/warrenbuffett.png";
-import Longterm from "./assets/longterm.jpeg";
+import CollegeStudent from "../assets/collegestudent.jpeg";
+import YoungAdult from "../assets/youngadult.jpeg";
+import WorkingAdult from "../assets/workingadult.jpeg";
+import Parents from "../assets/parents.jpeg";
+import newbie from "../assets/newbie.jpeg";
+import WarrenBuffett from "../assets/warrenbuffett.png";
+import Longterm from "../assets/longterm.jpeg";
 
 export default function Content() {
     return (

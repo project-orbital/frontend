@@ -1,11 +1,11 @@
 import PageTemplate from "../../common/components/PageTemplate";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
 import { Box } from "@chakra-ui/react";
-import Content from "./Content";
+import Content from "./components/Content";
 
 export default function Learn() {
     return (
-        <PageTemplate>
+        <PageTemplate page="learn">
             <Breadcrumbs path="Home/Learn" links={["/dashboard", "/learn"]} />
             <Box
                 fontWeight="semibold"
