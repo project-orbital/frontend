@@ -12,10 +12,11 @@ import axios from "axios";
 import { addTransactions } from "../../transactions/state/transactions";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllFiles, selectFiles } from "../state/files";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Modal from "../../../common/components/Modal";
 
 export default function ReviewModal() {
+    const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const files = useSelector(selectFiles);
@@ -67,7 +68,12 @@ export default function ReviewModal() {
                 headers,
             })
             .then((res) => {
-                dispatch(addTransactions(res.data));
+                const accountId = parseInt(id);
+                const transactions = res.data.map((tx) => ({
+                    ...tx,
+                    accountId: accountId,
+                }));
+                dispatch(addTransactions(transactions));
                 dispatch(deleteAllFiles());
                 navigate("../");
             })
