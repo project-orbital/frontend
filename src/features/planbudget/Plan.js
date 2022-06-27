@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import { AppProvider } from "./context/BudgetPlannerContext";
 import Budget from "./components/Budget";
 import ExpenseTotal from "./components/ExpenseTotal";
@@ -7,7 +6,7 @@ import AddExpenseForm from "./components/AddExpenseForm";
 import RemainingBudget from "./components/Remaining";
 import PageTemplate from "../../common/components/PageTemplate";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
-import { Spacer, Flex, Box, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spacer } from "@chakra-ui/react";
 
 export default function Plan() {
     return (
