@@ -6,7 +6,8 @@ import AddExpenseForm from "./components/AddExpenseForm";
 import RemainingBudget from "./components/Remaining";
 import PageTemplate from "../../common/components/PageTemplate";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
-import { Box, Flex, Heading, Spacer } from "@chakra-ui/react";
+import { Badge, Box, SimpleGrid } from "@chakra-ui/react";
+import Card from "../../common/components/Card";
 
 export default function Plan() {
     return (
@@ -16,25 +17,41 @@ export default function Plan() {
                 links={["/dashboard", "/plan"]}
             />
             <AppProvider>
-                <Box bg="gray.300" w="100%" p={5} color="black" rounded="xl">
-                    <Heading>Budget Tracker</Heading>
-                    <Flex>
-                        <Spacer />
-                        <Budget />
-                        <Spacer />
-                        <RemainingBudget />
-                        <Spacer />
-                        <ExpenseTotal />
-                        <Spacer />
-                    </Flex>
-                </Box>
-                <Box bg="gray.300" w="100%" p={5} color="black" rounded="xl">
-                    <Heading>Expenses</Heading>
-                    <ExpenseList />
-                </Box>
-                <Box bg="gray.300" w="100%" p={5} color="black" rounded="xl">
-                    <Heading>Add Expense</Heading>
-                    <AddExpenseForm />
+                <Box w="100%" h="100%">
+                    <SimpleGrid minChildWidth="500px" spacing="30px">
+                        <Card
+                            heading="Budget Tracker"
+                            badge={
+                                <Badge colorScheme="orange">
+                                    Work in Progress
+                                </Badge>
+                            }
+                        >
+                            <Budget />
+                            <RemainingBudget />
+                            <ExpenseTotal />
+                        </Card>
+                        <Card
+                            heading="Expenses"
+                            badge={
+                                <Badge colorScheme="orange">
+                                    Work in Progress
+                                </Badge>
+                            }
+                        >
+                            <ExpenseList />
+                        </Card>
+                        <Card
+                            heading="Add Expense"
+                            badge={
+                                <Badge colorScheme="orange">
+                                    Work in Progress
+                                </Badge>
+                            }
+                        >
+                            <AddExpenseForm />
+                        </Card>
+                    </SimpleGrid>
                 </Box>
             </AppProvider>
         </PageTemplate>

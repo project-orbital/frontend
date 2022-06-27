@@ -25,11 +25,7 @@ const ExpenseList = () => {
             {filteredExpenses.map((expense) => (
                 <VStack
                     divider={<StackDivider />}
-                    borderColor="gray.500"
-                    borderWidth="2px"
-                    p="5"
-                    borderRadius="lg"
-                    w="200%"
+                    w="100%"
                     maxW={{ base: "90vw", sm: "100vw", lg: "60vw", xl: "30vw" }}
                     alignItems="stretch"
                 >

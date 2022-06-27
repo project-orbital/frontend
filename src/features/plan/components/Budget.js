@@ -21,13 +21,7 @@ const Budget = () => {
     };
 
     return (
-        <Box
-            size="xl"
-            bg="grey.300"
-            borderRadius="md"
-            fontSize="xl"
-            BorderColor="lime"
-        >
+        <Box>
             {isEditing ? (
                 <EditBudget handleSaveClick={handleSaveClick} budget={budget} />
             ) : (

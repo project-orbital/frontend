@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/BudgetPlannerContext";
-import { Box, Container } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 
 const ExpenseTotal = () => {
     const { expenses } = useContext(AppContext);
@@ -10,14 +10,8 @@ const ExpenseTotal = () => {
     }, 0);
 
     return (
-        <Box
-            fontSize={25}
-            borderRadius={"3xl"}
-            border="4px"
-            borderColor="gray.500"
-            bg="orange.300"
-        >
-            <Container>Spent so far: ${total}</Container>
+        <Box>
+            <Text fontSize="2xl">{"Spent so far: $" + total}</Text>
         </Box>
     );
 };

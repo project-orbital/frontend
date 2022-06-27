@@ -20,15 +20,9 @@ const ExpenseItem = (props) => {
     };
 
     return (
-        <Box
-            size="xl"
-            bg="grey.300"
-            borderRadius="md"
-            fontSize="xl"
-            BorderColor="lime"
-        >
+        <Box size="xl" bg="grey.300" fontSize="xl">
             <HStack>
-                <Text w="100%" p="5px" borderRadius="lg" cursor="pointer">
+                <Text w="100%" p="5px" borderRadius="lg">
                     {props.name}
                 </Text>
                 <Spacer />
@@ -36,7 +30,7 @@ const ExpenseItem = (props) => {
                     <Box
                         as="button"
                         borderRadius="md"
-                        bg="orange.400"
+                        bg="accent"
                         color="white"
                         px={15}
                         h={9}
