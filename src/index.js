@@ -28,12 +28,13 @@ import ResetPasswordSuccess from "./features/user/password-reset/ResetPasswordSu
 import ResetPassword from "./features/user/password-reset/ResetPassword";
 import TransactionCreationModal from "./features/transactions/components/TransactionCreationModal";
 import PageNotFound from "./features/errors/PageNotFound";
+import Plan from "./features/planbudget/Plan";
 import { PersistGate } from "redux-persist/integration/react";
 import SignOut from "./features/user/authentication/SignOut";
 import Learn from "./features/learn/Learn";
 import LandingPage from "./features/landing/LandingPage";
-import Portfolio from "./features/portfolio/Portfolio";
 import Settings from "./features/settings/Settings";
+import Portfolio from "./features/portfolio/Portfolio";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -141,21 +142,6 @@ const routes = (
             }
         />
         <Route
-            path="accounts/:id"
-            element={
-                <RequireAuth>
-                    <Account />
-                </RequireAuth>
-            }
-        >
-            <Route path="rename" element={<AccountRenameModal />} />
-            <Route path="delete" element={<AccountDeleteModal />} />
-            <Route
-                path="create-transaction"
-                element={<TransactionCreationModal />}
-            />
-        </Route>
-        <Route
             path="accounts"
             element={
                 <RequireAuth>
@@ -166,15 +152,33 @@ const routes = (
             <Route path="create" element={<AccountCreationModal />} />
         </Route>
         <Route
+            path="accounts/:id"
+            element={
+                <RequireAuth>
+                    <Account />
+                </RequireAuth>
+            }
+        >
+            <Route path="rename" element={<AccountRenameModal />} />
+            <Route path="delete" element={<AccountDeleteModal />} />
+            <Route
+                path="create-spending-transaction"
+                element={<TransactionCreationModal isSpending={true} />}
+            />
+            <Route
+                path="create-receiving-transaction"
+                element={<TransactionCreationModal isSpending={false} />}
+            />
+        </Route>
+        <Route
             path="learn"
             element={
                 <RequireAuth>
                     <Learn />
                 </RequireAuth>
             }
+        ></Route>
         >
-            <Route path="create" element={<AccountCreationModal />} />
-        </Route>
         <Route
             path="portfolio"
             element={
@@ -182,7 +186,7 @@ const routes = (
                     <Portfolio />
                 </RequireAuth>
             }
-        />
+        ></Route>
         <Route
             path="settings"
             element={
@@ -190,7 +194,8 @@ const routes = (
                     <Settings />
                 </RequireAuth>
             }
-        />
+        ></Route>
+        <Route path="plan" element={<Plan />} />
         <Route path="*" element={<PageNotFound />} />
     </Routes>
 );
