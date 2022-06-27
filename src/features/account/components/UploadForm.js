@@ -1,11 +1,4 @@
-import {
-    Box,
-    FormControl,
-    Heading,
-    Input,
-    Text,
-    VStack,
-} from "@chakra-ui/react";
+import { Box, FormControl, Input, Text, VStack } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { addFiles, selectFiles } from "../state/files";
 
@@ -32,17 +25,13 @@ export default function UploadForm() {
                     borderRadius="10px"
                 >
                     <VStack p="8" align="center" spacing="1">
-                        <Heading
-                            fontSize="lg"
-                            color="gray.700"
-                            fontWeight="bold"
-                        >
+                        <Text fontSize="lg" fontWeight="bold">
                             {files.length < 1
                                 ? "Drop your files here."
                                 : files.length === 1
                                 ? "1 file selected."
                                 : `${files.length} files selected.`}
-                        </Heading>
+                        </Text>
                         <Text fontWeight="light">
                             {files.length < 1
                                 ? "Or click to upload."
