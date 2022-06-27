@@ -141,6 +141,16 @@ const routes = (
             }
         />
         <Route
+            path="accounts"
+            element={
+                <RequireAuth>
+                    <Accounts />
+                </RequireAuth>
+            }
+        >
+            <Route path="create" element={<AccountCreationModal />} />
+        </Route>
+        <Route
             path="accounts/:id"
             element={
                 <RequireAuth>
@@ -160,14 +170,6 @@ const routes = (
             />
         </Route>
         <Route
-            path="accounts"
-            element={
-                <RequireAuth>
-                    <Accounts />
-                </RequireAuth>
-            }
-        ></Route>
-        <Route
             path="learn"
             element={
                 <RequireAuth>
@@ -176,7 +178,6 @@ const routes = (
             }
         ></Route>
         >
-        <Route path="create" element={<AccountCreationModal />} />
         <Route
             path="portfolio"
             element={
@@ -193,7 +194,6 @@ const routes = (
                 </RequireAuth>
             }
         ></Route>
-        <Route path="create" element={<AccountCreationModal />} />
         <Route path="plan" element={<Plan />} />
         <Route path="*" element={<PageNotFound />} />
     </Routes>
