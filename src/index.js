@@ -32,8 +32,9 @@ import Plan from "./features/planbudget/Plan";
 import { PersistGate } from "redux-persist/integration/react";
 import SignOut from "./features/user/authentication/SignOut";
 import Learn from "./features/learn/Learn";
-import WorkInProgress from "./features/errors/WorkInProgress";
 import LandingPage from "./features/landing/LandingPage";
+import Settings from "./features/settings/Settings";
+import Portfolio from "./features/portfolio/Portfolio";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -182,7 +183,7 @@ const routes = (
             path="portfolio"
             element={
                 <RequireAuth>
-                    <WorkInProgress />
+                    <Portfolio />
                 </RequireAuth>
             }
         ></Route>
@@ -190,7 +191,7 @@ const routes = (
             path="settings"
             element={
                 <RequireAuth>
-                    <WorkInProgress />
+                    <Settings />
                 </RequireAuth>
             }
         ></Route>
