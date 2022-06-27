@@ -2,9 +2,9 @@ import PageTemplate from "../../common/components/PageTemplate";
 import { Outlet, useParams } from "react-router-dom";
 import Card from "../../common/components/Card";
 import { useSelector } from "react-redux";
-import { selectAccounts } from "./state/accounts";
+import { selectAccounts } from "../accounts/state/accounts";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
-import { Box, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Badge, Box, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import {
     format,
     formatDistanceToNow,
@@ -90,6 +90,36 @@ export default function Account() {
         }
     };
 
+    const DetailsCard = () => {
+        return (
+            <Card
+                heading="Account Details"
+                subheading="You can modify some of these details at any time by clicking on them."
+            >
+                <Card
+                    isNested
+                    heading="Name"
+                    subheading={name}
+                    link="./rename"
+                />
+                <Card
+                    isNested
+                    heading="Nickname"
+                    subheading={nickname}
+                    link="./rename"
+                />
+                <Card
+                    isNested
+                    heading="Created"
+                    link="./delete"
+                    subheading={`${formatDistanceToNow(
+                        createdAt
+                    )} ago, at ${format(createdAt, "MMM d, yyyy h:mm a")}`}
+                />
+            </Card>
+        );
+    };
+
     const BalanceCard = () => {
         if (lastTransaction === null) {
             return (
@@ -124,6 +154,18 @@ export default function Account() {
         );
     };
 
+    const ParseCard = () => {
+        return (
+            <Card
+                heading="Document Parser"
+                subheading="You can upload documents to parse for transactions."
+                badge={<Badge colorScheme="red">Experimental</Badge>}
+            >
+                <NavButton to="./upload-disclaimer" text="Parse documents" />
+            </Card>
+        );
+    };
+
     // === === ===
     // Combine the components.
     return (
@@ -136,35 +178,9 @@ export default function Account() {
             <Box h="100%" w="100%">
                 <SimpleGrid minChildWidth="500px" spacing="30px" mb="40px">
                     <BalanceCard />
+                    <DetailsCard />
+                    <ParseCard />
                     <TransactionCard />
-                    <Card
-                        heading="Account Details"
-                        subheading="You can modify some of these details at any time by clicking on them."
-                    >
-                        <Card
-                            isNested
-                            heading="Name"
-                            subheading={name}
-                            link="./rename"
-                        />
-                        <Card
-                            isNested
-                            heading="Nickname"
-                            subheading={nickname}
-                            link="./rename"
-                        />
-                        <Card
-                            isNested
-                            heading="Created"
-                            link="./delete"
-                            subheading={`${formatDistanceToNow(
-                                createdAt
-                            )} ago, at ${format(
-                                createdAt,
-                                "MMM d, yyyy h:mm a"
-                            )}`}
-                        />
-                    </Card>
                 </SimpleGrid>
             </Box>
             <Outlet context={[id, name, nickname]} />

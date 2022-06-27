@@ -1,17 +1,20 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import transactionsReducer from "../features/transactions/state/transactions";
 import accountsReducer from "../features/accounts/state/accounts";
+import filesReducer from "../features/account/state/files";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist"; // defaults to localStorage for web
 
 const persistConfig = {
     key: "root",
+    blacklist: ["files"],
     storage,
 };
 
 const rootReducer = combineReducers({
     transactions: transactionsReducer,
     accounts: accountsReducer,
+    files: filesReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
