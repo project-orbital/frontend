@@ -16,6 +16,7 @@ export default function TransactionsCard() {
 
     const NoTransactions = () => (
         <Card
+            isCentered
             heading="No transactions to display."
             subheading="Get started by creating one manually, or upload a bank statement."
         />
