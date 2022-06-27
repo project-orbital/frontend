@@ -10,7 +10,7 @@ import { Box, Flex, Heading, Spacer } from "@chakra-ui/react";
 
 export default function Plan() {
     return (
-        <PageTemplate>
+        <PageTemplate page="plan">
             <Breadcrumbs
                 path="Home/Budget Planner"
                 links={["/dashboard", "/plan"]}
