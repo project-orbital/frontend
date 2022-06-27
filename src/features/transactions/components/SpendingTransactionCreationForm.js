@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { VStack } from "@chakra-ui/react";
@@ -8,7 +8,6 @@ import { format, formatISO, isMatch, parse } from "date-fns";
 import { useParams } from "react-router-dom";
 import FormTextField from "../../../common/components/FormTextField";
 import TypeOfSpending from "./SpendingsDropDownField";
-import { useState } from "react";
 
 export default function ReceivingTransactionCreationForm({ afterSubmit }) {
     const { id } = useParams();
@@ -20,9 +19,9 @@ export default function ReceivingTransactionCreationForm({ afterSubmit }) {
         <Formik
             initialValues={{
                 date: today,
-                amount: 123.9,
+                amount: -123.91,
                 balance: 4567.89,
-                description: "Spending",
+                description: "An expense.",
             }}
             validationSchema={Yup.object({
                 date: Yup.string()

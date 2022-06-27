@@ -63,11 +63,11 @@ export default function Account() {
                 >
                     <NavButton
                         to="./create-spending-transaction"
-                        text="Create a spending transaction"
+                        text="Add a withdrawal transaction"
                     />
                     <NavButton
                         to="./create-receiving-transaction"
-                        text="Create a receiving transaction"
+                        text="Add a deposit transaction"
                     />
                 </Card>
             );
@@ -79,11 +79,11 @@ export default function Account() {
                     </Card>
                     <NavButton
                         to="./create-spending-transaction"
-                        text="Create a spending transaction"
+                        text="Add a withdrawal transaction"
                     />
                     <NavButton
                         to="./create-receiving-transaction"
-                        text="Create a receiving transaction"
+                        text="Add a deposit transaction"
                     />
                 </Card>
             );

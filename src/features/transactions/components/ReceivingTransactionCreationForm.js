@@ -18,7 +18,7 @@ export default function SpendingTransactionCreationForm({ afterSubmit }) {
                 date: today,
                 amount: 123.9,
                 balance: 4567.89,
-                description: "Receiving",
+                description: "Some income.",
             }}
             validationSchema={Yup.object({
                 date: Yup.string()
