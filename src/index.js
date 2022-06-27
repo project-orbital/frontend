@@ -16,7 +16,7 @@ import { Provider } from "react-redux";
 import "@fontsource/dm-serif-display/400.css";
 import Accounts from "./features/accounts/Accounts";
 import AccountCreationModal from "./features/accounts/components/AccountCreationModal";
-import Account from "./features/accounts/Account";
+import Account from "./features/account/Account";
 import AccountRenameModal from "./features/accounts/components/AccountRenameModal";
 import AccountDeleteModal from "./features/accounts/components/AccountDeleteModal";
 import EmailSent from "./features/user/email-verification/EmailSent";
@@ -35,6 +35,7 @@ import Learn from "./features/learn/Learn";
 import LandingPage from "./features/landing/LandingPage";
 import Settings from "./features/settings/Settings";
 import Portfolio from "./features/portfolio/Portfolio";
+import DisclaimerModal from "./features/account/components/DisclaimerModal";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -159,6 +160,7 @@ const routes = (
                 </RequireAuth>
             }
         >
+            <Route path="upload-disclaimer" element={<DisclaimerModal />} />
             <Route path="rename" element={<AccountRenameModal />} />
             <Route path="delete" element={<AccountDeleteModal />} />
             <Route

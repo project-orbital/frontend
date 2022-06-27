@@ -1,65 +1,74 @@
 import {
     Heading,
     HStack,
-    Modal,
+    Modal as ChakraModal,
     ModalBody,
     ModalContent,
     ModalFooter,
     ModalHeader,
     ModalOverlay,
     Text,
+    useDisclosure,
 } from "@chakra-ui/react";
 import BackButton from "../components/buttons/BackButton";
 import CancelButton from "../components/buttons/CancelButton";
 import SubmitButton from "../components/buttons/SubmitButton";
+import NavButton from "./buttons/NavButton";
 
-export default function AModal(
+export default function Modal({
     hasBackButton,
+    title,
     heading,
     subheading,
-    text,
-    form,
-    onClose,
-    isOpen
-) {
+    cancelText,
+    submitText,
+    submitLink,
+    submitButton,
+    children,
+}) {
+    const { onClose } = useDisclosure();
+
     const Header = () => {
         return (
             <ModalHeader>
                 <HStack align="center">
                     {hasBackButton && <BackButton />}
                     <Heading as="h3" size="md" fontWeight="semibold">
-                        {heading}
+                        {title}
                     </Heading>
                 </HStack>
                 <Text fontSize="md" fontWeight="medium" mt="20px">
-                    {subheading}
+                    {heading}
                 </Text>
                 <Text fontSize="sm" fontWeight="normal" color="gray.600">
-                    {text}
+                    {subheading}
                 </Text>
             </ModalHeader>
         );
     };
 
     const Body = () => {
-        return <ModalBody>{form}</ModalBody>;
+        return <ModalBody>{children}</ModalBody>;
     };
 
     const Footer = () => {
         return (
             <ModalFooter mt="20px" gap="20px">
-                <CancelButton />
-                <SubmitButton />
+                <CancelButton text={cancelText} />
+                {submitButton ||
+                    (submitLink ? (
+                        <NavButton to={submitLink} text={submitText} w="100%" />
+                    ) : (
+                        <SubmitButton text={submitText} />
+                    ))}
             </ModalFooter>
         );
     };
 
-    // === === ===
-    // Modal component.
     return (
-        <Modal
+        <ChakraModal
             onClose={onClose}
-            isOpen={isOpen}
+            isOpen
             closeOnOverlayClick={false}
             isCentered
             size="xl"
@@ -71,6 +80,6 @@ export default function AModal(
                 <Body />
                 <Footer />
             </ModalContent>
-        </Modal>
+        </ChakraModal>
     );
 }

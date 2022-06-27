@@ -1,8 +1,8 @@
 import { Button, Center, useDisclosure } from "@chakra-ui/react";
-import UploadModal from "./UploadModal";
+import UploadModal from "../../account/components/UploadModal";
 import { useState } from "react";
-import ReviewModal from "./ReviewModal";
-import ConfirmCancelModal from "./ConfirmCancelModal";
+import ReviewModal from "../../account/components/ReviewModal";
+import ConfirmCancelModal from "../../account/components/ConfirmCancelModal";
 
 export default function UploadButton() {
     // === === ===
@@ -14,8 +14,8 @@ export default function UploadButton() {
 
     return (
         <>
-            <Center>
-                <Button h="60px" onClick={uploadModal.onOpen}>
+            <Center w="100%">
+                <Button h="60px" w="100%" onClick={uploadModal.onOpen}>
                     Upload bank statements
                 </Button>
                 <UploadModal
