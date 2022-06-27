@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Modal({
     hasBackButton,
+    size,
     title,
     heading,
     subheading,
@@ -81,7 +82,7 @@ export default function Modal({
             closeOnOverlayClick={false}
             scrollBehavior="inside"
             isCentered
-            size="xl"
+            size={size || "xl"}
             motionPreset="slideInBottom"
         >
             <ModalOverlay />

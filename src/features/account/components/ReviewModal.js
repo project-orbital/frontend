@@ -12,7 +12,7 @@ import axios from "axios";
 import { addTransactions } from "../../transactions/state/transactions";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllFiles, selectFiles } from "../state/files";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Modal from "../../../common/components/Modal";
 
 export default function ReviewModal() {
@@ -45,8 +45,7 @@ export default function ReviewModal() {
     };
 
     const handleCancel = () => {
-        dispatch(deleteAllFiles());
-        navigate("../");
+        navigate("./cancel");
     };
 
     const handleSubmit = (data) => {
@@ -142,6 +141,7 @@ export default function ReviewModal() {
                     </FormControl>
                 </Form>
             </Formik>
+            <Outlet />
         </Modal>
     );
 }

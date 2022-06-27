@@ -1,26 +1,23 @@
-import {
-    Button,
-    Heading,
-    HStack,
-    Modal,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    Text,
-} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { BsFillCaretLeftFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import { deleteAllFiles } from "../state/files";
+import { useDispatch } from "react-redux";
+import Modal from "../../../common/components/Modal";
 
-export default function ConfirmCancelModal({ modal, action }) {
+export default function ConfirmCancelModal() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     // === === ===
     // Action handling.
     const handleNoCancel = () => {
-        modal.onClose();
+        navigate("../");
     };
 
     const handleActualCancel = () => {
-        modal.onClose();
-        action();
+        dispatch(deleteAllFiles());
+        navigate("../../");
     };
 
     // === === ===
@@ -55,42 +52,13 @@ export default function ConfirmCancelModal({ modal, action }) {
     // === === ===
     // Modal component.
     return (
-        <>
-            <Modal
-                isCentered
-                onClose={modal.onClose}
-                isOpen={modal.isOpen}
-                closeOnOverlayClick={false}
-                scrollBehavior="inside"
-                size="md"
-                motionPreset="slideInBottom"
-            >
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>
-                        <HStack align="center">
-                            <Heading as="h3" size="md" fontWeight="semibold">
-                                Cancel file uploading
-                            </Heading>
-                        </HStack>
-                        <Text fontSize="md" fontWeight="medium" mt="20px">
-                            Are you sure you want to cancel getting the
-                            transactions from your bank statements?
-                        </Text>
-                        <Text
-                            fontSize="sm"
-                            fontWeight="normal"
-                            color="gray.600"
-                        >
-                            You will lose all your current selections.
-                        </Text>
-                    </ModalHeader>
-                    <ModalFooter mt="20px" gap="20px">
-                        <NoCancelButton />
-                        <ActualCancelButton />
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-        </>
+        <Modal
+            size="lg"
+            title="Cancel file uploading"
+            heading="Are you sure you want to cancel getting transactions from your bank statements?"
+            subheading="You will lose all your current selections."
+            cancelButton={<NoCancelButton />}
+            submitButton={<ActualCancelButton />}
+        />
     );
 }

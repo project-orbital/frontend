@@ -165,8 +165,9 @@ const routes = (
         >
             <Route path="upload-disclaimer" element={<DisclaimerModal />} />
             <Route path="upload-files" element={<UploadModal />} />
-            <Route path="upload-review" element={<ReviewModal />} />
-            <Route path="upload-cancel" element={<ConfirmCancelModal />} />
+            <Route path="upload-review" element={<ReviewModal />}>
+                <Route path="cancel" element={<ConfirmCancelModal />} />
+            </Route>
             <Route path="rename" element={<AccountRenameModal />} />
             <Route path="delete" element={<AccountDeleteModal />} />
             <Route
