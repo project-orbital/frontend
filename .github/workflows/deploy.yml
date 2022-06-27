@@ -1,0 +1,61 @@
+name: CD
+on:
+    push:
+        branches: ["master"]
+    pull_request:
+        branches: ["master"]
+    workflow_dispatch:
+jobs:
+    deploy:
+        name: "Deploy to AWS EC2"
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        steps:
+            - name: Configure SSH
+              run: |
+                  mkdir -p ~/.ssh/
+                  echo "$SSH_KEY" > ~/.ssh/DollarPlanner.pem
+                  chmod 600 ~/.ssh/DollarPlanner.pem
+                  cat >>~/.ssh/config <<END
+                  Host staging
+                    HostName $SSH_HOST
+                    User $SSH_USER
+                    IdentityFile ~/.ssh/DollarPlanner.pem
+                    StrictHostKeyChecking no
+                  END
+              env:
+                  SSH_USER: ${{ secrets.SSH_USER }}
+                  SSH_KEY: ${{ secrets.SSH_KEY }}
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
+
+            - name: Checkout the master branch
+              uses: actions/checkout@v3
+              with:
+                  ref: master
+
+            - name: Build the application
+              run: |
+                  npm install
+                  npm run build
+
+            - name: Commit the built files
+              run: |
+                  git config --global user.email "dollarplanner2022@gmail.com"
+                  git config --global user.name "DollarPlanner"
+                  git switch -c deploy 
+                  git add .
+                  git commit -m "Build for deployment" --allow-empty
+                  git push origin deploy --force
+
+            - name: Stop the server
+              run: ssh staging 'sudo service nginx stop'
+
+            - name: Checkout the branch to deploy
+              run: ssh staging 'cd ~/frontend && git fetch && git reset --hard origin/deploy'
+
+            - name: Copy the files to the deployment directory
+              run: ssh staging 'cp -r ~/frontend/build ~/frontend/deployed && mkdir -p ~/frontend/server_logs'
+
+            - name: Start the server
+              if: ${{ always() }}
+              run: ssh staging 'sudo service nginx start'
