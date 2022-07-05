@@ -27,6 +27,7 @@ import PasswordResetEmailSent from "./features/user/password-reset/PasswordReset
 import ResetPasswordSuccess from "./features/user/password-reset/ResetPasswordSuccess";
 import ResetPassword from "./features/user/password-reset/ResetPassword";
 import TransactionCreationModal from "./features/transactions/components/TransactionCreationModal";
+import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
 import PageNotFound from "./features/errors/PageNotFound";
 import Plan from "./features/plan/Plan";
 import { PersistGate } from "redux-persist/integration/react";
@@ -177,6 +178,10 @@ const routes = (
             <Route
                 path="create-receiving-transaction"
                 element={<TransactionCreationModal isSpending={false} />}
+            />
+            <Route
+                path="delete-transaction"
+                element={<TransactionDeletionModal />}
             />
         </Route>
         <Route
