@@ -1,5 +1,5 @@
 import { StrictMode, useEffect, useState } from "react";
-import * as ReactDOM from "react-dom";
+import * as ReactDOMClient from "react-dom/client";
 import {
     ChakraProvider,
     ColorModeScript,
@@ -186,8 +186,7 @@ const routes = (
                     <Learn />
                 </RequireAuth>
             }
-        ></Route>
-        >
+        />
         <Route
             path="portfolio"
             element={
@@ -195,7 +194,7 @@ const routes = (
                     <Portfolio />
                 </RequireAuth>
             }
-        ></Route>
+        />
         <Route
             path="settings"
             element={
@@ -203,7 +202,7 @@ const routes = (
                     <Settings />
                 </RequireAuth>
             }
-        ></Route>
+        />
         <Route path="plan" element={<Plan />} />
         <Route path="*" element={<PageNotFound />} />
     </Routes>
@@ -225,4 +224,5 @@ const element = (
     </StrictMode>
 );
 
-ReactDOM.render(element, document.getElementById("root"));
+const root = ReactDOMClient.createRoot(document.getElementById("root"));
+root.render(element);
