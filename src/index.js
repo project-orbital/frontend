@@ -1,5 +1,5 @@
 import { StrictMode, useEffect, useState } from "react";
-import * as ReactDOMClient from "react-dom/client";
+import * as ReactDOM from "react-dom";
 import {
     ChakraProvider,
     ColorModeScript,
@@ -27,7 +27,6 @@ import PasswordResetEmailSent from "./features/user/password-reset/PasswordReset
 import ResetPasswordSuccess from "./features/user/password-reset/ResetPasswordSuccess";
 import ResetPassword from "./features/user/password-reset/ResetPassword";
 import TransactionCreationModal from "./features/transactions/components/TransactionCreationModal";
-import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
 import PageNotFound from "./features/errors/PageNotFound";
 import Plan from "./features/plan/Plan";
 import { PersistGate } from "redux-persist/integration/react";
@@ -40,6 +39,7 @@ import DisclaimerModal from "./features/account/components/DisclaimerModal";
 import UploadModal from "./features/account/components/UploadModal";
 import ReviewModal from "./features/account/components/ReviewModal";
 import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal";
+import PlanMenu from "./features/plan/PlanMenu";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -179,10 +179,6 @@ const routes = (
                 path="create-receiving-transaction"
                 element={<TransactionCreationModal isSpending={false} />}
             />
-            <Route
-                path="delete-transaction"
-                element={<TransactionDeletionModal />}
-            />
         </Route>
         <Route
             path="learn"
@@ -191,7 +187,7 @@ const routes = (
                     <Learn />
                 </RequireAuth>
             }
-        />
+        ></Route>
         <Route
             path="portfolio"
             element={
@@ -199,7 +195,7 @@ const routes = (
                     <Portfolio />
                 </RequireAuth>
             }
-        />
+        ></Route>
         <Route
             path="settings"
             element={
@@ -207,8 +203,23 @@ const routes = (
                     <Settings />
                 </RequireAuth>
             }
+        ></Route>
+        <Route
+            path="planMenu"
+            element={
+                <RequireAuth>
+                    <PlanMenu />
+                </RequireAuth>
+            }
+        ></Route>
+        <Route
+            path="plan/:id"
+            element={
+                <RequireAuth>
+                    <Plan />
+                </RequireAuth>
+            }
         />
-        <Route path="plan" element={<Plan />} />
         <Route path="*" element={<PageNotFound />} />
     </Routes>
 );
@@ -229,5 +240,4 @@ const element = (
     </StrictMode>
 );
 
-const root = ReactDOMClient.createRoot(document.getElementById("root"));
-root.render(element);
+ReactDOM.render(element, document.getElementById("root"));
