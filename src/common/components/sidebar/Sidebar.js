@@ -54,7 +54,7 @@ export default function Sidebar({ selected }) {
             />
             <SidebarLink
                 isSelected={selected === "plan"}
-                to="/plan"
+                to="/planMenu"
                 text="plan"
                 icon={<RiPieChart2Fill size="32px" />}
             />
