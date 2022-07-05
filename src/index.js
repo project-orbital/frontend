@@ -39,6 +39,7 @@ import DisclaimerModal from "./features/account/components/DisclaimerModal";
 import UploadModal from "./features/account/components/UploadModal";
 import ReviewModal from "./features/account/components/ReviewModal";
 import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal";
+import PlanMenu from "./features/plan/PlanMenu";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -187,7 +188,6 @@ const routes = (
                 </RequireAuth>
             }
         ></Route>
-        >
         <Route
             path="portfolio"
             element={
@@ -204,7 +204,22 @@ const routes = (
                 </RequireAuth>
             }
         ></Route>
-        <Route path="plan" element={<Plan />} />
+        <Route
+            path="planMenu"
+            element={
+                <RequireAuth>
+                    <PlanMenu />
+                </RequireAuth>
+            }
+        ></Route>
+        <Route
+            path="plan/:id"
+            element={
+                <RequireAuth>
+                    <Plan />
+                </RequireAuth>
+            }
+        />
         <Route path="*" element={<PageNotFound />} />
     </Routes>
 );
