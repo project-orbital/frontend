@@ -85,6 +85,12 @@ export default function Account() {
                         to="./create-receiving-transaction"
                         text="Add a deposit transaction"
                     />
+                    <NavButton
+                        to="./delete-transaction"
+                        text="Delete a transaction"
+                        bg="red.500"
+                        c="white"
+                    />
                 </Card>
             );
         }

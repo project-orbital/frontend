@@ -40,6 +40,13 @@ export const transactionsSlice = createSlice({
             state.history.push(...transactions);
             state.counter += transactions.length;
         },
+        // Deletes a transaction given its ID.
+        deleteTransactionWithID: (state, action) => {
+            const index = state.history.findIndex(
+                (tx) => tx.id === action.payload
+            );
+            state.history.splice(index, 1);
+        },
     },
 });
 
@@ -137,6 +144,7 @@ export const selectMonthEndBalancesFromAccount = (accountId) => (state) => {
         }, []);
 };
 
-export const { addTransaction, addTransactions } = transactionsSlice.actions;
+export const { addTransaction, addTransactions, deleteTransactionWithID } =
+    transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
