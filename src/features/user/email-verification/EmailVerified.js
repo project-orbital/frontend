@@ -21,7 +21,7 @@ export default function EmailVerified() {
                     text="Sign in"
                     w="100%"
                     bg="accent"
-                    c="white"
+                    color="white"
                 ></NavButton>
             </Center>
         </PageTemplate>

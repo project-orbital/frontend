@@ -18,10 +18,10 @@ export default function Navbar({ hasSignInButton, hasSignUpButton }) {
                 to="/sign-in"
                 text="Sign in"
                 h="40px"
-                fw="normal"
-                fs="sm"
+                fontWeight="normal"
+                fontSize="sm"
                 bg="none"
-                c="fg-light"
+                color="fg-light"
                 zIndex={2}
             />
         );
@@ -33,10 +33,10 @@ export default function Navbar({ hasSignInButton, hasSignUpButton }) {
                 to="/sign-up"
                 text="Sign up"
                 h="40px"
-                fw="semibold"
-                fs="sm"
+                fontWeight="semibold"
+                fontSize="sm"
                 bg="fg"
-                c="bg"
+                color="bg"
                 zIndex={2}
             />
         );

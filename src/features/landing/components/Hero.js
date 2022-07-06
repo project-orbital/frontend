@@ -44,10 +44,10 @@ export default function Hero() {
                     text="Sign up"
                     h="60px"
                     w="300px"
-                    fw="semibold"
-                    fs="lg"
+                    fontWeight="semibold"
+                    fontSize="lg"
                     bg="accent"
-                    c="white"
+                    color="white"
                 />
                 <Text pt="10px" color="fg-light">
                     Already have an account?{" "}
