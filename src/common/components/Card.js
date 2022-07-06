@@ -38,7 +38,7 @@ import { Link } from "react-router-dom";
  * @param isNested `true` if this card is nested inside another card, `false` otherwise
  * @param isCentered `true` if the contents of this card should be centered, `false` otherwise
  * @param isStandalone `true` if this card should be displayed on its own, `false` otherwise
- * @param isDarkModeReady `true` if this card should be respond to color mode toggles, `false` otherwise
+ * @param isDarkModeReady [DEPRECATED] `true` if this card should be respond to color mode toggles, `false` otherwise
  * @param isExternalLink `true` if this card's link is an external link, `false` otherwise
  * @return the card component
  */
