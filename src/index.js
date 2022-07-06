@@ -1,5 +1,4 @@
 import { StrictMode, useEffect, useState } from "react";
-import * as ReactDOM from "react-dom";
 import {
     ChakraProvider,
     ColorModeScript,
@@ -7,6 +6,7 @@ import {
     extendTheme,
 } from "@chakra-ui/react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import * as ReactDOMClient from "react-dom/client";
 import ky from "ky";
 import SignUp from "./features/user/authentication/SignUp";
 import SignIn from "./features/user/authentication/SignIn";
@@ -240,4 +240,5 @@ const element = (
     </StrictMode>
 );
 
-ReactDOM.render(element, document.getElementById("root"));
+const root = ReactDOMClient.createRoot(document.getElementById("root"));
+root.render(element);
