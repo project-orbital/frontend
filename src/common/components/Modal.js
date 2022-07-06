@@ -18,11 +18,19 @@ import { useNavigate } from "react-router-dom";
 
 /**
  * A custom modal component wrapping around Chakra UI's modal.
+ * If you intend to integrate a form with the modal, check out `FormModal` instead.
  *
  * The modal should have a title, heading, and subheading.
- * By default, the modal will have a cancel button and a submit button which perform
+ *
+ * By default, the modal will have a cancel button which performs
  * a backward navigation to the previous page.
+ * A submit button is also included but default, but it will not do anything
+ * unless the `submitLink` prop is passed.
+ *
  * If form submission is required, pass the form ID to the `submitForm` prop.
+ * It is recommended to handle navigation after form submission using your
+ * form library's `onSubmit` equivalent instead of using `submitLink` because the
+ * default submit button will not do any form validation.
  *
  * @param hasBackButton (optional, default: false) `true` if the modal should have a back button, `false` otherwise
  * @param size (optional, default: "xl") the size of the modal: "sm", "md", "lg", or "xl"
@@ -96,7 +104,7 @@ export default function Modal({
                         <SubmitButton
                             text={submitText}
                             form={submitForm}
-                            onClick={() => navigate(submitLink || -1)}
+                            onClick={submitLink && (() => navigate(submitLink))}
                         />
                     ))}
             </ModalFooter>
