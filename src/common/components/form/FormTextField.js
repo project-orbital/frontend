@@ -37,6 +37,7 @@ import React from "react";
  *
  * @param isRequired whether an empty field should block form submission
  * @param isMultiline whether the field should be vertically-resizable
+ * @param isPassword whether the field should be masked as a password, if not multi-line
  * @param withErrorMessage whether an error message should be displayed
  * @param id the field's unique identifier
  * @param labelText the field's label text
@@ -46,6 +47,7 @@ import React from "react";
 export default function FormTextField({
     isRequired,
     isMultiline,
+    isPassword,
     withErrorMessage,
     id,
     labelText,
@@ -71,6 +73,7 @@ export default function FormTextField({
                         <Input
                             {...field}
                             id={id}
+                            type={isPassword && "password"}
                             placeholder={placeholderText || ""}
                         />
                     )}
