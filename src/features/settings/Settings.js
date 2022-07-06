@@ -16,14 +16,18 @@ import { AiOutlineUserDelete } from "react-icons/ai";
 import ky from "ky";
 
 export default function Settings() {
+    // Dark mode toggle
     const { colorMode, toggleColorMode } = useColorMode();
     const handleColorModeToggle = () => {
         const prefersDarkMode = colorMode !== "dark";
         toggleColorMode();
-        ky.post(`${process.env.REACT_APP_BACKEND}/users/update-preferences`, {
-            json: { prefersDarkMode: prefersDarkMode },
-            credentials: "include",
-        });
+        ky.post(
+            `${process.env.REACT_APP_BACKEND}/users/preferences/dark-mode`,
+            {
+                json: { prefersDarkMode: prefersDarkMode },
+                credentials: "include",
+            }
+        );
     };
 
     return (
