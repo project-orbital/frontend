@@ -40,6 +40,7 @@ import UploadModal from "./features/account/components/UploadModal";
 import ReviewModal from "./features/account/components/ReviewModal";
 import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal";
 import PlanMenu from "./features/plan/PlanMenu";
+import PasswordChangeModal from "./features/settings/components/PasswordChangeModal";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -203,7 +204,9 @@ const routes = (
                     <Settings />
                 </RequireAuth>
             }
-        ></Route>
+        >
+            <Route path="change-password" element={<PasswordChangeModal />} />
+        </Route>
         <Route
             path="planMenu"
             element={

@@ -13,6 +13,7 @@ import NavButton from "../../common/components/buttons/NavButton";
 import { CgDarkMode } from "react-icons/cg";
 import { TbEraser } from "react-icons/tb";
 import { AiOutlineUserDelete } from "react-icons/ai";
+import { Outlet } from "react-router-dom";
 import ky from "ky";
 
 export default function Settings() {
@@ -63,7 +64,12 @@ export default function Settings() {
                         subheading="You can update your email, username, and/or your password here."
                     >
                         <NavButton text="Update profile" bg="dim" c="fg" />
-                        <NavButton text="Change password" bg="dim" c="fg" />
+                        <NavButton
+                            to="./change-password"
+                            text="Change password"
+                            bg="dim"
+                            c="fg"
+                        />
                         <NavButton
                             icon={
                                 <AiOutlineUserDelete
@@ -96,6 +102,7 @@ export default function Settings() {
                     </Card>
                 </SimpleGrid>
             </Box>
+            <Outlet />
         </PageTemplate>
     );
 }
