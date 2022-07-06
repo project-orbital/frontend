@@ -41,6 +41,7 @@ import ReviewModal from "./features/account/components/ReviewModal";
 import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal";
 import PlanMenu from "./features/plan/PlanMenu";
 import PasswordChangeModal from "./features/settings/components/PasswordChangeModal";
+import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -200,6 +201,10 @@ const routes = (
             <Route
                 path="create-receiving-transaction"
                 element={<TransactionCreationModal isSpending={false} />}
+            />
+            <Route
+                path="delete-transaction"
+                element={<TransactionDeletionModal />}
             />
         </Route>
         <Route
