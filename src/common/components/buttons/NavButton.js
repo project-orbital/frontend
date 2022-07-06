@@ -1,4 +1,4 @@
-import { Button, Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { BsFillCaretRightFill } from "react-icons/bs";
 
@@ -7,11 +7,13 @@ import { BsFillCaretRightFill } from "react-icons/bs";
  *
  * @param to the route to navigate to
  * @param text the text to display on the button
+ * @param icon an optional icon to display to the left of the button text
  * @param withArrow `true` to display a right arrow icon in the button text, `false` otherwise
  * @return the button
  */
 export default function NavButton({
     to,
+    icon,
     text,
     withArrow,
     h,
@@ -36,6 +38,7 @@ export default function NavButton({
                 transform: "scale(1.08)",
             }}
         >
+            {icon && <Box pr="8px">{icon}</Box>}
             <Text color={c || "white"} fontWeight={fw} fontSize={fs}>
                 {text}
             </Text>
