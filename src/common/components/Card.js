@@ -1,7 +1,6 @@
 import {
     Badge,
     Box,
-    Heading,
     LinkBox,
     LinkOverlay,
     SimpleGrid,
@@ -68,27 +67,29 @@ export default function Card({
             mb={children && !isNested ? "20px" : "0px"}
             align={isCentered ? "center" : "start"}
             borderBottom={isNested || isCentered ? "none" : "1px solid black"}
+            spacing={0}
         >
             {icon && <Box color="fg">{icon}</Box>}
             {badge}
             {info && <Badge fontWeight="bold">{info}</Badge>}
             {heading && (
-                <Heading
-                    as="h2"
+                <Text
                     align={isCentered ? "center" : "start"}
-                    size={isNested ? "md" : isStandalone ? "4xl" : "lg"}
-                    pb={subheading || children ? "0px" : "20px"}
+                    fontWeight="bold"
+                    fontSize={isNested ? "md" : isStandalone ? "4xl" : "xl"}
+                    pt={badge || info ? "10px" : "0px"}
+                    pb={subheading ? "2px" : children ? "0px" : "20px"}
                     lineHeight={isStandalone ? "1.25em" : null}
                     color={isStandalone ? null : "fg"}
                     bgGradient={isStandalone ? accentGradient : null}
                     bgClip={isStandalone ? "text" : null}
                 >
                     {heading}
-                </Heading>
+                </Text>
             )}
             {subheading && (
                 <Text
-                    fontSize={isNested ? "md" : "sm"}
+                    fontSize="sm"
                     mb="20px"
                     align={isCentered ? "center" : "start"}
                 >
