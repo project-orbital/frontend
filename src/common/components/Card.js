@@ -66,7 +66,8 @@ export default function Card({
             pb={children ? "20px" : "0px"}
             mb={children && !isNested ? "20px" : "0px"}
             align={isCentered ? "center" : "start"}
-            borderBottom={isNested || isCentered ? "none" : "1px solid black"}
+            borderBottom={isNested || isCentered ? "none" : "1px solid"}
+            borderColor="fg-light"
             spacing={0}
         >
             {icon && <Box color="fg">{icon}</Box>}
@@ -90,6 +91,7 @@ export default function Card({
             {subheading && (
                 <Text
                     fontSize="sm"
+                    pb={children ? "0px" : "15px"}
                     mb="20px"
                     align={isCentered ? "center" : "start"}
                 >
