@@ -85,6 +85,12 @@ export default function Account() {
                         to="./create-receiving-transaction"
                         text="Add a deposit transaction"
                     />
+                    <NavButton
+                        to="./delete-transaction"
+                        text="Delete a transaction"
+                        bg="red.500"
+                        c="white"
+                    />
                 </Card>
             );
         }
@@ -166,6 +172,18 @@ export default function Account() {
         );
     };
 
+    const BudgetPlannerCard = () => {
+        return (
+            <Card
+                heading="Budget Planner"
+                subheading="Use the budget planner feature with this account's details."
+                badge={<Badge colorScheme="red">New!</Badge>}
+            >
+                <NavButton to={`/plan/${id}`} text="Head to Budget Planner" />
+            </Card>
+        );
+    };
+
     // === === ===
     // Combine the components.
     return (
@@ -181,6 +199,7 @@ export default function Account() {
                     <DetailsCard />
                     <ParseCard />
                     <TransactionCard />
+                    <BudgetPlannerCard />
                 </SimpleGrid>
             </Box>
             <Outlet context={[id, name, nickname]} />
