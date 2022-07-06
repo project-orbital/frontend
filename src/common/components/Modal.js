@@ -16,6 +16,29 @@ import SubmitButton from "../components/buttons/SubmitButton";
 import NavButton from "./buttons/NavButton";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * A custom modal component wrapping around Chakra UI's modal.
+ *
+ * The modal should have a title, heading, and subheading.
+ * By default, the modal will have a cancel button and a submit button which perform
+ * a backward navigation to the previous page.
+ * If form submission is required, pass the form ID to the `submitForm` prop.
+ *
+ * @param hasBackButton (optional, default: false) `true` if the modal should have a back button, `false` otherwise
+ * @param size (optional, default: "xl") the size of the modal: "sm", "md", "lg", or "xl"
+ * @param title the title of the modal displayed in bold at the top of the modal
+ * @param heading the heading of the modal displayed below the title
+ * @param subheading the subheading of the modal displayed below the heading
+ * @param cancelText (optional, default: "Cancel") the text of the cancel button
+ * @param cancelLink (optional, default: backward navigation) the link the cancel button should point to
+ * @param cancelButton (optional) a to display instead of the default cancel button, overriding `cancelText` and `cancelLink`
+ * @param submitText (optional, default: "Submit") the text of the submit button
+ * @param submitForm (optional) the form ID to submit when the submit button is clicked
+ * @param submitLink (optional, default: backward navigation) the link the submit button should point to
+ * @param submitButton (optional) a to display instead of the default submit button, overriding `submitText` and `submitLink`
+ * @param children the children elements for the modal body
+ * @return {JSX.Element}
+ */
 export default function Modal({
     hasBackButton,
     size,
@@ -26,6 +49,7 @@ export default function Modal({
     cancelLink,
     cancelButton,
     submitText,
+    submitForm,
     submitLink,
     submitButton,
     children,
@@ -69,7 +93,11 @@ export default function Modal({
                     (submitLink ? (
                         <NavButton to={submitLink} text={submitText} w="100%" />
                     ) : (
-                        <SubmitButton text={submitText} />
+                        <SubmitButton
+                            text={submitText}
+                            form={submitForm}
+                            onClick={() => navigate(submitLink || -1)}
+                        />
                     ))}
             </ModalFooter>
         );
