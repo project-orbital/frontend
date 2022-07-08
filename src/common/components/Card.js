@@ -1,6 +1,7 @@
 import {
     Badge,
     Box,
+    Heading,
     LinkBox,
     LinkOverlay,
     SimpleGrid,
@@ -73,17 +74,23 @@ export default function Card({
             {icon && <Box color="fg">{icon}</Box>}
             {badge}
             {info && <Badge fontWeight="bold">{info}</Badge>}
-            {heading && (
+            {heading && isStandalone ? ( // If this card is standalone, render it in serif.
+                <Heading
+                    align="center"
+                    lineHeight="1.25em"
+                    bgGradient={accentGradient}
+                    bgClip="text"
+                    size="4xl"
+                >
+                    {heading}
+                </Heading> // Otherwise, render it in sans-serif (regular text).
+            ) : (
                 <Text
                     align={isCentered ? "center" : "start"}
                     fontWeight="bold"
-                    fontSize={isNested ? "md" : isStandalone ? "4xl" : "xl"}
+                    fontSize={isNested ? "md" : "xl"}
                     pt={badge || info ? "10px" : "0px"}
                     pb={subheading ? "2px" : children ? "0px" : "20px"}
-                    lineHeight={isStandalone ? "1.25em" : null}
-                    color={isStandalone ? null : "fg"}
-                    bgGradient={isStandalone ? accentGradient : null}
-                    bgClip={isStandalone ? "text" : null}
                 >
                     {heading}
                 </Text>
