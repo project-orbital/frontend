@@ -9,12 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function ProfileUpdate() {
     const navigate = useNavigate();
     const toast = useToast();
-    const [profile, setProfile] = useState({
-        firstName: "",
-        lastName: "",
-        username: "",
-        email: "",
-    });
+    const [profile, setProfile] = useState();
 
     // Fetch profile data to pre-fill the form.
     useEffect(() => {
@@ -26,10 +21,14 @@ export default function ProfileUpdate() {
                         { credentials: "include" }
                     )
                     .json();
-                console.log(response);
-                setProfile(() => response);
+                setProfile(response);
             } catch (error) {
-                console.log(error);
+                setProfile({
+                    firstName: "",
+                    lastName: "",
+                    username: "",
+                    email: "",
+                });
             }
         }
         fetchProfile();
