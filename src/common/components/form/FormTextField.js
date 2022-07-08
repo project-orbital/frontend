@@ -43,6 +43,7 @@ import React from "react";
  * @param labelText the field's label text
  * @param placeholderText (optional) the field's placeholder text
  * @param helperText (optional) the field's helper text
+ * @param props the style props to pass to Chakra UI's Input or Textarea
  */
 export default function FormTextField({
     isRequired,
@@ -53,6 +54,7 @@ export default function FormTextField({
     labelText,
     placeholderText,
     helperText,
+    ...props
 }) {
     return (
         <Field name={id}>
@@ -68,6 +70,7 @@ export default function FormTextField({
                             id={id}
                             placeholder={placeholderText || ""}
                             resize={"vertical"}
+                            {...props}
                         />
                     ) : (
                         <Input
@@ -75,6 +78,7 @@ export default function FormTextField({
                             id={id}
                             type={isPassword && "password"}
                             placeholder={placeholderText || ""}
+                            {...props}
                         />
                     )}
                     {withErrorMessage && (
