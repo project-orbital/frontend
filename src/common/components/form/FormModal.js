@@ -1,6 +1,7 @@
 import Modal from "../Modal";
 import { Form, Formik } from "formik";
 import { VStack } from "@chakra-ui/react";
+import { useState } from "react";
 
 /**
  * A modal with an integrated form constructed from a vertical stack of its children elements.
@@ -30,12 +31,21 @@ export default function FormModal({
     children,
     ...modalProps
 }) {
+    const [isSubmitting, setIsSubmitting] = useState(false);
     return (
-        <Modal {...modalProps} submitForm="integrated-form">
+        <Modal
+            {...modalProps}
+            submitForm="integrated-form"
+            isSubmitting={isSubmitting}
+        >
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={onSubmit}
+                onSubmit={async (values, props) => {
+                    setIsSubmitting(true);
+                    await onSubmit(values, props);
+                    setIsSubmitting(false);
+                }}
             >
                 <Form id="integrated-form">
                     <VStack spacing="20px">{children}</VStack>

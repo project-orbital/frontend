@@ -33,6 +33,7 @@ import { useNavigate } from "react-router-dom";
  * default submit button will not do any form validation.
  *
  * @param isDestructive (optional, default: false) whether the action executed by the modal will be destructive
+ * @param isSubmitting (optional, default: false) whether a spinning indicator should be shown on the submit button
  * @param hasBackButton (optional, default: true) whether the modal should have a back button
  * @param size (optional, default: "xl") the size of the modal: "sm", "md", "lg", or "xl"
  * @param title the title of the modal displayed in bold at the top of the modal
@@ -50,6 +51,7 @@ import { useNavigate } from "react-router-dom";
  */
 export default function Modal({
     isDestructive,
+    isSubmitting,
     hasBackButton,
     size,
     title,
@@ -106,6 +108,7 @@ export default function Modal({
                 {submitButton || (
                     <SubmitButton
                         isDestructive={isDestructive}
+                        isLoading={isSubmitting}
                         text={submitText}
                         form={submitForm}
                         onClick={submitLink && (() => navigate(submitLink))}
