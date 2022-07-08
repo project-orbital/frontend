@@ -5,11 +5,11 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 
-export default function PasswordChangeModal() {
+export default function PasswordChange() {
     const navigate = useNavigate();
     const toast = useToast();
 
-    const handleSubmit = async (values) => {
+    const handleSubmit = async (values, { setErrors }) => {
         try {
             await ky.post(
                 `${process.env.REACT_APP_BACKEND}/users/preferences/change-password`,
@@ -18,6 +18,7 @@ export default function PasswordChangeModal() {
                     credentials: "include",
                 }
             );
+            toast.closeAll();
             toast({
                 title: "Password changed successfully.",
                 description: "Please sign in with your new password.",
@@ -27,8 +28,10 @@ export default function PasswordChangeModal() {
             });
             navigate("/sign-out");
         } catch (error) {
+            setErrors(await error.response.json());
+            toast.closeAll();
             toast({
-                title: await error.response.text(),
+                title: "Password change failed.",
                 description: "Please try again.",
                 status: "error",
                 duration: null,
@@ -44,11 +47,15 @@ export default function PasswordChangeModal() {
             subheading="You will need to sign in again after changing your password."
             submitText="Change password"
             initialValues={{
+                currentPassword: "",
                 password: "",
                 confirmPassword: "",
             }}
             // The backend will also validate the password.
             validationSchema={Yup.object({
+                currentPassword: Yup.string().required(
+                    "Current password is required."
+                ),
                 password: Yup.string()
                     .min(8, "Password must be at least 8 characters long.")
                     .required("Password is required."),
@@ -61,6 +68,14 @@ export default function PasswordChangeModal() {
             })}
             onSubmit={handleSubmit}
         >
+            <FormTextField
+                id="currentPassword"
+                isRequired
+                isPassword
+                withErrorMessage
+                labelText="Current password"
+                placeholderText="••••••••"
+            />
             <FormTextField
                 id="password"
                 isRequired

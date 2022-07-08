@@ -40,7 +40,7 @@ import UploadModal from "./features/account/components/UploadModal";
 import ReviewModal from "./features/account/components/ReviewModal";
 import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal";
 import PlanMenu from "./features/plan/PlanMenu";
-import PasswordChangeModal from "./features/settings/components/PasswordChangeModal";
+import PasswordChange from "./features/settings/components/PasswordChange";
 import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
 import UserAccountDeletion from "./features/settings/components/UserAccountDeletion";
 import ProfileUpdate from "./features/settings/components/ProfileUpdate";
@@ -234,7 +234,7 @@ const routes = (
             }
         >
             <Route path="update-profile" element={<ProfileUpdate />} />
-            <Route path="change-password" element={<PasswordChangeModal />} />
+            <Route path="change-password" element={<PasswordChange />} />
             <Route path="delete-account" element={<UserAccountDeletion />} />
         </Route>
         <Route
