@@ -63,12 +63,12 @@ export default function Settings() {
                         heading="Account Management"
                         subheading="You can update your email, username, and/or your password here."
                     >
-                        <NavButton text="Update profile" bg="dim" c="fg" />
+                        <NavButton text="Update profile" bg="dim" color="fg" />
                         <NavButton
                             to="./change-password"
                             text="Change password"
                             bg="dim"
-                            c="fg"
+                            color="fg"
                         />
                         <NavButton
                             icon={
@@ -77,6 +77,7 @@ export default function Settings() {
                                     color="white"
                                 />
                             }
+                            to="delete-account"
                             text="Delete account"
                             bg="red.500"
                         />
@@ -88,11 +89,15 @@ export default function Settings() {
                         heading="Data Management"
                         subheading="You can control whether your data is stored on our servers here."
                     >
-                        <NavButton text="Manage data storage" bg="dim" c="fg" />
+                        <NavButton
+                            text="Manage data storage"
+                            bg="dim"
+                            color="fg"
+                        />
                         <NavButton
                             text="Download stored data"
                             bg="dim"
-                            c="fg"
+                            color="fg"
                         />
                         <NavButton
                             icon={<TbEraser size="25px" color="white" />}
