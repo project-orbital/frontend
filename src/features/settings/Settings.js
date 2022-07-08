@@ -57,13 +57,15 @@ export default function Settings() {
                         </Button>
                     </Card>
                     <Card
-                        badge={
-                            <Badge colorScheme="orange">Work in Progress</Badge>
-                        }
                         heading="Account Management"
-                        subheading="You can update your email, username, and/or your password here."
+                        subheading="You can update your profile and/or your password here."
                     >
-                        <NavButton text="Update profile" bg="dim" color="fg" />
+                        <NavButton
+                            to="update-profile"
+                            text="Update profile"
+                            bg="dim"
+                            color="fg"
+                        />
                         <NavButton
                             to="./change-password"
                             text="Change password"

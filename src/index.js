@@ -43,6 +43,7 @@ import PlanMenu from "./features/plan/PlanMenu";
 import PasswordChangeModal from "./features/settings/components/PasswordChangeModal";
 import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
 import UserAccountDeletion from "./features/settings/components/UserAccountDeletion";
+import ProfileUpdate from "./features/settings/components/ProfileUpdate";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -232,6 +233,7 @@ const routes = (
                 </RequireAuth>
             }
         >
+            <Route path="update-profile" element={<ProfileUpdate />} />
             <Route path="change-password" element={<PasswordChangeModal />} />
             <Route path="delete-account" element={<UserAccountDeletion />} />
         </Route>
