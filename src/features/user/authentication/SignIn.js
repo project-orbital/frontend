@@ -35,6 +35,7 @@ export default function SignIn() {
         const url = `${process.env.REACT_APP_BACKEND}/users/sign-in`;
         try {
             await ky.post(url, { json: values, credentials: "include" });
+            toast.closeAll();
             navigate("/dashboard");
         } catch (error) {
             if (!error.response) {
