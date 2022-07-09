@@ -47,7 +47,7 @@ export default function FormModal({
                     setIsSubmitting(false);
                 }}
             >
-                <Form id="integrated-form">
+                <Form id="integrated-form" noValidate>
                     <VStack spacing="20px">{children}</VStack>
                 </Form>
             </Formik>
