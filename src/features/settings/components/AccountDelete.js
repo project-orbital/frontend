@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import ky from "ky";
 
-export default function UserAccountDeletion() {
+export default function AccountDelete() {
     const navigate = useNavigate();
     const toast = useToast();
 

@@ -42,7 +42,7 @@ import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal
 import PlanMenu from "./features/plan/PlanMenu";
 import PasswordChange from "./features/settings/components/PasswordChange";
 import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
-import UserAccountDeletion from "./features/settings/components/UserAccountDeletion";
+import AccountDelete from "./features/settings/components/AccountDelete";
 import ProfileUpdate from "./features/settings/components/ProfileUpdate";
 
 function RequireAuth({ children }) {
@@ -235,7 +235,7 @@ const routes = (
         >
             <Route path="update-profile" element={<ProfileUpdate />} />
             <Route path="change-password" element={<PasswordChange />} />
-            <Route path="delete-account" element={<UserAccountDeletion />} />
+            <Route path="delete-account" element={<AccountDelete />} />
         </Route>
         <Route
             path="planMenu"
