@@ -37,9 +37,10 @@ export default function PageTemplate({ variant, heading, children, page }) {
         <Box>
             <Sidebar selected={page} />
             <VStack
-                w="calc(100vw - 160px)"
+                pos="absolute"
+                left="160px" // accounts for the width of the sidebar
+                w="stretch"
                 h="100vh"
-                ml="160px" // accounts for the width of the sidebar
                 p="40px"
                 spacing="40px"
                 align="start"

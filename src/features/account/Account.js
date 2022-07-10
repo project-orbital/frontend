@@ -89,7 +89,7 @@ export default function Account() {
                         to="./delete-transaction"
                         text="Delete a transaction"
                         bg="red.500"
-                        c="white"
+                        color="white"
                     />
                 </Card>
             );
