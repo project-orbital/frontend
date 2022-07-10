@@ -1,29 +1,24 @@
-import React, { useContext } from "react";
-import { AppContext } from "../context/BudgetPlannerContext";
 import { Box, Text } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { selectSpendingTransactions } from "../../transactions/state/transactions";
 
 const RemainingBudget = () => {
-    const { expenses, budget } = useContext(AppContext);
+    const totalExpenses = useSelector(selectSpendingTransactions).reduce(
+        (total, t) => {
+            return (total += -t.amount);
+        },
+        0
+    );
 
-    const totalExpenses = expenses.reduce((total, item) => {
-        return (total += item.cost);
-    }, 0);
+    const budget = useSelector((state) => state.budgets.budget);
 
     const remaining = budget - totalExpenses;
 
-    if (remaining >= 0) {
-        return (
-            <Box>
-                <Text fontSize="2xl">{"Remaining: $" + remaining}</Text>
-            </Box>
-        );
-    } else {
-        return (
-            <Box>
-                <Text fontSize="2xl">{"Remaining: $" + remaining}</Text>
-            </Box>
-        );
-    }
+    return (
+        <Box>
+            <Text fontSize="2xl">{"Remaining: $" + remaining}</Text>
+        </Box>
+    );
 };
 
 export default RemainingBudget;

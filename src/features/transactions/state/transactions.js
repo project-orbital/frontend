@@ -30,11 +30,13 @@ export const transactionsSlice = createSlice({
                 return {
                     ...transaction,
                     amount: parseFloat(transaction.amount),
+                    description: transaction.description,
                     balance:
                         transaction.balance === null
                             ? 0
                             : parseFloat(transaction.balance),
                     id: state.counter + index,
+                    accountId: parseInt(transaction.accountId),
                 };
             });
             state.history.push(...transactions);
@@ -65,6 +67,27 @@ export const selectTransactionsFromAccount = (accountId) => (state) => {
     // Convert ISO strings back into Date objects.
     return state.transactions.history
         .filter((transaction) => transaction.accountId === accountId)
+        .map((transaction) => {
+            const { date } = transaction;
+            return {
+                ...transaction,
+                date: parseISO(date),
+            };
+        });
+};
+
+const isNegative = (t) => {
+    if (t < 0) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+//For budget planner feature
+export const selectSpendingTransactions = (state) => {
+    return state.transactions.history
+        .filter((transaction) => isNegative(transaction.amount))
         .map((transaction) => {
             const { date } = transaction;
             return {
@@ -124,6 +147,28 @@ export const selectNetWorth = (state) => {
 export const selectMonthEndBalancesFromAccount = (accountId) => (state) => {
     return state.transactions.history
         .filter((transaction) => transaction.accountId === accountId)
+        .map((transaction) => ({
+            date: parseISO(transaction.date),
+            balance: transaction.balance,
+        }))
+        .sort((a, b) => compareAsc(a.date, b.date))
+        .reduce((acc, transaction) => {
+            if (acc.length === 0) {
+                acc.push(transaction);
+                return acc;
+            }
+            const last = acc[acc.length - 1];
+            if (isSameMonth(last.date, transaction.date)) {
+                acc[acc.length - 1] = transaction;
+            } else {
+                acc.push(transaction);
+            }
+            return acc;
+        }, []);
+};
+
+export const selectMonthEndBalancesFromAccounts = (state) => {
+    return state.transactions.history
         .map((transaction) => ({
             date: parseISO(transaction.date),
             balance: transaction.balance,

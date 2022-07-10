@@ -39,7 +39,8 @@ import DisclaimerModal from "./features/account/components/DisclaimerModal";
 import UploadModal from "./features/account/components/UploadModal";
 import ReviewModal from "./features/account/components/ReviewModal";
 import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal";
-import PlanMenu from "./features/plan/PlanMenu";
+import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
+import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -179,6 +180,10 @@ const routes = (
                 path="create-receiving-transaction"
                 element={<TransactionCreationModal isSpending={false} />}
             />
+            <Route
+                path="delete-transaction"
+                element={<TransactionDeletionModal isSpending={false} />}
+            />
         </Route>
         <Route
             path="learn"
@@ -205,21 +210,15 @@ const routes = (
             }
         ></Route>
         <Route
-            path="planMenu"
-            element={
-                <RequireAuth>
-                    <PlanMenu />
-                </RequireAuth>
-            }
-        ></Route>
-        <Route
-            path="plan/:id"
+            path="plan"
             element={
                 <RequireAuth>
                     <Plan />
                 </RequireAuth>
             }
-        />
+        >
+            <Route path="create-budget" element={<CreateBudgetModal />} />
+        </Route>
         <Route path="*" element={<PageNotFound />} />
     </Routes>
 );
