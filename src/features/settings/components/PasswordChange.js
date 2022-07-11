@@ -11,6 +11,7 @@ export default function PasswordChange() {
 
     const handleSubmit = async (values, { setErrors }) => {
         try {
+            toast.closeAll();
             await ky.post(
                 `${process.env.REACT_APP_BACKEND}/users/preferences/change-password`,
                 {
@@ -18,7 +19,6 @@ export default function PasswordChange() {
                     credentials: "include",
                 }
             );
-            toast.closeAll();
             toast({
                 title: "Password changed successfully.",
                 description: "Please sign in with your new password.",
@@ -28,14 +28,12 @@ export default function PasswordChange() {
             });
             navigate("/sign-out");
         } catch (error) {
-            setErrors(await error.response.json());
-            toast.closeAll();
+            const errors = await error.response.json();
+            setErrors(errors);
             toast({
-                title: "Password change failed.",
+                title: Object.values(errors),
                 description: "Please try again.",
                 status: "error",
-                duration: null,
-                isClosable: true,
             });
         }
     };

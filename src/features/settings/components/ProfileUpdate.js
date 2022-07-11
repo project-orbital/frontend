@@ -37,21 +37,21 @@ export default function ProfileUpdate() {
 
     const handleSubmit = async (values, { setErrors }) => {
         try {
-            await ky.patch(URL, { json: values, credentials: "include" });
             toast.closeAll();
+            await ky.patch(URL, { json: values, credentials: "include" });
             toast({
                 title: "Profile updated successfully.",
                 status: "success",
-                isClosable: true,
+                duration: 2000,
             });
             navigate("../");
         } catch (error) {
-            setErrors(await error.response.json());
+            const errors = await error.response.json();
+            setErrors(errors);
             toast({
-                title: "Profile update failed.",
+                title: Object.values(errors),
                 description: "Please try again.",
                 status: "error",
-                isClosable: true,
             });
         }
     };

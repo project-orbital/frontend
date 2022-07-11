@@ -9,8 +9,9 @@ export default function AccountDelete() {
     const navigate = useNavigate();
     const toast = useToast();
 
-    const handleSubmit = async (values) => {
+    const handleSubmit = async (values, { setErrors }) => {
         try {
+            toast.closeAll();
             await ky.delete(
                 `${process.env.REACT_APP_BACKEND}/users/preferences/delete-account`,
                 {
@@ -18,7 +19,6 @@ export default function AccountDelete() {
                     credentials: "include",
                 }
             );
-            toast.closeAll();
             toast({
                 title: "Account deleted successfully.",
                 description: "Thanks for using DollarPlanner.",
@@ -28,12 +28,12 @@ export default function AccountDelete() {
             });
             navigate("/sign-out");
         } catch (error) {
+            const errors = await error.response.json();
+            setErrors(errors);
             toast({
-                title: await error.response.text(),
+                title: Object.values(errors),
                 description: "Please try again.",
                 status: "error",
-                duration: 10000,
-                isClosable: true,
             });
         }
     };

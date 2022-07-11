@@ -35,10 +35,9 @@ export default function DataErase() {
             const errors = await error.response.json();
             setErrors(errors);
             toast({
-                title: "Data erasure failed.",
+                title: Object.values(errors),
                 description: "Please try again.",
                 status: "error",
-                isClosable: true,
             });
         }
     };
