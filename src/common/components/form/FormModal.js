@@ -34,6 +34,7 @@ export default function FormModal({
     const [isSubmitting, setIsSubmitting] = useState(false);
     return (
         <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async (values, props) => {
