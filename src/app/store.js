@@ -20,7 +20,7 @@ const combinedReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-    if (action.type.includes("signOut")) {
+    if (action.type.includes("signOut") || action.type.includes("eraseData")) {
         state = undefined;
     }
     return combinedReducer(state, action);

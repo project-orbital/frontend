@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import ky from "ky";
 import { useDispatch } from "react-redux";
-import { setDataSync } from "../state/preferences";
+import { eraseData, setDataSync } from "../state/preferences";
 
 export default function DataErase() {
     const dispatch = useDispatch();
@@ -24,7 +24,13 @@ export default function DataErase() {
                     },
                 }
             );
+            // Disable data synchronization as well, because deleting data
+            // de-synchronizes the client and the server.
             dispatch(setDataSync(false));
+            // Only erase data if the user chooses local data storage!
+            if (values.location.includes("local")) {
+                dispatch(eraseData());
+            }
             toast({
                 title: "Data erased successfully.",
                 description: "Data synchronization has also been disabled.",

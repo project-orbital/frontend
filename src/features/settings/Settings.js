@@ -99,7 +99,6 @@ export default function Settings() {
                             </Text>
                         </ActionButton>
                     </Card>
-
                     <Card
                         heading="Data Management"
                         subheading="Data synchronization across your devices requires your data
