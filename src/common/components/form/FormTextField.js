@@ -10,13 +10,26 @@ import { Field } from "formik";
 import React from "react";
 
 /**
+ * [DEPRECATED]
+ *
+ * This component is deprecated in favor of the components provided by the
+ * formik-chakra-ui bindings.
+ *
+ * See https://codesandbox.io/s/formik-chakra-ui-27yzm?file=/src/Form.tsx
+ * for examples of how to use the formik-chakra bindings.
+ *
+ * See https://629c67f66924e51a45fb2029--gregarious-marshmallow-00a41c.netlify.app/interfaces/baseprops.html
+ * for the props that can be passed to the formik-chakra bindings.
+ *
+ * ===
+ *
  * Abstracts a text input field in a Formik form into an easily customizable
  * component.
  *
  * The `isRequired` prop toggle allows you to specify whether an asterisk should
- * be displayed next to the label. This is sufficient to block form submission
- * if the field is empty, but it is still highly recommended to provide a
- * `required()` validation rule in your Formik validationSchema.
+ * be displayed next to the label. This does not block form submission
+ * if the field is empty, so you will need to provide a `required()` validation
+ * rule in your Yup validation schema.
  *
  * The `isMultiline` prop toggle allows you to specify whether the field should
  * be vertically-resizable, allowing multi-line text input.
