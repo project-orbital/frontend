@@ -4,8 +4,11 @@ import { Radio, Stack, useToast } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import ky from "ky";
+import { useDispatch } from "react-redux";
+import { setDataSync } from "../state/preferences";
 
 export default function DataErase() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const toast = useToast();
 
@@ -21,6 +24,7 @@ export default function DataErase() {
                     },
                 }
             );
+            dispatch(setDataSync(false));
             toast({
                 title: "Data erased successfully.",
                 description: "Data synchronization has also been disabled.",

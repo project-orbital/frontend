@@ -1,34 +1,82 @@
 import PageTemplate from "../../common/components/PageTemplate";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
 import {
-    Badge,
     Box,
-    Button,
     SimpleGrid,
     Text,
     useColorMode,
+    useToast,
 } from "@chakra-ui/react";
 import Card from "../../common/components/Card";
 import NavButton from "../../common/components/buttons/NavButton";
+import { Outlet } from "react-router-dom";
+import ky from "ky";
+import ActionButton from "../../common/components/buttons/ActionButton";
 import { CgDarkMode } from "react-icons/cg";
 import { TbEraser } from "react-icons/tb";
 import { AiOutlineUserDelete } from "react-icons/ai";
-import { Outlet } from "react-router-dom";
-import ky from "ky";
+import { MdSync, MdSyncDisabled } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { selectDataSync, toggleDataSync } from "./state/preferences";
 
 export default function Settings() {
+    const dispatch = useDispatch();
+    const dataSync = useSelector(selectDataSync);
+    const toast = useToast();
+
+    // Data synchronization toggle
+    const handleDataSyncToggle = async () => {
+        // dataSync is updated asynchronously, so we invert the old value now
+        // instead of sending the new value to the server.
+        const allowsDataStorage = !dataSync;
+        try {
+            const URL = `${process.env.REACT_APP_BACKEND}/users/preferences/data-sync`;
+            // Prevent duplicate toasts presenting conflicting messages.
+            await toast.closeAll();
+            await ky.post(URL, {
+                json: { allowsDataStorage: allowsDataStorage },
+                credentials: "include",
+            });
+            dispatch(toggleDataSync());
+            toast({
+                title: `Data synchronization ${
+                    allowsDataStorage ? "enabled" : "disabled"
+                }.`,
+                status: "success",
+                duration: 2000,
+            });
+        } catch {
+            toast({
+                title: `Data synchronization could not be ${
+                    allowsDataStorage ? "enabled" : "disabled"
+                }.`,
+                description: "Please try again.",
+                status: "error",
+                duration: 2000,
+            });
+        }
+    };
+
     // Dark mode toggle
     const { colorMode, toggleColorMode } = useColorMode();
     const handleColorModeToggle = () => {
         const prefersDarkMode = colorMode !== "dark";
         toggleColorMode();
-        ky.post(
-            `${process.env.REACT_APP_BACKEND}/users/preferences/dark-mode`,
-            {
-                json: { prefersDarkMode: prefersDarkMode },
-                credentials: "include",
-            }
-        );
+        try {
+            ky.post(
+                `${process.env.REACT_APP_BACKEND}/users/preferences/dark-mode`,
+                {
+                    json: { prefersDarkMode: prefersDarkMode },
+                    credentials: "include",
+                }
+            );
+        } catch {
+            toast({
+                title: `Dark mode preference could not be saved.`,
+                description: "Please try again.",
+                duration: 2000,
+            });
+        }
     };
 
     return (
@@ -43,18 +91,13 @@ export default function Settings() {
                         heading="Appearance"
                         subheading="You can change how the app looks here."
                     >
-                        <Button
-                            h="60px"
-                            bg="dim"
-                            color="fg"
-                            onClick={handleColorModeToggle}
-                        >
+                        <ActionButton onClick={handleColorModeToggle}>
                             <CgDarkMode size="25px" />
                             <Text pl="10px">
                                 {colorMode === "light" ? "Enable" : "Disable"}{" "}
                                 dark mode
                             </Text>
-                        </Button>
+                        </ActionButton>
                     </Card>
                     <Card
                         heading="Account Management"
@@ -85,17 +128,26 @@ export default function Settings() {
                         />
                     </Card>
                     <Card
-                        badge={
-                            <Badge colorScheme="orange">Work in Progress</Badge>
-                        }
                         heading="Data Management"
-                        subheading="You can control whether your data is stored on our servers here."
+                        subheading="Data synchronization across your devices requires your data
+                        to be stored on our servers. You can choose whether to disable this feature,
+                        and also erase your existing data."
                     >
-                        <NavButton
-                            text="Manage data storage"
-                            bg="dim"
-                            color="fg"
-                        />
+                        <ActionButton
+                            onClick={handleDataSyncToggle}
+                            delay={650}
+                        >
+                            {dataSync ? (
+                                <MdSyncDisabled size="25px" />
+                            ) : (
+                                <MdSync size="25px" />
+                            )}
+                            <Text pl="10px">
+                                {`${
+                                    dataSync === true ? "Disable" : "Enable"
+                                } data synchronization`}
+                            </Text>
+                        </ActionButton>
                         <NavButton
                             text="Download stored data"
                             bg="dim"
