@@ -103,6 +103,7 @@ export default function Settings() {
                         />
                         <NavButton
                             icon={<TbEraser size="25px" color="white" />}
+                            to="erase-data"
                             text="Erase stored data"
                             bg="red.500"
                         />
