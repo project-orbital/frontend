@@ -34,7 +34,7 @@ export default function SignIn() {
     async function configureApp() {
         try {
             const URL = `${process.env.REACT_APP_BACKEND}/users/preferences`;
-            const { prefersDarkMode, allowsDataStorage } = await ky
+            const { prefersDarkMode } = await ky
                 .get(URL, { credentials: "include" })
                 .json();
             // Toggle the color mode to the user preference.
