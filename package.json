@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@chakra-ui/react": "^2.2.1",
+        "@chakra-ui/react": "^2.2.3",
         "@chakra-ui/theme-tools": "^2.0.2",
         "@fontsource/dm-serif-display": "^4.5.7",
         "@reduxjs/toolkit": "^1.8.3",
