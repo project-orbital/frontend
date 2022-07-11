@@ -8,16 +8,23 @@ import preferencesReducer from "../features/settings/state/preferences";
 
 const persistConfig = {
     key: "root",
-    blacklist: ["files"],
+    blacklist: ["files", "preferences"],
     storage,
 };
 
-const rootReducer = combineReducers({
+const combinedReducer = combineReducers({
     transactions: transactionsReducer,
     accounts: accountsReducer,
     files: filesReducer,
     preferences: preferencesReducer,
 });
+
+const rootReducer = (state, action) => {
+    if (action.type.includes("signOut")) {
+        state = undefined;
+    }
+    return combinedReducer(state, action);
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

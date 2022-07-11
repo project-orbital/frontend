@@ -12,9 +12,11 @@ export const preferencesSlice = createSlice({
         toggleDataSync: (state) => {
             state.dataSync = !state.dataSync;
         },
+        signOut: () => {},
     },
 });
 
 export const selectDataSync = (state) => state.preferences.dataSync;
-export const { setDataSync, toggleDataSync } = preferencesSlice.actions;
+export const { setDataSync, toggleDataSync, signOut } =
+    preferencesSlice.actions;
 export default preferencesSlice.reducer;
