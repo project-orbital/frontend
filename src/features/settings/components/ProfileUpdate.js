@@ -10,16 +10,14 @@ export default function ProfileUpdate() {
     const navigate = useNavigate();
     const toast = useToast();
     const [profile, setProfile] = useState();
+    const URL = `${process.env.REACT_APP_BACKEND}/users/profile`;
 
     // Fetch profile data to pre-fill the form.
     useEffect(() => {
         async function fetchProfile() {
             try {
                 const response = await ky
-                    .get(
-                        `${process.env.REACT_APP_BACKEND}/users/preferences/user-profile`,
-                        { credentials: "include" }
-                    )
+                    .get(URL, { credentials: "include" })
                     .json();
                 setProfile(response);
             } catch (error) {
@@ -32,17 +30,12 @@ export default function ProfileUpdate() {
             }
         }
         fetchProfile();
-    }, []);
+    }, [URL]);
 
     const handleSubmit = async (values, { setErrors }) => {
         try {
-            await ky.patch(
-                `${process.env.REACT_APP_BACKEND}/users/preferences/user-profile`,
-                {
-                    json: values,
-                    credentials: "include",
-                }
-            );
+            await ky.patch(URL, { json: values, credentials: "include" });
+
             toast.closeAll();
             toast({
                 title: "Profile updated successfully.",
