@@ -6,36 +6,38 @@ import ky from "ky";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const URL = `${process.env.REACT_APP_BACKEND}/users/profile`;
+async function fetchProfile() {
+    try {
+        return await ky.get(URL, { credentials: "include" }).json();
+    } catch (error) {
+        return {
+            firstName: "",
+            lastName: "",
+            username: "",
+            email: "",
+        };
+    }
+}
+
 export default function ProfileUpdate() {
     const navigate = useNavigate();
     const toast = useToast();
-    const [profile, setProfile] = useState();
-    const URL = `${process.env.REACT_APP_BACKEND}/users/profile`;
+    const [profile, setProfile] = useState({
+        firstName: "",
+        lastName: "",
+        username: "",
+        email: "",
+    });
 
     // Fetch profile data to pre-fill the form.
     useEffect(() => {
-        async function fetchProfile() {
-            try {
-                const response = await ky
-                    .get(URL, { credentials: "include" })
-                    .json();
-                setProfile(response);
-            } catch (error) {
-                setProfile({
-                    firstName: "",
-                    lastName: "",
-                    username: "",
-                    email: "",
-                });
-            }
-        }
-        fetchProfile();
-    }, [URL]);
+        fetchProfile().then(setProfile);
+    }, []);
 
     const handleSubmit = async (values, { setErrors }) => {
         try {
             await ky.patch(URL, { json: values, credentials: "include" });
-
             toast.closeAll();
             toast({
                 title: "Profile updated successfully.",
