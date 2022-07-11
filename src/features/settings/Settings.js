@@ -99,6 +99,35 @@ export default function Settings() {
                             </Text>
                         </ActionButton>
                     </Card>
+
+                    <Card
+                        heading="Data Management"
+                        subheading="Data synchronization across your devices requires your data
+                        to be stored on our servers. You can choose whether to disable this feature,
+                        and also erase your existing data."
+                    >
+                        <ActionButton
+                            onClick={handleDataSyncToggle}
+                            delay={650}
+                        >
+                            {dataSync ? (
+                                <MdSyncDisabled size="25px" />
+                            ) : (
+                                <MdSync size="25px" />
+                            )}
+                            <Text pl="10px">
+                                {`${
+                                    dataSync === true ? "Disable" : "Enable"
+                                } data synchronization`}
+                            </Text>
+                        </ActionButton>
+                        <NavButton
+                            icon={<TbEraser size="25px" color="white" />}
+                            to="erase-data"
+                            text="Erase stored data"
+                            bg="red.500"
+                        />
+                    </Card>
                     <Card
                         heading="Account Management"
                         subheading="You can update your profile and/or your password here."
@@ -124,39 +153,6 @@ export default function Settings() {
                             }
                             to="delete-account"
                             text="Delete account"
-                            bg="red.500"
-                        />
-                    </Card>
-                    <Card
-                        heading="Data Management"
-                        subheading="Data synchronization across your devices requires your data
-                        to be stored on our servers. You can choose whether to disable this feature,
-                        and also erase your existing data."
-                    >
-                        <ActionButton
-                            onClick={handleDataSyncToggle}
-                            delay={650}
-                        >
-                            {dataSync ? (
-                                <MdSyncDisabled size="25px" />
-                            ) : (
-                                <MdSync size="25px" />
-                            )}
-                            <Text pl="10px">
-                                {`${
-                                    dataSync === true ? "Disable" : "Enable"
-                                } data synchronization`}
-                            </Text>
-                        </ActionButton>
-                        <NavButton
-                            text="Download stored data"
-                            bg="dim"
-                            color="fg"
-                        />
-                        <NavButton
-                            icon={<TbEraser size="25px" color="white" />}
-                            to="erase-data"
-                            text="Erase stored data"
                             bg="red.500"
                         />
                     </Card>
