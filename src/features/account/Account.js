@@ -1,5 +1,5 @@
 import PageTemplate from "../../common/components/PageTemplate";
-import { Outlet, useParams } from "react-router-dom";
+import { Navigate, Outlet, useParams } from "react-router-dom";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import { useReadAccountQuery } from "../../app/api";
@@ -8,7 +8,7 @@ import Card from "../../common/components/Card";
 
 export default function Account() {
     const accountId = useParams().id;
-    const { data, isLoading } = useReadAccountQuery(accountId);
+    const { data, isLoading, isError } = useReadAccountQuery(accountId);
     const { createdAt, name, nickname, _id } = data ?? {};
 
     const DetailsCard = () => {
@@ -54,7 +54,11 @@ export default function Account() {
             />
             <Box h="100%" w="100%">
                 <SimpleGrid minChildWidth="500px" spacing="30px" mb="40px">
-                    {isLoading || <DetailsCard />}
+                    {isError ? (
+                        <Navigate to="/accounts/not-found" replace={true} />
+                    ) : (
+                        isLoading || <DetailsCard />
+                    )}
                 </SimpleGrid>
             </Box>
             <Outlet context={[_id, name, nickname]} />
