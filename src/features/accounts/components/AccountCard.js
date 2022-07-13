@@ -1,6 +1,6 @@
 import Card from "../../../common/components/Card";
 import { useSelector } from "react-redux";
-import { selectLastTransactionFromAccount } from "../../transactions/state/transactions";
+import { selectLastTransactionFromAccount } from "../transactions/state/transactions";
 import { format, formatDistanceToNowStrict } from "date-fns";
 import LightTable from "../../../common/components/visuals/LightTable";
 import NavButton from "../../../common/components/buttons/NavButton";

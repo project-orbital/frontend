@@ -1,10 +1,10 @@
 import UploadForm from "./UploadForm";
-import CancelButton from "../../../common/components/buttons/CancelButton";
-import SubmitButton from "../../../common/components/buttons/SubmitButton";
+import CancelButton from "../../../../common/components/buttons/CancelButton";
+import SubmitButton from "../../../../common/components/buttons/SubmitButton";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllFiles, selectFiles } from "../state/files";
 import { useNavigate } from "react-router-dom";
-import Modal from "../../../common/components/Modal";
+import Modal from "../../../../common/components/Modal";
 
 export default function UploadModal() {
     const files = useSelector(selectFiles);

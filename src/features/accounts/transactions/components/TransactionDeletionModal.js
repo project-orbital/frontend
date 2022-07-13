@@ -1,4 +1,4 @@
-import Modal from "../../../common/components/Modal";
+import Modal from "../../../../common/components/Modal";
 import { Button, FormControl, Select } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

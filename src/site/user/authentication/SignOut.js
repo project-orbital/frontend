@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import LandingPage from "../../landing/LandingPage";
 import { useDispatch, useSelector } from "react-redux";
-import { selectDataSync, signOut } from "../../settings/state/preferences";
+import {
+    selectDataSync,
+    signOut,
+} from "../../../features/settings/state/preferences";
 
 export default function SignOut() {
     const dispatch = useDispatch();

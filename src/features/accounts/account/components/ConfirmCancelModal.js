@@ -3,7 +3,7 @@ import { BsFillCaretLeftFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { deleteAllFiles } from "../state/files";
 import { useDispatch } from "react-redux";
-import Modal from "../../../common/components/Modal";
+import Modal from "../../../../common/components/Modal";
 
 export default function ConfirmCancelModal() {
     const navigate = useNavigate();

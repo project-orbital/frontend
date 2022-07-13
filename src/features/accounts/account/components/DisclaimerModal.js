@@ -1,4 +1,4 @@
-import Modal from "../../../common/components/Modal";
+import Modal from "../../../../common/components/Modal";
 import { Image, Text, VStack } from "@chakra-ui/react";
 import DBS from "../assets/dbs.png";
 

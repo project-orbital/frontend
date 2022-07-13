@@ -4,8 +4,8 @@ import RequireAuth from "../../common/components/RequireAuth";
 import AccountCreate from "./components/AccountCreate";
 import AccountRename from "./components/AccountRename";
 import AccountDelete from "./components/AccountDelete";
-import AccountNotFound from "../account/AccountNotFound";
-import Account from "../account/Account";
+import AccountNotFound from "./account/AccountNotFound";
+import Account from "./account/Account";
 
 export default function AccountsRoutes() {
     return (

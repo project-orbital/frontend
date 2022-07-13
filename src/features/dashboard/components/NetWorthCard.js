@@ -3,7 +3,7 @@ import Card from "../../../common/components/Card";
 import { AspectRatio, Badge, Text, VStack } from "@chakra-ui/react";
 import { format, formatDistanceToNowStrict } from "date-fns";
 import { useSelector } from "react-redux";
-import { selectNetWorth } from "../../transactions/state/transactions";
+import { selectNetWorth } from "../../accounts/transactions/state/transactions";
 
 export default function NetWorthCard({ data }) {
     const netWorth = useSelector(selectNetWorth);

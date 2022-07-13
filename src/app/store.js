@@ -2,9 +2,9 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist"; // defaults to localStorage for web
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "./api";
-import transactionsReducer from "../features/transactions/state/transactions";
+import transactionsReducer from "../features/accounts/transactions/state/transactions";
 import accountsReducer from "../features/accounts/state/accounts";
-import filesReducer from "../features/account/state/files";
+import filesReducer from "../features/accounts/account/state/files";
 import storage from "redux-persist/lib/storage";
 import preferencesReducer from "../features/settings/state/preferences";
 

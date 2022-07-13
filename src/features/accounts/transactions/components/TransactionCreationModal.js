@@ -10,9 +10,9 @@ import {
     Text,
     useDisclosure,
 } from "@chakra-ui/react";
-import CancelButton from "../../../common/components/buttons/CancelButton";
-import SubmitButton from "../../../common/components/buttons/SubmitButton";
-import BackButton from "../../../common/components/buttons/BackButton";
+import CancelButton from "../../../../common/components/buttons/CancelButton";
+import SubmitButton from "../../../../common/components/buttons/SubmitButton";
+import BackButton from "../../../../common/components/buttons/BackButton";
 import { useNavigate } from "react-router-dom";
 import SpendingTransactionCreationForm from "./SpendingTransactionCreationForm";
 import ReceivingTransactionCreationForm from "./ReceivingTransactionCreationForm";

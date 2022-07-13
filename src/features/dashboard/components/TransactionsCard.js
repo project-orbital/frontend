@@ -1,4 +1,4 @@
-import { selectTransactions } from "../../transactions/state/transactions";
+import { selectTransactions } from "../../accounts/transactions/state/transactions";
 import { useSelector } from "react-redux";
 import Table from "../../../common/components/visuals/Table";
 import Card from "../../../common/components/Card";

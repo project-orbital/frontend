@@ -1,10 +1,10 @@
-import PageTemplate from "../../common/components/PageTemplate";
+import PageTemplate from "../../../common/components/PageTemplate";
 import { Navigate, Outlet, useParams } from "react-router-dom";
-import Breadcrumbs from "../../common/components/Breadcrumbs";
+import Breadcrumbs from "../../../common/components/Breadcrumbs";
 import { Box, SimpleGrid } from "@chakra-ui/react";
-import { useReadAccountQuery } from "../../app/api";
+import { useReadAccountQuery } from "../../../app/api";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
-import Card from "../../common/components/Card";
+import Card from "../../../common/components/Card";
 
 export default function Account() {
     const accountId = useParams().id;

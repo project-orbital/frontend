@@ -9,7 +9,7 @@ import RequireAuth from "./common/components/RequireAuth";
 import { persistor, store } from "./app/store";
 import { theme } from "./app/theme";
 
-import UserRoutes from "./features/user/UserRoutes";
+import UserRoutes from "./site/user/UserRoutes";
 import DashboardRoutes from "./features/dashboard/DashboardRoutes";
 import AccountsRoutes from "./features/accounts/AccountsRoutes";
 import SettingsRoutes from "./features/settings/SettingsRoutes";

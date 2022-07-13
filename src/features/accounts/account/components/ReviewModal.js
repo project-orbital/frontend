@@ -13,7 +13,7 @@ import { addTransactions } from "../../transactions/state/transactions";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllFiles, selectFiles } from "../state/files";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
-import Modal from "../../../common/components/Modal";
+import Modal from "../../../../common/components/Modal";
 
 export default function ReviewModal() {
     const { id } = useParams();

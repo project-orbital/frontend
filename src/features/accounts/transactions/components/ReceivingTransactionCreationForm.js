@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { addTransaction } from "../state/transactions";
 import { format, formatISO, isMatch, parse } from "date-fns";
 import { useParams } from "react-router-dom";
-import FormTextField from "../../../common/components/form/FormTextField";
+import FormTextField from "../../../../common/components/form/FormTextField";
 
 export default function SpendingTransactionCreationForm({ afterSubmit }) {
     const { id } = useParams();
