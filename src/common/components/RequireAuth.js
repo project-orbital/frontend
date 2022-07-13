@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ky from "ky";
 import { Navigate } from "react-router-dom";
+import PageTemplate from "./PageTemplate";
 
 export default function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(undefined);
@@ -16,6 +17,6 @@ export default function RequireAuth({ children }) {
                 setIsAuth(false);
             });
     }, []);
-    if (isAuth === undefined) return null;
+    if (isAuth === undefined) return <PageTemplate />;
     return isAuth ? <>{children}</> : <Navigate to="/sign-in" />;
 }

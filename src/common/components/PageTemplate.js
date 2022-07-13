@@ -54,7 +54,7 @@ export default function PageTemplate({
                 overflowX="auto"
                 float="left"
             >
-                {children.map((child, index) => (
+                {children?.map((child, index) => (
                     <Skeleton
                         key={index}
                         isLoaded={!isLoading}
