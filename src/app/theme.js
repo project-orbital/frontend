@@ -1,4 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
+import "@fontsource/dm-serif-display/400.css";
 
 export const theme = extendTheme({
     fonts: {
