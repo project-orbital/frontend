@@ -10,6 +10,7 @@ export default function BackButton({ isDisabled }) {
             aria-label="Back"
             icon={<IoChevronBack />}
             mr="10px"
+            bg="dim"
             onClick={() => navigate(-1)}
             isDisabled={isDisabled || false}
         />

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 /*
  * Transaction schema:
  * start date: string - date formatted as ISO string
@@ -11,7 +12,8 @@ export const BudgetSlice = createSlice({
     initialState: {
         budget: 0,
         start_date: "01/01/2000",
-        end_date: "01/01/2022",
+        end_date: "13/07/2022",
+        accounts: [],
     },
     reducers: {
         createBudget: (state, action) => {
@@ -22,6 +24,9 @@ export const BudgetSlice = createSlice({
         },
         createEndDate: (state, action) => {
             state.end_date = action.payload;
+        },
+        accountsSelected: (state, action) => {
+            state.accounts = action.payload;
         },
     },
 });

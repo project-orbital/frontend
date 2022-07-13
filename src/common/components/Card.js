@@ -39,7 +39,7 @@ import { Link } from "react-router-dom";
  * @param isNested `true` if this card is nested inside another card, `false` otherwise
  * @param isCentered `true` if the contents of this card should be centered, `false` otherwise
  * @param isStandalone `true` if this card should be displayed on its own, `false` otherwise
- * @param isDarkModeReady `true` if this card should be respond to color mode toggles, `false` otherwise
+ * @param isDarkModeReady [DEPRECATED] `true` if this card should be respond to color mode toggles, `false` otherwise
  * @param isExternalLink `true` if this card's link is an external link, `false` otherwise
  * @return the card component
  */
@@ -67,28 +67,38 @@ export default function Card({
             pb={children ? "20px" : "0px"}
             mb={children && !isNested ? "20px" : "0px"}
             align={isCentered ? "center" : "start"}
-            borderBottom={isNested || isCentered ? "none" : "1px solid black"}
+            borderBottom={isNested || isCentered ? "none" : "1px solid"}
+            borderColor="fg-light"
+            spacing={0}
         >
             {icon && <Box color="fg">{icon}</Box>}
             {badge}
             {info && <Badge fontWeight="bold">{info}</Badge>}
-            {heading && (
+            {heading && isStandalone ? ( // If this card is standalone, render it in serif.
                 <Heading
-                    as="h2"
-                    align={isCentered ? "center" : "start"}
-                    size={isNested ? "md" : isStandalone ? "4xl" : "lg"}
-                    pb={subheading || children ? "0px" : "20px"}
-                    lineHeight={isStandalone ? "1.25em" : null}
-                    color={isStandalone ? null : "fg"}
-                    bgGradient={isStandalone ? accentGradient : null}
-                    bgClip={isStandalone ? "text" : null}
+                    align="center"
+                    lineHeight="1.25em"
+                    bgGradient={accentGradient}
+                    bgClip="text"
+                    size="4xl"
                 >
                     {heading}
-                </Heading>
+                </Heading> // Otherwise, render it in sans-serif (regular text).
+            ) : (
+                <Text
+                    align={isCentered ? "center" : "start"}
+                    fontWeight="bold"
+                    fontSize={isNested ? "md" : "xl"}
+                    pt={badge || info ? "10px" : "0px"}
+                    pb={subheading ? "2px" : children ? "0px" : "20px"}
+                >
+                    {heading}
+                </Text>
             )}
             {subheading && (
                 <Text
-                    fontSize={isNested ? "md" : "sm"}
+                    fontSize="sm"
+                    pb={children ? "0px" : "15px"}
                     mb="20px"
                     align={isCentered ? "center" : "start"}
                 >

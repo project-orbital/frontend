@@ -37,7 +37,7 @@ export default function Accounts() {
                 to="/accounts/create"
                 text="Create another account"
                 bg="dim"
-                c="fg"
+                color="fg"
             />
         </Card>
     );

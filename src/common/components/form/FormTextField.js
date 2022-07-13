@@ -37,20 +37,24 @@ import React from "react";
  *
  * @param isRequired whether an empty field should block form submission
  * @param isMultiline whether the field should be vertically-resizable
+ * @param isPassword whether the field should be masked as a password, if not multi-line
  * @param withErrorMessage whether an error message should be displayed
  * @param id the field's unique identifier
  * @param labelText the field's label text
  * @param placeholderText (optional) the field's placeholder text
  * @param helperText (optional) the field's helper text
+ * @param props the style props to pass to Chakra UI's Input or Textarea
  */
 export default function FormTextField({
     isRequired,
     isMultiline,
+    isPassword,
     withErrorMessage,
     id,
     labelText,
     placeholderText,
     helperText,
+    ...props
 }) {
     return (
         <Field name={id}>
@@ -66,12 +70,15 @@ export default function FormTextField({
                             id={id}
                             placeholder={placeholderText || ""}
                             resize={"vertical"}
+                            {...props}
                         />
                     ) : (
                         <Input
                             {...field}
                             id={id}
+                            type={isPassword && "password"}
                             placeholder={placeholderText || ""}
+                            {...props}
                         />
                     )}
                     {withErrorMessage && (

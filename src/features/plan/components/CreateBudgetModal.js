@@ -38,7 +38,8 @@ export default function CreateBudgetModal() {
                         </Heading>
                     </HStack>
                     <Text fontSize="md" fontWeight="medium" mt="20px">
-                        hello!
+                        Please set a start date, end date and budget amount for
+                        your upcoming budget.
                     </Text>
                 </ModalHeader>
                 <ModalBody>

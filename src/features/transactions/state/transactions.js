@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { compareAsc, isSameMonth, parseISO } from "date-fns";
+import {
+    compareAsc,
+    isSameMonth,
+    parseISO,
+    isAfter,
+    isEqual,
+    isBefore,
+} from "date-fns";
 
 /*
  * Transaction schema:
@@ -84,7 +91,6 @@ const isNegative = (t) => {
     }
 };
 
-//For budget planner feature
 export const selectSpendingTransactions = (state) => {
     return state.transactions.history
         .filter((transaction) => isNegative(transaction.amount))
@@ -96,6 +102,32 @@ export const selectSpendingTransactions = (state) => {
             };
         });
 };
+
+//For budget planner feature
+export const selectSpendingTransactionsBetween =
+    (startDate, endDate) => (state) => {
+        const start_date = parseISO(startDate);
+        const end_date = parseISO(endDate);
+
+        return state.transactions.history
+            .filter((transaction) => isNegative(transaction.amount))
+            .map((transaction) => {
+                const { date } = transaction;
+                return {
+                    ...transaction,
+                    date: parseISO(date),
+                };
+            })
+            .filter(
+                (transaction) =>
+                    isEqual(start_date, transaction.date) ||
+                    isEqual(end_date, transaction.date) ||
+                    (isAfter(transaction.date, start_date) &&
+                        isBefore(transaction.date, end_date))
+            )
+            .sort((a, b) => compareAsc(a.date, b.date))
+            .reverse();
+    };
 
 export const selectLastTransactionFromAccount = (accountId) => (state) => {
     const result = state.transactions.history
