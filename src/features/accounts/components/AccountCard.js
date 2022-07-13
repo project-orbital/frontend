@@ -4,6 +4,7 @@ import { selectLastTransactionFromAccount } from "../../transactions/state/trans
 import { format, formatDistanceToNowStrict } from "date-fns";
 import LightTable from "../../../common/components/visuals/LightTable";
 import NavButton from "../../../common/components/buttons/NavButton";
+import { Badge } from "@chakra-ui/react";
 
 export default function AccountCard({ account, index }) {
     const lastTransaction = useSelector(
@@ -42,10 +43,10 @@ export default function AccountCard({ account, index }) {
 
     return (
         <Card
-            info={index}
+            badge={<Badge>{index}</Badge>}
             heading={account.name}
             subheading={account.nickname}
-            link={`/accounts/${account.id}`}
+            link={`/accounts/${account._id}`}
         >
             <Card
                 isNested
@@ -55,7 +56,7 @@ export default function AccountCard({ account, index }) {
                         ? `SGD ${lastTransaction.balance}`
                         : "No balance information."
                 }
-            ></Card>
+            />
             <Card
                 isNested
                 heading="Last Transaction"
@@ -64,7 +65,7 @@ export default function AccountCard({ account, index }) {
                 {lastTransaction ? (
                     <LastTransaction transaction={lastTransaction} />
                 ) : (
-                    <NavButton to={`./${account.id}`} text="Go to account" />
+                    <NavButton to={`./${account._id}`} text="Go to account" />
                 )}
             </Card>
         </Card>

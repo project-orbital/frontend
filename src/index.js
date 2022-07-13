@@ -1,3 +1,4 @@
+import * as ReactDOMClient from "react-dom/client";
 import { StrictMode, useEffect, useState } from "react";
 import {
     ChakraProvider,
@@ -6,45 +7,57 @@ import {
     extendTheme,
 } from "@chakra-ui/react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import * as ReactDOMClient from "react-dom/client";
-import ky from "ky";
-import SignUp from "./features/user/authentication/SignUp";
-import SignIn from "./features/user/authentication/SignIn";
-import Dashboard from "./features/dashboard/Dashboard";
+import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./app/store";
 import { Provider } from "react-redux";
+import ky from "ky";
 import "@fontsource/dm-serif-display/400.css";
-import Accounts from "./features/accounts/Accounts";
-import AccountCreationModal from "./features/accounts/components/AccountCreationModal";
-import Account from "./features/account/Account";
-import AccountRenameModal from "./features/accounts/components/AccountRenameModal";
-import AccountDeleteModal from "./features/accounts/components/AccountDeleteModal";
+
+import LandingPage from "./features/landing/LandingPage";
+
+import SignUp from "./features/user/authentication/SignUp";
+import SignIn from "./features/user/authentication/SignIn";
+import SignOut from "./features/user/authentication/SignOut";
+
 import EmailSent from "./features/user/email-verification/EmailSent";
 import VerifyEmail from "./features/user/email-verification/VerifyEmail";
 import EmailVerified from "./features/user/email-verification/EmailVerified";
+
 import RequestPasswordReset from "./features/user/password-reset/RequestPasswordReset";
 import PasswordResetEmailSent from "./features/user/password-reset/PasswordResetEmailSent";
 import ResetPasswordSuccess from "./features/user/password-reset/ResetPasswordSuccess";
 import ResetPassword from "./features/user/password-reset/ResetPassword";
-import TransactionCreationModal from "./features/transactions/components/TransactionCreationModal";
-import PageNotFound from "./features/errors/PageNotFound";
-import Plan from "./features/plan/Plan";
-import { PersistGate } from "redux-persist/integration/react";
-import SignOut from "./features/user/authentication/SignOut";
-import Learn from "./features/learn/Learn";
-import LandingPage from "./features/landing/LandingPage";
-import Settings from "./features/settings/Settings";
-import Portfolio from "./features/portfolio/Portfolio";
+
+import Dashboard from "./features/dashboard/Dashboard";
+
+import Accounts from "./features/accounts/Accounts";
+import AccountCreate from "./features/accounts/components/AccountCreate";
+import AccountRename from "./features/accounts/components/AccountRename";
+import AccountDelete from "./features/accounts/components/AccountDelete";
+
+import Account from "./features/account/Account";
 import DisclaimerModal from "./features/account/components/DisclaimerModal";
 import UploadModal from "./features/account/components/UploadModal";
 import ReviewModal from "./features/account/components/ReviewModal";
 import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal";
-import PlanMenu from "./features/plan/PlanMenu";
-import PasswordChange from "./features/settings/components/PasswordChange";
+
+import TransactionCreationModal from "./features/transactions/components/TransactionCreationModal";
 import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
-import AccountDelete from "./features/settings/components/AccountDelete";
-import ProfileUpdate from "./features/settings/components/ProfileUpdate";
+
+import Portfolio from "./features/portfolio/Portfolio";
+
+import Plan from "./features/plan/Plan";
+import PlanMenu from "./features/plan/PlanMenu";
+
+import Learn from "./features/learn/Learn";
+
+import Settings from "./features/settings/Settings";
 import DataErase from "./features/settings/components/DataErase";
+import ProfileUpdate from "./features/settings/components/ProfileUpdate";
+import PasswordChange from "./features/settings/components/PasswordChange";
+import UserAccountDelete from "./features/settings/components/AccountDelete";
+
+import PageNotFound from "./features/errors/PageNotFound";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -180,7 +193,7 @@ const routes = (
                 </RequireAuth>
             }
         >
-            <Route path="create" element={<AccountCreationModal />} />
+            <Route path="create" element={<AccountCreate />} />
         </Route>
         <Route
             path="accounts/:id"
@@ -195,8 +208,8 @@ const routes = (
             <Route path="upload-review" element={<ReviewModal />}>
                 <Route path="cancel" element={<ConfirmCancelModal />} />
             </Route>
-            <Route path="rename" element={<AccountRenameModal />} />
-            <Route path="delete" element={<AccountDeleteModal />} />
+            <Route path="rename" element={<AccountRename />} />
+            <Route path="delete" element={<AccountDelete />} />
             <Route
                 path="create-spending-transaction"
                 element={<TransactionCreationModal isSpending={true} />}
@@ -236,7 +249,7 @@ const routes = (
         >
             <Route path="update-profile" element={<ProfileUpdate />} />
             <Route path="change-password" element={<PasswordChange />} />
-            <Route path="delete-account" element={<AccountDelete />} />
+            <Route path="delete-account" element={<UserAccountDelete />} />
             <Route path="erase-data" element={<DataErase />} />
         </Route>
         <Route
