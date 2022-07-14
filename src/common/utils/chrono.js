@@ -68,6 +68,6 @@ export function discretize(
             }
             return acc;
         },
-        [data[0]]
+        [sorted[0]]
     );
 }
