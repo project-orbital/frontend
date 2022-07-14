@@ -48,11 +48,7 @@ export default function Accounts() {
         } else {
             return accounts
                 .map((account, index) => (
-                    <AccountCard
-                        key={index}
-                        index={`#${index + 1}`}
-                        account={account}
-                    />
+                    <AccountCard account={account} index={index} key={index} />
                 ))
                 .concat(<AddAccount key="add-account" />);
         }
