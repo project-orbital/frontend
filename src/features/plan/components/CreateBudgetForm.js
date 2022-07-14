@@ -5,7 +5,6 @@ import { format, isMatch } from "date-fns";
 import FormTextField from "../../../common/components/form/FormTextField";
 import FormModal from "../../../common/components/form/FormModal";
 import { createBudget, createStartDate, createEndDate } from "../state/budgets";
-import "react-datepicker/dist/react-datepicker.css";
 
 export default function CreateBudgetForm({ afterSubmit }) {
     const dispatch = useDispatch();

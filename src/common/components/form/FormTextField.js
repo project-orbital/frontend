@@ -78,9 +78,7 @@ export default function FormTextField({
                             {...field}
                             id={id}
                             type={
-                                (isPassword && "password") ||
-                                (isDate && "date") ||
-                                (isDate && "date")
+                                (isPassword && "password") || (isDate && "date")
                             }
                             placeholder={placeholderText || ""}
                             {...props}
