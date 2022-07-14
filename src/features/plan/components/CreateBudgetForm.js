@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { format, isMatch } from "date-fns";
+import { format, isMatch, isBefore, parseISO } from "date-fns";
 import FormTextField from "../../../common/components/form/FormTextField";
 import FormModal from "../../../common/components/form/FormModal";
 import { createBudget, createStartDate, createEndDate } from "../state/budgets";
@@ -17,7 +17,7 @@ export default function CreateBudgetForm({ afterSubmit }) {
             title="Set your budget..."
             heading="Please set a start date, end date and budget amount for
                         your upcoming budget."
-            submitText="Create"
+            submitText="Create budget"
             initialValues={{
                 start_date: today,
                 end_date: today,
@@ -25,21 +25,27 @@ export default function CreateBudgetForm({ afterSubmit }) {
             }}
             validationSchema={Yup.object({
                 start_date: Yup.string()
-                    .test(
-                        "date",
-                        "Please provide a valid date in the form dd/mm/yyyy",
-                        (value) => isMatch(value, "dd/MM/yyyy")
+                    .test("date", "Please provide a valid date", (value) =>
+                        isMatch(value, "dd/MM/yyyy")
                     )
                     .required("Please provide a date."),
                 end_date: Yup.string()
+                    .test("date", "Please provide a valid date", (value) =>
+                        isMatch(value, "dd/MM/yyyy")
+                    )
                     .test(
                         "date",
-                        "Please provide a valid date in the form dd/mm/yyyy",
-                        (value) => isMatch(value, "dd/MM/yyyy")
+                        "End date should be after start date",
+                        (value) =>
+                            isBefore(
+                                parseISO(Yup.ref("start_date")),
+                                parseISO(value)
+                            )
                     )
                     .required("Please provide a date."),
                 budget: Yup.number()
                     .typeError("Please provide a numeric value.")
+                    .min(1)
                     .required("Please provide a balance."),
             })}
             onSubmit={(values) => {
@@ -55,7 +61,7 @@ export default function CreateBudgetForm({ afterSubmit }) {
                 isRequired
                 isDate
                 withErrorMessage
-                labelText="Select start date"
+                labelText="Start date"
                 value={startDate}
                 onChange={(ev) => setStartDate(ev.target.value)}
             />
@@ -65,16 +71,16 @@ export default function CreateBudgetForm({ afterSubmit }) {
                 isRequired
                 withErrorMessage
                 value={endDate}
-                labelText="Select end date"
+                labelText="End date"
                 onChange={(ev) => setEndDate(ev.target.value)}
             />
             <FormTextField
                 id="budget"
                 isRequired
                 withErrorMessage
-                labelText="Your Budget"
+                labelText="Budgeted Amount"
                 placeholderText="1000"
-                helperText="Think carefully!"
+                helperText="You can always change this later!"
             />
         </FormModal>
     );

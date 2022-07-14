@@ -178,7 +178,6 @@ export default function Account() {
             <Card
                 heading="Budget Planner"
                 subheading="Use the budget planner to plan your budget."
-                badge={<Badge colorScheme="red">New!</Badge>}
             >
                 <NavButton to="/plan" text="Head to Budget Planner" />
             </Card>
