@@ -1,5 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import ky from "ky";
+import { parseISO } from "date-fns";
+import currency from "currency.js";
 
 // Nothing against the Fetch API, but since we're already using the `ky` library,
 // we can use their abstraction instead.
@@ -64,15 +66,47 @@ export const api = createApi({
             }),
             invalidatesTags: ["Account", "Accounts"],
         }),
+        createTransaction: builder.mutation({
+            query: (values) => ({
+                url: "transactions",
+                method: "post",
+                data: values,
+            }),
+            invalidatesTags: ["Transactions"],
+        }),
+        readTransactionsInAccount: builder.query({
+            query: (id) => ({
+                url: "transactions",
+                method: "get",
+                params: { accountId: id },
+            }),
+            transformResponse: (response) =>
+                // Deserialize decimal128 into currency values and ISO date strings into Date objects.
+                // We won't be persisting this data, so we don't need to worry about it being unserializable.
+                response.map((tx) => ({
+                    date: parseISO(tx.date),
+                    amount: currency(tx.amount["$numberDecimal"]),
+                    balance: currency(
+                        tx.balance ? tx.balance["$numberDecimal"] : 0
+                    ),
+                    category: tx.category,
+                    description: tx.description,
+                })),
+            providesTags: ["Transactions"],
+        }),
     }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints.
 export const {
+    // Accounts
     useCreateAccountMutation,
     useReadAccountQuery,
     useReadAccountsQuery,
     useUpdateAccountMutation,
     useDeleteAccountMutation,
+    // Transactions
+    useCreateTransactionMutation,
+    useReadTransactionsInAccountQuery,
 } = api;

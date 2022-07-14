@@ -46,7 +46,10 @@ export const store = configureStore({
     // Add the api middleware, enabling caching, invalidation, polling,
     // and other useful features of `rtk-query`.
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(api.middleware),
+        // Silence unserializable value warnings since we're not persisting API data.
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }).concat(api.middleware),
     devTools: process.env.NODE_ENV !== "production",
 });
 export const persistor = persistStore(store);
