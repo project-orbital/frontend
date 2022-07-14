@@ -1,6 +1,6 @@
-import FormModal from "../../../common/components/form/FormModal";
+import FormModal from "../../../../common/components/form/FormModal";
 import { InputControl } from "formik-chakra-ui";
-import { useCreateAccountMutation } from "../../../app/api";
+import { useCreateAccountMutation } from "../../../../app/api";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";

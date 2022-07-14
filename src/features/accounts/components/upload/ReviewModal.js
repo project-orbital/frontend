@@ -9,9 +9,9 @@ import {
 import { Field, FieldArray, Form, Formik } from "formik";
 import { BsFillCaretRightFill } from "react-icons/bs";
 import axios from "axios";
-import { addTransactions } from "../../transactions/state/transactions";
+import { addTransactions } from "../../state/transactions";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAllFiles, selectFiles } from "../state/files";
+import { deleteAllFiles, selectFiles } from "../../state/files";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Modal from "../../../../common/components/Modal";
 

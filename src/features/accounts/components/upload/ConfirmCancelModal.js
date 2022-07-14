@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/react";
 import { BsFillCaretLeftFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { deleteAllFiles } from "../state/files";
+import { deleteAllFiles } from "../../state/files";
 import { useDispatch } from "react-redux";
 import Modal from "../../../../common/components/Modal";
 

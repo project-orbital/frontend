@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     deleteTransactionWithID,
     selectTransactionsFromAccount,
-} from "../state/transactions";
+} from "../../state/transactions";
 import { formatDistanceToNow } from "date-fns";
 import { Form, Formik } from "formik";
 

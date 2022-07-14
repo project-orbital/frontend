@@ -1,6 +1,6 @@
 import { Box, FormControl, Input, Text, VStack } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { addFiles, selectFiles } from "../state/files";
+import { addFiles, selectFiles } from "../../state/files";
 
 /**
  * This component is a "fake" form in the sense that we're not actually using react-hook-form,

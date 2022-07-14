@@ -1,7 +1,7 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import Card from "../../common/components/Card";
-import AccountCard from "./components/AccountCard";
+import AccountCard from "./components/account/AccountCard";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
 import PageTemplate from "../../common/components/PageTemplate";
 import NavButton from "../../common/components/buttons/NavButton";
@@ -9,8 +9,8 @@ import NavButton from "../../common/components/buttons/NavButton";
 import { useReadAccountsQuery } from "../../app/api";
 
 /**
- * Route for the accounts page, which renders information for all accounts with the ability to create new accounts.
- * Not to be confused with the `Account` route, which renders information only for a particular account.
+ * The main account page view displaying all accounts in a grid.
+ * The grid items comprise of `AccountCard`.
  */
 export default function Accounts() {
     const { data: accounts, isLoading } = useReadAccountsQuery();

@@ -1,6 +1,6 @@
-import PageTemplate from "../../../common/components/PageTemplate";
-import Breadcrumbs from "../../../common/components/Breadcrumbs";
-import Card from "../../../common/components/Card";
+import PageTemplate from "../../../../common/components/PageTemplate";
+import Breadcrumbs from "../../../../common/components/Breadcrumbs";
+import Card from "../../../../common/components/Card";
 
 export default function AccountNotFound() {
     return (

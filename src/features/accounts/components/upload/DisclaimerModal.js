@@ -1,6 +1,6 @@
 import Modal from "../../../../common/components/Modal";
 import { Image, Text, VStack } from "@chakra-ui/react";
-import DBS from "../assets/dbs.png";
+import DBS from "../../assets/dbs.png";
 
 export default function DisclaimerModal() {
     return (

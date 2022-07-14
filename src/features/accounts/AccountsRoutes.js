@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import Accounts from "./Accounts";
 import RequireAuth from "../../common/components/RequireAuth";
-import AccountCreate from "./components/AccountCreate";
-import AccountRename from "./components/AccountRename";
-import AccountDelete from "./components/AccountDelete";
-import AccountNotFound from "./account/AccountNotFound";
-import Account from "./account/Account";
+import AccountCreate from "./components/account/AccountCreate";
+import AccountRename from "./components/account/AccountRename";
+import AccountDelete from "./components/account/AccountDelete";
+import AccountNotFound from "./components/account/AccountNotFound";
+import Account from "./components/account/Account";
 
 export default function AccountsRoutes() {
     return (

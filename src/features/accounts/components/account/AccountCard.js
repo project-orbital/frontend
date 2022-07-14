@@ -1,11 +1,20 @@
-import Card from "../../../common/components/Card";
+import Card from "../../../../common/components/Card";
 import { useSelector } from "react-redux";
-import { selectLastTransactionFromAccount } from "../transactions/state/transactions";
+import { selectLastTransactionFromAccount } from "../../state/transactions";
 import { format, formatDistanceToNowStrict } from "date-fns";
-import LightTable from "../../../common/components/visuals/LightTable";
-import NavButton from "../../../common/components/buttons/NavButton";
+import LightTable from "../../../../common/components/visuals/LightTable";
+import NavButton from "../../../../common/components/buttons/NavButton";
 import { Badge } from "@chakra-ui/react";
 
+/**
+ * The card component which displays a summary of a specified account.
+ * Used in `Accounts`.
+ *
+ * @param account an object with the details of the account to display
+ * @param index the reading order index of the account to display in a badge
+ * @return {JSX.Element}
+ * @constructor
+ */
 export default function AccountCard({ account, index }) {
     const lastTransaction = useSelector(
         selectLastTransactionFromAccount(account.id)

@@ -1,5 +1,5 @@
-import FormModal from "../../../common/components/form/FormModal";
-import { useUpdateAccountMutation } from "../../../app/api";
+import FormModal from "../../../../common/components/form/FormModal";
+import { useUpdateAccountMutation } from "../../../../app/api";
 import * as Yup from "yup";
 import { InputControl } from "formik-chakra-ui";
 import { useToast } from "@chakra-ui/react";

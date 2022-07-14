@@ -1,27 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { VStack } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { addTransaction } from "../state/transactions";
+import { addTransaction } from "../../state/transactions";
 import { format, formatISO, isMatch, parse } from "date-fns";
 import { useParams } from "react-router-dom";
 import FormTextField from "../../../../common/components/form/FormTextField";
-import TypeOfSpending from "./SpendingsDropDownField";
 
-export default function ReceivingTransactionCreationForm({ afterSubmit }) {
+export default function SpendingTransactionCreationForm({ afterSubmit }) {
     const { id } = useParams();
     const dispatch = useDispatch();
     const today = format(new Date(), "dd/MM/yyyy");
-    const [childData, setChildData] = useState("");
-
     return (
         <Formik
             initialValues={{
                 date: today,
-                amount: -123.91,
+                amount: 123.9,
                 balance: 4567.89,
-                description: "An expense.",
+                description: "Some income.",
             }}
             validationSchema={Yup.object({
                 date: Yup.string()
@@ -52,7 +49,6 @@ export default function ReceivingTransactionCreationForm({ afterSubmit }) {
                         // Store dates as formatted ISO strings because Date objects aren't serializable.
                         date: formatISO(parse(date, "dd/MM/yyyy", new Date())),
                         accountId: parseInt(id),
-                        category: childData,
                     })
                 );
                 afterSubmit();
@@ -83,11 +79,6 @@ export default function ReceivingTransactionCreationForm({ afterSubmit }) {
                         labelText="Balance"
                         placeholderText="4567.89"
                         helperText="This should be the balance of your account after the transaction."
-                    />
-                    <TypeOfSpending
-                        id="typeofspending"
-                        isRequired
-                        passChildData={setChildData}
                     />
                     <FormTextField
                         id="description"
