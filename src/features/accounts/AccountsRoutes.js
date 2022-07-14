@@ -21,8 +21,22 @@ export default function AccountsRoutes() {
             >
                 <Route path="create" element={<AccountCreate />} />
             </Route>
-            <Route path="/not-found" element={<AccountNotFound />} />
-            <Route path="/:id" element={<Account />}>
+            <Route
+                path="/not-found"
+                element={
+                    <RequireAuth>
+                        <AccountNotFound />
+                    </RequireAuth>
+                }
+            />
+            <Route
+                path="/:id"
+                element={
+                    <RequireAuth>
+                        <Account />
+                    </RequireAuth>
+                }
+            >
                 <Route path="rename" element={<AccountRename />} />
                 <Route path="delete" element={<AccountDelete />} />
                 <Route path="transactions">
