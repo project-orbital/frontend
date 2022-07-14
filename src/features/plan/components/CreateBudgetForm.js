@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { Form, Formik } from "formik";
-import { Input, VStack, FormControl, FormLabel } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { format, isMatch } from "date-fns";
 import FormTextField from "../../../common/components/form/FormTextField";
+import FormModal from "../../../common/components/form/FormModal";
 import { createBudget, createStartDate, createEndDate } from "../state/budgets";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -15,12 +14,15 @@ export default function CreateBudgetForm({ afterSubmit }) {
     const [endDate, setEndDate] = useState("");
 
     return (
-        <Formik
+        <FormModal
+            title="Set your budget..."
+            heading="Please set a start date, end date and budget amount for
+                        your upcoming budget."
+            submitText="Create"
             initialValues={{
                 start_date: today,
                 end_date: today,
                 budget: 1000,
-                accounts: [],
             }}
             validationSchema={Yup.object({
                 start_date: Yup.string()
@@ -49,38 +51,32 @@ export default function CreateBudgetForm({ afterSubmit }) {
                 afterSubmit();
             }}
         >
-            <Form id="create-budget">
-                <VStack spacing="20px">
-                    <FormControl isRequired>
-                        <FormLabel>Select start date</FormLabel>
-                        <Input
-                            size="md"
-                            backgroundColor="#ffffff"
-                            type="date"
-                            value={startDate}
-                            onChange={(ev) => setStartDate(ev.target.value)}
-                        />
-                    </FormControl>
-                    <FormControl isRequired>
-                        <FormLabel>Select start date</FormLabel>
-                        <Input
-                            size="md"
-                            backgroundColor="#ffffff"
-                            type="date"
-                            value={endDate}
-                            onChange={(ev) => setEndDate(ev.target.value)}
-                        />
-                    </FormControl>
-                    <FormTextField
-                        id="budget"
-                        isRequired
-                        withErrorMessage
-                        labelText="Your Budget"
-                        placeholderText="1000"
-                        helperText="Think carefully!"
-                    />
-                </VStack>
-            </Form>
-        </Formik>
+            <FormTextField
+                id="start_date"
+                isRequired
+                isDate
+                withErrorMessage
+                labelText="Select start date"
+                value={startDate}
+                onChange={(ev) => setStartDate(ev.target.value)}
+            />
+            <FormTextField
+                id="end_date"
+                isDate
+                isRequired
+                withErrorMessage
+                value={endDate}
+                labelText="Select end date"
+                onChange={(ev) => setEndDate(ev.target.value)}
+            />
+            <FormTextField
+                id="budget"
+                isRequired
+                withErrorMessage
+                labelText="Your Budget"
+                placeholderText="1000"
+                helperText="Think carefully!"
+            />
+        </FormModal>
     );
 }

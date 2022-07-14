@@ -1,13 +1,6 @@
 import PageTemplate from "../../common/components/PageTemplate";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
-import {
-    Badge,
-    Grid,
-    AspectRatio,
-    GridItem,
-    Box,
-    Text,
-} from "@chakra-ui/react";
+import { Grid, AspectRatio, GridItem } from "@chakra-ui/react";
 import Card from "../../common/components/Card";
 import { selectAccounts } from "../accounts/state/accounts";
 import { useSelector } from "react-redux";
@@ -27,13 +20,12 @@ import ExpensesCategoryCard from "./components/ExpensesCategoryCard";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Outlet } from "react-router-dom";
+import LightTable from "../../common/components/visuals/LightTable";
 
 export default function Plan() {
     const budget = useSelector((state) => state.budgets.budget);
     const totalExpenses = useSelector(selectSpendingTransactions)
-        .reduce((total, t) => {
-            return (total += -t.amount);
-        }, 0)
+        .reduce((total, t) => total - t.amount, 0)
         .toFixed(2);
     const start_date = useSelector((state) => state.budgets.start_date);
     const end_date = useSelector((state) => state.budgets.end_date);
@@ -74,23 +66,18 @@ export default function Plan() {
         value: Math.floor(
             transactions
                 .filter((t) => t.category === spending)
-                .reduce((total, t) => {
-                    return (total += t.amount);
-                }, 0)
+                .reduce((total, t) => total + t.amount, 0)
         ),
     }));
 
-    // Text for subheading, need fix UI
-    // After you initiate a plan, we will sync the spendings from your account(s).
-    // From there, you can track the progress of your budgeting and have a quick view of where
-    // your expenses are going.Good luck!
     const IntroductionCard = () => {
         return (
             <Card
                 isCentered
                 heading="Welcome to Budget Planner."
-                subheading="...."
-                badge={<Badge colorScheme="orange">NEW!</Badge>}
+                subheading="After you initiate a plan, we will sync the spendings from your account(s).
+                            From there, you can track the progress of your budgeting and 
+                            have a quick view of where your expenses are going. Good luck!"
             >
                 <NavButton
                     to="./create-budget"
@@ -122,59 +109,126 @@ export default function Plan() {
         }
     };
 
-    return (
-        <PageTemplate page="plan">
-            <Breadcrumbs
-                path={"Home/Budget Planner"}
-                links={["/dashboard", "/plan"]}
-            />
-            <Grid
-                w="100%"
-                gap="25px"
-                autoColumns="minmax(600px, auto)"
-                autoFlow="row"
-            >
-                <GridItem>
-                    <IntroductionCard />
-                </GridItem>
-                <GridItem>
-                    <Card heading="Budget Details">
-                        <Box>
-                            <Text fontSize="2xl">Start Date: {start_date}</Text>
-                        </Box>
-                        <Box>
-                            <Text fontSize="2xl">End Date: {end_date}</Text>
-                        </Box>
-                        <Box>
-                            <Text fontSize="2xl">Budget: ${budget}</Text>
-                        </Box>
-                        <Box>
-                            <Text fontSize="2xl">
-                                {"Remaining: $" + remaining}
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Text fontSize="2xl">
-                                {"Spent so far: $" + totalExpenses}
-                            </Text>
-                        </Box>
-                    </Card>
-                </GridItem>
-                <GridItem>
-                    <Card heading="Progress (Time)">
+    const DeleteBudgetCard = () => {
+        return (
+            <Card isCentered heading="Delete your budget.">
+                <NavButton to="./delete-budget" text="Delete" bg="dim" c="fg" />
+            </Card>
+        );
+    };
+
+    if (budget === 0) {
+        return (
+            <PageTemplate page="plan">
+                <Breadcrumbs
+                    path={"Home/Budget Planner"}
+                    links={["/dashboard", "/plan"]}
+                />
+                <Grid
+                    w="100%"
+                    gap="25px"
+                    autoColumns="minmax(600px, auto)"
+                    autoFlow="row"
+                >
+                    <GridItem>
+                        <IntroductionCard />
+                    </GridItem>
+                </Grid>
+                <Outlet />
+            </PageTemplate>
+        );
+    } else {
+        return (
+            <PageTemplate page="plan">
+                <Breadcrumbs
+                    path={"Home/Budget Planner"}
+                    links={["/dashboard", "/plan"]}
+                />
+                <Grid
+                    w="100%"
+                    gap="25px"
+                    autoColumns="minmax(600px, auto)"
+                    autoFlow="row"
+                >
+                    <GridItem>
+                        <Card heading="Budget Details">
+                            <Card isNested>
+                                <LightTable
+                                    headers={[
+                                        "Start Date",
+                                        "End Date",
+                                        "Duration",
+                                    ]}
+                                    primary={[
+                                        format(
+                                            parseISO(start_date),
+                                            "dd LLLL yyyy"
+                                        ),
+                                        format(
+                                            parseISO(end_date),
+                                            "dd LLLL yyyy"
+                                        ),
+                                        `${differenceInDays(
+                                            parseISO(end_date),
+                                            parseISO(start_date)
+                                        )} days`,
+                                    ]}
+                                />
+                            </Card>
+                            <Card isNested>
+                                <LightTable
+                                    headers={[
+                                        "Budget",
+                                        "Spent thus far",
+                                        "Remaining",
+                                    ]}
+                                    primary={[
+                                        `$${budget}`,
+                                        `$${totalExpenses}`,
+                                        `$${remaining}`,
+                                    ]}
+                                />
+                            </Card>
+                        </Card>
+                    </GridItem>
+                    <GridItem>
+                        <Card heading="Progress (Time)">
+                            <Card isNested>
+                                <AspectRatio ratio={16 / 9}>
+                                    <CircularProgressbar
+                                        value={progress}
+                                        text={`${progress}% complete`}
+                                        styles={buildStyles({
+                                            pathColor:
+                                                progress > 100
+                                                    ? "#DC2626"
+                                                    : "#3b82f6",
+                                            trailColor: "#f5f5f5",
+                                            textColor:
+                                                progress > 100
+                                                    ? "#DC2626"
+                                                    : "#3b82f6",
+                                            textSize: "12px",
+                                        })}
+                                    />
+                                </AspectRatio>
+                            </Card>
+                        </Card>
+                    </GridItem>
+                    <Card heading="Progress (Budget)">
                         <Card isNested>
                             <AspectRatio ratio={16 / 9}>
                                 <CircularProgressbar
-                                    value={progress}
-                                    text={`${progress}% complete`}
+                                    value={percentage}
+                                    text={`${percentage}% spent`}
                                     styles={buildStyles({
                                         pathColor:
-                                            progress > 100
+                                            percentage > 100
                                                 ? "#DC2626"
                                                 : "#3b82f6",
                                         trailColor: "#f5f5f5",
                                         textColor:
-                                            progress > 100
+                                            percentage > 100
                                                 ? "#DC2626"
                                                 : "#3b82f6",
                                         textSize: "12px",
@@ -183,37 +237,18 @@ export default function Plan() {
                             </AspectRatio>
                         </Card>
                     </Card>
-                </GridItem>
-                <Card heading="Progress (Budget)">
-                    <Card isNested>
-                        <AspectRatio ratio={16 / 9}>
-                            <CircularProgressbar
-                                value={percentage}
-                                text={`${percentage}% spent`}
-                                styles={buildStyles({
-                                    pathColor:
-                                        percentage > 100
-                                            ? "#DC2626"
-                                            : "#3b82f6",
-                                    trailColor: "#f5f5f5",
-                                    textColor:
-                                        percentage > 100
-                                            ? "#DC2626"
-                                            : "#3b82f6",
-                                    textSize: "12px",
-                                })}
-                            />
-                        </AspectRatio>
-                    </Card>
-                </Card>
-                <GridItem>
-                    <ExpensesCategoryCard data={spendingsData} />
-                </GridItem>
-                <GridItem colSpan={2}>
-                    <SpendingTransactions />
-                </GridItem>
-            </Grid>
-            <Outlet />
-        </PageTemplate>
-    );
+                    <GridItem>
+                        <ExpensesCategoryCard data={spendingsData} />
+                    </GridItem>
+                    <GridItem colSpan={2}>
+                        <SpendingTransactions />
+                    </GridItem>
+                    <GridItem>
+                        <DeleteBudgetCard />
+                    </GridItem>
+                </Grid>
+                <Outlet />
+            </PageTemplate>
+        );
+    }
 }

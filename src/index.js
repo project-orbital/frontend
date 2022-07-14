@@ -44,6 +44,7 @@ import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
 import PasswordChange from "./features/settings/components/PasswordChange";
 import UserAccountDeletion from "./features/settings/components/UserAccountDeletion";
 import ProfileUpdate from "./features/settings/components/ProfileUpdate";
+import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -246,6 +247,7 @@ const routes = (
             }
         >
             <Route path="create-budget" element={<CreateBudgetModal />} />
+            <Route path="delete-budget" element={<BudgetDeleteModal />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
     </Routes>

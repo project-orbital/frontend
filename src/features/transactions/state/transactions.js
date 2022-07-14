@@ -83,17 +83,9 @@ export const selectTransactionsFromAccount = (accountId) => (state) => {
         });
 };
 
-const isNegative = (t) => {
-    if (t < 0) {
-        return true;
-    } else {
-        return false;
-    }
-};
-
 export const selectSpendingTransactions = (state) => {
     return state.transactions.history
-        .filter((transaction) => isNegative(transaction.amount))
+        .filter((transaction) => transaction.amount < 0)
         .map((transaction) => {
             const { date } = transaction;
             return {
@@ -110,7 +102,7 @@ export const selectSpendingTransactionsBetween =
         const end_date = parseISO(endDate);
 
         return state.transactions.history
-            .filter((transaction) => isNegative(transaction.amount))
+            .filter((transaction) => transaction.amount < 0)
             .map((transaction) => {
                 const { date } = transaction;
                 return {
