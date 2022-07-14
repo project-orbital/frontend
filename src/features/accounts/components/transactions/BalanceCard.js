@@ -27,7 +27,7 @@ export default function BalanceCard() {
     const monthEndBalances = discretize(transactions, isSameMonth).map(
         (tx) => ({
             x: format(tx.date, "LLLL yyyy"),
-            y: parseFloat(tx.balance).toFixed(2),
+            y: parseFloat(tx.balance),
         })
     );
 

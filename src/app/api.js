@@ -25,6 +25,18 @@ const kyBaseQuery =
         }
     };
 
+// Deserializes decimal128 into currency values and ISO date strings into Date objects.
+// We won't be persisting this data, so we don't need to worry about it being unserializable.
+const transformTransactions = (response) =>
+    response.map((tx) => ({
+        date: parseISO(tx.date),
+        amount: currency(tx.amount["$numberDecimal"]),
+        balance: currency(tx.balance ? tx.balance["$numberDecimal"] : 0),
+        category: tx.category,
+        description: tx.description,
+        accountId: tx.account_id,
+    }));
+
 // Define a service using a base URL and expected endpoints.
 // Tags are used to group related data together, and allow for cache invalidation
 // of the groups of data with the same tag. This is needed for automatic
@@ -35,6 +47,8 @@ export const api = createApi({
     baseQuery: kyBaseQuery({ baseUrl: process.env.REACT_APP_BACKEND }),
     tagTypes: ["Account", "Accounts"],
     endpoints: (builder) => ({
+        // === === ===
+        // Accounts
         createAccount: builder.mutation({
             query: (values) => ({
                 url: "accounts",
@@ -64,8 +78,10 @@ export const api = createApi({
                 url: `accounts/${id}`,
                 method: "delete",
             }),
-            invalidatesTags: ["Account", "Accounts"],
+            invalidatesTags: ["Account", "Accounts", "Transactions"],
         }),
+        // === === ===
+        // Transactions
         createTransaction: builder.mutation({
             query: (values) => ({
                 url: "transactions",
@@ -74,24 +90,21 @@ export const api = createApi({
             }),
             invalidatesTags: ["Transactions"],
         }),
+        readTransactions: builder.query({
+            query: () => ({
+                url: "transactions",
+                method: "get",
+            }),
+            transformResponse: transformTransactions,
+            providesTags: ["Transactions"],
+        }),
         readTransactionsInAccount: builder.query({
             query: (id) => ({
                 url: "transactions",
                 method: "get",
                 params: { accountId: id },
             }),
-            transformResponse: (response) =>
-                // Deserialize decimal128 into currency values and ISO date strings into Date objects.
-                // We won't be persisting this data, so we don't need to worry about it being unserializable.
-                response.map((tx) => ({
-                    date: parseISO(tx.date),
-                    amount: currency(tx.amount["$numberDecimal"]),
-                    balance: currency(
-                        tx.balance ? tx.balance["$numberDecimal"] : 0
-                    ),
-                    category: tx.category,
-                    description: tx.description,
-                })),
+            transformResponse: transformTransactions,
             providesTags: ["Transactions"],
         }),
     }),
@@ -108,5 +121,6 @@ export const {
     useDeleteAccountMutation,
     // Transactions
     useCreateTransactionMutation,
+    useReadTransactionsQuery,
     useReadTransactionsInAccountQuery,
 } = api;

@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { GridItem, SimpleGrid } from "@chakra-ui/react";
 
 import * as rand from "../../common/utils/rand";
 import TransactionsCard from "./components/TransactionsCard";
@@ -7,34 +7,12 @@ import AssetAllocationCard from "./components/AssetAllocationCard";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
 import PageTemplate from "../../common/components/PageTemplate";
 
-const rng = rand.randIntGenerator(20000, 70000);
-const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-];
-const netWorthData = months.map((month) => ({ key: month, value: rng() }));
-const netWorthValue = netWorthData[11].value;
-const netWorthChange = (
-    ((netWorthValue - netWorthData[10].value) / netWorthData[10].value) *
-    100
-).toFixed(2);
-
 const assets = ["Cash", "Bonds", "Stocks", "Crypto"];
 const assetsRaw = rand.randIntArray(assets.length, 0, 100);
 const assetsTotal = assetsRaw.reduce((a, b) => a + b);
 const assetsData = assets.map((asset, i) => ({
     key: asset,
-    value: Math.floor((netWorthValue * assetsRaw[i]) / assetsTotal),
+    value: Math.floor((100000 * assetsRaw[i]) / assetsTotal),
 }));
 
 export default function Dashboard() {
@@ -44,26 +22,13 @@ export default function Dashboard() {
                 path="Home/Dashboard"
                 links={["/dashboard", "/dashboard"]}
             />
-            <Grid
-                w="100%"
-                gap="25px"
-                autoColumns="minmax(600px, auto)"
-                autoFlow="row"
-            >
-                <GridItem>
-                    <NetWorthCard
-                        value={netWorthValue}
-                        change={netWorthChange}
-                        data={netWorthData}
-                    />
-                </GridItem>
-                <GridItem>
-                    <AssetAllocationCard data={assetsData} />
-                </GridItem>
+            <SimpleGrid spacing={8} minChildWidth="600px">
+                <NetWorthCard />
+                <AssetAllocationCard data={assetsData} />
                 <GridItem colSpan={2}>
                     <TransactionsCard />
                 </GridItem>
-            </Grid>
+            </SimpleGrid>
         </PageTemplate>
     );
 }
