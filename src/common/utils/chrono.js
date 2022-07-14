@@ -41,7 +41,8 @@ export function newest(data, dateExtractorFn = (elem) => elem.date) {
  *
  * @param data an array of chronologically unsorted elements
  * @param boundaryFn a 2-argument function which takes 2 Date objects and returns
- * whether they fall in the same month
+ * whether they should considered to be in the same group, of which the most recent
+ * is chosen as the representative element of the group
  * @param dateExtractorFn (optional) a function to extract the Date object from an element
  * @return a new array with only the chronologically newest elements in the
  * original array which meet the condition specified by a boundary function
