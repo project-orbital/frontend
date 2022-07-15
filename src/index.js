@@ -42,8 +42,9 @@ import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal
 import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
 import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
 import PasswordChange from "./features/settings/components/PasswordChange";
-import UserAccountDeletion from "./features/settings/components/UserAccountDeletion";
+import UserAccountDelete from "./features/settings/components/AccountDelete";
 import ProfileUpdate from "./features/settings/components/ProfileUpdate";
+import DataErase from "./features/settings/components/DataErase";
 import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
 import AmendBudget from "./features/plan/components/AmendBudget";
 
@@ -237,7 +238,8 @@ const routes = (
         >
             <Route path="update-profile" element={<ProfileUpdate />} />
             <Route path="change-password" element={<PasswordChange />} />
-            <Route path="delete-account" element={<UserAccountDeletion />} />
+            <Route path="delete-account" element={<UserAccountDelete />} />
+            <Route path="erase-data" element={<DataErase />} />
         </Route>
         <Route
             path="plan"

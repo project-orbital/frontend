@@ -1,22 +1,22 @@
 import PageTemplate from "../../common/components/PageTemplate";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
-import { Grid, AspectRatio, GridItem, Box } from "@chakra-ui/react";
+import { AspectRatio, Box, Grid, GridItem } from "@chakra-ui/react";
 import Card from "../../common/components/Card";
 import { selectAccounts } from "../accounts/state/accounts";
 import { useSelector } from "react-redux";
 import { selectSpendingTransactionsBetween } from "../transactions/state/transactions";
 import {
+    differenceInCalendarDays,
+    differenceInDays,
     format,
     formatDistanceStrict,
-    parseISO,
-    differenceInDays,
-    differenceInCalendarDays,
     isPast,
+    parseISO,
 } from "date-fns";
 import Table from "../../common/components/visuals/Table";
 import NavButton from "../../common/components/buttons/NavButton";
 import ExpensesCategoryCard from "./components/ExpensesCategoryCard";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Outlet } from "react-router-dom";
 import LightTable from "../../common/components/visuals/LightTable";

@@ -6,57 +6,52 @@ import ky from "ky";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const URL = `${process.env.REACT_APP_BACKEND}/users/profile`;
+async function fetchProfile() {
+    try {
+        return await ky.get(URL, { credentials: "include" }).json();
+    } catch (error) {
+        return {
+            firstName: "",
+            lastName: "",
+            username: "",
+            email: "",
+        };
+    }
+}
+
 export default function ProfileUpdate() {
     const navigate = useNavigate();
     const toast = useToast();
-    const [profile, setProfile] = useState();
+    const [profile, setProfile] = useState({
+        firstName: "",
+        lastName: "",
+        username: "",
+        email: "",
+    });
 
     // Fetch profile data to pre-fill the form.
     useEffect(() => {
-        async function fetchProfile() {
-            try {
-                const response = await ky
-                    .get(
-                        `${process.env.REACT_APP_BACKEND}/users/preferences/user-profile`,
-                        { credentials: "include" }
-                    )
-                    .json();
-                setProfile(response);
-            } catch (error) {
-                setProfile({
-                    firstName: "",
-                    lastName: "",
-                    username: "",
-                    email: "",
-                });
-            }
-        }
-        fetchProfile();
+        fetchProfile().then(setProfile);
     }, []);
 
     const handleSubmit = async (values, { setErrors }) => {
         try {
-            await ky.patch(
-                `${process.env.REACT_APP_BACKEND}/users/preferences/user-profile`,
-                {
-                    json: values,
-                    credentials: "include",
-                }
-            );
             toast.closeAll();
+            await ky.patch(URL, { json: values, credentials: "include" });
             toast({
                 title: "Profile updated successfully.",
                 status: "success",
-                isClosable: true,
+                duration: 2000,
             });
             navigate("../");
         } catch (error) {
-            setErrors(await error.response.json());
+            const errors = await error.response.json();
+            setErrors(errors);
             toast({
-                title: "Profile update failed.",
+                title: Object.values(errors),
                 description: "Please try again.",
                 status: "error",
-                isClosable: true,
             });
         }
     };

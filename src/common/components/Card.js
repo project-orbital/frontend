@@ -64,6 +64,7 @@ export default function Card({
 
     const header = (
         <VStack
+            width="stretch"
             pb={children ? "20px" : "0px"}
             mb={children && !isNested ? "20px" : "0px"}
             align={isCentered ? "center" : "start"}

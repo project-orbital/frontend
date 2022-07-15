@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
     compareAsc,
+    isAfter,
+    isBefore,
+    isEqual,
     isSameMonth,
     parseISO,
-    isAfter,
-    isEqual,
-    isBefore,
 } from "date-fns";
 
 /*

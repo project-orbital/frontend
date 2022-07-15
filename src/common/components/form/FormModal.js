@@ -33,24 +33,25 @@ export default function FormModal({
 }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     return (
-        <Modal
-            {...modalProps}
-            submitForm="integrated-form"
-            isSubmitting={isSubmitting}
+        <Formik
+            enableReinitialize={true}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={async (values, props) => {
+                setIsSubmitting(true);
+                await onSubmit(values, props);
+                setIsSubmitting(false);
+            }}
         >
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={async (values, props) => {
-                    setIsSubmitting(true);
-                    await onSubmit(values, props);
-                    setIsSubmitting(false);
-                }}
-            >
-                <Form id="integrated-form">
+            <Form id="integrated-form" noValidate>
+                <Modal
+                    {...modalProps}
+                    submitForm="integrated-form"
+                    isSubmitting={isSubmitting}
+                >
                     <VStack spacing="20px">{children}</VStack>
-                </Form>
-            </Formik>
-        </Modal>
+                </Modal>
+            </Form>
+        </Formik>
     );
 }

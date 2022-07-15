@@ -9,6 +9,7 @@ import {
     Link,
     Spacer,
     Text,
+    useColorMode,
     useToast,
     VStack,
 } from "@chakra-ui/react";
@@ -18,7 +19,7 @@ import PageTemplate from "../../../common/components/PageTemplate";
 export default function SignIn() {
     // === === ===
     // Hooks.
-
+    const { colorMode, toggleColorMode } = useColorMode();
     const navigate = useNavigate();
     const toast = useToast();
     const {
@@ -29,12 +30,37 @@ export default function SignIn() {
     } = useForm();
 
     // === === ===
-    // Form handling.
+    // User configuration (intended for after sign-in).
+    async function configureApp() {
+        try {
+            const URL = `${process.env.REACT_APP_BACKEND}/users/preferences`;
+            const { prefersDarkMode } = await ky
+                .get(URL, { credentials: "include" })
+                .json();
+            // Toggle the color mode to the user preference.
+            if (
+                (prefersDarkMode && colorMode === "light") ||
+                (!prefersDarkMode && colorMode === "dark")
+            ) {
+                toggleColorMode();
+            }
+        } catch {
+            toast({
+                title: "We couldn't configure the app to your preferences.",
+                description: "Try refreshing the page.",
+                status: "error",
+                isClosable: true,
+            });
+        }
+    }
 
+    // === === ===
+    // Form handling.
     async function signIn(values) {
         const url = `${process.env.REACT_APP_BACKEND}/users/sign-in`;
         try {
             await ky.post(url, { json: values, credentials: "include" });
+            await configureApp();
             toast.closeAll();
             navigate("/dashboard");
         } catch (error) {
@@ -71,7 +97,6 @@ export default function SignIn() {
 
     // === === ===
     // Form fields.
-
     const usernameField = (
         <FormControl isInvalid={errors.username}>
             <FormLabel htmlFor="username">Username</FormLabel>
