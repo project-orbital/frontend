@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { addDays } from "date-fns";
 import FormTextField from "../../../common/components/form/FormTextField";
 import FormModal from "../../../common/components/form/FormModal";
 import { createBudget, createStartDate, createEndDate } from "../state/budgets";
@@ -25,8 +24,8 @@ export default function CreateBudgetForm({ afterSubmit }) {
                 start_date: Yup.date().required("Please provide a date."),
                 end_date: Yup.date()
                     .min(
-                        Yup.ref("start_date"),
-                        "End date should be later than start date"
+                        Yup.ref("start_date") && today,
+                        "End date should be later than start date and current date"
                     )
                     .required("Please provide a date."),
                 budget: Yup.number()
