@@ -96,7 +96,7 @@ export default function Plan() {
                 <Card
                     isCentered
                     heading="No transactions to display."
-                    subheading="There is no spending transaction in your account(s) to import."
+                    subheading="There is no spending transaction in your accounts to import."
                 />
             );
         } else {
