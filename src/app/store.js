@@ -5,8 +5,9 @@ import { api } from "./api";
 import transactionsReducer from "../features/accounts/state/transactions";
 import accountsReducer from "../features/accounts/state/accounts";
 import filesReducer from "../features/accounts/state/files";
-import storage from "redux-persist/lib/storage";
+import budgetsReducer from "../features/plan/state/budgets";
 import preferencesReducer from "../features/settings/state/preferences";
+import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
     key: "root",
@@ -25,6 +26,7 @@ const combinedReducer = combineReducers({
     accounts: accountsReducer,
     files: filesReducer,
     preferences: preferencesReducer,
+    budgets: budgetsReducer,
     // Add the generated reducer as a specific top-level slice.
     [api.reducerPath]: api.reducer,
 });
@@ -52,6 +54,7 @@ export const store = configureStore({
         }).concat(api.middleware),
     devTools: process.env.NODE_ENV !== "production",
 });
+
 export const persistor = persistStore(store);
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

@@ -16,8 +16,10 @@ import SettingsRoutes from "./features/settings/SettingsRoutes";
 
 import Portfolio from "./features/portfolio/Portfolio";
 import Plan from "./features/plan/Plan";
-import PlanMenu from "./features/plan/PlanMenu";
 import Learn from "./features/learn/Learn";
+import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
+import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
+import AmendBudget from "./features/plan/components/AmendBudget";
 
 // TODO: Replace the remaining routes by creating "__Routes.js" in their respective folders and linking them here.
 const routes = (
@@ -43,21 +45,17 @@ const routes = (
             }
         ></Route>
         <Route
-            path="planMenu"
-            element={
-                <RequireAuth>
-                    <PlanMenu />
-                </RequireAuth>
-            }
-        ></Route>
-        <Route
-            path="plan/:id"
+            path="plan"
             element={
                 <RequireAuth>
                     <Plan />
                 </RequireAuth>
             }
-        />
+        >
+            <Route path="create-budget" element={<CreateBudgetModal />} />
+            <Route path="delete-budget" element={<BudgetDeleteModal />} />
+            <Route path="amend-budget" element={<AmendBudget />} />
+        </Route>
     </Routes>
 );
 
