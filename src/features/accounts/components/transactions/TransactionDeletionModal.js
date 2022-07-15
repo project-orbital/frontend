@@ -32,7 +32,6 @@ export default function TransactionDeletionModal() {
 
     function handleSubmit(data) {
         dispatch(deleteTransactionWithID(data));
-        console.log(data);
         navigate("../");
     }
 

@@ -65,8 +65,6 @@ export default function NetWorthCard() {
             ),
         }));
 
-    console.log(history);
-
     return (
         <Card heading="Net Worth">
             <Card isNested>
