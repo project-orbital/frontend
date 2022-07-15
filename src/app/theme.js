@@ -8,10 +8,20 @@ export const theme = extendTheme({
     semanticTokens: {
         // All these colors are color mode responsive.
         colors: {
+            // The go-to primary color for backgrounds in the UI
+            // (e.g. page backgrounds).
+            bg: {
+                default: "#f8f8f8",
+                _dark: "#050203",
+            },
             // The go-to secondary color for elements which need separation from the background
             // (e.g. cards).
             "bg-light": {
                 default: "#f3f3f3",
+                _dark: "#12070B",
+            },
+            "bg-lighter": {
+                default: "#F2EBEE",
                 _dark: "#12070B",
             },
             // Used for overlaying content on top of main content
@@ -30,12 +40,6 @@ export const theme = extendTheme({
             "fg-light": {
                 default: "#4a4a4a",
                 _dark: "#e1e1e1",
-            },
-            // The go-to primary color for backgrounds in the UI
-            // (e.g. page backgrounds).
-            bg: {
-                default: "#f8f8f8",
-                _dark: "#050203",
             },
             // Background color for minor elements that need to blend into the background
             // (e.g. action buttons).

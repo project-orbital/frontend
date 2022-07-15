@@ -50,9 +50,9 @@ export default function Table({ values, rowLimit }) {
 function createTableHeaders(headers) {
     return (
         <Thead>
-            <Tr>
+            <Tr height={12}>
                 {headers.map((header, x) => (
-                    <Th key={x} fontFamily="body">
+                    <Th key={x} pl={x === 0 ? 8 : 0} fontFamily="body">
                         {header}
                     </Th>
                 ))}
@@ -73,9 +73,13 @@ function createTableBody(body, rowLimit) {
         return <Tbody></Tbody>;
     }
     const rowToJSX = (row, y) => (
-        <Tr key={y}>
+        <Tr key={y} height={12}>
             {row.map((cell, x) => (
-                <Td key={x} bg={y % 2 === 0 ? "dim" : "bg-light"}>
+                <Td
+                    key={x}
+                    pl={x === 0 ? 8 : 0}
+                    bg={y % 2 === 0 ? "whiteAlpha.500" : "none"}
+                >
                     {cell}
                 </Td>
             ))}

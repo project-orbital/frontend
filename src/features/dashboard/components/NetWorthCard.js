@@ -1,85 +1,96 @@
-import Card from "../../../common/components/Card";
 import { useReadTransactionsQuery } from "../../../app/api";
 import { discretize, newest } from "../../../common/utils/chrono";
-import NavButton from "../../../common/components/buttons/NavButton";
-import { MdOutlineCallMade, MdOutlineCallReceived } from "react-icons/md";
 import { compareAsc, format, formatDistanceToNow, isSameMonth } from "date-fns";
 import currency from "currency.js";
 import { groupBy } from "../../../common/utils/arrays";
 import AreaChart from "../../../common/components/visuals/AreaChart";
+import BaseCard from "../../../common/components/cards/BaseCard";
+import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 
 export default function NetWorthCard() {
+    const accentGradient = useColorModeValue(
+        "linear(to-t, accent, fg)",
+        "linear(to-t, fg, fg)"
+    );
+
     const {
         data: transactions,
         isLoading,
         isError,
     } = useReadTransactionsQuery();
-    // Don't display this card while loading for now.
-    // TODO: When skeleton cards are implemented, display that instead.
-    if (isLoading || isError) {
+
+    if (isError) {
         return;
     }
-    if (transactions.length === 0) {
+
+    const NetWorth = () => {
+        const isSameAccount = (a, b) => a.accountId === b.accountId;
+        const lastTransactions =
+            isLoading || transactions.length === 0
+                ? []
+                : discretize(transactions, isSameAccount);
+        const asOf =
+            isLoading || transactions.length === 0
+                ? new Date()
+                : newest(lastTransactions).date;
+        const netWorth =
+            isLoading || transactions.length === 0
+                ? currency(0)
+                : lastTransactions.reduce(
+                      (acc, tx) => acc.add(tx.balance),
+                      currency(0)
+                  );
         return (
-            <Card
-                isCentered
-                heading="No transactions added."
-                subheading="Get started by adding a transaction."
-            >
-                <NavButton
-                    to="./transactions/create/withdrawal"
-                    icon={<MdOutlineCallMade color="white" size="20px" />}
-                    text="Add a withdrawal transaction"
-                />
-                <NavButton
-                    to="./transactions/create/deposit"
-                    icon={<MdOutlineCallReceived color="white" size="20px" />}
-                    text="Add a deposit transaction"
-                />
-            </Card>
-        );
-    }
-
-    // Net worth computation.
-    const isSameAccount = (a, b) => a.accountId === b.accountId;
-    const lastTransactions = discretize(transactions, isSameAccount);
-    const asOf = newest(lastTransactions).date;
-    const netWorth = lastTransactions.reduce(
-        (acc, tx) => acc.add(tx.balance),
-        currency(0)
-    );
-
-    // Net worth history computation.
-    const months = groupBy(transactions, "accountId")
-        .flatMap((account) => discretize(account, isSameMonth))
-        .map((tx) => ({
-            ...tx,
-            label: format(tx.date, "LLLL yyyy"),
-        }));
-    const history = groupBy(months, "label")
-        .sort((a, b) => compareAsc(a[0].date, b[0].date))
-        .map((month) => ({
-            x: month[0].label,
-            y: parseFloat(
-                month.reduce((acc, tx) => acc.add(tx.balance), currency(0))
-            ),
-        }));
-
-    return (
-        <Card heading="Net Worth">
-            <Card isNested>
-                <Card
-                    isStandalone
-                    isNested
-                    heading={netWorth.format({ symbol: "SGD " })}
-                    subheading={`as of ${formatDistanceToNow(asOf, {
+            <Box>
+                <Heading bgGradient={accentGradient} bgClip="text">
+                    {netWorth.format({ symbol: "SGD " })}
+                </Heading>
+                <Text fontSize="sm" color="fg-light">
+                    {`as of ${formatDistanceToNow(asOf, {
                         addSuffix: true,
                     })}, on ${format(asOf, "dd LLLL yyyy")}`}
-                />
-            </Card>
-            <Card isNested>
+                </Text>
+            </Box>
+        );
+    };
+
+    const History = () => {
+        if (isLoading || transactions.length === 0) {
+            return (
+                <Box w="100%">
+                    <AreaChart data={{}} />
+                </Box>
+            );
+        }
+        const months = groupBy(transactions, "accountId")
+            .flatMap((account) => discretize(account, isSameMonth))
+            .map((tx) => ({
+                ...tx,
+                label: format(tx.date, "LLLL yyyy"),
+            }));
+        const history = groupBy(months, "label")
+            .sort((a, b) => compareAsc(a[0].date, b[0].date))
+            .map((month) => ({
+                x: month[0].label,
+                y: parseFloat(
+                    month.reduce((acc, tx) => acc.add(tx.balance), currency(0))
+                ),
+            }));
+        return (
+            <Box w="100%">
                 <AreaChart data={history} />
-            </Card>
-        </Card>
+            </Box>
+        );
+    };
+
+    return (
+        <BaseCard
+            title="Net Worth"
+            subtitle="The sum of your account balances."
+            isLoading={isLoading}
+        >
+            <NetWorth />
+            <History />
+        </BaseCard>
     );
 }

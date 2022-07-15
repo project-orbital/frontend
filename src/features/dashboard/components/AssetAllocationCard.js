@@ -1,19 +1,18 @@
 import PieChart from "../../../common/components/visuals/PieChart";
-import Card from "../../../common/components/Card";
-import { AspectRatio, Badge } from "@chakra-ui/react";
+import { AspectRatio, Box } from "@chakra-ui/react";
+import BaseCard from "../../../common/components/cards/BaseCard";
 
 export default function AssetAllocationCard({ data }) {
     return (
-        <Card
-            badge={<Badge colorScheme="blue">Preview</Badge>}
-            heading="Asset Allocation"
-            subheading="This is a preview of what's coming in milestone 3 when the Portfolio is implemented."
+        <BaseCard
+            title="Asset Allocation"
+            subtitle="For more information, check out your portfolio."
         >
-            <Card isNested>
+            <Box w="100%">
                 <AspectRatio ratio={16 / 9}>
                     <PieChart data={data} />
                 </AspectRatio>
-            </Card>
-        </Card>
+            </Box>
+        </BaseCard>
     );
 }
