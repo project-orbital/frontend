@@ -21,7 +21,7 @@ export default function ReceivingTransactionCreationForm({ afterSubmit }) {
                 date: today,
                 amount: -123.91,
                 balance: 4567.89,
-                description: "An expense.",
+                description: "Withdrawal",
             }}
             validationSchema={Yup.object({
                 date: Yup.string()

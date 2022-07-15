@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { compareAsc, isSameMonth, parseISO } from "date-fns";
+import {
+    compareAsc,
+    isSameMonth,
+    parseISO,
+    isAfter,
+    isEqual,
+    isBefore,
+} from "date-fns";
 
 /*
  * Transaction schema:
@@ -30,11 +37,13 @@ export const transactionsSlice = createSlice({
                 return {
                     ...transaction,
                     amount: parseFloat(transaction.amount),
+                    description: transaction.description,
                     balance:
                         transaction.balance === null
                             ? 0
                             : parseFloat(transaction.balance),
                     id: state.counter + index,
+                    accountId: parseInt(transaction.accountId),
                 };
             });
             state.history.push(...transactions);
@@ -73,6 +82,44 @@ export const selectTransactionsFromAccount = (accountId) => (state) => {
             };
         });
 };
+
+export const selectSpendingTransactions = (state) => {
+    return state.transactions.history
+        .filter((transaction) => transaction.amount < 0)
+        .map((transaction) => {
+            const { date } = transaction;
+            return {
+                ...transaction,
+                date: parseISO(date),
+            };
+        });
+};
+
+//For budget planner feature
+export const selectSpendingTransactionsBetween =
+    (startDate, endDate) => (state) => {
+        const start_date = parseISO(startDate);
+        const end_date = parseISO(endDate);
+
+        return state.transactions.history
+            .filter((transaction) => transaction.amount < 0)
+            .map((transaction) => {
+                const { date } = transaction;
+                return {
+                    ...transaction,
+                    date: parseISO(date),
+                };
+            })
+            .filter(
+                (transaction) =>
+                    isEqual(start_date, transaction.date) ||
+                    isEqual(end_date, transaction.date) ||
+                    (isAfter(transaction.date, start_date) &&
+                        isBefore(transaction.date, end_date))
+            )
+            .sort((a, b) => compareAsc(a.date, b.date))
+            .reverse();
+    };
 
 export const selectLastTransactionFromAccount = (accountId) => (state) => {
     const result = state.transactions.history
@@ -124,6 +171,28 @@ export const selectNetWorth = (state) => {
 export const selectMonthEndBalancesFromAccount = (accountId) => (state) => {
     return state.transactions.history
         .filter((transaction) => transaction.accountId === accountId)
+        .map((transaction) => ({
+            date: parseISO(transaction.date),
+            balance: transaction.balance,
+        }))
+        .sort((a, b) => compareAsc(a.date, b.date))
+        .reduce((acc, transaction) => {
+            if (acc.length === 0) {
+                acc.push(transaction);
+                return acc;
+            }
+            const last = acc[acc.length - 1];
+            if (isSameMonth(last.date, transaction.date)) {
+                acc[acc.length - 1] = transaction;
+            } else {
+                acc.push(transaction);
+            }
+            return acc;
+        }, []);
+};
+
+export const selectMonthEndBalancesFromAccounts = (state) => {
+    return state.transactions.history
         .map((transaction) => ({
             date: parseISO(transaction.date),
             balance: transaction.balance,

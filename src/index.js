@@ -39,11 +39,13 @@ import DisclaimerModal from "./features/account/components/DisclaimerModal";
 import UploadModal from "./features/account/components/UploadModal";
 import ReviewModal from "./features/account/components/ReviewModal";
 import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal";
-import PlanMenu from "./features/plan/PlanMenu";
-import PasswordChange from "./features/settings/components/PasswordChange";
 import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
+import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
+import PasswordChange from "./features/settings/components/PasswordChange";
 import UserAccountDeletion from "./features/settings/components/UserAccountDeletion";
 import ProfileUpdate from "./features/settings/components/ProfileUpdate";
+import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
+import AmendBudget from "./features/plan/components/AmendBudget";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -238,21 +240,17 @@ const routes = (
             <Route path="delete-account" element={<UserAccountDeletion />} />
         </Route>
         <Route
-            path="planMenu"
-            element={
-                <RequireAuth>
-                    <PlanMenu />
-                </RequireAuth>
-            }
-        ></Route>
-        <Route
-            path="plan/:id"
+            path="plan"
             element={
                 <RequireAuth>
                     <Plan />
                 </RequireAuth>
             }
-        />
+        >
+            <Route path="create-budget" element={<CreateBudgetModal />} />
+            <Route path="delete-budget" element={<BudgetDeleteModal />} />
+            <Route path="amend-budget" element={<AmendBudget />} />
+        </Route>
         <Route path="*" element={<PageNotFound />} />
     </Routes>
 );
