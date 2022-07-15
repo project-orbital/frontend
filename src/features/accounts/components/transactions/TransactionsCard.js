@@ -1,10 +1,11 @@
-import Card from "../../../../common/components/Card";
 import NavButton from "../../../../common/components/buttons/NavButton";
 import { MdOutlineCallMade, MdOutlineCallReceived } from "react-icons/md";
 import { useReadTransactionsInAccountQuery } from "../../../../app/api";
-import Table from "../../../../common/components/visuals/Table";
 import { compareDesc, format } from "date-fns";
 import { useParams } from "react-router-dom";
+import BaseCard from "../../../../common/components/cards/BaseCard";
+import { Box, Text, VStack } from "@chakra-ui/react";
+import TableCard from "../../../../common/components/cards/TableCard";
 
 export default function TransactionsCard() {
     const { id: accountId } = useParams();
@@ -13,64 +14,64 @@ export default function TransactionsCard() {
         isLoading,
         isError,
     } = useReadTransactionsInAccountQuery(accountId);
-    // Don't display this card while loading for now.
-    // TODO: When skeleton cards are implemented, display that instead.
-    if (isLoading || isError) {
+
+    if (isError) {
         return;
     }
-    if (transactions.length === 0) {
+
+    if (!isLoading && transactions.length === 0) {
         return (
-            <Card
-                isCentered
-                heading="No transactions added."
-                subheading="Get started by adding a transaction."
-            >
-                <NavButton
-                    to="./transactions/create/withdrawal"
-                    icon={<MdOutlineCallMade color="white" size="20px" />}
-                    text="Add a withdrawal transaction"
-                />
-                <NavButton
-                    to="./transactions/create/deposit"
-                    icon={<MdOutlineCallReceived color="white" size="20px" />}
-                    text="Add a deposit transaction"
-                />
-            </Card>
+            <BaseCard>
+                <Box>
+                    <Text fontSize="xl" fontWeight="bold">
+                        {"You haven't added any transactions yet."}
+                    </Text>
+                    <Text>
+                        Once you've added a transaction, you'll see it and your
+                        account balance here.
+                    </Text>
+                </Box>
+                <VStack align="start" spacing={4}>
+                    <NavButton
+                        to="./transactions/create/withdrawal"
+                        icon={<MdOutlineCallMade color="white" size="20px" />}
+                        text="Add a withdrawal transaction"
+                    />
+                    <NavButton
+                        to="./transactions/create/deposit"
+                        icon={
+                            <MdOutlineCallReceived color="white" size="20px" />
+                        }
+                        text="Add a deposit transaction"
+                    />
+                </VStack>
+            </BaseCard>
         );
     }
+
     // Convert the transaction data into human-readable values for the table.
-    const tableValues = transactions
-        .slice()
-        .sort((a, b) => compareDesc(a.date, b.date))
-        .map((tx) => ({
-            date: format(tx.date, "dd LLLL yyyy"),
-            description: tx.description,
-            category: tx.category,
-            // Hide the $ symbol for less visual clutter.
-            amount: tx.amount.format({ symbol: "" }),
-            balance: tx.balance.format({ symbol: "" }),
-        }));
+    function tableValues() {
+        if (isLoading) {
+            return [];
+        }
+        return transactions
+            .slice()
+            .sort((a, b) => compareDesc(a.date, b.date))
+            .map((tx) => ({
+                date: format(tx.date, "dd LLLL yyyy"),
+                description: tx.description,
+                category: tx.category,
+                // Hide the $ symbol for less visual clutter.
+                amount: tx.amount.format({ symbol: "" }),
+                balance: tx.balance.format({ symbol: "" }),
+            }));
+    }
+
     return (
-        <Card heading="Transactions">
-            <Card isNested>
-                <Table values={tableValues} rowLimit={10} />
-            </Card>
-            <Card isNested>
-                <NavButton
-                    to="./transactions/create/withdrawal"
-                    bg="dim"
-                    color="fg"
-                    icon={<MdOutlineCallMade color="fg" size="20px" />}
-                    text="Add a withdrawal"
-                />
-                <NavButton
-                    to="./transactions/create/deposit"
-                    bg="dim"
-                    color="fg"
-                    icon={<MdOutlineCallReceived color="fg" size="20px" />}
-                    text="Add a deposit"
-                />
-            </Card>
-        </Card>
+        <TableCard
+            title="Transactions"
+            values={tableValues()}
+            isLoading={isLoading}
+        />
     );
 }

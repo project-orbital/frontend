@@ -11,7 +11,7 @@ export default function DisclaimerModal() {
             subheading="We've done extensive testing to ensure the parser fails gracefully instead of crashing, but unlike text, bank statements are a very uncontrollable input."
             cancelText="Back to safety"
             submitText="Continue"
-            submitLink="../upload-files"
+            submitLink="../files"
         >
             <VStack align="start">
                 <Text>

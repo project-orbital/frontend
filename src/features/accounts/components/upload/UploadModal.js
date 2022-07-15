@@ -13,11 +13,11 @@ export default function UploadModal() {
 
     const handleCancel = () => {
         dispatch(deleteAllFiles);
-        navigate("../");
+        navigate("../../");
     };
 
     const handleSubmit = () => {
-        navigate("../upload-review");
+        navigate("../review");
     };
 
     return (

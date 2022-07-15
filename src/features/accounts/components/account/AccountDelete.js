@@ -1,4 +1,4 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import FormModal from "../../../../common/components/form/FormModal";
 import { useDeleteAccountMutation } from "../../../../app/api";
@@ -6,7 +6,7 @@ import { useDeleteAccountMutation } from "../../../../app/api";
 export default function AccountDelete() {
     const [deleteAccount] = useDeleteAccountMutation();
 
-    const [id] = useOutletContext();
+    const { id } = useParams();
     const navigate = useNavigate();
     const toast = useToast();
 

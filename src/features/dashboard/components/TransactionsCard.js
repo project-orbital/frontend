@@ -25,15 +25,8 @@ export default function TransactionsCard() {
                 subtitle="Your ten latest transactions."
                 button={
                     <ActionButton
+                        variant="tertiary"
                         leftIcon={<MdModeEditOutline />}
-                        h={10}
-                        p={0}
-                        bg="none"
-                        color="gray.200"
-                        _active={{
-                            bg: "none",
-                            color: "gray.400",
-                        }}
                     >
                         Edit
                     </ActionButton>

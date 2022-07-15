@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useReadTransactionsInAccountQuery } from "../../../../app/api";
-import Card from "../../../../common/components/Card";
-import { Text, VStack } from "@chakra-ui/react";
-import { format, formatDistanceToNowStrict, isSameMonth } from "date-fns";
+import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import { format, formatDistanceToNow, isSameMonth } from "date-fns";
 import AreaChart from "../../../../common/components/visuals/AreaChart";
 import { discretize, newest } from "../../../../common/utils/chrono";
+import BaseCard from "../../../../common/components/cards/BaseCard";
+import currency from "currency.js";
 
 export default function BalanceCard() {
     const { id: accountId } = useParams();
@@ -13,44 +14,44 @@ export default function BalanceCard() {
         isLoading,
         isError,
     } = useReadTransactionsInAccountQuery(accountId);
-    // Don't display this card while loading for now.
-    // TODO: When skeleton cards are implemented, display that instead.
-    if (isLoading || isError) {
-        return;
-    }
-    // Don't display this card when there are no transactions.
-    if (transactions.length === 0) {
-        return;
-    }
 
-    const lastTransaction = newest(transactions);
-    const monthEndBalances = discretize(transactions, isSameMonth).map(
-        (tx) => ({
-            x: format(tx.date, "LLLL yyyy"),
-            y: parseFloat(tx.balance),
-        })
+    const accentGradient = useColorModeValue(
+        "linear(to-t, accent, fg)",
+        "linear(to-t, fg, fg)"
     );
 
+    if (isError) {
+        return;
+    }
+
+    // Don't display this card when there are no transactions.
+    if (!isLoading && transactions.length === 0) {
+        return;
+    }
+
+    const { balance, date } = isLoading
+        ? { balance: currency(0), date: new Date() }
+        : newest(transactions);
+    const monthEndBalances = isLoading
+        ? {}
+        : discretize(transactions, isSameMonth).map((tx) => ({
+              x: format(tx.date, "LLLL yyyy"),
+              y: parseFloat(tx.balance),
+          }));
+
     return (
-        <Card heading="Account Balance">
-            <Card isNested>
-                <VStack spacing={0}>
-                    <Text
-                        fontWeight="bold"
-                        fontSize="2xl"
-                    >{`SGD ${lastTransaction.balance}`}</Text>
-                    <Text fontSize="sm">{`as of ${formatDistanceToNowStrict(
-                        lastTransaction.date,
-                        { addSuffix: true }
-                    )}, on ${format(
-                        lastTransaction.date,
-                        "dd LLLL yyyy"
-                    )}`}</Text>
-                </VStack>
-            </Card>
-            <Card isNested>
-                <AreaChart data={monthEndBalances} />
-            </Card>
-        </Card>
+        <BaseCard title="Balance" isLoading={isLoading}>
+            <Box>
+                <Heading bgGradient={accentGradient} bgClip="text">
+                    {balance.format({ symbol: "SGD " })}
+                </Heading>
+                <Text fontSize="sm" color="fg-light">
+                    {`as of ${formatDistanceToNow(date, {
+                        addSuffix: true,
+                    })}, on ${format(date, "dd LLLL yyyy")}`}
+                </Text>
+            </Box>
+            <AreaChart data={monthEndBalances} />
+        </BaseCard>
     );
 }

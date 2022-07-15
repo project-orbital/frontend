@@ -7,6 +7,10 @@ import AccountDelete from "./components/account/AccountDelete";
 import AccountNotFound from "./components/account/AccountNotFound";
 import Account from "./components/account/Account";
 import TransactionCreate from "./components/transactions/TransactionCreate";
+import DisclaimerModal from "./components/upload/DisclaimerModal";
+import UploadModal from "./components/upload/UploadModal";
+import ReviewModal from "./components/upload/ReviewModal";
+import ConfirmCancelModal from "./components/upload/ConfirmCancelModal";
 
 export default function AccountsRoutes() {
     return (
@@ -20,6 +24,8 @@ export default function AccountsRoutes() {
                 }
             >
                 <Route path="create" element={<AccountCreate />} />
+                <Route path="update/:id" element={<AccountRename />} />
+                <Route path="delete/:id" element={<AccountDelete />} />
             </Route>
             <Route
                 path="/not-found"
@@ -37,8 +43,13 @@ export default function AccountsRoutes() {
                     </RequireAuth>
                 }
             >
-                <Route path="rename" element={<AccountRename />} />
-                <Route path="delete" element={<AccountDelete />} />
+                <Route path="upload">
+                    <Route path="disclaimer" element={<DisclaimerModal />} />
+                    <Route path="files" element={<UploadModal />} />
+                    <Route path="review" element={<ReviewModal />}>
+                        <Route path="cancel" element={<ConfirmCancelModal />} />
+                    </Route>
+                </Route>
                 <Route path="transactions">
                     <Route path="create">
                         <Route

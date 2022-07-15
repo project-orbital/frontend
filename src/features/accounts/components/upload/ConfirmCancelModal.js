@@ -17,7 +17,7 @@ export default function ConfirmCancelModal() {
 
     const handleActualCancel = () => {
         dispatch(deleteAllFiles());
-        navigate("../../");
+        navigate("../../../");
     };
 
     // === === ===

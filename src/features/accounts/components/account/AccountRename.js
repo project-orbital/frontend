@@ -1,13 +1,18 @@
 import FormModal from "../../../../common/components/form/FormModal";
-import { useUpdateAccountMutation } from "../../../../app/api";
+import {
+    useReadAccountQuery,
+    useUpdateAccountMutation,
+} from "../../../../app/api";
 import * as Yup from "yup";
 import { InputControl } from "formik-chakra-ui";
 import { useToast } from "@chakra-ui/react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function AccountRename() {
     const [updateAccount] = useUpdateAccountMutation();
-    const [id, name, nickname] = useOutletContext();
+    const { id } = useParams();
+    const { data: accounts } = useReadAccountQuery(id);
+    const { name, nickname } = accounts ?? {};
     const navigate = useNavigate();
     const toast = useToast();
 

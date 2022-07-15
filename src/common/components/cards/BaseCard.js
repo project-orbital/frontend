@@ -107,6 +107,7 @@ export default function BaseCard({
     // Make the entire card clickable with a hover animation.
     return (
         <LinkBox
+            as="article"
             transition="transform .2s"
             _hover={{
                 transform: "scale(1.01)",
