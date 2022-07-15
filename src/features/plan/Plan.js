@@ -4,10 +4,7 @@ import { Grid, AspectRatio, GridItem, Box } from "@chakra-ui/react";
 import Card from "../../common/components/Card";
 import { selectAccounts } from "../accounts/state/accounts";
 import { useSelector } from "react-redux";
-import {
-    selectSpendingTransactions,
-    selectSpendingTransactionsBetween,
-} from "../transactions/state/transactions";
+import { selectSpendingTransactionsBetween } from "../transactions/state/transactions";
 import {
     format,
     formatDistanceStrict,
@@ -27,11 +24,13 @@ import BudgetAlert from "./components/BudgetAlert";
 
 export default function Plan() {
     const budget = useSelector((state) => state.budgets.budget);
-    const totalExpenses = useSelector(selectSpendingTransactions)
-        .reduce((total, t) => total - t.amount, 0)
-        .toFixed(2);
     const start_date = useSelector((state) => state.budgets.start_date);
     const end_date = useSelector((state) => state.budgets.end_date);
+    const totalExpenses = useSelector(
+        selectSpendingTransactionsBetween(start_date, end_date)
+    )
+        .reduce((total, t) => total - t.amount, 0)
+        .toFixed(2);
     const remaining = (budget - totalExpenses).toFixed(2);
     const percentage = ((totalExpenses / budget) * 100).toFixed(1);
     const accounts = useSelector(selectAccounts);
@@ -39,7 +38,6 @@ export default function Plan() {
         const account = accounts.find((acc) => acc.id === id);
         return account.nickname;
     };
-
     const transactions = useSelector(
         selectSpendingTransactionsBetween(start_date, end_date)
     ).map((t) => ({
@@ -48,7 +46,6 @@ export default function Plan() {
         category: t.category,
         amount: -t.amount.toFixed(2),
     }));
-
     const totalDays = differenceInCalendarDays(
         parseISO(start_date),
         parseISO(end_date)
