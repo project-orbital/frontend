@@ -38,6 +38,7 @@ export default function Account() {
     const monthEndBalances = useSelector(
         selectMonthEndBalancesFromAccount(accountId)
     );
+
     const lastTransaction = useSelector(
         selectLastTransactionFromAccount(accountId)
     );
@@ -176,10 +177,9 @@ export default function Account() {
         return (
             <Card
                 heading="Budget Planner"
-                subheading="Use the budget planner feature with this account's details."
-                badge={<Badge colorScheme="red">New!</Badge>}
+                subheading="Use the budget planner to plan your budget."
             >
-                <NavButton to={`/plan/${id}`} text="Head to Budget Planner" />
+                <NavButton to="/plan" text="Head to Budget Planner" />
             </Card>
         );
     };

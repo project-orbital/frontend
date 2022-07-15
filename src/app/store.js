@@ -1,10 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist"; // defaults to localStorage for web
 import transactionsReducer from "../features/transactions/state/transactions";
 import accountsReducer from "../features/accounts/state/accounts";
 import filesReducer from "../features/account/state/files";
-import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist"; // defaults to localStorage for web
+import budgetsReducer from "../features/plan/state/budgets";
 import preferencesReducer from "../features/settings/state/preferences";
+import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
     key: "root",
@@ -17,6 +18,7 @@ const combinedReducer = combineReducers({
     accounts: accountsReducer,
     files: filesReducer,
     preferences: preferencesReducer,
+    budgets: budgetsReducer,
 });
 
 const rootReducer = (state, action) => {
@@ -32,4 +34,5 @@ export const store = configureStore({
     reducer: persistedReducer,
     devTools: process.env.NODE_ENV !== "production",
 });
+
 export const persistor = persistStore(store);

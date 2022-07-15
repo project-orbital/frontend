@@ -62,6 +62,7 @@ export default function FormTextField({
     isRequired,
     isMultiline,
     isPassword,
+    isDate,
     withErrorMessage,
     id,
     labelText,
@@ -89,7 +90,9 @@ export default function FormTextField({
                         <Input
                             {...field}
                             id={id}
-                            type={isPassword && "password"}
+                            type={
+                                (isPassword && "password") || (isDate && "date")
+                            }
                             placeholder={placeholderText || ""}
                             {...props}
                         />

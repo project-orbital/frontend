@@ -39,12 +39,14 @@ import DisclaimerModal from "./features/account/components/DisclaimerModal";
 import UploadModal from "./features/account/components/UploadModal";
 import ReviewModal from "./features/account/components/ReviewModal";
 import ConfirmCancelModal from "./features/account/components/ConfirmCancelModal";
-import PlanMenu from "./features/plan/PlanMenu";
-import PasswordChange from "./features/settings/components/PasswordChange";
 import TransactionDeletionModal from "./features/transactions/components/TransactionDeletionModal";
-import AccountDelete from "./features/settings/components/AccountDelete";
+import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
+import PasswordChange from "./features/settings/components/PasswordChange";
+import UserAccountDelete from "./features/settings/components/AccountDelete";
 import ProfileUpdate from "./features/settings/components/ProfileUpdate";
 import DataErase from "./features/settings/components/DataErase";
+import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
+import AmendBudget from "./features/plan/components/AmendBudget";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -236,25 +238,21 @@ const routes = (
         >
             <Route path="update-profile" element={<ProfileUpdate />} />
             <Route path="change-password" element={<PasswordChange />} />
-            <Route path="delete-account" element={<AccountDelete />} />
+            <Route path="delete-account" element={<UserAccountDelete />} />
             <Route path="erase-data" element={<DataErase />} />
         </Route>
         <Route
-            path="planMenu"
-            element={
-                <RequireAuth>
-                    <PlanMenu />
-                </RequireAuth>
-            }
-        ></Route>
-        <Route
-            path="plan/:id"
+            path="plan"
             element={
                 <RequireAuth>
                     <Plan />
                 </RequireAuth>
             }
-        />
+        >
+            <Route path="create-budget" element={<CreateBudgetModal />} />
+            <Route path="delete-budget" element={<BudgetDeleteModal />} />
+            <Route path="amend-budget" element={<AmendBudget />} />
+        </Route>
         <Route path="*" element={<PageNotFound />} />
     </Routes>
 );
