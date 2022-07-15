@@ -29,6 +29,7 @@ const kyBaseQuery =
 // We won't be persisting this data, so we don't need to worry about it being unserializable.
 const transformTransactions = (response) =>
     response.map((tx) => ({
+        id: tx._id,
         date: parseISO(tx.date),
         amount: currency(tx.amount["$numberDecimal"]),
         balance: currency(tx.balance ? tx.balance["$numberDecimal"] : 0),
@@ -107,6 +108,13 @@ export const api = createApi({
             transformResponse: transformTransactions,
             providesTags: ["Transactions"],
         }),
+        deleteTransaction: builder.mutation({
+            query: (id) => ({
+                url: `transactions/${id}`,
+                method: "delete",
+            }),
+            invalidatesTags: ["Transactions"],
+        }),
     }),
 });
 
@@ -123,4 +131,5 @@ export const {
     useCreateTransactionMutation,
     useReadTransactionsQuery,
     useReadTransactionsInAccountQuery,
+    useDeleteTransactionMutation,
 } = api;

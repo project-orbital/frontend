@@ -15,6 +15,7 @@ export default function Navbar({ hasSignInButton, hasSignUpButton }) {
     const SignIn = () => {
         return (
             <NavButton
+                variant=""
                 to="/sign-in"
                 text="Sign in"
                 h="40px"
@@ -30,6 +31,7 @@ export default function Navbar({ hasSignInButton, hasSignUpButton }) {
     const SignUp = () => {
         return (
             <NavButton
+                variant=""
                 to="/sign-up"
                 text="Sign up"
                 h="40px"
