@@ -1,5 +1,5 @@
-import { Box, Button, Text } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Box, Button, Text, useColorMode } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
 import { BsFillCaretRightFill } from "react-icons/bs";
 
 /**
@@ -24,15 +24,97 @@ export default function NavButton({
     text,
     withArrow,
     color,
+    variant = "primary",
     fontWeight,
     fontSize,
+    children,
     ...props
 }) {
     const navigate = useNavigate();
+    const { colorMode } = useColorMode();
+
+    if (variant === "primary") {
+        return (
+            <Button
+                h="60px"
+                px={16}
+                py={8}
+                bgGradient="linear(to-br, accent, accent-dark)"
+                shadow={
+                    colorMode === "light" ? "2px 4px 20px 0px #662B4244" : null
+                }
+                zIndex={4}
+                onClick={() => navigate(to)}
+                rightIcon={withArrow && <BsFillCaretRightFill />}
+                transition="transform .1s"
+                _hover={{
+                    transform: "scale(1.05)",
+                }}
+                {...props}
+            >
+                {icon && <Box pr="8px">{icon}</Box>}
+                <Text color="white" fontWeight={fontWeight} fontSize={fontSize}>
+                    {text}
+                </Text>
+            </Button>
+        );
+    }
+
+    if (variant === "secondary") {
+        return (
+            <Button
+                h="60px"
+                px={16}
+                py={8}
+                bg="accent"
+                zIndex={4}
+                onClick={() => navigate(to)}
+                rightIcon={withArrow && <BsFillCaretRightFill />}
+                transition="transform .1s"
+                _hover={{
+                    transform: "scale(1.05)",
+                }}
+            >
+                {icon && <Box pr="8px">{icon}</Box>}
+                <Text color="white" fontWeight={fontWeight} fontSize={fontSize}>
+                    {text}
+                </Text>
+            </Button>
+        );
+    }
+
+    if (variant === "tertiary") {
+        return (
+            <Button
+                as={Link}
+                to={to}
+                h={10}
+                p={4}
+                bg="none"
+                color="gray.200"
+                zIndex={4}
+                transition="transform .1s"
+                _hover={{
+                    transform: "scale(1.05)",
+                    bg: "whiteAlpha.50",
+                }}
+                _active={{
+                    bg: "none",
+                    color: "gray.400",
+                }}
+                {...props}
+            >
+                {children}
+            </Button>
+        );
+    }
+
     return (
         <Button
             h="60px"
-            bg="accent"
+            px={12}
+            py={8}
+            bg={variant === "primary" ? "accent" : "dim"}
             onClick={() => navigate(to)}
             rightIcon={withArrow && <BsFillCaretRightFill />}
             transition="transform .1s"
@@ -43,7 +125,7 @@ export default function NavButton({
         >
             {icon && <Box pr="8px">{icon}</Box>}
             <Text
-                color={color || "white"}
+                color={color ?? variant === "primary" ? "white" : "fg"}
                 fontWeight={fontWeight}
                 fontSize={fontSize}
             >
