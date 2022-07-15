@@ -66,7 +66,7 @@ export default function NavButton({
                 h="60px"
                 px={16}
                 py={8}
-                bg="accent"
+                bg="bg"
                 zIndex={4}
                 onClick={() => navigate(to)}
                 rightIcon={withArrow && <BsFillCaretRightFill />}
@@ -76,7 +76,7 @@ export default function NavButton({
                 }}
             >
                 {icon && <Box pr="8px">{icon}</Box>}
-                <Text color="white" fontWeight={fontWeight} fontSize={fontSize}>
+                <Text color="fg" fontWeight={fontWeight} fontSize={fontSize}>
                     {text}
                 </Text>
             </Button>
@@ -105,6 +105,33 @@ export default function NavButton({
                 {...props}
             >
                 {children}
+            </Button>
+        );
+    }
+
+    if (variant === "danger") {
+        return (
+            <Button
+                h="60px"
+                px={16}
+                py={8}
+                bg="bg-danger"
+                zIndex={4}
+                onClick={() => navigate(to)}
+                rightIcon={withArrow && <BsFillCaretRightFill />}
+                transition="transform .1s"
+                _hover={{
+                    transform: "scale(1.05)",
+                }}
+            >
+                {icon && <Box pr="8px">{icon}</Box>}
+                <Text
+                    color="fg-danger"
+                    fontWeight={fontWeight}
+                    fontSize={fontSize}
+                >
+                    {text}
+                </Text>
             </Button>
         );
     }
