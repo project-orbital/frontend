@@ -19,21 +19,18 @@ export default function FeatureCard() {
                 <SimpleGrid spacing="30px" columns={[1, null, 2, null, 3]}>
                     <Card
                         isCentered
-                        isDarkModeReady
                         icon={<MdPrivacyTip size="80px" />}
                         heading="Privacy first."
                         subheading="We do not store your sensitive information on our servers."
                     />
                     <Card
                         isCentered
-                        isDarkModeReady
                         icon={<MdSwitchAccount size="80px" />}
                         heading="Multiple accounts."
                         subheading="We've made it incredibly easy to create and switch between accounts."
                     />
                     <Card
                         isCentered
-                        isDarkModeReady
                         icon={<MdDocumentScanner size="80px" />}
                         badge={<Badge>Experimental</Badge>}
                         heading="Document parsing."
@@ -41,7 +38,6 @@ export default function FeatureCard() {
                     />
                     <Card
                         isCentered
-                        isDarkModeReady
                         icon={<MdPhonelink size="80px" />}
                         badge={<Badge>Beta</Badge>}
                         heading="Responsive design."
@@ -49,14 +45,12 @@ export default function FeatureCard() {
                     />
                     <Card
                         isCentered
-                        isDarkModeReady
                         icon={<MdSchool size="80px" />}
                         heading="Learn as you go."
                         subheading="No prior knowledge required. We curate financial literacy resources for you."
                     />
                     <Card
                         isCentered
-                        isDarkModeReady
                         icon={<MdDarkMode size="80px" />}
                         badge={<Badge>Beta</Badge>}
                         heading="Dark mode."

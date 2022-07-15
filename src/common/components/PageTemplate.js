@@ -28,12 +28,7 @@ export default function PageTemplate({
             <VStack spacing="0" bg="bg">
                 <Navbar />
                 <VStack justify="center" minH="100vh" spacing="0" w="60%">
-                    <Card
-                        isCentered
-                        isDarkModeReady
-                        isStandalone
-                        heading={heading}
-                    >
+                    <Card isCentered isStandalone heading={heading}>
                         {children}
                     </Card>
                 </VStack>

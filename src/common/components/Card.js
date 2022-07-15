@@ -1,5 +1,4 @@
 import {
-    Badge,
     Box,
     Heading,
     LinkBox,
@@ -29,7 +28,6 @@ import { Link } from "react-router-dom";
  * which accepts a URL to navigate to when any part of the card is clicked.
  * Nested clickable components such as buttons will still work even though the entire card is clickable.
  *
- * @param info [DEPRECATED] an optional information text, e.g. an index number, to display in a badge above the heading
  * @param badge a badge to display on the card above the heading and icon (if any)
  * @param icon an optional icon to display above the heading
  * @param heading the optional heading text
@@ -39,12 +37,10 @@ import { Link } from "react-router-dom";
  * @param isNested `true` if this card is nested inside another card, `false` otherwise
  * @param isCentered `true` if the contents of this card should be centered, `false` otherwise
  * @param isStandalone `true` if this card should be displayed on its own, `false` otherwise
- * @param isDarkModeReady [DEPRECATED] `true` if this card should be respond to color mode toggles, `false` otherwise
  * @param isExternalLink `true` if this card's link is an external link, `false` otherwise
  * @return the card component
  */
 export default function Card({
-    info,
     badge,
     icon,
     heading,
@@ -54,7 +50,6 @@ export default function Card({
     isNested,
     isCentered,
     isStandalone,
-    isDarkModeReady,
     isExternalLink,
 }) {
     const accentGradient = useColorModeValue(
@@ -74,7 +69,6 @@ export default function Card({
         >
             {icon && <Box color="fg">{icon}</Box>}
             {badge}
-            {info && <Badge fontWeight="bold">{info}</Badge>}
             {heading && isStandalone ? ( // If this card is standalone, render it in serif.
                 <Heading
                     align="center"
@@ -90,7 +84,7 @@ export default function Card({
                     align={isCentered ? "center" : "start"}
                     fontWeight="bold"
                     fontSize={isNested ? "md" : "xl"}
-                    pt={badge || info ? "10px" : "0px"}
+                    pt={badge ? "10px" : "0px"}
                     pb={subheading ? "2px" : children ? "0px" : "20px"}
                 >
                     {heading}
@@ -123,15 +117,7 @@ export default function Card({
             align={isCentered ? "center" : "start"}
             justify={isCentered ? "center" : "start"}
             p={isNested ? "20px" : "30px"}
-            bg={
-                isStandalone
-                    ? "none"
-                    : isDarkModeReady
-                    ? "bg-light"
-                    : isNested
-                    ? "bg"
-                    : "bg-light"
-            }
+            bg={isStandalone ? "none" : isNested ? "bg" : "bg-light"}
             borderRadius="10px"
             shadow={isStandalone ? null : isNested ? "sm" : "md"}
         >
