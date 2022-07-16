@@ -83,8 +83,6 @@ export default function TransactionsCard() {
                 isNumeric: [false, false, false, true, true],
                 rowLimit: 10,
             }}
-            values={tableValues}
-            rowLimit={10}
         />
     );
 }
