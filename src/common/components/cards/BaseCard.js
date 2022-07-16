@@ -23,6 +23,31 @@ export default function BaseCard({
 }) {
     const { colorMode } = useColorMode();
 
+    const Title = () => (
+        <HStack
+            w="100%"
+            px={8}
+            py={6}
+            bgGradient="linear(to-br, accent, accent-dark)"
+            borderRadius="lg"
+            borderBottomRadius="md"
+            shadow={colorMode === "light" ? "2px 4px 20px 0px #662B4244" : null}
+            zIndex={2}
+        >
+            <VStack align="start" spacing="2px">
+                {badge && <Box pb={2}>{badge}</Box>}
+                <Text fontSize="xl" fontWeight="bold" color="gray.200">
+                    {title}
+                </Text>
+                <Text fontSize="sm" color="gray.200">
+                    {subtitle}
+                </Text>
+            </VStack>
+            <Spacer />
+            {button && <Box>{button}</Box>}
+        </HStack>
+    );
+
     const Children = () => {
         if (children instanceof Array) {
             return children.map((child, i) => (
@@ -62,60 +87,33 @@ export default function BaseCard({
         );
     };
 
-    const Card = () => {
-        if (!title && !subtitle) {
-            return <Body />;
-        }
+    if (!title && !subtitle) {
+        return <Body />;
+    }
+    if (!link) {
+        // If the card isn't clickable, then we don't need to wrap it with a link overlay.
         return (
             <VStack spacing={0}>
-                <HStack
-                    w="100%"
-                    px={8}
-                    py={6}
-                    bgGradient="linear(to-br, accent, accent-dark)"
-                    borderRadius="lg"
-                    borderBottomRadius="md"
-                    shadow={
-                        colorMode === "light"
-                            ? "2px 4px 20px 0px #662B4244"
-                            : null
-                    }
-                    zIndex={2}
-                >
-                    <VStack align="start" spacing="2px">
-                        {badge && <Box pb={2}>{badge}</Box>}
-                        <Text fontSize="xl" fontWeight="bold" color="gray.200">
-                            {title}
-                        </Text>
-                        <Text fontSize="sm" color="gray.200">
-                            {subtitle}
-                        </Text>
-                    </VStack>
-                    <Spacer />
-                    {button && <Box>{button}</Box>}
-                </HStack>
+                <Title />
                 <Body />
             </VStack>
         );
-    };
-
-    // If the card isn't clickable, then we don't need to wrap it with a link overlay.
-    if (!link) {
-        return <Card />;
     }
 
     // Make the entire card clickable with a hover animation.
     return (
         <LinkBox
-            as="article"
             transition="transform .2s"
             _hover={{
                 transform: "scale(1.01)",
             }}
         >
-            <LinkOverlay as={Link} to={link}>
-                <Card />
-            </LinkOverlay>
+            <VStack spacing={0}>
+                <LinkOverlay as={Link} to={link} w="100%">
+                    <Title />
+                    <Body />
+                </LinkOverlay>
+            </VStack>
         </LinkBox>
     );
 }

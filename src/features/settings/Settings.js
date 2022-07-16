@@ -126,7 +126,6 @@ export default function Settings() {
                             icon={<TbEraser size="25px" color="white" />}
                             to="erase-data"
                             text="Erase stored data"
-                            bg="red.500"
                         />
                     </BaseCard>
                     <BaseCard
@@ -154,7 +153,6 @@ export default function Settings() {
                             }
                             to="delete-account"
                             text="Delete account"
-                            bg="red.500"
                         />
                     </BaseCard>
                 </SimpleGrid>
