@@ -27,26 +27,27 @@ const kyBaseQuery =
 
 // Deserializes decimal128 into currency values and ISO date strings into Date objects.
 // We won't be persisting this data, so we don't need to worry about it being unserializable.
-const transformTransactions = (response) =>
-    response.map((tx) => ({
-        id: tx._id,
-        date: parseISO(tx.date),
-        amount: currency(tx.amount["$numberDecimal"]),
-        balance: currency(tx.balance ? tx.balance["$numberDecimal"] : 0),
-        category: tx.category,
-        description: tx.description,
-        accountId: tx.account_id,
-    }));
+const transformTransaction = (tx) => ({
+    id: tx._id,
+    date: parseISO(tx.date),
+    amount: currency(tx.amount["$numberDecimal"]),
+    balance: currency(tx.balance ? tx.balance["$numberDecimal"] : 0),
+    category: tx.category,
+    description: tx.description,
+    accountId: tx.account_id,
+});
+const transformTransactions = (response) => response.map(transformTransaction);
 
 // Define a service using a base URL and expected endpoints.
 // Tags are used to group related data together, and allow for cache invalidation
 // of the groups of data with the same tag. This is needed for automatic
 // refreshing of data when changes are made (and to trigger re-renders, etc.).
 // Use CRUD for the method name prefixes, e.g. (createAccount, readAccounts, etc.).
+// TODO: Give tags their own ID for more controlled cache invalidation.
 export const api = createApi({
     reducerPath: "api",
     baseQuery: kyBaseQuery({ baseUrl: process.env.REACT_APP_BACKEND }),
-    tagTypes: ["Account", "Accounts"],
+    tagTypes: ["Account", "Accounts", "Transaction", "Transactions"],
     endpoints: (builder) => ({
         // === === ===
         // Accounts
@@ -79,7 +80,12 @@ export const api = createApi({
                 url: `accounts/${id}`,
                 method: "delete",
             }),
-            invalidatesTags: ["Account", "Accounts", "Transactions"],
+            invalidatesTags: [
+                "Account",
+                "Accounts",
+                "Transaction",
+                "Transactions",
+            ],
         }),
         // === === ===
         // Transactions
@@ -90,6 +96,14 @@ export const api = createApi({
                 data: values,
             }),
             invalidatesTags: ["Transactions"],
+        }),
+        readTransaction: builder.query({
+            query: (id) => ({
+                url: `transactions/${id}`,
+                method: "get",
+            }),
+            transformResponse: transformTransaction,
+            providesTags: ["Transaction"],
         }),
         readTransactions: builder.query({
             query: () => ({
@@ -108,12 +122,20 @@ export const api = createApi({
             transformResponse: transformTransactions,
             providesTags: ["Transactions"],
         }),
+        updateTransaction: builder.mutation({
+            query: ({ id, ...values }) => ({
+                url: `transactions/${id}`,
+                method: "put",
+                data: values,
+            }),
+            invalidatesTags: ["Transaction", "Transactions"],
+        }),
         deleteTransaction: builder.mutation({
             query: (id) => ({
                 url: `transactions/${id}`,
                 method: "delete",
             }),
-            invalidatesTags: ["Transactions"],
+            invalidatesTags: ["Transaction", "Transactions"],
         }),
     }),
 });
@@ -129,7 +151,9 @@ export const {
     useDeleteAccountMutation,
     // Transactions
     useCreateTransactionMutation,
+    useReadTransactionQuery,
     useReadTransactionsQuery,
     useReadTransactionsInAccountQuery,
+    useUpdateTransactionMutation,
     useDeleteTransactionMutation,
 } = api;

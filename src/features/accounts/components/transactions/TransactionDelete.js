@@ -1,33 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { formatDistanceToNow } from "date-fns";
 import FormModal from "../../../../common/components/form/FormModal";
-import { SelectControl } from "formik-chakra-ui";
-import {
-    useDeleteTransactionMutation,
-    useReadTransactionsInAccountQuery,
-} from "../../../../app/api";
-import * as Yup from "yup";
+import { useDeleteTransactionMutation } from "../../../../app/api";
 import { useToast } from "@chakra-ui/react";
 
 export default function TransactionDelete() {
-    const { id: accountId } = useParams();
-    const {
-        data: transactions,
-        isLoading,
-        isError,
-    } = useReadTransactionsInAccountQuery(accountId);
     const [deleteTransaction] = useDeleteTransactionMutation();
+    const { transactionId } = useParams();
     const navigate = useNavigate();
     const toast = useToast();
 
-    if (isError) {
-        return;
-    }
-
-    async function handleSubmit({ transaction }) {
+    async function handleSubmit() {
         try {
             toast.closeAll();
-            await deleteTransaction(transaction).unwrap();
+            await deleteTransaction(transactionId).unwrap();
             toast({
                 title: "Transaction deleted.",
                 status: "success",
@@ -43,35 +28,14 @@ export default function TransactionDelete() {
 
     return (
         <FormModal
-            title="Deleting a transaction..."
-            heading="Select the transaction you wish to delete."
+            isDestructive
+            title="Deleting transaction..."
+            heading="Are you sure you want to delete this transaction?"
             subheading="This action cannot be undone."
-            cancelText="Cancel transaction deletion"
-            submitText="Delete selected transaction"
-            initialValues={{
-                transaction: "",
-            }}
-            validationSchema={Yup.object({
-                transaction: Yup.string().required(
-                    "Please select a transaction."
-                ),
-            })}
+            cancelText="No, don't delete it"
+            submitText="Yes, delete transaction"
+            initialValues={{}}
             onSubmit={handleSubmit}
-        >
-            {!isLoading && (
-                <SelectControl
-                    name="transaction"
-                    selectProps={{ placeholder: "Select option" }}
-                >
-                    {transactions.map((tx, i) => (
-                        <option key={tx.id} value={tx.id}>{`#${i + 1}: ${
-                            tx.description
-                        } ${formatDistanceToNow(tx.date, {
-                            addSuffix: true,
-                        })}`}</option>
-                    ))}
-                </SelectControl>
-            )}
-        </FormModal>
+        />
     );
 }

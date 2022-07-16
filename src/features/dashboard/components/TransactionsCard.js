@@ -71,23 +71,20 @@ export default function TransactionsCard() {
         <TableCard
             title="Transaction History"
             subtitle="Your ten latest transactions."
+            tableProps={{
+                headers: [
+                    "date",
+                    "description",
+                    "category",
+                    "amount",
+                    "balance",
+                ],
+                values: tableValues,
+                isNumeric: [false, false, false, true, true],
+                rowLimit: 10,
+            }}
             values={tableValues}
             rowLimit={10}
-            button={
-                <ActionButton
-                    leftIcon={<MdModeEditOutline />}
-                    h={10}
-                    p={0}
-                    bg="none"
-                    color="gray.200"
-                    _active={{
-                        bg: "none",
-                        color: "gray.400",
-                    }}
-                >
-                    Edit
-                </ActionButton>
-            }
         />
     );
 }

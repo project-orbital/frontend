@@ -12,6 +12,7 @@ import UploadModal from "./components/upload/UploadModal";
 import ReviewModal from "./components/upload/ReviewModal";
 import ConfirmCancelModal from "./components/upload/ConfirmCancelModal";
 import TransactionDelete from "./components/transactions/TransactionDelete";
+import TransactionUpdate from "./components/transactions/TransactionUpdate";
 
 export default function AccountsRoutes() {
     return (
@@ -62,8 +63,10 @@ export default function AccountsRoutes() {
                             element={<TransactionCreate type="deposit" />}
                         />
                     </Route>
-                    <Route path="update" element={<TransactionDelete />} />
-                    <Route path="delete" element={<TransactionDelete />} />
+                    <Route path=":transactionId">
+                        <Route path="update" element={<TransactionUpdate />} />
+                        <Route path="delete" element={<TransactionDelete />} />
+                    </Route>
                 </Route>
             </Route>
         </Routes>

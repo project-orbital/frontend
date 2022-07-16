@@ -39,6 +39,7 @@ export default function Table({
     isNumeric = [],
     offset = 4,
     rowLimit,
+    ...props
 }) {
     // If the headers are unspecified, we extract all possible keys in the data
     // to use as headers.
@@ -119,7 +120,7 @@ export default function Table({
     };
 
     return (
-        <TableContainer w="100%">
+        <TableContainer w="100%" {...props}>
             <ChakraTable size="sm" placement="top">
                 <TableHeaders />
                 <TableBody />

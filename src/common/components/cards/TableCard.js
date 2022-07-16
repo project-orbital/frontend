@@ -1,23 +1,12 @@
 import BaseCard from "./BaseCard";
 import Table from "../visuals/Table";
 
-export default function TableCard({
-    values,
-    headers,
-    isNumeric,
-    rowLimit,
-    children,
-    ...props
-}) {
+// TODO: Add documentation.
+export default function TableCard({ tableProps, children, ...props }) {
+    // TODO: Paginate the table.
     return (
-        <BaseCard {...props} px={0} py={4} spacing={0}>
-            <Table
-                values={values}
-                headers={headers}
-                isNumeric={isNumeric}
-                rowLimit={rowLimit}
-                offset={6}
-            />
+        <BaseCard px={0} py={4} spacing={0} {...props}>
+            <Table offset={6} {...tableProps} />
             {children}
         </BaseCard>
     );
