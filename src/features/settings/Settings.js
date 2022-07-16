@@ -91,7 +91,11 @@ export default function Settings() {
                         title="Appearance"
                         subtitle="You can change how the app looks here."
                     >
-                        <ActionButton onClick={handleColorModeToggle}>
+                        <ActionButton
+                            onClick={handleColorModeToggle}
+                            bg="bg"
+                            w="100%"
+                        >
                             <CgDarkMode size="25px" />
                             <Text pl="10px">
                                 {colorMode === "light" ? "Enable" : "Disable"}{" "}
@@ -109,6 +113,8 @@ export default function Settings() {
                         <ActionButton
                             onClick={handleDataSyncToggle}
                             delay={650}
+                            bg="bg"
+                            w="100%"
                         >
                             {dataSync ? (
                                 <MdSyncDisabled size="25px" />
@@ -126,6 +132,7 @@ export default function Settings() {
                             icon={<TbEraser size="25px" color="white" />}
                             to="erase-data"
                             text="Erase stored data"
+                            w="100%"
                         />
                     </BaseCard>
                     <BaseCard
@@ -137,11 +144,13 @@ export default function Settings() {
                             variant="secondary"
                             to="update-profile"
                             text="Update profile"
+                            w="100%"
                         />
                         <NavButton
                             variant="secondary"
                             to="./change-password"
                             text="Change password"
+                            w="100%"
                         />
                         <NavButton
                             variant="danger"
@@ -153,6 +162,7 @@ export default function Settings() {
                             }
                             to="delete-account"
                             text="Delete account"
+                            w="100%"
                         />
                     </BaseCard>
                 </SimpleGrid>
