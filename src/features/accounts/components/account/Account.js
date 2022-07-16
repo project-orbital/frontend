@@ -32,7 +32,7 @@ export default function Account() {
                 links={["/dashboard", "/accounts", `.`]}
             />
             <Box h="100%" w="100%">
-                <SimpleGrid minChildWidth="500px" spacing="30px" mb="40px">
+                <SimpleGrid minChildWidth="550px" spacing="30px" mb="40px">
                     <BalanceCard />
                     <TransactionsCard />
                     <ParseCard />
