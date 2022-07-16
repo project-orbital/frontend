@@ -43,8 +43,8 @@ export default function TransactionCreate({ type }) {
             cancelText="Cancel transaction addition"
             submitText="Add transaction"
             initialValues={{
-                date: undefined,
-                amount: undefined,
+                date: "",
+                amount: "",
                 category: "",
                 description: "",
             }}
