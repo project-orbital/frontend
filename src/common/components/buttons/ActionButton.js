@@ -10,7 +10,13 @@ import { useState } from "react";
  * @param props (optional) the style props to pass to the Chakra UI button
  * @return {JSX.Element}
  */
-export default function ActionButton({ onClick, delay, children, ...props }) {
+export default function ActionButton({
+    onClick,
+    delay,
+    variant,
+    children,
+    ...props
+}) {
     const [isLoading, setIsLoading] = useState(false);
 
     function handleClick() {
@@ -19,6 +25,31 @@ export default function ActionButton({ onClick, delay, children, ...props }) {
             onClick();
             setIsLoading(false);
         }, delay);
+    }
+
+    if (variant === "tertiary") {
+        return (
+            <Button
+                h={10}
+                p={4}
+                bg="none"
+                color="gray.200"
+                isLoading={delay && isLoading}
+                onClick={handleClick}
+                transition="transform .1s"
+                _hover={{
+                    transform: "scale(1.05)",
+                    bg: "whiteAlpha.50",
+                }}
+                _active={{
+                    bg: "none",
+                    color: "gray.400",
+                }}
+                {...props}
+            >
+                {children}
+            </Button>
+        );
     }
 
     return (
