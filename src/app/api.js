@@ -147,6 +147,13 @@ export const api = createApi({
             }),
             invalidatesTags: ["Learn"],
         }),
+        readContributions: builder.query({
+            query: () => ({
+                url: "learn",
+                method: "get",
+            }),
+            providesTags: ["Learn"],
+        }),
     }),
 });
 
@@ -168,4 +175,5 @@ export const {
     useDeleteTransactionMutation,
     // Contributions
     useCreateContributionMutation,
+    useReadContributionsQuery,
 } = api;

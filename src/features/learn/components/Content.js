@@ -18,30 +18,24 @@ import WarrenBuffett from "../assets/warrenbuffett.png";
 import Longterm from "../assets/longterm.jpeg";
 import NavButton from "../../../common/components/buttons/NavButton";
 import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useReadContributionsQuery } from "../../../app/api";
 
 export default function Content() {
-    const userContributedHeader = useSelector(
-        (state) => state.contributions.header
-    );
-    const userContributedSummary = useSelector(
-        (state) => state.contributions.summary
-    );
-    const userContributedLink = useSelector(
-        (state) => state.contributions.link
-    );
-    const Contributed =
-        userContributedHeader && userContributedSummary && userContributedLink;
+    const { data: contributions, isLoading } = useReadContributionsQuery();
+
+    const LastContributions =
+        isLoading || contributions.length === 0 ? [] : contributions;
+
     const UserContributed = () => {
-        if (Contributed) {
+        return LastContributions.map((c) => {
             return (
                 <BlogPostCard
-                    Header={userContributedHeader}
-                    Summary={userContributedSummary}
-                    Link={userContributedLink}
+                    Header={c.header}
+                    Summary={c.summary}
+                    Link={c.link}
                 />
             );
-        }
+        });
     };
 
     return (
