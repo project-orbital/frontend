@@ -9,6 +9,8 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { useCreateTransactionMutation } from "../../../../app/api";
+import { format } from "date-fns";
+import currency from "currency.js";
 
 export default function TransactionCreate({ type }) {
     const [createTransaction] = useCreateTransactionMutation();
@@ -34,6 +36,28 @@ export default function TransactionCreate({ type }) {
         }
     }
 
+    const WithdrawalOptions = () => (
+        <SelectControl isRequired name="category" label="Category">
+            <option value="">Please select</option>
+            <option value="Dining">Dining</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Bills">Bills</option>
+            <option value="Education">Education</option>
+            <option value="Others">Others</option>
+        </SelectControl>
+    );
+
+    const DepositOptions = () => (
+        <SelectControl isRequired name="category" label="Category">
+            <option value="">Please select</option>
+            <option value="Salary">Salary</option>
+            <option value="Transfer">Transfer</option>
+            <option value="Investment">Investment</option>
+            <option value="Others">Others</option>
+        </SelectControl>
+    );
+
     return (
         <FormModal
             title="Adding your transaction..."
@@ -43,10 +67,11 @@ export default function TransactionCreate({ type }) {
             cancelText="Cancel transaction addition"
             submitText="Add transaction"
             initialValues={{
-                date: "",
-                amount: "",
-                category: "",
-                description: "",
+                date: format(new Date(), "yyyy-MM-dd"),
+                amount: currency(0),
+                balance: currency(0),
+                category: "Others",
+                description: `Some ${type}`,
             }}
             validationSchema={Yup.object({
                 date: Yup.date().required("Please provide a date."),
@@ -56,10 +81,7 @@ export default function TransactionCreate({ type }) {
                 balance: Yup.number().typeError(
                     "Please provide a numerical value."
                 ),
-                category:
-                    type === "withdrawal"
-                        ? Yup.string().required("Please provide a category.")
-                        : Yup.string(),
+                category: Yup.string().required("Please provide a category."),
                 description: Yup.string(),
             })}
             onSubmit={handleSubmit}
@@ -87,17 +109,7 @@ export default function TransactionCreate({ type }) {
                     step: 0.01,
                 }}
             />
-            {type === "withdrawal" && (
-                <SelectControl isRequired name="category" label="Category">
-                    <option value="">Please select</option>
-                    <option value="Dining">Dining</option>
-                    <option value="Shopping">Shopping</option>
-                    <option value="Entertainment">Entertainment</option>
-                    <option value="Bills">Bills</option>
-                    <option value="Education">Education</option>
-                    <option value="Others">Others</option>
-                </SelectControl>
-            )}
+            {type === "withdrawal" ? <WithdrawalOptions /> : <DepositOptions />}
             <TextareaControl
                 name={"description"}
                 label="Description"
