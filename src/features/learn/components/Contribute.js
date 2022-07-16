@@ -49,6 +49,7 @@ export default function UserContribute() {
                 labelText="Header for article"
             />
             <FormTextField
+                isMultiline
                 id="summary"
                 isRequired
                 withErrorMessage

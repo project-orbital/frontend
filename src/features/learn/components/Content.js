@@ -18,8 +18,32 @@ import WarrenBuffett from "../assets/warrenbuffett.png";
 import Longterm from "../assets/longterm.jpeg";
 import NavButton from "../../../common/components/buttons/NavButton";
 import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Content() {
+    const userContributedHeader = useSelector(
+        (state) => state.contributions.header
+    );
+    const userContributedSummary = useSelector(
+        (state) => state.contributions.summary
+    );
+    const userContributedLink = useSelector(
+        (state) => state.contributions.link
+    );
+    const Contributed =
+        userContributedHeader && userContributedSummary && userContributedLink;
+    const UserContributed = () => {
+        if (Contributed) {
+            return (
+                <BlogPostCard
+                    Header={userContributedHeader}
+                    Summary={userContributedSummary}
+                    Link={userContributedLink}
+                />
+            );
+        }
+    };
+
     return (
         <Tabs size="sm">
             <TabList>
@@ -85,8 +109,10 @@ export default function Content() {
                     </Stack>
                 </TabPanel>
                 <TabPanel>
+                    <Stack direction={"row"} spacing={10} align={"center"}>
+                        <UserContributed />
+                    </Stack>
                     <Card
-                        isCentered
                         heading="Do you have something to share?"
                         subheading="Let us know what's on your mind."
                     >
