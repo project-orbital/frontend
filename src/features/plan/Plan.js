@@ -4,7 +4,7 @@ import { AspectRatio, Box, Grid, GridItem } from "@chakra-ui/react";
 import Card from "../../common/components/Card";
 import { selectAccounts } from "../accounts/state/accounts";
 import { useSelector } from "react-redux";
-import { selectSpendingTransactionsBetween } from "../transactions/state/transactions";
+import { selectSpendingTransactionsBetween } from "../accounts/state/transactions";
 import {
     differenceInCalendarDays,
     differenceInDays,

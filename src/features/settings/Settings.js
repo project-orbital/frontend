@@ -7,7 +7,6 @@ import {
     useColorMode,
     useToast,
 } from "@chakra-ui/react";
-import Card from "../../common/components/Card";
 import NavButton from "../../common/components/buttons/NavButton";
 import { Outlet } from "react-router-dom";
 import ky from "ky";
@@ -18,6 +17,7 @@ import { AiOutlineUserDelete } from "react-icons/ai";
 import { MdSync, MdSyncDisabled } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDataSync, toggleDataSync } from "./state/preferences";
+import BaseCard from "../../common/components/cards/BaseCard";
 
 export default function Settings() {
     const dispatch = useDispatch();
@@ -86,28 +86,35 @@ export default function Settings() {
                 links={["/dashboard", "/Settings"]}
             />
             <Box w="100%" h="100%">
-                <SimpleGrid columns={2} spacing="30px">
-                    <Card
-                        heading="Appearance"
-                        subheading="You can change how the app looks here."
+                <SimpleGrid columns={2} spacing={8}>
+                    <BaseCard
+                        title="Appearance"
+                        subtitle="You can change how the app looks here."
                     >
-                        <ActionButton onClick={handleColorModeToggle}>
+                        <ActionButton
+                            onClick={handleColorModeToggle}
+                            bg="bg"
+                            w="100%"
+                        >
                             <CgDarkMode size="25px" />
                             <Text pl="10px">
                                 {colorMode === "light" ? "Enable" : "Disable"}{" "}
                                 dark mode
                             </Text>
                         </ActionButton>
-                    </Card>
-                    <Card
-                        heading="Data Management"
-                        subheading="Data synchronization across your devices requires your data
+                    </BaseCard>
+                    <BaseCard
+                        title="Data Management"
+                        subtitle="Data synchronization across your devices requires your data
                         to be stored on our servers. You can choose whether to disable this feature,
                         and also erase your existing data."
+                        spacing={4}
                     >
                         <ActionButton
                             onClick={handleDataSyncToggle}
                             delay={650}
+                            bg="bg"
+                            w="100%"
                         >
                             {dataSync ? (
                                 <MdSyncDisabled size="25px" />
@@ -121,29 +128,32 @@ export default function Settings() {
                             </Text>
                         </ActionButton>
                         <NavButton
+                            variant="danger"
                             icon={<TbEraser size="25px" color="white" />}
                             to="erase-data"
                             text="Erase stored data"
-                            bg="red.500"
+                            w="100%"
                         />
-                    </Card>
-                    <Card
-                        heading="Account Management"
-                        subheading="You can update your profile and/or your password here."
+                    </BaseCard>
+                    <BaseCard
+                        title="Account Management"
+                        subtitle="You can update your profile and/or your password here."
+                        spacing={4}
                     >
                         <NavButton
+                            variant="secondary"
                             to="update-profile"
                             text="Update profile"
-                            bg="dim"
-                            color="fg"
+                            w="100%"
                         />
                         <NavButton
+                            variant="secondary"
                             to="./change-password"
                             text="Change password"
-                            bg="dim"
-                            color="fg"
+                            w="100%"
                         />
                         <NavButton
+                            variant="danger"
                             icon={
                                 <AiOutlineUserDelete
                                     size="25px"
@@ -152,9 +162,9 @@ export default function Settings() {
                             }
                             to="delete-account"
                             text="Delete account"
-                            bg="red.500"
+                            w="100%"
                         />
-                    </Card>
+                    </BaseCard>
                 </SimpleGrid>
             </Box>
             <Outlet />

@@ -15,29 +15,28 @@ export default function Navbar({ hasSignInButton, hasSignUpButton }) {
     const SignIn = () => {
         return (
             <NavButton
+                variant="tertiary"
                 to="/sign-in"
-                text="Sign in"
-                h="40px"
                 fontWeight="normal"
                 fontSize="sm"
-                bg="none"
                 color="fg-light"
-                zIndex={2}
-            />
+            >
+                Sign in
+            </NavButton>
         );
     };
 
     const SignUp = () => {
         return (
             <NavButton
+                variant="secondary"
+                p={4}
                 to="/sign-up"
                 text="Sign up"
-                h="40px"
                 fontWeight="semibold"
                 fontSize="sm"
                 bg="fg"
                 color="bg"
-                zIndex={2}
             />
         );
     };
