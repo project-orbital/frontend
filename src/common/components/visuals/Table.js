@@ -69,13 +69,35 @@ export default function Table({
     const body = values.map((obj) =>
         headers.map((header) => obj[header] || null)
     );
+    const Cell = ({ content }) => {
+        if (content === null) {
+            return <Text>""</Text>;
+        } else if (typeof content === "object") {
+            return content;
+        } else {
+            return (
+                <Text
+                    style={
+                        content.length < 20
+                            ? null
+                            : {
+                                  whiteSpace: "normal",
+                                  wordWrap: "break-word",
+                              }
+                    }
+                >
+                    {content}
+                </Text>
+            );
+        }
+    };
     const TableBody = () => {
         if (!body || rowLimit <= 0) {
             return <Tbody></Tbody>;
         }
         const rowToJSX = (row, y) => (
-            <Tr key={y} height={12}>
-                {row.map((cell, x) => (
+            <Tr key={y} height={16}>
+                {row.map((content, x) => (
                     <Td
                         key={x}
                         isNumeric={isNumeric[x]}
@@ -84,20 +106,7 @@ export default function Table({
                         pr={x === headers.length - 1 ? offset : 2}
                         bg={y % 2 === 0 ? "whiteAlpha.500" : "none"}
                     >
-                        {
-                            <Text
-                                style={
-                                    cell.length < 20
-                                        ? null
-                                        : {
-                                              whiteSpace: "normal",
-                                              wordWrap: "break-word",
-                                          }
-                                }
-                            >
-                                {cell}
-                            </Text>
-                        }
+                        <Cell content={content} />
                     </Td>
                 ))}
             </Tr>
