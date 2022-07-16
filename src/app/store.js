@@ -4,6 +4,7 @@ import transactionsReducer from "../features/transactions/state/transactions";
 import accountsReducer from "../features/accounts/state/accounts";
 import filesReducer from "../features/account/state/files";
 import budgetsReducer from "../features/plan/state/budgets";
+import contributionsReducer from "../features/learn/state/contributions";
 import preferencesReducer from "../features/settings/state/preferences";
 import storage from "redux-persist/lib/storage";
 
@@ -19,6 +20,7 @@ const combinedReducer = combineReducers({
     files: filesReducer,
     preferences: preferencesReducer,
     budgets: budgetsReducer,
+    contributions: contributionsReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -16,6 +16,8 @@ import Parents from "../assets/parents.jpeg";
 import newbie from "../assets/newbie.jpeg";
 import WarrenBuffett from "../assets/warrenbuffett.png";
 import Longterm from "../assets/longterm.jpeg";
+import NavButton from "../../../common/components/buttons/NavButton";
+import { Outlet } from "react-router-dom";
 
 export default function Content() {
     return (
@@ -85,11 +87,14 @@ export default function Content() {
                 <TabPanel>
                     <Card
                         isCentered
-                        heading="No transactions to display."
-                        subheading="Get started by creating a transaction."
-                    />
+                        heading="Do you have something to share?"
+                        subheading="Let us know what's on your mind."
+                    >
+                        <NavButton to="./contribute" text="Contribute" />
+                    </Card>
                 </TabPanel>
             </TabPanels>
+            <Outlet />
         </Tabs>
     );
 }

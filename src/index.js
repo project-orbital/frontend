@@ -47,6 +47,7 @@ import ProfileUpdate from "./features/settings/components/ProfileUpdate";
 import DataErase from "./features/settings/components/DataErase";
 import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
 import AmendBudget from "./features/plan/components/AmendBudget";
+import UserContribute from "./features/learn/components/Contribute";
 
 function RequireAuth({ children }) {
     const [isAuth, setIsAuth] = useState(); // initially undefined
@@ -219,7 +220,9 @@ const routes = (
                     <Learn />
                 </RequireAuth>
             }
-        ></Route>
+        >
+            <Route path="contribute" element={<UserContribute />} />
+        </Route>
         <Route
             path="portfolio"
             element={
