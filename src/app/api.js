@@ -137,6 +137,16 @@ export const api = createApi({
             }),
             invalidatesTags: ["Transaction", "Transactions"],
         }),
+        // === === ===
+        // Transactions
+        createContribution: builder.mutation({
+            query: (values) => ({
+                url: "learn",
+                method: "post",
+                data: values,
+            }),
+            invalidatesTags: ["Learn"],
+        }),
     }),
 });
 
@@ -156,4 +166,6 @@ export const {
     useReadTransactionsInAccountQuery,
     useUpdateTransactionMutation,
     useDeleteTransactionMutation,
+    // Contributions
+    useCreateContributionMutation,
 } = api;

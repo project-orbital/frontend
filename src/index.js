@@ -20,7 +20,7 @@ import Learn from "./features/learn/Learn";
 import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
 import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
 import AmendBudget from "./features/plan/components/AmendBudget";
-import UserContribute from "./features/learn/components/Contribute";
+import ContributionCreate from "./features/learn/components/ContributionCreate";
 
 // TODO: Replace the remaining routes by creating "__Routes.js" in their respective folders and linking them here.
 const routes = (
@@ -37,7 +37,7 @@ const routes = (
                 </RequireAuth>
             }
         >
-            <Route path="contribute" element={<UserContribute />} />
+            <Route path="contribute" element={<ContributionCreate />} />
         </Route>
         <Route
             path="portfolio"

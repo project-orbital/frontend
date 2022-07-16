@@ -1,23 +1,32 @@
 import FormModal from "../../../common/components/form/FormModal";
-import { useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
 import FormTextField from "../../../common/components/form/FormTextField";
-import {
-    createHeader,
-    createSummary,
-    createLink,
-} from "../state/contributions";
+import { useToast } from "@chakra-ui/react";
+import { useCreateContributionMutation } from "../../../app/api";
 
 export default function UserContribute() {
-    const dispatch = useDispatch();
+    const [createContribution] = useCreateContributionMutation();
     const navigate = useNavigate();
-    const { onClose } = useDisclosure();
-    const afterSubmit = () => {
-        onClose();
-        navigate("../");
-    };
+    const toast = useToast();
+
+    async function handleSubmit(values, { setErrors }) {
+        toast.closeAll();
+        try {
+            await createContribution({ ...values }).unwrap();
+            toast({
+                title: "Thank you for your contribution!",
+                status: "success",
+            });
+            navigate("../");
+        } catch (error) {
+            setErrors(error);
+            toast({
+                ...error,
+                status: "error",
+            });
+        }
+    }
 
     return (
         <FormModal
@@ -34,13 +43,7 @@ export default function UserContribute() {
                 summary: Yup.string().required("Please provide a text."),
                 link: Yup.string().required("Please provide a text."),
             })}
-            onSubmit={(values) => {
-                const { header, summary, link } = values;
-                dispatch(createHeader(header));
-                dispatch(createSummary(summary));
-                dispatch(createLink(link));
-                afterSubmit();
-            }}
+            onSubmit={handleSubmit}
         >
             <FormTextField
                 id="header"
