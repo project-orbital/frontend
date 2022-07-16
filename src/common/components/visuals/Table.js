@@ -72,7 +72,7 @@ export default function Table({
     );
     const Cell = ({ content }) => {
         if (content === null) {
-            return <Text>""</Text>;
+            return <Text />;
         } else if (typeof content === "object") {
             return content;
         } else {
