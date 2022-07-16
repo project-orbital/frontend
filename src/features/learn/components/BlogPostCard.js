@@ -10,7 +10,6 @@ import {
     VStack,
 } from "@chakra-ui/react";
 
-//need to make the cards stretch when browser size changes
 export default function BlogPostCard({ Header, Summary, Link, Picture }) {
     return (
         <Center py={6}>

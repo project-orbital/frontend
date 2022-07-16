@@ -7,6 +7,7 @@ import {
     TabPanels,
     Tabs,
 } from "@chakra-ui/react";
+import Card from "../../../common/components/Card";
 import BlogPostCard from "./BlogPostCard";
 import CollegeStudent from "../assets/collegestudent.jpeg";
 import YoungAdult from "../assets/youngadult.jpeg";
@@ -82,7 +83,11 @@ export default function Content() {
                     </Stack>
                 </TabPanel>
                 <TabPanel>
-                    <p>Feature coming soon!</p>
+                    <Card
+                        isCentered
+                        heading="No transactions to display."
+                        subheading="Get started by creating a transaction."
+                    />
                 </TabPanel>
             </TabPanels>
         </Tabs>
