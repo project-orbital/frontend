@@ -10,7 +10,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { useCreateTransactionMutation } from "../../../../app/api";
 import { format } from "date-fns";
-import currency from "currency.js";
 
 export default function TransactionCreate({ type }) {
     const [createTransaction] = useCreateTransactionMutation();
@@ -68,8 +67,8 @@ export default function TransactionCreate({ type }) {
             submitText="Add transaction"
             initialValues={{
                 date: format(new Date(), "yyyy-MM-dd"),
-                amount: currency(0),
-                balance: currency(0),
+                amount: 0,
+                balance: 0,
                 category: "Others",
                 description: `Some ${type}`,
             }}
@@ -77,6 +76,7 @@ export default function TransactionCreate({ type }) {
                 date: Yup.date().required("Please provide a date."),
                 amount: Yup.number()
                     .typeError("Please provide a numerical value.")
+                    .min(0, "Please provide a positive value.")
                     .required("Please provide an amount."),
                 balance: Yup.number().typeError(
                     "Please provide a numerical value."
@@ -98,7 +98,8 @@ export default function TransactionCreate({ type }) {
                 label="Amount"
                 numberInputProps={{
                     precision: 2,
-                    step: 0.01,
+                    step: 1,
+                    min: 0,
                 }}
             />
             <NumberInputControl
@@ -106,7 +107,7 @@ export default function TransactionCreate({ type }) {
                 label="Balance"
                 numberInputProps={{
                     precision: 2,
-                    step: 0.01,
+                    step: 1,
                 }}
             />
             {type === "withdrawal" ? <WithdrawalOptions /> : <DepositOptions />}
