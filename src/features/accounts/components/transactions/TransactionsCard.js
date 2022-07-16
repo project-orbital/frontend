@@ -8,9 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import BaseCard from "../../../../common/components/cards/BaseCard";
 import { Box, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
 import TableCard from "../../../../common/components/cards/TableCard";
-import { BiSelectMultiple } from "react-icons/bi";
 import { FiEdit2, FiTrash } from "react-icons/fi";
-import ActionButton from "../../../../common/components/buttons/ActionButton";
 
 export default function TransactionsCard() {
     const [isEditing, setIsEditing] = useState(false);
@@ -56,17 +54,6 @@ export default function TransactionsCard() {
             </BaseCard>
         );
     }
-
-    // Controls whether edit and delete controls are shown in the table.
-    const ManageButton = () => (
-        <ActionButton
-            variant="tertiary"
-            onClick={() => setIsEditing((isEditing) => !isEditing)}
-            leftIcon={<BiSelectMultiple size="18px" />}
-        >
-            Manage
-        </ActionButton>
-    );
 
     // The edit and delete controls.
     const ControlButtons = ({ id }) => (
@@ -129,7 +116,6 @@ export default function TransactionsCard() {
     return (
         <TableCard
             title="Transactions"
-            button={<ManageButton />}
             isLoading={isLoading}
             tableProps={{
                 headers: headers,
