@@ -35,7 +35,7 @@ export default function BlogPostCard({
                     <Box>
                         {Picture && (
                             <Image
-                                borderRadius="full"
+                                borderRadius="50"
                                 boxSize="210px"
                                 src={Picture}
                             />
@@ -50,7 +50,7 @@ export default function BlogPostCard({
                     <Text>{Summary}</Text>
                     <Spacer />
                     {ContributedBy && (
-                        <Text>Contributed by: {ContributedBy}</Text>
+                        <Text>Contributed By: {ContributedBy}</Text>
                     )}
                 </VStack>
             </LinkBox>
