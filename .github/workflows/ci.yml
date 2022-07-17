@@ -39,6 +39,10 @@ jobs:
               run: |
                   git clone https://github.com/project-orbital/backend.git
                   cd backend
+                  git submodule init
+                  git submodule update
+                  git submodule foreach git checkout dev
+                  git submodule foreach git pull origin dev
                   echo "$DOTENV" >> .env
                   cat .env
                   echo "$JWTPUB" >> id_rsa_pub.pem
@@ -51,11 +55,21 @@ jobs:
                   DOTENV: ${{secrets.BACKEND_DOT_ENV}}
                   JWTPUB: ${{secrets.BACKEND_JWT_PUBLIC_KEY}}
                   JWTPRIV: ${{secrets.BACKEND_JWT_PRIVATE_KEY}}
+            - name: Build parser from submodule
+              run: |
+                  curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+                  ls backend
+                  cd backend
+                  cd parser
+                  wasm-pack build --target nodejs
+                  cd ..
+                  npm install
+                  cd ..
             - name: Start the backend server
               run: |
+                  ls backend
                   cd backend
-                  chmod +x start.sh
-                  ./start.sh dev &
+                  npm start &
                   sleep 30
                   cd ..
             - name: Use Node.js ${{ matrix.node-version }}
