@@ -7,7 +7,7 @@ on:
     push:
         branches: [master, dev]
     pull_request:
-        branches: "**"
+        branches: [master, dev]
     workflow_dispatch:
 
 jobs:
@@ -37,28 +37,28 @@ jobs:
             - uses: actions/checkout@v3
             - name: Clone the backend repository with secrets
               run: |
-                    git clone https://github.com/project-orbital/backend.git
-                    cd backend
-                    echo "$DOTENV" >> .env
-                    cat .env
-                    echo "$JWTPUB" >> id_rsa_pub.pem
-                    cat .env
-                    echo "$JWTPRIV" >> id_rsa_priv.pem
-                    cat .env
-                    cd ..
+                  git clone https://github.com/project-orbital/backend.git
+                  cd backend
+                  echo "$DOTENV" >> .env
+                  cat .env
+                  echo "$JWTPUB" >> id_rsa_pub.pem
+                  cat .env
+                  echo "$JWTPRIV" >> id_rsa_priv.pem
+                  cat .env
+                  cd ..
               shell: bash
               env:
-                DOTENV: ${{secrets.BACKEND_DOT_ENV}}
-                JWTPUB: ${{secrets.BACKEND_JWT_PUBLIC_KEY}}
-                JWTPRIV: ${{secrets.BACKEND_JWT_PRIVATE_KEY}}
+                  DOTENV: ${{secrets.BACKEND_DOT_ENV}}
+                  JWTPUB: ${{secrets.BACKEND_JWT_PUBLIC_KEY}}
+                  JWTPRIV: ${{secrets.BACKEND_JWT_PRIVATE_KEY}}
             - name: Start the backend server
               run: |
-                    curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf
-                    cd backend
-                    chmod +x start.sh
-                    ./start.sh dev &
-                    sleep 5
-                    cd ..
+                  curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf
+                  cd backend
+                  chmod +x start.sh
+                  ./start.sh dev &
+                  sleep 5
+                  cd ..
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v3
               with:
@@ -68,6 +68,17 @@ jobs:
               run: npm ci
             - name: Install Playwright Browsers
               run: npx playwright install --with-deps
+            - name: Set up frontend secrets
+              run: |
+                  echo "$DOTENV" >> .env
+                  cat .env
+              shell: bash
+              env:
+                  DOTENV: ${{secrets.FRONTEND_DOT_ENV}}
+            - name: Start the frontend server
+              run: |
+                  npm start &
+                  sleep 5
             - name: Run Playwright tests
               run: npx playwright test
             - uses: actions/upload-artifact@v2
