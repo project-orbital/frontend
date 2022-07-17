@@ -33,6 +33,7 @@ export default function Content() {
                     Header={c.header}
                     Summary={c.summary}
                     Link={c.link}
+                    ContributedBy={c.username}
                 />
             );
         });

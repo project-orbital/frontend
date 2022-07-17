@@ -8,9 +8,16 @@ import {
     Text,
     useColorModeValue,
     VStack,
+    Spacer,
 } from "@chakra-ui/react";
 
-export default function BlogPostCard({ Header, Summary, Link, Picture }) {
+export default function BlogPostCard({
+    Header,
+    Summary,
+    Link,
+    Picture,
+    ContributedBy,
+}) {
     return (
         <Center py={6}>
             <LinkBox
@@ -26,18 +33,25 @@ export default function BlogPostCard({ Header, Summary, Link, Picture }) {
             >
                 <VStack>
                     <Box>
-                        <Image
-                            borderRadius="full"
-                            boxSize="210px"
-                            src={Picture}
-                        />
+                        {Picture && (
+                            <Image
+                                borderRadius="full"
+                                boxSize="210px"
+                                src={Picture}
+                            />
+                        )}
                     </Box>
                     <Heading size="md" my="2">
                         <LinkOverlay href={Link} target="_blank">
                             {Header}
                         </LinkOverlay>
                     </Heading>
+                    <Spacer />
                     <Text>{Summary}</Text>
+                    <Spacer />
+                    {ContributedBy && (
+                        <Text>Contributed by: {ContributedBy}</Text>
+                    )}
                 </VStack>
             </LinkBox>
         </Center>
