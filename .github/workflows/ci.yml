@@ -53,11 +53,10 @@ jobs:
                   JWTPRIV: ${{secrets.BACKEND_JWT_PRIVATE_KEY}}
             - name: Start the backend server
               run: |
-                  curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf
                   cd backend
                   chmod +x start.sh
                   ./start.sh dev &
-                  sleep 5
+                  sleep 30
                   cd ..
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v3
