@@ -110,7 +110,7 @@ const SidebarDrawer = ({ isOpen, onClose }) => (
         <DrawerOverlay />
         <DrawerContent>
             <DrawerHeader borderBottomWidth="1px">Documentation</DrawerHeader>
-            <DrawerBody pb={16}>
+            <DrawerBody pb={16} onClick={onClose}>
                 <SidebarContent />
             </DrawerBody>
         </DrawerContent>
