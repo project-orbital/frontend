@@ -13,6 +13,6 @@ const code = `
 </p>
 `;
 
-export default function ProejctLog() {
+export default function ProjectLog() {
     return <Prose dangerouslySetInnerHTML={{ __html: code }} />;
 }

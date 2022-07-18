@@ -15,7 +15,7 @@ import TestingStrategy from "./content/testing/TestingStrategy";
 import UserTesting from "./content/testing/UserTesting";
 import SWEPractices from "./content/miscellany/SWEPractices";
 import Limitations from "./content/miscellany/Limitations";
-import ProejctLog from "./content/miscellany/ProejctLog";
+import ProjectLog from "./content/miscellany/ProjectLog";
 import CICD from "./content/testing/CICD";
 
 export default function DocsRoutes() {
@@ -49,7 +49,7 @@ export default function DocsRoutes() {
                 <Route path="miscellany">
                     <Route path="swe-practices" element={<SWEPractices />} />
                     <Route path="limitations" element={<Limitations />} />
-                    <Route path="project-log" element={<ProejctLog />} />
+                    <Route path="project-log" element={<ProjectLog />} />
                 </Route>
                 <Route path="sample" element={<Sample />} />
             </Route>

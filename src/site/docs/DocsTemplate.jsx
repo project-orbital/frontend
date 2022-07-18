@@ -73,7 +73,7 @@ const SidebarContent = () => {
                 <Link to="./design/ui-ux" text="UI & UX" />
             </Section>
             <Section name="Testing">
-                <Link to="./testing/strategy" text="Strategy" />
+                <Link to="./testing/strategy" text="Testing Strategy" />
                 <Link to="./testing/user-testing" text="User Testing" />
                 <Link to="./testing/ci-cd" text="CI/CD" />
             </Section>{" "}
