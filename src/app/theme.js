@@ -95,6 +95,9 @@ export const theme = extendTheme(
                 fontWeight: "normal",
                 fontStyle: "normal",
             },
+            a: {
+                "text-decoration": "underline",
+            },
         },
     })
 );
