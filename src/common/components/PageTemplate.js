@@ -27,7 +27,7 @@ export default function PageTemplate({
 }) {
     if (variant === "auth") {
         return (
-            <>
+            <VStack>
                 <Navbar buttons={buttons} />
                 <VStack
                     pt={[20, 24]}
@@ -43,7 +43,7 @@ export default function PageTemplate({
                         </Card>
                     </Box>
                 </VStack>
-            </>
+            </VStack>
         );
     }
     return (

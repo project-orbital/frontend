@@ -55,8 +55,7 @@ export default function Navbar({
             position="fixed"
             spacing={0}
             w="100%"
-            h={[16, 20]}
-            pt={2}
+            h={[20, 24]}
             pl={[6, 6, 8, 16]}
             pr={[2, 4, 6, 12]}
             bg="bg-translucent"
