@@ -25,14 +25,22 @@ export default function PageTemplate({
 }) {
     if (variant === "auth") {
         return (
-            <VStack spacing="0" bg="bg">
+            <>
                 <Navbar />
-                <VStack justify="center" minH="100vh" spacing="0" w="60%">
-                    <Card isCentered isStandalone heading={heading}>
-                        {children}
-                    </Card>
+                <VStack
+                    pt="90px"
+                    justify="center"
+                    spacing="0"
+                    w="100vw"
+                    minH="100vh"
+                >
+                    <Box pb="10vh">
+                        <Card isCentered isStandalone heading={heading}>
+                            {children}
+                        </Card>
+                    </Box>
                 </VStack>
-            </VStack>
+            </>
         );
     }
     return (

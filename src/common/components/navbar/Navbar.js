@@ -43,7 +43,7 @@ export default function Navbar({ hasSignInButton, hasSignUpButton }) {
 
     return (
         <HStack
-            position="absolute"
+            position="fixed"
             w="100%"
             h="90px"
             px="5%"
