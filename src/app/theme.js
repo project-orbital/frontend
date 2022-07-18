@@ -83,11 +83,19 @@ export const theme = extendTheme(
     },
     withProse({
         baseStyle: {
+            h1: {
+                color: "fg",
+            },
+            h2: {
+                color: "fg",
+            },
             h3: {
                 fontFamily: "body",
+                color: "fg",
             },
             h4: {
                 fontFamily: "body",
+                color: "fg-light",
             },
             blockquote: {
                 color: "gray.500",
@@ -97,6 +105,9 @@ export const theme = extendTheme(
             },
             a: {
                 "text-decoration": "underline",
+            },
+            p: {
+                color: "fg",
             },
         },
     })
