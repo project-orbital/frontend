@@ -35,7 +35,8 @@ const code = `
 <h2>Secrets and Security</h2>
 <p>
     We keep our secrets such as private keys in <tt>.env</tt> files and <tt>gitignore</tt> them for security.
-    They are not committed to the repository publicly, and are only re-generated on the fly when needed, e.g. for CI/CD.
+    They are not committed to the repository publicly; we use GitHub's repository secrets feature,
+    regenerating secrets on the fly only when needed, e.g. for CI/CD.
 </p>
 <p>
     We also enable Dependabot on GitHub to keep our dependencies up to date
