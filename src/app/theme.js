@@ -109,6 +109,9 @@ export const theme = extendTheme(
             p: {
                 color: "fg",
             },
+            span: {
+                fontSize: "0.8rem",
+            },
         },
     })
 );
