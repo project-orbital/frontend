@@ -81,5 +81,20 @@ export const theme = extendTheme(
             useSystemColorMode: true,
         },
     },
-    withProse()
+    withProse({
+        baseStyle: {
+            h3: {
+                fontFamily: "body",
+            },
+            h4: {
+                fontFamily: "body",
+            },
+            blockquote: {
+                color: "gray.500",
+                fontSize: "sm",
+                fontWeight: "normal",
+                fontStyle: "normal",
+            },
+        },
+    })
 );
