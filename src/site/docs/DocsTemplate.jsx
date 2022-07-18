@@ -52,7 +52,7 @@ const SidebarContent = () => {
     return (
         <VStack align="start">
             <Section name="Overview">
-                <Link to="./" text="Introduction" />
+                <Link to="./overview/introduction" text="Introduction" />
                 <Link to="./overview/quick-links" text="Quick Links" />
                 <Link to="./overview/tech-stack" text="Tech Stack" />
             </Section>
