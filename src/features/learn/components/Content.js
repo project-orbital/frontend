@@ -25,13 +25,14 @@ export default function Content() {
     const { data: contributions, isLoading } = useReadContributionsQuery();
     const LastContributions =
         isLoading || contributions.length === 0 ? [] : contributions;
-    const arr = [Pic1, Pic2, Pic3, Pic4];
+    const arr = [Pic4, Pic3, Pic2, Pic1];
     const HorizontalRowOf4 = (contributions) => {
         return (
             <Stack direction={"row"} spacing={10} align={"left"}>
                 {contributions.map((c) => {
                     return (
                         <BlogPostCard
+                            id={c._id}
                             Picture={arr[indexOf(contributions, c)]}
                             Header={c.header}
                             Summary={c.summary}
@@ -47,7 +48,7 @@ export default function Content() {
         );
     };
 
-    //Make the array an array of smaller sub arrays.
+    //Make array an array of smaller sub arrays.
     function chunk(array, size) {
         const chunkedArray = [];
         for (let i = 0; i < array.length; i++) {

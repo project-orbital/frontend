@@ -63,6 +63,9 @@ export const theme = extendTheme({
             // (e.g. cancellation, deletion buttons).
             "bg-danger": "red.500",
             "fg-danger": "white",
+            // A nice blue colour.
+            // (e.g. thumbs up button).
+            "bg-blue": "#46BED4",
             // Foreground color used for error messages.
             error: "red.500",
         },

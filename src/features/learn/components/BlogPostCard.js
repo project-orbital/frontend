@@ -12,6 +12,8 @@ import {
     Flex,
 } from "@chakra-ui/react";
 import ActionButton from "../../../common/components/buttons/ActionButton";
+import { MdOutlineThumbUp, MdOutlineReportGmailerrorred } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function BlogPostCard({
     Header,
@@ -22,7 +24,10 @@ export default function BlogPostCard({
     SubmissionDate,
     LikeButton,
     ReportButton,
+    id,
 }) {
+    const navigate = useNavigate();
+
     return (
         <Center py={6}>
             <Box
@@ -31,7 +36,7 @@ export default function BlogPostCard({
                 bg={useColorModeValue("white", "gray.900")}
                 boxShadow={"2xl"}
                 rounded={"md"}
-                h="420px"
+                h="430px"
                 w="260px"
                 p={6}
                 overflow={"hidden"}
@@ -66,14 +71,21 @@ export default function BlogPostCard({
                 <Spacer />
                 <Flex>
                     {LikeButton && (
-                        <ActionButton>
-                            <Text pl="10px">Like{true ? "" : "d"}</Text>
+                        <ActionButton
+                            variant="like"
+                            leftIcon={<MdOutlineThumbUp />}
+                        >
+                            Like{true ? "" : "d"}
                         </ActionButton>
                     )}
                     <Spacer />
                     {ReportButton && (
-                        <ActionButton>
-                            <Text pl="10px">Report{true ? "" : "d"}</Text>{" "}
+                        <ActionButton
+                            onClick={() => navigate(`./report/${id}`)}
+                            variant="report"
+                            leftIcon={<MdOutlineReportGmailerrorred />}
+                        >
+                            Report{true ? "" : "d"}
                         </ActionButton>
                     )}
                 </Flex>

@@ -54,6 +54,7 @@ export const api = createApi({
         "Transactions",
         "Contribution",
         "Contributions",
+        "ReportedContribution",
     ],
     endpoints: (builder) => ({
         // === === ===
@@ -67,11 +68,17 @@ export const api = createApi({
             invalidatesTags: ["Accounts"],
         }),
         readAccount: builder.query({
-            query: (id) => ({ url: `accounts/${id}`, method: "get" }),
+            query: (id) => ({
+                url: `accounts/${id}`,
+                method: "get",
+            }),
             providesTags: ["Account"],
         }),
         readAccounts: builder.query({
-            query: () => ({ url: "accounts", method: "get" }),
+            query: () => ({
+                url: "accounts",
+                method: "get",
+            }),
             providesTags: ["Accounts"],
         }),
         updateAccount: builder.mutation({
@@ -148,7 +155,7 @@ export const api = createApi({
         // Contributions
         createContribution: builder.mutation({
             query: (values) => ({
-                url: "learn",
+                url: "learn/contribute",
                 method: "post",
                 data: values,
             }),
@@ -160,6 +167,24 @@ export const api = createApi({
                 method: "get",
             }),
             providesTags: ["Contributions"],
+        }),
+        likeContribution: builder.mutation({
+            query: ({ id, ...values }) => ({
+                url: `learn/like/${id}`,
+                method: "put",
+                data: values,
+            }),
+            invalidatesTags: ["Contribution"],
+        }),
+
+        reportContribution: builder.mutation({
+            query: ({ id, ...values }) => ({
+                url: `learn/report/${id}`,
+                method: "put",
+                data: values,
+                params: { id: id },
+            }),
+            invalidatesTags: ["Contributions"],
         }),
     }),
 });
@@ -183,4 +208,6 @@ export const {
     // Contributions
     useCreateContributionMutation,
     useReadContributionsQuery,
+    useLikeContributionMutation,
+    useReportContributionMutation,
 } = api;

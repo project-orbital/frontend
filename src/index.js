@@ -16,11 +16,14 @@ import SettingsRoutes from "./features/settings/SettingsRoutes";
 
 import Portfolio from "./features/portfolio/Portfolio";
 import Plan from "./features/plan/Plan";
+
 import Learn from "./features/learn/Learn";
+import ContributionCreate from "./features/learn/components/ContributionCreate";
+import ContributionReport from "./features/learn/components/ReportContribution";
+
 import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
 import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
 import AmendBudget from "./features/plan/components/AmendBudget";
-import ContributionCreate from "./features/learn/components/ContributionCreate";
 
 // TODO: Replace the remaining routes by creating "__Routes.js" in their respective folders and linking them here.
 const routes = (
@@ -30,7 +33,7 @@ const routes = (
         <Route path="/accounts/*" element={<AccountsRoutes />} />
         <Route path="/settings/*" element={<SettingsRoutes />} />
         <Route
-            path="learn"
+            path="/learn/"
             element={
                 <RequireAuth>
                     <Learn />
@@ -38,6 +41,7 @@ const routes = (
             }
         >
             <Route path="contribute" element={<ContributionCreate />} />
+            <Route path="report/*" element={<ContributionReport />} />
         </Route>
         <Route
             path="portfolio"
