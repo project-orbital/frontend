@@ -20,11 +20,13 @@ import Learn from "./features/learn/Learn";
 import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
 import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
 import AmendBudget from "./features/plan/components/AmendBudget";
+import DocsRoutes from "./site/docs/DocsRoutes";
 
 // TODO: Replace the remaining routes by creating "__Routes.js" in their respective folders and linking them here.
 const routes = (
     <Routes>
         <Route path="/*" element={<UserRoutes />} />
+        <Route path="/docs/*" element={<DocsRoutes />} />
         <Route path="/dashboard/*" element={<DashboardRoutes />} />
         <Route path="/accounts/*" element={<AccountsRoutes />} />
         <Route path="/settings/*" element={<SettingsRoutes />} />
