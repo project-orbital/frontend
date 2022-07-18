@@ -9,7 +9,9 @@ import {
     useColorModeValue,
     VStack,
     Spacer,
+    Flex,
 } from "@chakra-ui/react";
+import ActionButton from "../../../common/components/buttons/ActionButton";
 
 export default function BlogPostCard({
     Header,
@@ -17,43 +19,65 @@ export default function BlogPostCard({
     Link,
     Picture,
     ContributedBy,
+    SubmissionDate,
+    LikeButton,
+    ReportButton,
 }) {
     return (
         <Center py={6}>
-            <LinkBox
+            <Box
                 as="article"
                 maxW={"445px"}
                 bg={useColorModeValue("white", "gray.900")}
                 boxShadow={"2xl"}
                 rounded={"md"}
-                h="400px"
+                h="420px"
                 w="260px"
                 p={6}
                 overflow={"hidden"}
             >
-                <VStack>
-                    <Box>
-                        {Picture && (
-                            <Image
-                                borderRadius="50"
-                                boxSize="210px"
-                                src={Picture}
-                            />
+                <LinkBox>
+                    <VStack>
+                        <Box>
+                            {Picture && (
+                                <Image
+                                    borderRadius="50"
+                                    boxSize="210px"
+                                    src={Picture}
+                                />
+                            )}
+                        </Box>
+                        <Heading size="md" my="2">
+                            <LinkOverlay href={Link} target="_blank">
+                                {Header}
+                            </LinkOverlay>
+                        </Heading>
+                        <Spacer />
+                        <Text>{Summary}</Text>
+                        <Spacer />
+                        {ContributedBy && (
+                            <Text>Contributed by: {ContributedBy}</Text>
                         )}
-                    </Box>
-                    <Heading size="md" my="2">
-                        <LinkOverlay href={Link} target="_blank">
-                            {Header}
-                        </LinkOverlay>
-                    </Heading>
-                    <Spacer />
-                    <Text>{Summary}</Text>
-                    <Spacer />
-                    {ContributedBy && (
-                        <Text>Contributed By: {ContributedBy}</Text>
+                        {SubmissionDate && (
+                            <Text>Date submitted: {SubmissionDate} </Text>
+                        )}
+                    </VStack>
+                </LinkBox>
+                <Spacer />
+                <Flex>
+                    {LikeButton && (
+                        <ActionButton>
+                            <Text pl="10px">Like{true ? "" : "d"}</Text>
+                        </ActionButton>
                     )}
-                </VStack>
-            </LinkBox>
+                    <Spacer />
+                    {ReportButton && (
+                        <ActionButton>
+                            <Text pl="10px">Report{true ? "" : "d"}</Text>{" "}
+                        </ActionButton>
+                    )}
+                </Flex>
+            </Box>
         </Center>
     );
 }

@@ -47,7 +47,14 @@ const transformTransactions = (response) => response.map(transformTransaction);
 export const api = createApi({
     reducerPath: "api",
     baseQuery: kyBaseQuery({ baseUrl: process.env.REACT_APP_BACKEND }),
-    tagTypes: ["Account", "Accounts", "Transaction", "Transactions"],
+    tagTypes: [
+        "Account",
+        "Accounts",
+        "Transaction",
+        "Transactions",
+        "Contribution",
+        "Contributions",
+    ],
     endpoints: (builder) => ({
         // === === ===
         // Accounts
@@ -138,21 +145,21 @@ export const api = createApi({
             invalidatesTags: ["Transaction", "Transactions"],
         }),
         // === === ===
-        // Transactions
+        // Contributions
         createContribution: builder.mutation({
             query: (values) => ({
                 url: "learn",
                 method: "post",
                 data: values,
             }),
-            invalidatesTags: ["Learn"],
+            invalidatesTags: ["Contribution"],
         }),
         readContributions: builder.query({
             query: () => ({
                 url: "learn",
                 method: "get",
             }),
-            providesTags: ["Learn"],
+            providesTags: ["Contributions"],
         }),
     }),
 });
