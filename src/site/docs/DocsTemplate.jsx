@@ -75,6 +75,7 @@ const SidebarContent = () => {
             <Section name="Testing">
                 <Link to="./testing/strategy" text="Strategy" />
                 <Link to="./testing/user-testing" text="User Testing" />
+                <Link to="./testing/ci-cd" text="CI/CD" />
             </Section>{" "}
             <Section name="Miscellany">
                 <Link to="./miscellany/swe-practices" text="SWE Practices" />
