@@ -10,7 +10,11 @@ import Logo from "./Logo";
 import NavButton from "../buttons/NavButton";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-export default function Navbar({ hasSignInButton, hasSignUpButton }) {
+export default function Navbar({
+    hasSignInButton,
+    hasSignUpButton,
+    buttons = [],
+}) {
     const { toggleColorMode } = useColorMode();
     const darkModeIcon = useColorModeValue(
         <MoonIcon boxSize={[4]} />,
@@ -63,14 +67,17 @@ export default function Navbar({ hasSignInButton, hasSignUpButton }) {
             <Spacer />
             {hasSignInButton && <SignIn />}
             {hasSignUpButton && <SignUp />}
-            <Box pl={[2, 4, 6, 8, 8]}>
+            <HStack pl={[2, 4, 6, 8, 8]}>
                 <IconButton
                     bg="none"
                     aria-label="Toggle dark mode"
                     onClick={toggleColorMode}
                     icon={darkModeIcon}
                 />
-            </Box>
+                {buttons?.map((bt, i) => (
+                    <Box key={i}>{bt}</Box>
+                ))}
+            </HStack>
         </HStack>
     );
 }

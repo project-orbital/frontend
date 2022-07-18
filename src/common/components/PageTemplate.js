@@ -14,6 +14,7 @@ import Navbar from "./navbar/Navbar";
  * @param heading the heading only used for the authentication pages
  * @param children the children elements of the page
  * @param page the page that will be selected in the sidebar
+ * @param buttons an array of components to be displayed in the navbar
  * @return the page populated with the sidebar and children elements
  */
 export default function PageTemplate({
@@ -21,12 +22,13 @@ export default function PageTemplate({
     variant,
     heading,
     children,
+    buttons = [],
     page,
 }) {
     if (variant === "auth") {
         return (
             <>
-                <Navbar />
+                <Navbar buttons={buttons} />
                 <VStack
                     pt={[20, 24]}
                     justify="center"
