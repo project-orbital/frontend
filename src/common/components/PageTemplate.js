@@ -28,13 +28,14 @@ export default function PageTemplate({
             <>
                 <Navbar />
                 <VStack
-                    pt="90px"
+                    pt={[20, 24]}
                     justify="center"
                     spacing="0"
-                    w="100vw"
+                    w="100%"
                     minH="100vh"
+                    overflowX="hidden"
                 >
-                    <Box pb="10vh">
+                    <Box w={["100vw", "100vw", "100vw", "80vw", "60vw"]}>
                         <Card isCentered isStandalone heading={heading}>
                             {children}
                         </Card>
