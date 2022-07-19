@@ -37,7 +37,7 @@ const code = `
 <p>
     Concurrently, our CI runner starts its own copy of the backend server in order to run the Playwright
     and Jest automated tests. For more details on these tests, check out the 
-    <a href="/docs/testing/strategy" target="_blank">testing section of our documentation</a>.
+    <a href="/docs/testing/strategy">Testing Strategy</a> section.
 </p>
 <p>
     CI must pass before we continue with CD.

@@ -48,7 +48,7 @@ const code = `
     We test our frontend, backend, and parser to ensure they are working as expected.
 </p>
 <p>
-    For more details, check out the <a href="/docs/testing/strategy" target="_blank">testing section of our documentation</a>.
+    For more details, check out the <a href="/docs/testing/strategy">Testing Strategy</a> section.
 </p>
 
 <h2>Continuous Integration and Deployment (CI/CD)</h2>
@@ -61,7 +61,7 @@ const code = `
     doing so manually, which is a hassle.
 </p>
 <p>
-    For more details, check out the <a href="/docs/testing/ci-cd" target="_blank">CI/CD section of our documentation</a>.
+    For more details, check out the <a href="/docs/testing/ci-cd">CI/CD</a> section.
 </p>
 `;
 
