@@ -29,13 +29,12 @@ export default function Content() {
     const LastContributions =
         isLoading || contributions.length === 0 ? [] : contributions;
 
+    // Wants to return a the array of contributed reported by the current user here.
+    // But is undefined.
     const { data: reportedContributions } = useReadReactionsQuery();
 
-    //Check whether the given contribution is reported by the user.
-    const A = reportedContributions.length === 0 ? [] : reportedContributions;
-
     const isReported = (id) => {
-        return A.indexOf(id);
+        return reportedContributions.indexOf(id) > -1;
     };
 
     const arr = [Pic4, Pic3, Pic2, Pic1];
@@ -54,7 +53,7 @@ export default function Content() {
                             SubmissionDate={c.submissionDate.slice(0, 10)}
                             LikeButton
                             ReportButton
-                            isReported={isReported}
+                            isReported={isReported(c.id)}
                         />
                     );
                 })}
