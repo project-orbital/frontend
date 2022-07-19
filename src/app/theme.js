@@ -104,12 +104,15 @@ export const theme = extendTheme(
                 fontStyle: "normal",
             },
             a: {
-                "text-decoration": "underline",
+                textDecoration: "underline",
             },
             p: {
                 color: "fg",
             },
             span: {
+                fontSize: "0.8rem",
+            },
+            td: {
                 fontSize: "0.8rem",
             },
         },
