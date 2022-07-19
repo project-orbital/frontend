@@ -29,7 +29,6 @@ export default function BlogPostCard({
     isReported,
 }) {
     const navigate = useNavigate();
-
     return (
         <Center py={6}>
             <Box

@@ -16,7 +16,10 @@ import Pic2 from "../assets/set1/b.jpg";
 import Pic3 from "../assets/set1/c.jpg";
 import Pic4 from "../assets/set1/d.jpg";
 import { Outlet } from "react-router-dom";
-import { useReadContributionsQuery } from "../../../app/api";
+import {
+    useReadContributionsQuery,
+    useReadReactionsQuery,
+} from "../../../app/api";
 import { indexOf } from "lodash";
 import BudgetingTab from "./BudgetingTab";
 import InvestmentTab from "./InvestmentTab";
@@ -25,9 +28,16 @@ export default function Content() {
     const { data: contributions, isLoading } = useReadContributionsQuery();
     const LastContributions =
         isLoading || contributions.length === 0 ? [] : contributions;
-    /*    const { data: reportedContributions } = useReadContributionReactionsQuery();
-        const LastReportedContributions = reportedContributions.length === 0 ? [] : reportedContributions;
-     */
+
+    const { data: reportedContributions } = useReadReactionsQuery();
+
+    //Check whether the given contribution is reported by the user.
+    const A = reportedContributions.length === 0 ? [] : reportedContributions;
+
+    const isReported = (id) => {
+        return A.indexOf(id);
+    };
+
     const arr = [Pic4, Pic3, Pic2, Pic1];
     const HorizontalRowOf4 = (contributions) => {
         return (
@@ -44,6 +54,7 @@ export default function Content() {
                             SubmissionDate={c.submissionDate.slice(0, 10)}
                             LikeButton
                             ReportButton
+                            isReported={isReported}
                         />
                     );
                 })}

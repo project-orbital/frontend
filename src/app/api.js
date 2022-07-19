@@ -54,7 +54,7 @@ export const api = createApi({
         "Transactions",
         "Contribution",
         "Contributions",
-        "ReportedContribution",
+        "ReportedContributions",
     ],
     endpoints: (builder) => ({
         // === === ===
@@ -166,7 +166,7 @@ export const api = createApi({
                 url: "learn",
                 method: "get",
             }),
-            providesTags: ["Contributions"],
+            providesTags: ["Contributions", "ReportedContributions"],
         }),
         likeContribution: builder.mutation({
             query: ({ id, ...values }) => ({
@@ -185,12 +185,12 @@ export const api = createApi({
             }),
             invalidatesTags: ["Contributions"],
         }),
-        readContributionReactions: builder.query({
+        readReactions: builder.query({
             query: () => ({
                 url: "learn/reactions",
                 method: "get",
             }),
-            providesTags: ["Contributions"],
+            invalidatesTags: ["Contributions"],
         }),
     }),
 });
@@ -216,5 +216,5 @@ export const {
     useReadContributionsQuery,
     useLikeContributionMutation,
     useReportContributionMutation,
-    useReadContributionReactionsQuery,
+    useReadReactionsQuery,
 } = api;
