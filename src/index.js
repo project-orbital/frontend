@@ -41,7 +41,7 @@ const routes = (
             }
         >
             <Route path="contribute" element={<ContributionCreate />} />
-            <Route path="report/*" element={<ContributionReport />} />
+            <Route path="report/:id" element={<ContributionReport />} />
         </Route>
         <Route
             path="portfolio"

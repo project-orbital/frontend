@@ -25,6 +25,9 @@ export default function Content() {
     const { data: contributions, isLoading } = useReadContributionsQuery();
     const LastContributions =
         isLoading || contributions.length === 0 ? [] : contributions;
+    /*    const { data: reportedContributions } = useReadContributionReactionsQuery();
+        const LastReportedContributions = reportedContributions.length === 0 ? [] : reportedContributions;
+     */
     const arr = [Pic4, Pic3, Pic2, Pic1];
     const HorizontalRowOf4 = (contributions) => {
         return (

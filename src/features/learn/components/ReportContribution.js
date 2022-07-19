@@ -17,7 +17,7 @@ export default function UserContribute() {
         try {
             await reportContribution({ id: id, ...values }).unwrap();
             toast({
-                title: "Thank you for your report!",
+                title: "Thank you for letting us know.",
                 status: "success",
             });
             navigate("../");

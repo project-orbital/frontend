@@ -25,6 +25,8 @@ export default function BlogPostCard({
     LikeButton,
     ReportButton,
     id,
+    isLiked,
+    isReported,
 }) {
     const navigate = useNavigate();
 
@@ -75,7 +77,7 @@ export default function BlogPostCard({
                             variant="like"
                             leftIcon={<MdOutlineThumbUp />}
                         >
-                            Like{true ? "" : "d"}
+                            Like{isLiked ? "d" : ""}
                         </ActionButton>
                     )}
                     <Spacer />
@@ -85,7 +87,7 @@ export default function BlogPostCard({
                             variant="report"
                             leftIcon={<MdOutlineReportGmailerrorred />}
                         >
-                            Report{true ? "" : "d"}
+                            Report{isReported ? "ed" : ""}
                         </ActionButton>
                     )}
                 </Flex>
