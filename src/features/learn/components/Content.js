@@ -1,5 +1,4 @@
 import {
-    Box,
     Button,
     SimpleGrid,
     Tab,
@@ -7,7 +6,6 @@ import {
     TabPanel,
     TabPanels,
     Tabs,
-    Text,
 } from "@chakra-ui/react";
 import BlogPostCard from "./BlogPostCard";
 import NavButton from "../../../common/components/buttons/NavButton";
@@ -70,13 +68,10 @@ export default function Content() {
 
     const SubmitArticleCard = () => {
         return (
-            <BaseCard>
-                <Box>
-                    <Text fontSize="xl" fontWeight="bold">
-                        Have something to share with the community?
-                    </Text>
-                    <Text>Let us know what's on your mind.</Text>
-                </Box>
+            <BaseCard
+                heading="Have something to share with the community?"
+                subheading="Let us know what's on your mind."
+            >
                 <NavButton to="./contribute" text="Contribute an article" />
             </BaseCard>
         );

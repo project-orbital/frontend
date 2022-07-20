@@ -14,6 +14,8 @@ import { Link } from "react-router-dom";
 export default function BaseCard({
     title,
     subtitle,
+    heading,
+    subheading,
     badge,
     button,
     link,
@@ -69,6 +71,20 @@ export default function BaseCard({
         );
     };
 
+    const Heading = () => {
+        if (!heading && !subheading) {
+            return null;
+        }
+        return (
+            <Box>
+                <Text fontSize="xl" fontWeight="bold">
+                    {heading}
+                </Text>
+                <Text>{subheading}</Text>
+            </Box>
+        );
+    };
+
     const Body = () => {
         return (
             <VStack
@@ -83,6 +99,7 @@ export default function BaseCard({
                 shadow="4px 8px 8px 0px #662B4218"
                 {...props}
             >
+                <Heading />
                 <Children />
             </VStack>
         );
