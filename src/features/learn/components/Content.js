@@ -67,6 +67,7 @@ export default function Content() {
             ReportButton
             isLiked={likedContributions.includes(contribution._id)}
             isReported={reportedContributions.includes(contribution._id)}
+            likeCount={contribution.likedBy.length}
         />
     ));
 

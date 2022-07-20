@@ -51,7 +51,7 @@ export default function BlogPostCard({
                 {LikeButton && (
                     <NavButton
                         to={`./`}
-                        onClick={likeOnClick}
+                        onClick={isLiked ? null : likeOnClick}
                         isDisabled={isLiked}
                         variant="secondary"
                         w="100%"

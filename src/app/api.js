@@ -45,6 +45,7 @@ const transformContribution = (c) => ({
     link: c.link,
     submissionDate: parseISO(c.submissionDate),
     username: c.username,
+    likedBy: c.likedBy,
 });
 
 const transformContributions = (response) =>
