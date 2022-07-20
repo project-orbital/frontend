@@ -1,12 +1,12 @@
 import BlogPostCard from "./BlogPostCard";
-import { Stack } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import newbie from "../assets/newbie.jpeg";
 import WarrenBuffett from "../assets/warrenbuffett.png";
 import Longterm from "../assets/longterm.jpeg";
 
 export default function InvestmentTab() {
     return (
-        <Stack direction={"row"} spacing={10} align={"center"}>
+        <SimpleGrid minChildWidth={60} spacing={8}>
             <BlogPostCard
                 Header="For newbies"
                 Summary="It's important to know you what you are doing even before you get started."
@@ -25,6 +25,6 @@ export default function InvestmentTab() {
                 Link="https://www.investopedia.com/articles/00/082100.asp "
                 Picture={Longterm}
             />
-        </Stack>
+        </SimpleGrid>
     );
 }

@@ -1,5 +1,5 @@
 import BlogPostCard from "./BlogPostCard";
-import { Stack } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import CollegeStudent from "../assets/collegestudent.jpeg";
 import YoungAdult from "../assets/youngadult.jpeg";
 import WorkingAdult from "../assets/workingadult.jpeg";
@@ -7,7 +7,7 @@ import Parents from "../assets/parents.jpeg";
 
 export default function BudgetingTab() {
     return (
-        <Stack direction={"row"} spacing={10} align={"center"}>
+        <SimpleGrid spacing={8} minChildWidth={60}>
             <BlogPostCard
                 Header="For college students"
                 Summary="6 important tips on how to manage money for college students with little to no income."
@@ -32,6 +32,6 @@ export default function BudgetingTab() {
                 Link="https://www.investopedia.com/guide-allowances-and-kids-5217591"
                 Picture={Parents}
             />
-        </Stack>
+        </SimpleGrid>
     );
 }
