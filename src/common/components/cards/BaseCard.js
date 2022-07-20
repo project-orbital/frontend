@@ -18,6 +18,7 @@ export default function BaseCard({
     button,
     link,
     isLoading,
+    isExternal,
     children,
     ...props
 }) {
@@ -100,6 +101,19 @@ export default function BaseCard({
         );
     }
 
+    const InternalLinkOverlay = () => (
+        <LinkOverlay as={Link} to={link} w="100%">
+            <Title />
+            <Body />
+        </LinkOverlay>
+    );
+    const ExternalLinkOverlay = () => (
+        <LinkOverlay href={link} w="100%" isExternal>
+            <Title />
+            <Body />
+        </LinkOverlay>
+    );
+
     // Make the entire card clickable with a hover animation.
     return (
         <LinkBox
@@ -109,10 +123,7 @@ export default function BaseCard({
             }}
         >
             <VStack spacing={0}>
-                <LinkOverlay as={Link} to={link} w="100%">
-                    <Title />
-                    <Body />
-                </LinkOverlay>
+                {isExternal ? <ExternalLinkOverlay /> : <InternalLinkOverlay />}
             </VStack>
         </LinkBox>
     );
