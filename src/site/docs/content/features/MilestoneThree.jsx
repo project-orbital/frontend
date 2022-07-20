@@ -53,9 +53,8 @@ const code = `
     But this comes at the cost of privacy, which we value, and we know some of our users will too.
 </p>
 <p>
-    To that end, we elected to let our users opt out of data synchronization, which disables
-    storing their data in our database, with the tradeoff of only being able to access their data
-    on the same device.
+    To that end, we elected to let our users delete their account data anytime they want.
+    More on that next.
 </p>
 
 <h3>Account and Data Management</h3>
