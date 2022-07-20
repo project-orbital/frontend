@@ -74,7 +74,7 @@ export default function BlogPostCard({
                         </Text>
                         <Text fontSize="sm">
                             {format(
-                                parse(SubmissionDate, "yyyy-mm-dd", new Date()),
+                                parse(SubmissionDate, "yyyy-MM-dd", new Date()),
                                 "dd LLL yyyy"
                             )}{" "}
                         </Text>
