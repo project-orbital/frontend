@@ -58,6 +58,7 @@ export default function ActionButton({
                 h={10}
                 p={4}
                 bg="bg-danger"
+                color="fg-danger"
                 isLoading={delay && isLoading}
                 onClick={handleClick}
                 transition="transform .1s"
@@ -67,7 +68,6 @@ export default function ActionButton({
                 }}
                 _active={{
                     bg: "bg-danger",
-                    color: "gray.400",
                 }}
                 {...props}
             >
@@ -82,6 +82,7 @@ export default function ActionButton({
                 h={10}
                 p={4}
                 bg="bg-blue"
+                color="white"
                 isLoading={delay && isLoading}
                 onClick={handleClick}
                 transition="transform .1s"

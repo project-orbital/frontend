@@ -1,5 +1,4 @@
 import {
-    Button,
     SimpleGrid,
     Tab,
     TabList,
@@ -62,35 +61,29 @@ export default function Content() {
         />
     ));
 
-    const UserContributed = () => {
-        return <SimpleGrid columns={4}>{cards}</SimpleGrid>;
-    };
-
-    const SubmitArticleCard = () => {
-        return (
-            <BaseCard
-                heading="Have something to share with the community?"
-                subheading="Let us know what's on your mind."
-            >
-                <NavButton to="./contribute" text="Contribute an article" />
-            </BaseCard>
-        );
-    };
+    const SubmitArticleCard = () => (
+        <BaseCard
+            heading="Have something to share with the community?"
+            subheading="Let us know what's on your mind."
+        >
+            <NavButton to="./contribute" text="Contribute an article" />
+        </BaseCard>
+    );
+    const CommunityContributedTab = () => (
+        <SimpleGrid columns={4} spacing={8}>
+            {cards}
+            <SubmitArticleCard />
+        </SimpleGrid>
+    );
 
     return (
-        <Tabs size="sm">
-            <TabList>
-                <Tab>
-                    <Button>Budgeting</Button>
-                </Tab>
-                <Tab>
-                    <Button>Investment</Button>
-                </Tab>
-                <Tab>
-                    <Button>Community Contributed</Button>
-                </Tab>
+        <Tabs size="lg" colorScheme="gray">
+            <TabList mx={4}>
+                <Tab>Budgeting</Tab>
+                <Tab>Investment</Tab>
+                <Tab>Community Contributed</Tab>
             </TabList>
-            <TabPanels>
+            <TabPanels pt={4}>
                 <TabPanel>
                     <BudgetingTab />
                 </TabPanel>
@@ -98,8 +91,7 @@ export default function Content() {
                     <InvestmentTab />
                 </TabPanel>
                 <TabPanel>
-                    <UserContributed />
-                    <SubmitArticleCard />
+                    <CommunityContributedTab />
                 </TabPanel>
             </TabPanels>
             <Outlet />

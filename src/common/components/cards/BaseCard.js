@@ -1,6 +1,7 @@
 import {
     Box,
     HStack,
+    Image,
     LinkBox,
     LinkOverlay,
     Skeleton,
@@ -19,6 +20,7 @@ export default function BaseCard({
     badge,
     button,
     link,
+    image,
     isLoading,
     isExternal,
     children,
@@ -63,12 +65,12 @@ export default function BaseCard({
             return null;
         }
         return (
-            <Box>
+            <VStack align="start">
                 <Text fontSize="xl" fontWeight="bold">
                     {heading}
                 </Text>
                 <Text>{subheading}</Text>
-            </Box>
+            </VStack>
         );
     };
 
@@ -102,10 +104,14 @@ export default function BaseCard({
                 justify="start"
                 align="start"
                 bgGradient="linear(to-br, bg-light, bg-lighter)"
-                borderBottomRadius="lg"
+                borderTopRadius={!title && !subtitle ? "md" : null}
+                borderBottomRadius={!title && !subtitle ? "md" : "lg"}
                 shadow="4px 8px 8px 0px #662B4218"
                 {...props}
             >
+                {image && (
+                    <Image src={image} borderRadius="md" boxSize="210px" />
+                )}
                 <Heading />
                 <Children />
             </VStack>
@@ -146,7 +152,6 @@ export default function BaseCard({
         return (
             <VStack spacing={0}>
                 <Title />
-                <Heading />
                 <Body />
             </VStack>
         );

@@ -1,19 +1,8 @@
-import {
-    Box,
-    Center,
-    Heading,
-    Image,
-    LinkBox,
-    LinkOverlay,
-    Text,
-    useColorModeValue,
-    VStack,
-    Spacer,
-    Flex,
-} from "@chakra-ui/react";
-import ActionButton from "../../../common/components/buttons/ActionButton";
-import { MdOutlineThumbUp, MdOutlineReportGmailerrorred } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import BaseCard from "../../../common/components/cards/BaseCard";
+import { Text, VStack } from "@chakra-ui/react";
+import ActionButton from "../../../common/components/buttons/ActionButton";
+import { MdOutlineReportGmailerrorred, MdOutlineThumbUp } from "react-icons/md";
 
 export default function BlogPostCard({
     Header,
@@ -30,67 +19,38 @@ export default function BlogPostCard({
 }) {
     const navigate = useNavigate();
     return (
-        <Center py={6}>
-            <Box
-                as="article"
-                maxW={"445px"}
-                bg={useColorModeValue("white", "gray.900")}
-                boxShadow={"2xl"}
-                rounded={"md"}
-                h="430px"
-                w="260px"
-                p={6}
-                overflow={"hidden"}
-            >
-                <LinkBox>
-                    <VStack>
-                        <Box>
-                            {Picture && (
-                                <Image
-                                    borderRadius="50"
-                                    boxSize="210px"
-                                    src={Picture}
-                                />
-                            )}
-                        </Box>
-                        <Heading size="md" my="2">
-                            <LinkOverlay href={Link} target="_blank">
-                                {Header}
-                            </LinkOverlay>
-                        </Heading>
-                        <Spacer />
-                        <Text>{Summary}</Text>
-                        <Spacer />
-                        {ContributedBy && (
-                            <Text>Contributed by: {ContributedBy}</Text>
-                        )}
-                        {SubmissionDate && (
-                            <Text>Date submitted: {SubmissionDate} </Text>
-                        )}
-                    </VStack>
-                </LinkBox>
-                <Spacer />
-                <Flex>
-                    {LikeButton && (
-                        <ActionButton
-                            variant="like"
-                            leftIcon={<MdOutlineThumbUp />}
-                        >
-                            Like{isLiked ? "d" : ""}
-                        </ActionButton>
-                    )}
-                    <Spacer />
-                    {ReportButton && (
-                        <ActionButton
-                            onClick={() => navigate(`./report/${id}`)}
-                            variant="report"
-                            leftIcon={<MdOutlineReportGmailerrorred />}
-                        >
-                            Report{isReported ? "ed" : ""}
-                        </ActionButton>
-                    )}
-                </Flex>
-            </Box>
-        </Center>
+        <BaseCard
+            heading={Header}
+            subheading={Summary}
+            image={Picture}
+            link={Link}
+            isExternal
+        >
+            <VStack align="start">
+                {ContributedBy && <Text>Contributed by: {ContributedBy}</Text>}
+                {SubmissionDate && (
+                    <Text>Date submitted: {SubmissionDate} </Text>
+                )}
+            </VStack>
+            <VStack align="start">
+                {LikeButton && (
+                    <ActionButton
+                        variant="like"
+                        leftIcon={<MdOutlineThumbUp />}
+                    >
+                        {isLiked ? "Liked" : "Like"}
+                    </ActionButton>
+                )}
+                {ReportButton && (
+                    <ActionButton
+                        onClick={() => navigate(`./report/${id}`)}
+                        variant="report"
+                        leftIcon={<MdOutlineReportGmailerrorred />}
+                    >
+                        {isReported ? "Reported" : "Report"}
+                    </ActionButton>
+                )}
+            </VStack>
+        </BaseCard>
     );
 }
