@@ -51,7 +51,22 @@ export const api = createApi({
     tagTypes: ["Account", "Accounts", "Transaction", "Transactions"],
     endpoints: (builder) => ({
         // === === ===
-        // User Data
+        // User
+        deleteUserAccount: builder.mutation({
+            query: (password) => ({
+                url: `users/preferences/delete-account`,
+                method: "delete",
+                headers: {
+                    password: password,
+                },
+            }),
+            invalidatesTags: [
+                "Transaction",
+                "Transactions",
+                "Account",
+                "Accounts",
+            ],
+        }),
         deleteUserData: builder.mutation({
             query: (password) => ({
                 url: `users/preferences/erase-data`,
@@ -64,7 +79,7 @@ export const api = createApi({
                 "Transaction",
                 "Transactions",
                 "Account",
-                "Transactions",
+                "Accounts",
             ],
         }),
         // === === ===
@@ -161,8 +176,9 @@ export const api = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints.
 export const {
-    // User Data
+    // User
     useDeleteUserDataMutation,
+    useDeleteUserAccountMutation,
     // Accounts
     useCreateAccountMutation,
     useReadAccountQuery,

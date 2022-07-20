@@ -1,24 +1,19 @@
 import FormModal from "../../../common/components/form/FormModal";
-import FormTextField from "../../../common/components/form/FormTextField";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
-import ky from "ky";
+import { useDeleteUserAccountMutation } from "../../../app/api";
+import { InputControl } from "formik-chakra-ui";
 
 export default function AccountDelete() {
+    const [deleteAccount] = useDeleteUserAccountMutation();
     const navigate = useNavigate();
     const toast = useToast();
 
-    const handleSubmit = async (values, { setErrors }) => {
+    const handleSubmit = async ({ password }, { setErrors }) => {
         try {
             toast.closeAll();
-            await ky.delete(
-                `${process.env.REACT_APP_BACKEND}/users/preferences/delete-account`,
-                {
-                    json: values,
-                    credentials: "include",
-                }
-            );
+            await deleteAccount(password).unwrap();
             toast({
                 title: "Account deleted successfully.",
                 description: "Thanks for using DollarPlanner.",
@@ -28,11 +23,9 @@ export default function AccountDelete() {
             });
             navigate("/sign-out");
         } catch (error) {
-            const errors = await error.response.json();
-            setErrors(errors);
+            setErrors(error);
             toast({
-                title: Object.values(errors),
-                description: "Please try again.",
+                ...error,
                 status: "error",
             });
         }
@@ -54,13 +47,15 @@ export default function AccountDelete() {
             })}
             onSubmit={handleSubmit}
         >
-            <FormTextField
-                id="password"
+            <InputControl
                 isRequired
-                isPassword
-                withErrorMessage
-                labelText="Enter your password to confirm."
-                placeholder="••••••••"
+                name="password"
+                label="Enter your password to confirm."
+                inputProps={{
+                    type: "password",
+                    autoComplete: "new-password",
+                    placeholder: "••••••••",
+                }}
             />
         </FormModal>
     );
