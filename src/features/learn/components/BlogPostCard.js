@@ -1,7 +1,8 @@
 import BaseCard from "../../../common/components/cards/BaseCard";
-import { Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { MdOutlineReportGmailerrorred, MdOutlineThumbUp } from "react-icons/md";
 import NavButton from "../../../common/components/buttons/NavButton";
+import { format, parse } from "date-fns";
 
 export default function BlogPostCard({
     Header,
@@ -24,12 +25,6 @@ export default function BlogPostCard({
             link={Link}
             isExternal
         >
-            <VStack align="start">
-                {ContributedBy && <Text>Contributed by: {ContributedBy}</Text>}
-                {SubmissionDate && (
-                    <Text>Date submitted: {SubmissionDate} </Text>
-                )}
-            </VStack>
             <VStack align="center" spacing={4}>
                 {LikeButton && (
                     <NavButton
@@ -53,6 +48,39 @@ export default function BlogPostCard({
                     </NavButton>
                 )}
             </VStack>
+            <HStack w="100%" spacing={8}>
+                {ContributedBy && (
+                    <Box>
+                        <Text
+                            fontSize="xs"
+                            fontWeight="bold"
+                            color="gray.500"
+                            textTransform="uppercase"
+                        >
+                            Contributor
+                        </Text>
+                        <Text fontSize="sm">{ContributedBy}</Text>
+                    </Box>
+                )}
+                {SubmissionDate && (
+                    <Box>
+                        <Text
+                            fontSize="xs"
+                            fontWeight="bold"
+                            color="gray.500"
+                            textTransform="uppercase"
+                        >
+                            Submitted
+                        </Text>
+                        <Text fontSize="sm">
+                            {format(
+                                parse(SubmissionDate, "yyyy-mm-dd", new Date()),
+                                "dd LLL yyyy"
+                            )}{" "}
+                        </Text>
+                    </Box>
+                )}
+            </HStack>
         </BaseCard>
     );
 }
