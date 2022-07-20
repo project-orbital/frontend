@@ -1,6 +1,7 @@
 import BaseCard from "../../../common/components/cards/BaseCard";
-import { Button, Text, VStack, Box, HStack } from "@chakra-ui/react";
-import { MdOutlineReportGmailerrorred, MdOutlineThumbUp } from "react-icons/md";
+import { Text, VStack, Box, HStack } from "@chakra-ui/react";
+import { MdOutlineReportGmailerrorred } from "react-icons/md";
+import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import NavButton from "../../../common/components/buttons/NavButton";
 import { useLikeContributionMutation } from "../../../app/api";
 import { useToast } from "@chakra-ui/react";
@@ -47,14 +48,15 @@ export default function BlogPostCard({
         >
             <VStack align="center" spacing={4}>
                 {LikeButton && (
-                    <Button
-                        onClick={likeOnClick}
-                        variant="primary"
+                    <NavButton
+                        to={likeOnClick}
+                        isDisabled={isLiked}
+                        variant="secondary"
                         w="100%"
-                        leftIcon={<MdOutlineThumbUp />}
+                        leftIcon={isLiked ? <AiFillLike /> : <AiOutlineLike />}
                     >
                         {isLiked ? "Liked" : "Like"}
-                    </Button>
+                    </NavButton>
                 )}
                 {ReportButton && (
                     <NavButton
@@ -67,24 +69,6 @@ export default function BlogPostCard({
                         {isReported ? "Reported" : "Report"}
                     </NavButton>
                 )}
-                {ReportButton &&
-                    (isReported ? (
-                        <Button
-                            variant="secondary"
-                            leftIcon={<MdOutlineReportGmailerrorred />}
-                            bg="bg"
-                        >
-                            Reported
-                        </Button>
-                    ) : (
-                        <NavButton
-                            to={`./report/${id}`}
-                            variant="secondary"
-                            leftIcon={<MdOutlineReportGmailerrorred />}
-                        >
-                            Report
-                        </NavButton>
-                    ))}
             </VStack>
             <HStack w="100%" spacing={8}>
                 {ContributedBy && (

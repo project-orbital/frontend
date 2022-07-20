@@ -198,9 +198,16 @@ export const api = createApi({
             }),
             invalidatesTags: ["Contributions"],
         }),
-        readReactions: builder.query({
+        readReports: builder.query({
             query: () => ({
-                url: "learn/reactions",
+                url: "learn/reactions/reports",
+                method: "get",
+            }),
+            providesTags: ["Contributions"],
+        }),
+        readLikes: builder.query({
+            query: () => ({
+                url: "learn/reactions/likes",
                 method: "get",
             }),
             providesTags: ["Contributions"],
@@ -229,5 +236,6 @@ export const {
     useReadContributionsQuery,
     useLikeContributionMutation,
     useReportContributionMutation,
-    useReadReactionsQuery,
+    useReadReportsQuery,
+    useReadLikesQuery,
 } = api;

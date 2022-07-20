@@ -16,7 +16,8 @@ import { Outlet } from "react-router-dom";
 import { format } from "date-fns";
 import {
     useReadContributionsQuery,
-    useReadReactionsQuery,
+    useReadReportsQuery,
+    useReadLikesQuery,
 } from "../../../app/api";
 import BudgetingTab from "./BudgetingTab";
 import InvestmentTab from "./InvestmentTab";
@@ -32,16 +33,21 @@ export default function Content() {
 
     const {
         data: reportedContributions,
-        isLoading: isReactionsLoading,
-        isError: isReactionsError,
-    } = useReadReactionsQuery();
+        isLoading: isReportsLoading,
+        isError: isReportsError,
+    } = useReadReportsQuery();
 
+    const {
+        data: likedContributions,
+        isLoading: isLikesLoading,
+        isError: isLikesError,
+    } = useReadLikesQuery();
     // Wait for the API to return data.
-    if (isContributionsLoading || isReactionsLoading) {
+    if (isContributionsLoading || isReportsLoading || isLikesLoading) {
         // We need this check to ensure that we don't get `undefined` data.
         return null;
     }
-    if (isContributionsError || isReactionsError) {
+    if (isContributionsError || isReportsError || isLikesError) {
         // Ideally, we want to display some form of error message here,
         // but in the interest of time, we'll just return null and display nothing.
         return null;
@@ -59,6 +65,7 @@ export default function Content() {
             SubmissionDate={format(contribution.submissionDate, "dd LLLL yyyy")}
             LikeButton
             ReportButton
+            isLiked={likedContributions.includes(contribution._id)}
             isReported={reportedContributions.includes(contribution._id)}
         />
     ));
