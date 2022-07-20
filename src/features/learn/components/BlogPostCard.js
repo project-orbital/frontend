@@ -1,5 +1,5 @@
 import BaseCard from "../../../common/components/cards/BaseCard";
-import { Text, VStack, Box, HStack } from "@chakra-ui/react";
+import { Text, VStack, Box, HStack, Button } from "@chakra-ui/react";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import NavButton from "../../../common/components/buttons/NavButton";
@@ -27,7 +27,7 @@ export default function BlogPostCard({
         try {
             await likeContribution({ id: id }).unwrap();
             toast({
-                title: "Thank you for your contribution!",
+                title: "Liked!",
                 status: "success",
             });
         } catch (error) {
@@ -49,7 +49,8 @@ export default function BlogPostCard({
             <VStack align="center" spacing={4}>
                 {LikeButton && (
                     <NavButton
-                        to={likeOnClick}
+                        to={`./`}
+                        onClick={likeOnClick}
                         isDisabled={isLiked}
                         variant="secondary"
                         w="100%"

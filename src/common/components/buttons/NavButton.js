@@ -30,6 +30,7 @@ export default function NavButton({
     fontWeight,
     fontSize,
     children,
+    onClick,
     ...props
 }) {
     const { colorMode } = useColorMode();
@@ -87,6 +88,7 @@ export default function NavButton({
             {...buttonProps}
             _hover={props.isDisabled ? {} : buttonProps._hover}
             {...props}
+            onClick={onClick}
         >
             {icon && <Box pr="8px">{icon}</Box>}
             <Text

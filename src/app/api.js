@@ -187,7 +187,7 @@ export const api = createApi({
                 method: "put",
                 params: { id: id },
             }),
-            invalidatesTags: ["Contribution"],
+            invalidatesTags: ["Contributions"],
         }),
         reportContribution: builder.mutation({
             query: ({ id, ...values }) => ({
