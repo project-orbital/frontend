@@ -14,48 +14,10 @@ import ActionButton from "../../common/components/buttons/ActionButton";
 import { CgDarkMode } from "react-icons/cg";
 import { TbEraser } from "react-icons/tb";
 import { AiOutlineUserDelete } from "react-icons/ai";
-import { MdSync, MdSyncDisabled } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { selectDataSync, toggleDataSync } from "./state/preferences";
 import BaseCard from "../../common/components/cards/BaseCard";
 
 export default function Settings() {
-    const dispatch = useDispatch();
-    const dataSync = useSelector(selectDataSync);
     const toast = useToast();
-
-    // Data synchronization toggle
-    const handleDataSyncToggle = async () => {
-        // dataSync is updated asynchronously, so we invert the old value now
-        // instead of sending the new value to the server.
-        const allowsDataStorage = !dataSync;
-        try {
-            const URL = `${process.env.REACT_APP_BACKEND}/users/preferences/data-sync`;
-            // Prevent duplicate toasts presenting conflicting messages.
-            await toast.closeAll();
-            await ky.post(URL, {
-                json: { allowsDataStorage: allowsDataStorage },
-                credentials: "include",
-            });
-            dispatch(toggleDataSync());
-            toast({
-                title: `Data synchronization ${
-                    allowsDataStorage ? "enabled" : "disabled"
-                }.`,
-                status: "success",
-                duration: 2000,
-            });
-        } catch {
-            toast({
-                title: `Data synchronization could not be ${
-                    allowsDataStorage ? "enabled" : "disabled"
-                }.`,
-                description: "Please try again.",
-                status: "error",
-                duration: 2000,
-            });
-        }
-    };
 
     // Dark mode toggle
     const { colorMode, toggleColorMode } = useColorMode();
@@ -105,33 +67,15 @@ export default function Settings() {
                     </BaseCard>
                     <BaseCard
                         title="Data Management"
-                        subtitle="Data synchronization across your devices requires your data
-                        to be stored on our servers. You can choose whether to disable this feature,
-                        and also erase your existing data."
+                        subtitle="If you wish to reset your account without having to create another account,
+                        you can do so here."
                         spacing={4}
                     >
-                        <ActionButton
-                            onClick={handleDataSyncToggle}
-                            delay={650}
-                            bg="bg"
-                            w="100%"
-                        >
-                            {dataSync ? (
-                                <MdSyncDisabled size="25px" />
-                            ) : (
-                                <MdSync size="25px" />
-                            )}
-                            <Text pl="10px">
-                                {`${
-                                    dataSync === true ? "Disable" : "Enable"
-                                } data synchronization`}
-                            </Text>
-                        </ActionButton>
                         <NavButton
                             variant="danger"
                             icon={<TbEraser size="25px" color="white" />}
                             to="erase-data"
-                            text="Erase stored data"
+                            text="Erase data"
                             w="100%"
                         />
                     </BaseCard>

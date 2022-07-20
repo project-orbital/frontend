@@ -7,7 +7,7 @@ import currency from "currency.js";
 // we can use their abstraction instead.
 const kyBaseQuery =
     ({ baseUrl } = { baseUrl: "" }) =>
-    async ({ url, method, data, params }) => {
+    async ({ url, method, data, params, headers }) => {
         try {
             const response = await ky(url, {
                 prefixUrl: baseUrl,
@@ -15,6 +15,7 @@ const kyBaseQuery =
                 json: data,
                 credentials: "include",
                 searchParams: params,
+                headers: headers,
             }).json();
             return { data: response };
         } catch (error) {
@@ -49,6 +50,23 @@ export const api = createApi({
     baseQuery: kyBaseQuery({ baseUrl: process.env.REACT_APP_BACKEND }),
     tagTypes: ["Account", "Accounts", "Transaction", "Transactions"],
     endpoints: (builder) => ({
+        // === === ===
+        // User Data
+        deleteUserData: builder.mutation({
+            query: (password) => ({
+                url: `users/preferences/erase-data`,
+                method: "delete",
+                headers: {
+                    password: password,
+                },
+            }),
+            invalidatesTags: [
+                "Transaction",
+                "Transactions",
+                "Account",
+                "Transactions",
+            ],
+        }),
         // === === ===
         // Accounts
         createAccount: builder.mutation({
@@ -143,6 +161,8 @@ export const api = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints.
 export const {
+    // User Data
+    useDeleteUserDataMutation,
     // Accounts
     useCreateAccountMutation,
     useReadAccountQuery,

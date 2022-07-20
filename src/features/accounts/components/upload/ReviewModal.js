@@ -9,7 +9,6 @@ import {
 import { Field, FieldArray, Form, Formik } from "formik";
 import { BsFillCaretRightFill } from "react-icons/bs";
 import axios from "axios";
-import { addTransactions } from "../../state/transactions";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllFiles, selectFiles } from "../../state/files";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
@@ -67,13 +66,7 @@ export default function ReviewModal() {
             .post(`${process.env.REACT_APP_BACKEND}/api/upload`, submission, {
                 headers,
             })
-            .then((res) => {
-                const accountId = parseInt(id);
-                const transactions = res.data.map((tx) => ({
-                    ...tx,
-                    accountId: accountId,
-                }));
-                dispatch(addTransactions(transactions));
+            .then(() => {
                 dispatch(deleteAllFiles());
                 navigate("../");
             })
