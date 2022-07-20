@@ -45,10 +45,13 @@ export default function Content() {
         return null;
     }
 
+    console.log(contributions);
+    console.log(reportedContributions);
+
     const pics = [Pic4, Pic3, Pic2, Pic1];
     const cards = contributions.map((contribution, index) => (
         <BlogPostCard
-            id={contribution.id}
+            id={contribution._id}
             Picture={pics[index % 4]}
             Header={contribution.header}
             Summary={contribution.summary}
@@ -57,7 +60,7 @@ export default function Content() {
             SubmissionDate={contribution.submissionDate.slice(0, 10)}
             LikeButton
             ReportButton
-            isReported={reportedContributions.includes(contribution.id)}
+            isReported={reportedContributions.includes(contribution._id)}
         />
     ));
 
