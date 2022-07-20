@@ -49,14 +49,14 @@ export default function UserContribute() {
                 id="header"
                 isRequired
                 withErrorMessage
-                labelText="Header for article"
+                labelText="Header of your post"
             />
             <FormTextField
                 isMultiline
                 id="summary"
                 isRequired
                 withErrorMessage
-                labelText="Summary for the article"
+                labelText="Summary of the article"
             />
             <FormTextField
                 id="link"

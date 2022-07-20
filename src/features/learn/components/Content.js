@@ -73,8 +73,8 @@ export default function Content() {
 
     const SubmitArticleCard = () => (
         <BaseCard
-            heading="Have something to share with the community?"
-            subheading="Let us know what's on your mind."
+            heading="Contribute useful resources."
+            subheading="Have some gems to share with the community?"
         >
             <NavButton to="./contribute" text="Contribute an article" />
         </BaseCard>
