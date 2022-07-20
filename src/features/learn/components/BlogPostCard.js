@@ -1,8 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import BaseCard from "../../../common/components/cards/BaseCard";
 import { Text, VStack } from "@chakra-ui/react";
-import ActionButton from "../../../common/components/buttons/ActionButton";
 import { MdOutlineReportGmailerrorred, MdOutlineThumbUp } from "react-icons/md";
+import NavButton from "../../../common/components/buttons/NavButton";
 
 export default function BlogPostCard({
     Header,
@@ -17,7 +16,6 @@ export default function BlogPostCard({
     isLiked,
     isReported,
 }) {
-    const navigate = useNavigate();
     return (
         <BaseCard
             heading={Header}
@@ -32,23 +30,24 @@ export default function BlogPostCard({
                     <Text>Date submitted: {SubmissionDate} </Text>
                 )}
             </VStack>
-            <VStack align="start">
+            <VStack align="start" spacing={4}>
                 {LikeButton && (
-                    <ActionButton
-                        variant="like"
+                    <NavButton
+                        to="./"
+                        variant="primary"
                         leftIcon={<MdOutlineThumbUp />}
                     >
                         {isLiked ? "Liked" : "Like"}
-                    </ActionButton>
+                    </NavButton>
                 )}
                 {ReportButton && (
-                    <ActionButton
-                        onClick={() => navigate(`./report/${id}`)}
-                        variant="report"
+                    <NavButton
+                        to={`./report/${id}`}
+                        variant="secondary"
                         leftIcon={<MdOutlineReportGmailerrorred />}
                     >
                         {isReported ? "Reported" : "Report"}
-                    </ActionButton>
+                    </NavButton>
                 )}
             </VStack>
         </BaseCard>
