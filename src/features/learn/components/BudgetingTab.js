@@ -1,9 +1,9 @@
 import BlogPostCard from "./BlogPostCard";
 import { SimpleGrid } from "@chakra-ui/react";
-import CollegeStudent from "../assets/collegestudent.jpeg";
-import YoungAdult from "../assets/youngadult.jpeg";
-import WorkingAdult from "../assets/workingadult.jpeg";
-import Parents from "../assets/parents.jpeg";
+import CollegeStudent from "../assets/collegestudent.png";
+import YoungAdult from "../assets/youngadult.png";
+import WorkingAdult from "../assets/workingadult.png";
+import Parents from "../assets/parents.png";
 
 export default function BudgetingTab() {
     return (
