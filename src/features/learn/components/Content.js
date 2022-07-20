@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     SimpleGrid,
     Tab,
@@ -6,8 +7,8 @@ import {
     TabPanel,
     TabPanels,
     Tabs,
+    Text,
 } from "@chakra-ui/react";
-import Card from "../../../common/components/Card";
 import BlogPostCard from "./BlogPostCard";
 import NavButton from "../../../common/components/buttons/NavButton";
 import Pic1 from "../assets/set1/a.jpg";
@@ -21,6 +22,7 @@ import {
 } from "../../../app/api";
 import BudgetingTab from "./BudgetingTab";
 import InvestmentTab from "./InvestmentTab";
+import BaseCard from "../../../common/components/cards/BaseCard";
 
 export default function Content() {
     // Grab the contributions and reactions from the API.
@@ -68,12 +70,15 @@ export default function Content() {
 
     const SubmitArticleCard = () => {
         return (
-            <Card
-                heading="Do you have something to share?"
-                subheading="Let us know what's on your mind."
-            >
-                <NavButton to="./contribute" text="Contribute" />
-            </Card>
+            <BaseCard>
+                <Box>
+                    <Text fontSize="xl" fontWeight="bold">
+                        Have something to share with the community?
+                    </Text>
+                    <Text>Let us know what's on your mind.</Text>
+                </Box>
+                <NavButton to="./contribute" text="Contribute an article" />
+            </BaseCard>
         );
     };
 
