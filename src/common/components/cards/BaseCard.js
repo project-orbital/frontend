@@ -11,6 +11,7 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function BaseCard({
     title,
@@ -27,6 +28,7 @@ export default function BaseCard({
     ...props
 }) {
     const { colorMode } = useColorMode();
+    const [imageFilter, setImageFilter] = useState("grayscale(60%)");
 
     const Title = () => {
         if (!title && !subtitle) {
@@ -65,11 +67,11 @@ export default function BaseCard({
             return null;
         }
         return (
-            <VStack align="start">
-                <Text fontSize="xl" fontWeight="bold">
+            <VStack align="start" w="100%">
+                <Text fontSize="xl" fontWeight="bold" w="100%">
                     {heading}
                 </Text>
-                <Text>{subheading}</Text>
+                <Text w="100%">{subheading}</Text>
             </VStack>
         );
     };
@@ -110,7 +112,15 @@ export default function BaseCard({
                 {...props}
             >
                 {image && (
-                    <Image src={image} borderRadius="md" boxSize="210px" />
+                    <Box h="200px">
+                        <Image
+                            src={image}
+                            boxSize="100%"
+                            fit="cover"
+                            borderRadius="md"
+                            filter={imageFilter}
+                        />
+                    </Box>
                 )}
                 <Heading />
                 <Children />
@@ -132,17 +142,13 @@ export default function BaseCard({
         return (
             <LinkBox
                 transition="transform .2s"
+                onMouseOver={() => setImageFilter("grayscale(0%)")}
+                onMouseOut={() => setImageFilter("grayscale(60%)")}
                 _hover={{
                     transform: "scale(1.01)",
                 }}
             >
-                <VStack spacing={0}>
-                    {isExternal ? (
-                        <ExternalLinkOverlay />
-                    ) : (
-                        <InternalLinkOverlay />
-                    )}
-                </VStack>
+                {isExternal ? <ExternalLinkOverlay /> : <InternalLinkOverlay />}
             </LinkBox>
         );
     };
@@ -150,7 +156,7 @@ export default function BaseCard({
     if (!link) {
         // If the card isn't clickable, then we don't need to wrap it with a link overlay.
         return (
-            <VStack spacing={0}>
+            <VStack spacing={0} w="100%">
                 <Title />
                 <Body />
             </VStack>
@@ -159,7 +165,7 @@ export default function BaseCard({
     // Make the entire card clickable with a hover animation.
     return (
         <LinkCard>
-            <VStack spacing={0}>
+            <VStack spacing={0} w="100%">
                 <Title />
                 <Body />
             </VStack>

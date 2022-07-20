@@ -1,8 +1,8 @@
 import BlogPostCard from "./BlogPostCard";
 import { SimpleGrid } from "@chakra-ui/react";
-import newbie from "../assets/newbie.jpeg";
+import newbie from "../assets/newbie.png";
 import WarrenBuffett from "../assets/warrenbuffett.png";
-import Longterm from "../assets/longterm.jpeg";
+import Longterm from "../assets/longterm.png";
 
 export default function InvestmentTab() {
     return (
