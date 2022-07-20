@@ -11,6 +11,7 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function BaseCard({
     title,
@@ -27,6 +28,7 @@ export default function BaseCard({
     ...props
 }) {
     const { colorMode } = useColorMode();
+    const [imageFilter, setImageFilter] = useState("grayscale(60%)");
 
     const Title = () => {
         if (!title && !subtitle) {
@@ -110,7 +112,15 @@ export default function BaseCard({
                 {...props}
             >
                 {image && (
-                    <Image src={image} borderRadius="md" boxSize="210px" />
+                    <Box h="200px">
+                        <Image
+                            src={image}
+                            boxSize="100%"
+                            fit="scale-down"
+                            borderRadius="md"
+                            filter={imageFilter}
+                        />
+                    </Box>
                 )}
                 <Heading />
                 <Children />
@@ -132,6 +142,8 @@ export default function BaseCard({
         return (
             <LinkBox
                 transition="transform .2s"
+                onMouseOver={() => setImageFilter("grayscale(0%)")}
+                onMouseOut={() => setImageFilter("grayscale(60%)")}
                 _hover={{
                     transform: "scale(1.01)",
                 }}
