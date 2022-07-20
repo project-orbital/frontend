@@ -1,12 +1,11 @@
 import {
     Button,
-    Stack,
+    SimpleGrid,
     Tab,
     TabList,
     TabPanel,
     TabPanels,
     Tabs,
-    VStack,
 } from "@chakra-ui/react";
 import Card from "../../../common/components/Card";
 import BlogPostCard from "./BlogPostCard";
@@ -20,63 +19,51 @@ import {
     useReadContributionsQuery,
     useReadReactionsQuery,
 } from "../../../app/api";
-import { indexOf } from "lodash";
 import BudgetingTab from "./BudgetingTab";
 import InvestmentTab from "./InvestmentTab";
 
 export default function Content() {
-    const { data: contributions, isLoading } = useReadContributionsQuery();
-    const LastContributions =
-        isLoading || contributions.length === 0 ? [] : contributions;
+    // Grab the contributions and reactions from the API.
+    const {
+        data: contributions,
+        isLoading: isContributionsLoading,
+        isError: isContributionsError,
+    } = useReadContributionsQuery();
+    const {
+        data: reportedContributions,
+        isLoading: isReactionsLoading,
+        isError: isReactionsError,
+    } = useReadReactionsQuery();
 
-    // Wants to return a the array of contributed reported by the current user here.
-    // But is undefined.
-    const { data: reportedContributions } = useReadReactionsQuery();
-
-    const isReported = (id) => {
-        return reportedContributions.indexOf(id) > -1;
-    };
-
-    const arr = [Pic4, Pic3, Pic2, Pic1];
-    const HorizontalRowOf4 = (contributions) => {
-        return (
-            <Stack direction={"row"} spacing={10} align={"left"}>
-                {contributions.map((c) => {
-                    return (
-                        <BlogPostCard
-                            id={c._id}
-                            Picture={arr[indexOf(contributions, c)]}
-                            Header={c.header}
-                            Summary={c.summary}
-                            Link={c.link}
-                            ContributedBy={c.username}
-                            SubmissionDate={c.submissionDate.slice(0, 10)}
-                            LikeButton
-                            ReportButton
-                            isReported={isReported(c.id)}
-                        />
-                    );
-                })}
-            </Stack>
-        );
-    };
-
-    //Make array an array of smaller sub arrays.
-    function chunk(array, size) {
-        const chunkedArray = [];
-        for (let i = 0; i < array.length; i++) {
-            const last = chunkedArray[chunkedArray.length - 1];
-            if (!last || last.length === size) {
-                chunkedArray.push([array[i]]);
-            } else {
-                last.push(array[i]);
-            }
-        }
-        return chunkedArray;
+    // Wait for the API to return data.
+    if (isContributionsLoading || isReactionsLoading) {
+        // We need this check to ensure that we don't get `undefined` data.
+        return null;
     }
-    const chunked = chunk(LastContributions, 4);
+    if (isContributionsError || isReactionsError) {
+        // Ideally, we want to display some form of error message here,
+        // but in the interest of time, we'll just return null and display nothing.
+        return null;
+    }
+
+    const pics = [Pic4, Pic3, Pic2, Pic1];
+    const cards = contributions.map((contribution, index) => (
+        <BlogPostCard
+            id={contribution.id}
+            Picture={pics[index % 4]}
+            Header={contribution.header}
+            Summary={contribution.summary}
+            Link={contribution.link}
+            ContributedBy={contribution.username}
+            SubmissionDate={contribution.submissionDate.slice(0, 10)}
+            LikeButton
+            ReportButton
+            isReported={reportedContributions.includes(contribution.id)}
+        />
+    ));
+
     const UserContributed = () => {
-        return <VStack>{chunked.map((c) => HorizontalRowOf4(c))}</VStack>;
+        return <SimpleGrid columns={4}>{cards}</SimpleGrid>;
     };
 
     const SubmitArticleCard = () => {
@@ -89,6 +76,7 @@ export default function Content() {
             </Card>
         );
     };
+
     return (
         <Tabs size="sm">
             <TabList>
