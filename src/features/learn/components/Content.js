@@ -8,10 +8,10 @@ import {
 } from "@chakra-ui/react";
 import BlogPostCard from "./BlogPostCard";
 import NavButton from "../../../common/components/buttons/NavButton";
-import Pic1 from "../assets/set1/a.jpg";
-import Pic2 from "../assets/set1/b.jpg";
-import Pic3 from "../assets/set1/c.jpg";
-import Pic4 from "../assets/set1/d.jpg";
+import Pic1 from "../assets/set1/a.jpeg";
+import Pic2 from "../assets/set1/b.jpeg";
+import Pic3 from "../assets/set1/c.jpeg";
+import Pic4 from "../assets/set1/d.jpeg";
 import { Outlet } from "react-router-dom";
 import { format } from "date-fns";
 import {
@@ -42,6 +42,7 @@ export default function Content() {
         isLoading: isLikesLoading,
         isError: isLikesError,
     } = useReadLikesQuery();
+
     // Wait for the API to return data.
     if (isContributionsLoading || isReportsLoading || isLikesLoading) {
         // We need this check to ensure that we don't get `undefined` data.

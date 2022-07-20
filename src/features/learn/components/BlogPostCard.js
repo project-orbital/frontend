@@ -3,7 +3,10 @@ import { Text, VStack, Box, HStack } from "@chakra-ui/react";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import NavButton from "../../../common/components/buttons/NavButton";
-import { useLikeContributionMutation } from "../../../app/api";
+import {
+    useLikeContributionMutation,
+    useUnlikeContributionMutation,
+} from "../../../app/api";
 import { useToast } from "@chakra-ui/react";
 
 export default function BlogPostCard({
@@ -21,6 +24,7 @@ export default function BlogPostCard({
     likeCount,
 }) {
     const [likeContribution] = useLikeContributionMutation();
+    const [unlikeContribution] = useUnlikeContributionMutation();
     const toast = useToast();
 
     async function likeOnClick() {
@@ -29,6 +33,22 @@ export default function BlogPostCard({
             await likeContribution({ id: id }).unwrap();
             toast({
                 title: "Liked!",
+                status: "success",
+            });
+        } catch (error) {
+            toast({
+                ...error,
+                status: "error",
+            });
+        }
+    }
+
+    async function unlikeOnClick() {
+        toast.closeAll();
+        try {
+            await unlikeContribution({ id: id }).unwrap();
+            toast({
+                title: "Unliked!",
                 status: "success",
             });
         } catch (error) {
@@ -51,8 +71,7 @@ export default function BlogPostCard({
                 {LikeButton && (
                     <NavButton
                         to={`./`}
-                        onClick={isLiked ? null : likeOnClick}
-                        isDisabled={isLiked}
+                        onClick={isLiked ? unlikeOnClick : likeOnClick}
                         variant="secondary"
                         w="100%"
                         leftIcon={isLiked ? <AiFillLike /> : <AiOutlineLike />}

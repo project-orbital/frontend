@@ -190,6 +190,14 @@ export const api = createApi({
             }),
             invalidatesTags: ["Contributions"],
         }),
+        unlikeContribution: builder.mutation({
+            query: ({ id }) => ({
+                url: `learn/unlike/${id}`,
+                method: "put",
+                params: { id: id },
+            }),
+            invalidatesTags: ["Contributions"],
+        }),
         reportContribution: builder.mutation({
             query: ({ id, ...values }) => ({
                 url: `learn/report/${id}`,
@@ -236,6 +244,7 @@ export const {
     useCreateContributionMutation,
     useReadContributionsQuery,
     useLikeContributionMutation,
+    useUnlikeContributionMutation,
     useReportContributionMutation,
     useReadReportsQuery,
     useReadLikesQuery,
