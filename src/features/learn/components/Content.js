@@ -81,7 +81,7 @@ export default function Content() {
 
     return (
         <Tabs size="lg" colorScheme="gray">
-            <TabList mx={4}>
+            <TabList mx={4} gap={4}>
                 <Tab>Budgeting</Tab>
                 <Tab>Investment</Tab>
                 <Tab>Community Contributed</Tab>
