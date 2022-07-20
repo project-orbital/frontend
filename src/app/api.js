@@ -38,6 +38,18 @@ const transformTransaction = (tx) => ({
 });
 const transformTransactions = (response) => response.map(transformTransaction);
 
+const transformContribution = (c) => ({
+    _id: c._id,
+    header: c.header,
+    summary: c.summary,
+    link: c.link,
+    submissionDate: parseISO(c.submissionDate),
+    username: c.username,
+});
+
+const transformContributions = (response) =>
+    response.map(transformContribution);
+
 // Define a service using a base URL and expected endpoints.
 // Tags are used to group related data together, and allow for cache invalidation
 // of the groups of data with the same tag. This is needed for automatic
@@ -159,14 +171,15 @@ export const api = createApi({
                 method: "post",
                 data: values,
             }),
-            invalidatesTags: ["Contribution"],
+            invalidatesTags: ["Contribution", "Contributions"],
         }),
         readContributions: builder.query({
             query: () => ({
                 url: "learn",
                 method: "get",
             }),
-            providesTags: ["Contributions", "ReportedContributions"],
+            transformResponse: transformContributions,
+            providesTags: ["Contributions"],
         }),
         likeContribution: builder.mutation({
             query: ({ id, ...values }) => ({
@@ -190,7 +203,7 @@ export const api = createApi({
                 url: "learn/reactions",
                 method: "get",
             }),
-            invalidatesTags: ["Contributions"],
+            providesTags: ["Contributions"],
         }),
     }),
 });

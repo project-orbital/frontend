@@ -13,6 +13,7 @@ import Pic2 from "../assets/set1/b.jpg";
 import Pic3 from "../assets/set1/c.jpg";
 import Pic4 from "../assets/set1/d.jpg";
 import { Outlet } from "react-router-dom";
+import { format } from "date-fns";
 import {
     useReadContributionsQuery,
     useReadReactionsQuery,
@@ -45,9 +46,6 @@ export default function Content() {
         return null;
     }
 
-    console.log(contributions);
-    console.log(reportedContributions);
-
     const pics = [Pic4, Pic3, Pic2, Pic1];
     const cards = contributions.map((contribution, index) => (
         <BlogPostCard
@@ -57,7 +55,7 @@ export default function Content() {
             Summary={contribution.summary}
             Link={contribution.link}
             ContributedBy={contribution.username}
-            SubmissionDate={contribution.submissionDate.slice(0, 10)}
+            SubmissionDate={format(contribution.submissionDate, "dd LLLL yyyy")}
             LikeButton
             ReportButton
             isReported={reportedContributions.includes(contribution._id)}
