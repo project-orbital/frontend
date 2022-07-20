@@ -2,9 +2,7 @@ import PageTemplate from "../../common/components/PageTemplate";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
 import { AspectRatio, Box, Grid, GridItem } from "@chakra-ui/react";
 import Card from "../../common/components/Card";
-import { selectAccounts } from "../accounts/state/accounts";
 import { useSelector } from "react-redux";
-import { selectSpendingTransactionsBetween } from "../accounts/state/transactions";
 import {
     differenceInCalendarDays,
     differenceInDays,
@@ -21,31 +19,53 @@ import "react-circular-progressbar/dist/styles.css";
 import { Outlet } from "react-router-dom";
 import LightTable from "../../common/components/visuals/LightTable";
 import BudgetAlert from "./components/BudgetAlert";
+import { useReadAccountsQuery, useReadTransactionsQuery } from "../../app/api";
 
 export default function Plan() {
+    const {
+        data: accountsData,
+        isLoading: isAccountsLoading,
+        isError: isAccountsError,
+    } = useReadAccountsQuery();
+
+    const {
+        data: transactionsData,
+        isLoading: isTransactionsLoading,
+        isError: isTransactionsError,
+    } = useReadTransactionsQuery();
+
     const budget = useSelector((state) => state.budgets.budget);
     const start_date = useSelector((state) => state.budgets.start_date);
     const end_date = useSelector((state) => state.budgets.end_date);
-    const totalExpenses = useSelector(
-        selectSpendingTransactionsBetween(start_date, end_date)
-    )
+
+    if (isAccountsLoading || isTransactionsLoading) {
+        return null;
+    }
+    if (isAccountsError || isTransactionsError) {
+        return null;
+    }
+
+    const accounts = accountsData;
+    const transactions = transactionsData
+        .filter((tx) => tx.date >= start_date && tx.date <= end_date)
+        .map((t) => ({
+            "account nickname": accountNickname(t.accountId),
+            date: format(t.date, "dd LLLL yyyy"),
+            category: t.category,
+            amount: -t.amount.toFixed(2),
+        }));
+    const totalExpenses = transactionsData
+        .filter((tx) => tx.date >= start_date && tx.date <= end_date)
         .reduce((total, t) => total - t.amount, 0)
         .toFixed(2);
+
     const remaining = (budget - totalExpenses).toFixed(2);
     const percentage = ((totalExpenses / budget) * 100).toFixed(1);
-    const accounts = useSelector(selectAccounts);
+
     const accountNickname = (id) => {
         const account = accounts.find((acc) => acc.id === id);
         return account.nickname;
     };
-    const transactions = useSelector(
-        selectSpendingTransactionsBetween(start_date, end_date)
-    ).map((t) => ({
-        "account nickname": accountNickname(t.accountId),
-        date: format(t.date, "dd LLLL yyyy"),
-        category: t.category,
-        amount: -t.amount.toFixed(2),
-    }));
     const totalDays = differenceInCalendarDays(
         parseISO(start_date),
         parseISO(end_date)

@@ -2,8 +2,6 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist"; // defaults to localStorage for web
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "./api";
-import transactionsReducer from "../features/accounts/state/transactions";
-import accountsReducer from "../features/accounts/state/accounts";
 import filesReducer from "../features/accounts/state/files";
 import budgetsReducer from "../features/plan/state/budgets";
 import preferencesReducer from "../features/settings/state/preferences";
@@ -22,8 +20,6 @@ const persistConfig = {
 // the inspection here.
 // noinspection JSUnresolvedVariable
 const combinedReducer = combineReducers({
-    transactions: transactionsReducer,
-    accounts: accountsReducer,
     files: filesReducer,
     preferences: preferencesReducer,
     budgets: budgetsReducer,
