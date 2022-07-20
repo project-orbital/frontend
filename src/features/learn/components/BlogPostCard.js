@@ -18,6 +18,7 @@ export default function BlogPostCard({
     id,
     isLiked,
     isReported,
+    likeCount,
 }) {
     const [likeContribution] = useLikeContributionMutation();
     const toast = useToast();
@@ -56,7 +57,7 @@ export default function BlogPostCard({
                         w="100%"
                         leftIcon={isLiked ? <AiFillLike /> : <AiOutlineLike />}
                     >
-                        {isLiked ? "Liked" : "Like"}
+                        {isLiked ? "Liked" : "Like"} {likeCount}
                     </NavButton>
                 )}
                 {ReportButton && (
