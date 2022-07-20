@@ -30,11 +30,12 @@ export default function BlogPostCard({
                     <Text>Date submitted: {SubmissionDate} </Text>
                 )}
             </VStack>
-            <VStack align="start" spacing={4}>
+            <VStack align="center" spacing={4}>
                 {LikeButton && (
                     <NavButton
                         to="./"
                         variant="primary"
+                        w="100%"
                         leftIcon={<MdOutlineThumbUp />}
                     >
                         {isLiked ? "Liked" : "Like"}
@@ -43,7 +44,9 @@ export default function BlogPostCard({
                 {ReportButton && (
                     <NavButton
                         to={`./report/${id}`}
+                        isDisabled={isReported}
                         variant="secondary"
+                        w="100%"
                         leftIcon={<MdOutlineReportGmailerrorred />}
                     >
                         {isReported ? "Reported" : "Report"}

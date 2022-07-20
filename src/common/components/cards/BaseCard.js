@@ -67,11 +67,11 @@ export default function BaseCard({
             return null;
         }
         return (
-            <VStack align="start">
-                <Text fontSize="xl" fontWeight="bold">
+            <VStack align="start" w="100%">
+                <Text fontSize="xl" fontWeight="bold" w="100%">
                     {heading}
                 </Text>
-                <Text>{subheading}</Text>
+                <Text w="100%">{subheading}</Text>
             </VStack>
         );
     };
@@ -116,7 +116,7 @@ export default function BaseCard({
                         <Image
                             src={image}
                             boxSize="100%"
-                            fit="scale-down"
+                            fit="cover"
                             borderRadius="md"
                             filter={imageFilter}
                         />
@@ -148,13 +148,7 @@ export default function BaseCard({
                     transform: "scale(1.01)",
                 }}
             >
-                <VStack spacing={0}>
-                    {isExternal ? (
-                        <ExternalLinkOverlay />
-                    ) : (
-                        <InternalLinkOverlay />
-                    )}
-                </VStack>
+                {isExternal ? <ExternalLinkOverlay /> : <InternalLinkOverlay />}
             </LinkBox>
         );
     };
@@ -162,7 +156,7 @@ export default function BaseCard({
     if (!link) {
         // If the card isn't clickable, then we don't need to wrap it with a link overlay.
         return (
-            <VStack spacing={0}>
+            <VStack spacing={0} w="100%">
                 <Title />
                 <Body />
             </VStack>
@@ -171,7 +165,7 @@ export default function BaseCard({
     // Make the entire card clickable with a hover animation.
     return (
         <LinkCard>
-            <VStack spacing={0}>
+            <VStack spacing={0} w="100%">
                 <Title />
                 <Body />
             </VStack>
