@@ -1,5 +1,5 @@
 import BaseCard from "../../../common/components/cards/BaseCard";
-import { Text, VStack, Box, HStack, Button } from "@chakra-ui/react";
+import { Text, VStack, Box, HStack } from "@chakra-ui/react";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import NavButton from "../../../common/components/buttons/NavButton";
