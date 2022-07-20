@@ -29,6 +29,7 @@ export default function Content() {
         isLoading: isContributionsLoading,
         isError: isContributionsError,
     } = useReadContributionsQuery();
+
     const {
         data: reportedContributions,
         isLoading: isReactionsLoading,

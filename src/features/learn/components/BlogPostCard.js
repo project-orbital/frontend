@@ -2,7 +2,8 @@ import BaseCard from "../../../common/components/cards/BaseCard";
 import { Button, Text, VStack } from "@chakra-ui/react";
 import { MdOutlineReportGmailerrorred, MdOutlineThumbUp } from "react-icons/md";
 import NavButton from "../../../common/components/buttons/NavButton";
-
+import { useLikeContributionMutation } from "../../../app/api";
+import { useToast } from "@chakra-ui/react";
 export default function BlogPostCard({
     Header,
     Summary,
@@ -16,6 +17,25 @@ export default function BlogPostCard({
     isLiked,
     isReported,
 }) {
+    const [likeContribution] = useLikeContributionMutation();
+    const toast = useToast();
+
+    async function likeOnClick() {
+        toast.closeAll();
+        try {
+            await likeContribution({ id: id }).unwrap();
+            toast({
+                title: "Thank you for your contribution!",
+                status: "success",
+            });
+        } catch (error) {
+            toast({
+                ...error,
+                status: "error",
+            });
+        }
+    }
+
     return (
         <BaseCard
             heading={Header}
@@ -32,13 +52,13 @@ export default function BlogPostCard({
             </VStack>
             <VStack align="start" spacing={4}>
                 {LikeButton && (
-                    <NavButton
-                        to="./"
+                    <Button
+                        onClick={likeOnClick}
                         variant="primary"
                         leftIcon={<MdOutlineThumbUp />}
                     >
                         {isLiked ? "Liked" : "Like"}
-                    </NavButton>
+                    </Button>
                 )}
                 {ReportButton &&
                     (isReported ? (

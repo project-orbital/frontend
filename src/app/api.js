@@ -182,10 +182,10 @@ export const api = createApi({
             providesTags: ["Contributions"],
         }),
         likeContribution: builder.mutation({
-            query: ({ id, ...values }) => ({
+            query: ({ id }) => ({
                 url: `learn/like/${id}`,
                 method: "put",
-                data: values,
+                params: { id: id },
             }),
             invalidatesTags: ["Contribution"],
         }),
