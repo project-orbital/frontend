@@ -25,12 +25,14 @@ import Logo from "../navbar/Logo";
  */
 const SidebarContent = ({ selected }) => (
     <VStack
-        h="100vh"
+        h="100%"
         py="40px"
         w={["100%", null, null, "160px"]}
         pos="fixed"
         bgColor="accent-dark"
         align="start"
+        overflowY="auto"
+        overflowX="hidden"
     >
         <Logo
             direction="column"
@@ -94,7 +96,7 @@ const SidebarInline = ({ selected }) => (
         pb={[20, 24]}
         zIndex={16}
         align="start"
-        overflowY="auto"
+        overflowY="scroll"
     >
         <SidebarContent selected={selected} />
     </Flex>
