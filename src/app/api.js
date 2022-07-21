@@ -67,6 +67,18 @@ export const api = createApi({
                 "Accounts",
             ],
         }),
+        signOut: builder.mutation({
+            query: () => ({
+                url: `users/sign-out`,
+                method: "get",
+            }),
+            invalidatesTags: [
+                "Transaction",
+                "Transactions",
+                "Account",
+                "Accounts",
+            ],
+        }),
         deleteUserData: builder.mutation({
             query: (password) => ({
                 url: `users/preferences/erase-data`,
@@ -179,6 +191,7 @@ export const {
     // User
     useDeleteUserDataMutation,
     useDeleteUserAccountMutation,
+    useSignOutMutation,
     // Accounts
     useCreateAccountMutation,
     useReadAccountQuery,
