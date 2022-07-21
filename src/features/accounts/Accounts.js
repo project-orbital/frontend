@@ -11,7 +11,7 @@ import BaseCard from "../../common/components/cards/BaseCard";
  * The grid items comprise of `AccountCard`.
  */
 export default function Accounts() {
-    const { data: accounts, isLoading } = useReadAccountsQuery();
+    const { data: accounts } = useReadAccountsQuery();
 
     // The default card to be displayed when no accounts have been created, and hidden otherwise.
     const NoAccounts = () => (
