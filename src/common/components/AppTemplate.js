@@ -102,7 +102,8 @@ export default function AppTemplate({ page, path, links, title }) {
                 top={["70px", "85px", "100px", "0px"]}
                 w="stretch"
                 minH="100vh"
-                py={[0, null, null, 10]}
+                pt={[0, null, null, 10]}
+                pb={10}
                 px={[4, 6, 8, 12]}
                 align="start"
                 spacing={8}
