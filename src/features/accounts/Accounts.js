@@ -1,8 +1,6 @@
-import { Box, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import AccountCard from "./components/account/AccountCard";
-import Breadcrumbs from "../../common/components/Breadcrumbs";
-import PageTemplate from "../../common/components/PageTemplate";
 import NavButton from "../../common/components/buttons/NavButton";
 
 import { useReadAccountsQuery } from "../../app/api";
@@ -63,17 +61,9 @@ export default function Accounts() {
     };
 
     return (
-        <PageTemplate page="accounts" isLoading={isLoading}>
-            <Breadcrumbs
-                path="Home/Accounts"
-                links={["/dashboard", "/accounts"]}
-            />
-            <Box w="100%" h="100%">
-                <SimpleGrid minChildWidth="500px" spacing={8} mb="40px">
-                    <PageContent />
-                </SimpleGrid>
-            </Box>
+        <>
+            <PageContent />
             <Outlet />
-        </PageTemplate>
+        </>
     );
 }

@@ -4,8 +4,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import * as ReactDOMClient from "react-dom/client";
-
-import RequireAuth from "./common/components/RequireAuth";
 import { persistor, store } from "./app/store";
 import { theme } from "./app/theme";
 
@@ -21,6 +19,7 @@ import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
 import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
 import AmendBudget from "./features/plan/components/AmendBudget";
 import DocsRoutes from "./site/docs/DocsRoutes";
+import AppTemplate from "./common/components/AppTemplate";
 
 // TODO: Replace the remaining routes by creating "__Routes.js" in their respective folders and linking them here.
 const routes = (
@@ -33,30 +32,45 @@ const routes = (
         <Route
             path="learn"
             element={
-                <RequireAuth>
-                    <Learn />
-                </RequireAuth>
+                <AppTemplate
+                    page="learn"
+                    path={["Home", "Learn"]}
+                    links={["/dashboard", "/learn"]}
+                    title="Learn"
+                />
             }
-        ></Route>
+        >
+            <Route path="" element={<Learn />} />
+        </Route>
         <Route
             path="portfolio"
             element={
-                <RequireAuth>
-                    <Portfolio />
-                </RequireAuth>
+                <AppTemplate
+                    page="portfolio"
+                    path={["Home", "Portfolio"]}
+                    links={["/dashboard", "/portfolio"]}
+                    title="Portfolio"
+                />
             }
-        ></Route>
+        >
+            <Route path="" element={<Portfolio />} />
+        </Route>
         <Route
             path="plan"
             element={
-                <RequireAuth>
-                    <Plan />
-                </RequireAuth>
+                <AppTemplate
+                    page="plan"
+                    path={["Home", "Plan"]}
+                    links={["/dashboard", "/plan"]}
+                    title="Plan"
+                />
             }
         >
-            <Route path="create-budget" element={<CreateBudgetModal />} />
-            <Route path="delete-budget" element={<BudgetDeleteModal />} />
-            <Route path="amend-budget" element={<AmendBudget />} />
+            <Route path="" element={<Plan />}>
+                <Route path="create-budget" element={<CreateBudgetModal />} />
+                <Route path="delete-budget" element={<BudgetDeleteModal />} />
+                <Route path="amend-budget" element={<AmendBudget />} />
+            </Route>
         </Route>
     </Routes>
 );

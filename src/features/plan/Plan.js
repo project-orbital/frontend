@@ -1,6 +1,4 @@
-import PageTemplate from "../../common/components/PageTemplate";
-import Breadcrumbs from "../../common/components/Breadcrumbs";
-import { AspectRatio, Box, Grid, GridItem } from "@chakra-ui/react";
+import { AspectRatio, Box, GridItem } from "@chakra-ui/react";
 import Card from "../../common/components/Card";
 import { useSelector } from "react-redux";
 import {
@@ -148,153 +146,98 @@ export default function Plan() {
 
     if (budget === 0) {
         return (
-            <PageTemplate page="plan">
-                <Breadcrumbs
-                    path={"Home/Budget Planner"}
-                    links={["/dashboard", "/plan"]}
-                />
-                <Grid
-                    w="100%"
-                    gap="25px"
-                    autoColumns="minmax(600px, auto)"
-                    autoFlow="row"
-                >
-                    <GridItem>
-                        <IntroductionCard />
-                    </GridItem>
-                </Grid>
+            <>
+                <IntroductionCard />
                 <Outlet />
-            </PageTemplate>
+            </>
         );
     } else {
         return (
-            <PageTemplate page="plan">
-                <Breadcrumbs
-                    path={"Home/Budget Planner"}
-                    links={["/dashboard", "/plan"]}
-                />
-                <Grid
-                    w="100%"
-                    gap="25px"
-                    autoColumns="minmax(600px, auto)"
-                    autoFlow="row"
-                >
-                    <GridItem>
-                        <Card heading="Budget Details">
-                            <Card isNested>
-                                <LightTable
-                                    headers={[
-                                        "Start Date",
-                                        "End Date",
-                                        "Duration",
-                                        "Time left",
-                                    ]}
-                                    primary={[
-                                        format(
-                                            parseISO(start_date),
-                                            "dd LLLL yyyy"
-                                        ),
-                                        format(
-                                            parseISO(end_date),
-                                            "dd LLLL yyyy"
-                                        ),
+            <>
+                <GridItem>
+                    <Card heading="Budget Details">
+                        <Card isNested>
+                            <LightTable
+                                headers={[
+                                    "Start Date",
+                                    "End Date",
+                                    "Duration",
+                                    "Time left",
+                                ]}
+                                primary={[
+                                    format(
+                                        parseISO(start_date),
+                                        "dd LLLL yyyy"
+                                    ),
+                                    format(parseISO(end_date), "dd LLLL yyyy"),
+                                    `${formatDistanceStrict(
+                                        parseISO(end_date),
+                                        parseISO(start_date)
+                                    )}`,
+                                    !isPast(parseISO(end_date)) &&
                                         `${formatDistanceStrict(
-                                            parseISO(end_date),
-                                            parseISO(start_date)
+                                            new Date(),
+                                            parseISO(end_date)
                                         )}`,
-                                        !isPast(parseISO(end_date)) &&
-                                            `${formatDistanceStrict(
-                                                new Date(),
-                                                parseISO(end_date)
-                                            )}`,
-                                    ]}
-                                />
-                            </Card>
-                            <Card isNested>
-                                <LightTable
-                                    headers={[
-                                        "Budget",
-                                        "Spent thus far",
-                                        "Remaining",
-                                    ]}
-                                    primary={[
-                                        `$${budget}`,
-                                        `$${totalExpenses}`,
-                                        `$${remaining}`,
-                                    ]}
-                                />
-                            </Card>
-                            <Box>
-                                {progress >= 100 && percentage <= 100 ? (
-                                    <BudgetAlert isComplete />
-                                ) : percentage > 100 ? (
-                                    <BudgetAlert HasOverSpent />
-                                ) : percentage - progress > 0 ? (
-                                    <BudgetAlert IsOverspending />
-                                ) : (
-                                    <BudgetAlert isOnTrack />
-                                )}
-                            </Box>
+                                ]}
+                            />
                         </Card>
-                    </GridItem>
-                    <GridItem>
-                        <Card heading="Progress (Time)">
-                            <Card isNested>
-                                <AspectRatio ratio={16 / 9}>
-                                    <CircularProgressbar
-                                        value={progress}
-                                        text={
-                                            progress >= 100
-                                                ? "Over!"
-                                                : `${progress}% complete`
-                                        }
-                                        styles={buildStyles({
-                                            pathColor:
-                                                progress >= 100 &&
-                                                percentage > 100
-                                                    ? "#DC2626"
-                                                    : progress >= 100 &&
-                                                      percentage <= 100
-                                                    ? "#2fdc26"
-                                                    : progress > 80
-                                                    ? "#f6ae3b"
-                                                    : "#3b82f6",
-                                            trailColor: "#f5f5f5",
-                                            textColor:
-                                                progress >= 100 &&
-                                                percentage > 100
-                                                    ? "#DC2626"
-                                                    : progress >= 100 &&
-                                                      percentage <= 100
-                                                    ? "#2fdc26"
-                                                    : progress > 80
-                                                    ? "#f6ae3b"
-                                                    : "#3b82f6",
-                                            textSize: "10px",
-                                        })}
-                                    />
-                                </AspectRatio>
-                            </Card>
+                        <Card isNested>
+                            <LightTable
+                                headers={[
+                                    "Budget",
+                                    "Spent thus far",
+                                    "Remaining",
+                                ]}
+                                primary={[
+                                    `$${budget}`,
+                                    `$${totalExpenses}`,
+                                    `$${remaining}`,
+                                ]}
+                            />
                         </Card>
-                    </GridItem>
-                    <Card heading="Progress (Budget)">
+                        <Box>
+                            {progress >= 100 && percentage <= 100 ? (
+                                <BudgetAlert isComplete />
+                            ) : percentage > 100 ? (
+                                <BudgetAlert HasOverSpent />
+                            ) : percentage - progress > 0 ? (
+                                <BudgetAlert IsOverspending />
+                            ) : (
+                                <BudgetAlert isOnTrack />
+                            )}
+                        </Box>
+                    </Card>
+                </GridItem>
+                <GridItem>
+                    <Card heading="Progress (Time)">
                         <Card isNested>
                             <AspectRatio ratio={16 / 9}>
                                 <CircularProgressbar
-                                    value={percentage}
-                                    text={`${percentage}% spent`}
+                                    value={progress}
+                                    text={
+                                        progress >= 100
+                                            ? "Over!"
+                                            : `${progress}% complete`
+                                    }
                                     styles={buildStyles({
                                         pathColor:
-                                            percentage > 100
+                                            progress >= 100 && percentage > 100
                                                 ? "#DC2626"
-                                                : percentage > 80
+                                                : progress >= 100 &&
+                                                  percentage <= 100
+                                                ? "#2fdc26"
+                                                : progress > 80
                                                 ? "#f6ae3b"
                                                 : "#3b82f6",
                                         trailColor: "#f5f5f5",
                                         textColor:
-                                            percentage > 100
+                                            progress >= 100 && percentage > 100
                                                 ? "#DC2626"
-                                                : percentage > 80
+                                                : progress >= 100 &&
+                                                  percentage <= 100
+                                                ? "#2fdc26"
+                                                : progress > 80
                                                 ? "#f6ae3b"
                                                 : "#3b82f6",
                                         textSize: "10px",
@@ -303,18 +246,43 @@ export default function Plan() {
                             </AspectRatio>
                         </Card>
                     </Card>
-                    <GridItem>
-                        <ExpensesCategoryCard data={spendingsData} />
-                    </GridItem>
-                    <GridItem colSpan={2}>
-                        <SpendingTransactions />
-                    </GridItem>
-                    <GridItem>
-                        <DeleteBudgetCard />
-                    </GridItem>
-                </Grid>
-                <Outlet />
-            </PageTemplate>
+                </GridItem>
+                <Card heading="Progress (Budget)">
+                    <Card isNested>
+                        <AspectRatio ratio={16 / 9}>
+                            <CircularProgressbar
+                                value={percentage}
+                                text={`${percentage}% spent`}
+                                styles={buildStyles({
+                                    pathColor:
+                                        percentage > 100
+                                            ? "#DC2626"
+                                            : percentage > 80
+                                            ? "#f6ae3b"
+                                            : "#3b82f6",
+                                    trailColor: "#f5f5f5",
+                                    textColor:
+                                        percentage > 100
+                                            ? "#DC2626"
+                                            : percentage > 80
+                                            ? "#f6ae3b"
+                                            : "#3b82f6",
+                                    textSize: "10px",
+                                })}
+                            />
+                        </AspectRatio>
+                    </Card>
+                </Card>
+                <GridItem>
+                    <ExpensesCategoryCard data={spendingsData} />
+                </GridItem>
+                <GridItem colSpan={2}>
+                    <SpendingTransactions />
+                </GridItem>
+                <GridItem>
+                    <DeleteBudgetCard />
+                </GridItem>
+            </>
         );
     }
 }

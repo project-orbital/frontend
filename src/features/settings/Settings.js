@@ -1,14 +1,5 @@
-import PageTemplate from "../../common/components/PageTemplate";
-import Breadcrumbs from "../../common/components/Breadcrumbs";
-import {
-    Box,
-    SimpleGrid,
-    Text,
-    useColorMode,
-    useToast,
-} from "@chakra-ui/react";
+import { Text, useColorMode, useToast } from "@chakra-ui/react";
 import NavButton from "../../common/components/buttons/NavButton";
-import { Outlet } from "react-router-dom";
 import ky from "ky";
 import ActionButton from "../../common/components/buttons/ActionButton";
 import { CgDarkMode } from "react-icons/cg";
@@ -42,76 +33,57 @@ export default function Settings() {
     };
 
     return (
-        <PageTemplate page="settings">
-            <Breadcrumbs
-                path="Home/Settings"
-                links={["/dashboard", "/Settings"]}
-            />
-            <Box w="100%" h="100%">
-                <SimpleGrid columns={2} spacing={8}>
-                    <BaseCard
-                        title="Appearance"
-                        subtitle="You can change how the app looks here."
-                    >
-                        <ActionButton
-                            onClick={handleColorModeToggle}
-                            bg="bg"
-                            w="100%"
-                        >
-                            <CgDarkMode size="25px" />
-                            <Text pl="10px">
-                                {colorMode === "light" ? "Enable" : "Disable"}{" "}
-                                dark mode
-                            </Text>
-                        </ActionButton>
-                    </BaseCard>
-                    <BaseCard
-                        title="Data Management"
-                        subtitle="If you wish to reset your account without having to create another account,
+        <>
+            <BaseCard
+                title="Appearance"
+                subtitle="You can change how the app looks here."
+            >
+                <ActionButton onClick={handleColorModeToggle} bg="bg" w="100%">
+                    <CgDarkMode size="25px" />
+                    <Text pl="10px">
+                        {colorMode === "light" ? "Enable" : "Disable"} dark mode
+                    </Text>
+                </ActionButton>
+            </BaseCard>
+            <BaseCard
+                title="Data Management"
+                subtitle="If you wish to reset your account without having to create another account,
                         you can do so here."
-                        spacing={4}
-                    >
-                        <NavButton
-                            variant="danger"
-                            icon={<TbEraser size="25px" color="white" />}
-                            to="erase-data"
-                            text="Erase data"
-                            w="100%"
-                        />
-                    </BaseCard>
-                    <BaseCard
-                        title="Account Management"
-                        subtitle="You can update your profile and/or your password here."
-                        spacing={4}
-                    >
-                        <NavButton
-                            variant="secondary"
-                            to="update-profile"
-                            text="Update profile"
-                            w="100%"
-                        />
-                        <NavButton
-                            variant="secondary"
-                            to="./change-password"
-                            text="Change password"
-                            w="100%"
-                        />
-                        <NavButton
-                            variant="danger"
-                            icon={
-                                <AiOutlineUserDelete
-                                    size="25px"
-                                    color="white"
-                                />
-                            }
-                            to="delete-account"
-                            text="Delete account"
-                            w="100%"
-                        />
-                    </BaseCard>
-                </SimpleGrid>
-            </Box>
-            <Outlet />
-        </PageTemplate>
+                spacing={4}
+            >
+                <NavButton
+                    variant="danger"
+                    icon={<TbEraser size="25px" color="white" />}
+                    to="erase-data"
+                    text="Erase data"
+                    w="100%"
+                />
+            </BaseCard>
+            <BaseCard
+                title="Account Management"
+                subtitle="You can update your profile and/or your password here."
+                spacing={4}
+            >
+                <NavButton
+                    variant="secondary"
+                    to="update-profile"
+                    text="Update profile"
+                    w="100%"
+                />
+                <NavButton
+                    variant="secondary"
+                    to="./change-password"
+                    text="Change password"
+                    w="100%"
+                />
+                <NavButton
+                    variant="danger"
+                    icon={<AiOutlineUserDelete size="25px" color="white" />}
+                    to="delete-account"
+                    text="Delete account"
+                    w="100%"
+                />
+            </BaseCard>
+        </>
     );
 }
