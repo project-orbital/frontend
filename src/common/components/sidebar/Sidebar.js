@@ -25,6 +25,7 @@ import Logo from "../navbar/Logo";
  */
 const SidebarContent = ({ selected }) => (
     <VStack
+        key="sidebar"
         h="100%"
         py="40px"
         w={["100%", null, null, "160px"]}
