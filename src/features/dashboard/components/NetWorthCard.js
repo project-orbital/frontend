@@ -39,9 +39,7 @@ export default function NetWorthCard() {
             .sort((a, b) => compareAsc(a[0].date, b[0].date))
             .map((month) => ({
                 x: month[0].label,
-                y: parseFloat(
-                    month.reduce((acc, tx) => acc.add(tx.balance), currency(0))
-                ),
+                y: month.reduce((acc, tx) => acc.add(tx.balance), currency(0)),
             }));
     }
 
@@ -52,7 +50,7 @@ export default function NetWorthCard() {
         return (
             <Box>
                 <Heading bgGradient={accentGradient} bgClip="text">
-                    {`SGD ${netWorth.toFixed(2)}`}
+                    {netWorth.format({ symbol: "SGD " })}
                 </Heading>
                 <Text fontSize="sm" color="fg-light">
                     {`as of ${formatDistanceToNow(asOf, {
@@ -66,7 +64,12 @@ export default function NetWorthCard() {
     const History = () => {
         return (
             <Box w="100%">
-                <AreaChart data={computeHistory()} />
+                <AreaChart
+                    data={computeHistory().map((tx) => ({
+                        x: tx.x,
+                        y: parseFloat(tx.y),
+                    }))}
+                />
             </Box>
         );
     };
