@@ -49,7 +49,6 @@ export default function AmendBudget() {
                 isRequired
                 withErrorMessage
                 labelText="Budgeted Amount"
-                placeholderText="1000"
                 helperText="You can always change this later!"
             />
         </FormModal>
