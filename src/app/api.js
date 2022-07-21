@@ -68,6 +68,7 @@ export const api = createApi({
         "Contribution",
         "Contributions",
         "ReportedContributions",
+        "Budget",
     ],
     endpoints: (builder) => ({
         // === === ===
@@ -221,6 +222,38 @@ export const api = createApi({
             }),
             providesTags: ["Contributions"],
         }),
+        // === === ===
+        // Budgeting
+        createBudget: builder.mutation({
+            query: (values) => ({
+                url: "budget",
+                method: "post",
+                data: values,
+            }),
+            invalidatesTags: ["Budget"],
+        }),
+        deleteBudget: builder.mutation({
+            query: () => ({
+                url: "budget",
+                method: "delete",
+            }),
+            invalidatesTags: ["Budget"],
+        }),
+        updateBudget: builder.mutation({
+            query: (values) => ({
+                url: "budget/update",
+                method: "put",
+                data: values,
+            }),
+            invalidatesTags: ["Budget"],
+        }),
+        readBudget: builder.query({
+            query: () => ({
+                url: "budget",
+                method: "get",
+            }),
+            providesTags: ["Budget"],
+        }),
     }),
 });
 
@@ -248,4 +281,9 @@ export const {
     useReportContributionMutation,
     useReadReportsQuery,
     useReadLikesQuery,
+    // Budgets
+    useCreateBudgetMutation,
+    useDeleteBudgetMutation,
+    useUpdateBudgetMutation,
+    useReadBudgetQuery,
 } = api;

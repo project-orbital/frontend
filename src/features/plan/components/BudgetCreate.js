@@ -1,13 +1,32 @@
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
 import FormTextField from "../../../common/components/form/FormTextField";
 import FormModal from "../../../common/components/form/FormModal";
-import { createBudget, createEndDate, createStartDate } from "../state/budgets";
+import { useCreateBudgetMutation } from "../../../app/api";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
-export default function CreateBudgetForm({ afterSubmit }) {
-    const dispatch = useDispatch();
-    //returns string
-    const today = new Date();
+export default function BudgetCreate() {
+    const [createBudget] = useCreateBudgetMutation();
+    const navigate = useNavigate();
+    const toast = useToast();
+
+    async function handleSubmit(values, { setErrors }) {
+        toast.closeAll();
+        try {
+            await createBudget({ ...values }).unwrap();
+            toast({
+                title: "Budget updated!",
+                status: "success",
+            });
+            navigate("../");
+        } catch (error) {
+            setErrors(error);
+            toast({
+                ...error,
+                status: "error",
+            });
+        }
+    }
 
     return (
         <FormModal
@@ -16,15 +35,15 @@ export default function CreateBudgetForm({ afterSubmit }) {
                         your budget."
             submitText="Create budget"
             initialValues={{
-                start_date: today,
-                end_date: today,
-                budget: 1000,
+                start_date: new Date(),
+                end_date: new Date(),
+                budget: 0,
             }}
             validationSchema={Yup.object().shape({
                 start_date: Yup.date().required("Please provide a date."),
                 end_date: Yup.date()
                     .min(
-                        Yup.ref("start_date") && today,
+                        Yup.ref("start_date"),
                         "End date should be later than start date and current date"
                     )
                     .required("Please provide a date."),
@@ -33,13 +52,7 @@ export default function CreateBudgetForm({ afterSubmit }) {
                     .min(1)
                     .required("Please provide a balance."),
             })}
-            onSubmit={(values) => {
-                const { budget, start_date, end_date } = values;
-                dispatch(createBudget(budget));
-                dispatch(createStartDate(start_date));
-                dispatch(createEndDate(end_date));
-                afterSubmit();
-            }}
+            onSubmit={handleSubmit}
         >
             <FormTextField
                 id="start_date"
@@ -61,7 +74,7 @@ export default function CreateBudgetForm({ afterSubmit }) {
                 withErrorMessage
                 labelText="Budgeted Amount"
                 placeholderText="1000"
-                helperText="You can always change this later!"
+                helperText="You can still change this later."
             />
         </FormModal>
     );

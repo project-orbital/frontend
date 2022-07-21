@@ -1,67 +1,40 @@
-import {
-    Heading,
-    HStack,
-    Modal,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    Text,
-    useDisclosure,
-} from "@chakra-ui/react";
-import CancelButton from "../../../common/components/buttons/CancelButton";
-import SubmitButton from "../../../common/components/buttons/SubmitButton";
-import BackButton from "../../../common/components/buttons/BackButton";
+import FormModal from "../../../common/components/form/FormModal";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deleteBudget } from "../state/budgets";
+import { useDeleteBudgetMutation } from "../../../app/api";
+import { useToast } from "@chakra-ui/react";
 
-export default function BudgetDeleteModal() {
-    const { onClose } = useDisclosure();
+export default function BudgetDelete() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const [deleteBudget] = useDeleteBudgetMutation();
+    const toast = useToast();
+
+    async function handleSubmit() {
+        try {
+            toast.closeAll();
+            await deleteBudget().unwrap();
+            toast({
+                title: "Transaction deleted.",
+                status: "success",
+            });
+            navigate("../");
+        } catch (error) {
+            toast({
+                ...error,
+                status: "error",
+            });
+        }
+    }
 
     return (
-        <Modal
-            onClose={onClose}
-            isOpen
-            isCentered
-            size="xl"
-            motionPreset="slideInBottom"
-        >
-            <ModalOverlay />
-            <ModalContent>
-                <ModalHeader>
-                    <HStack align="center">
-                        <BackButton />
-                        <Heading as="h3" size="md">
-                            Deleting your budget...
-                        </Heading>
-                    </HStack>
-                    <Text fontSize="md" fontWeight="medium" mt="20px">
-                        Are you sure you want to delete your budget?
-                    </Text>
-                </ModalHeader>
-                <ModalFooter gap="20px">
-                    <CancelButton
-                        isNonDestructive
-                        onClick={() => {
-                            onClose();
-                            navigate("../");
-                        }}
-                        text="Cancel"
-                    />
-                    <SubmitButton
-                        text="Delete budget"
-                        isDestructive
-                        onClick={() => {
-                            dispatch(deleteBudget());
-                            onClose();
-                            navigate("/plan");
-                        }}
-                    />
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
+        <FormModal
+            isDestructive
+            title="Deleting your budget..."
+            heading="Are you sure you want to delete your budget?"
+            subheading="This action cannot be undone."
+            cancelText="No, don't delete it"
+            submitText="Yes, delete transaction"
+            initialValues={{}}
+            onSubmit={handleSubmit}
+        />
     );
 }

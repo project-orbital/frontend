@@ -1,37 +1,48 @@
-import { useDisclosure } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
 import FormTextField from "../../../common/components/form/FormTextField";
 import FormModal from "../../../common/components/form/FormModal";
-import { createBudget } from "../state/budgets";
+import { useUpdateBudgetMutation } from "../../../app/api";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 export default function AmendBudget() {
-    const dispatch = useDispatch();
+    const [updateBudget] = useUpdateBudgetMutation();
     const navigate = useNavigate();
-    const { onClose } = useDisclosure();
-    const afterSubmit = () => {
-        onClose();
-        navigate("../");
-    };
+    const toast = useToast();
+
+    async function handleSubmit(values, { setErrors }) {
+        toast.closeAll();
+        try {
+            await updateBudget({ ...values }).unwrap();
+            toast({
+                title: "Budget updated!",
+                status: "success",
+            });
+            navigate("../");
+        } catch (error) {
+            setErrors(error);
+            toast({
+                ...error,
+                status: "error",
+            });
+        }
+    }
+
     return (
         <FormModal
             title="Set your budget..."
             heading="Do you really want to change your budget?"
-            submitText="Create budget"
+            submitText="Update budget"
             initialValues={{
-                budget: 1000,
+                budget: "",
             }}
             validationSchema={Yup.object({
                 budget: Yup.number()
                     .typeError("Please provide a numeric value.")
+                    .min(1)
                     .required("Please provide a balance."),
             })}
-            onSubmit={(values) => {
-                const { budget } = values;
-                dispatch(createBudget(budget));
-                afterSubmit();
-            }}
+            onSubmit={handleSubmit}
         >
             <FormTextField
                 id="budget"

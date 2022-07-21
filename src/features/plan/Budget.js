@@ -2,15 +2,16 @@ import PageTemplate from "../../common/components/PageTemplate";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
 import { AspectRatio, Box, Grid, GridItem } from "@chakra-ui/react";
 import Card from "../../common/components/Card";
-import { selectAccounts } from "../accounts/state/accounts";
-import { useSelector } from "react-redux";
-import { selectSpendingTransactionsBetween } from "../accounts/state/transactions";
 import {
     differenceInCalendarDays,
     differenceInDays,
     format,
     formatDistanceStrict,
     isPast,
+    isEqual,
+    isAfter,
+    isBefore,
+    compareAsc,
     parseISO,
 } from "date-fns";
 import Table from "../../common/components/visuals/Table";
@@ -21,112 +22,44 @@ import "react-circular-progressbar/dist/styles.css";
 import { Outlet } from "react-router-dom";
 import LightTable from "../../common/components/visuals/LightTable";
 import BudgetAlert from "./components/BudgetAlert";
+import {
+    useReadAccountsQuery,
+    useReadBudgetQuery,
+    useReadTransactionsQuery,
+} from "../../app/api";
 
 export default function Plan() {
-    const budget = useSelector((state) => state.budgets.budget);
-    const start_date = useSelector((state) => state.budgets.start_date);
-    const end_date = useSelector((state) => state.budgets.end_date);
-    const totalExpenses = useSelector(
-        selectSpendingTransactionsBetween(start_date, end_date)
-    )
-        .reduce((total, t) => total - t.amount, 0)
-        .toFixed(2);
-    const remaining = (budget - totalExpenses).toFixed(2);
-    const percentage = ((totalExpenses / budget) * 100).toFixed(1);
-    const accounts = useSelector(selectAccounts);
-    const accountNickname = (id) => {
-        const account = accounts.find((acc) => acc.id === id);
-        return account.nickname;
-    };
-    const transactions = useSelector(
-        selectSpendingTransactionsBetween(start_date, end_date)
-    ).map((t) => ({
-        "account nickname": accountNickname(t.accountId),
-        date: format(t.date, "dd LLLL yyyy"),
-        category: t.category,
-        amount: -t.amount.toFixed(2),
-    }));
-    const totalDays = differenceInCalendarDays(
-        parseISO(start_date),
-        parseISO(end_date)
-    );
-    const daysFromStart = differenceInDays(parseISO(start_date), new Date());
-    const progress = ((daysFromStart / totalDays) * 100).toFixed(0);
-    const spendingCategories = [
-        "Dining",
-        "Shopping",
-        "Entertainment",
-        "Bills",
-        "Education",
-        "Others",
-    ];
+    const {
+        data: budget,
+        isLoading: isBudgetLoading,
+        isError: isBudgetError,
+    } = useReadBudgetQuery();
 
-    const spendingsData = spendingCategories.map((spending) => ({
-        key: spending,
-        value: Math.floor(
-            transactions
-                .filter((t) => t.category === spending)
-                .reduce((total, t) => total + t.amount, 0)
-        ),
-    }));
+    const {
+        data: transactions,
+        isLoading: isTransactionsLoading,
+        isError: isTransactionsError,
+    } = useReadTransactionsQuery();
 
-    const IntroductionCard = () => {
-        return (
-            <Card
-                isCentered
-                heading="Welcome to Budget Planner."
-                subheading="After you initiate a plan, we will sync the spendings from your accounts.
-                            From there, you can track the progress of your budgeting and 
-                            have a quick view of where your expenses are going."
-            >
-                <NavButton
-                    to="./create-budget"
-                    text="Create a budgeting plan"
-                />
-            </Card>
-        );
-    };
+    const {
+        data: accounts,
+        isLoading: isAccountsLoading,
+        isError: isAccountsError,
+    } = useReadAccountsQuery();
 
-    const SpendingTransactions = () => {
-        if (transactions.length === 0) {
-            return (
-                <Card
-                    isCentered
-                    heading="No transactions to display."
-                    subheading="There is no spending transaction in your accounts to import."
-                />
-            );
-        } else {
-            return (
-                <Card heading="Imported spending transactions">
-                    <Card isNested>
-                        <Table values={transactions} />
-                    </Card>
-                </Card>
-            );
-        }
-    };
+    if (isBudgetLoading || isTransactionsLoading || isAccountsLoading) {
+        // We need this check to ensure that we don't get `undefined` data.
+        return null;
+    }
 
-    const DeleteBudgetCard = () => {
-        return (
-            <Card heading="Budget management">
-                <NavButton
-                    to="./amend-budget"
-                    text="Amend budget"
-                    bg="bg-danger"
-                    c="fg-danger"
-                />
-                <NavButton
-                    to="./delete-budget"
-                    text="Delete budget"
-                    bg="bg-danger"
-                    c="fg-danger"
-                />
-            </Card>
-        );
-    };
+    if (isBudgetError || isTransactionsError || isAccountsError) {
+        // We need this check to ensure that we don't get `undefined` data.
+        return null;
+    }
 
-    if (budget === 0) {
+    console.log(budget);
+
+    if (!isBudgetLoading && budget.length === 0) {
         return (
             <PageTemplate page="plan">
                 <Breadcrumbs
@@ -140,13 +73,117 @@ export default function Plan() {
                     autoFlow="row"
                 >
                     <GridItem>
-                        <IntroductionCard />
+                        <Card
+                            isCentered
+                            heading="Welcome to Budget Planner."
+                            subheading="After you initiate a plan, we will sync the spendings from your accounts.
+                            From there, you can track the progress of your budgeting and 
+                            have a quick view of where your expenses are going."
+                        >
+                            <NavButton
+                                to="./create-budget"
+                                text="Create a budgeting plan"
+                            />
+                        </Card>
                     </GridItem>
                 </Grid>
                 <Outlet />
             </PageTemplate>
         );
     } else {
+        const start_date = parseISO(budget.start_date);
+        const end_date = parseISO(budget.end_date);
+        const budget_amount = budget.budget;
+
+        const SpendingTransactions = transactions
+            .filter((transaction) => transaction.amount < 0)
+            .filter(
+                (transaction) =>
+                    isEqual(start_date, transaction.date) ||
+                    isEqual(end_date, transaction.date) ||
+                    (isAfter(transaction.date, start_date) &&
+                        isBefore(transaction.date, end_date))
+            )
+            .sort((a, b) => compareAsc(a.date, b.date))
+            .reverse();
+
+        const totalExpenses = SpendingTransactions.reduce(
+            (total, t) => total - t.amount,
+            0
+        ).toFixed(2);
+
+        const remaining = (budget_amount - totalExpenses).toFixed(2);
+        const percentage = ((totalExpenses / budget_amount) * 100).toFixed(1);
+        const accountNickname = (id) => {
+            const account = accounts.find((acc) => acc._id === id);
+            return account.nickname;
+        };
+
+        const displayedTransactions = SpendingTransactions.map((t) => ({
+            "account nickname": accountNickname(t.accountId),
+            date: format(t.date, "dd LLLL yyyy"),
+            category: t.category,
+            amount: -t.amount.toFixed(2),
+        }));
+
+        const totalDays = differenceInCalendarDays(start_date, end_date);
+        const daysFromStart = differenceInDays(start_date, new Date());
+        const progress = ((daysFromStart / totalDays) * 100).toFixed(0);
+        const spendingCategories = [
+            "Dining",
+            "Shopping",
+            "Entertainment",
+            "Bills",
+            "Education",
+            "Others",
+        ];
+
+        const spendingsData = spendingCategories.map((spending) => ({
+            key: spending,
+            value: Math.floor(
+                SpendingTransactions.filter(
+                    (t) => t.category === spending
+                ).reduce((total, t) => total + t.amount, 0)
+            ),
+        }));
+        const SpendingTransactionsCard = () => {
+            if (transactions.length === 0) {
+                return (
+                    <Card
+                        isCentered
+                        heading="No transactions to display."
+                        subheading="There is no spending transaction in your accounts to import."
+                    />
+                );
+            } else {
+                return (
+                    <Card heading="Imported spending transactions">
+                        <Card isNested>
+                            <Table values={displayedTransactions} />
+                        </Card>
+                    </Card>
+                );
+            }
+        };
+
+        const DeleteBudgetCard = () => {
+            return (
+                <Card heading="Budget management">
+                    <NavButton
+                        to="./amend-budget"
+                        text="Amend budget"
+                        bg="bg-danger"
+                        c="fg-danger"
+                    />
+                    <NavButton
+                        to="./delete-budget"
+                        text="Delete budget"
+                        bg="bg-danger"
+                        c="fg-danger"
+                    />
+                </Card>
+            );
+        };
         return (
             <PageTemplate page="plan">
                 <Breadcrumbs
@@ -170,22 +207,16 @@ export default function Plan() {
                                         "Time left",
                                     ]}
                                     primary={[
-                                        format(
-                                            parseISO(start_date),
-                                            "dd LLLL yyyy"
-                                        ),
-                                        format(
-                                            parseISO(end_date),
-                                            "dd LLLL yyyy"
-                                        ),
+                                        format(start_date, "dd LLLL yyyy"),
+                                        format(end_date, "dd LLLL yyyy"),
                                         `${formatDistanceStrict(
-                                            parseISO(end_date),
-                                            parseISO(start_date)
+                                            end_date,
+                                            start_date
                                         )}`,
-                                        !isPast(parseISO(end_date)) &&
+                                        !isPast(end_date) &&
                                             `${formatDistanceStrict(
                                                 new Date(),
-                                                parseISO(end_date)
+                                                end_date
                                             )}`,
                                     ]}
                                 />
@@ -198,7 +229,7 @@ export default function Plan() {
                                         "Remaining",
                                     ]}
                                     primary={[
-                                        `$${budget}`,
+                                        `$${budget_amount}`,
                                         `$${totalExpenses}`,
                                         `$${remaining}`,
                                     ]}
@@ -287,7 +318,7 @@ export default function Plan() {
                         <ExpensesCategoryCard data={spendingsData} />
                     </GridItem>
                     <GridItem colSpan={2}>
-                        <SpendingTransactions />
+                        <SpendingTransactionsCard />
                     </GridItem>
                     <GridItem>
                         <DeleteBudgetCard />
