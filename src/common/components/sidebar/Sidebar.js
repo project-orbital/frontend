@@ -1,6 +1,5 @@
 import {
     Drawer,
-    DrawerBody,
     DrawerContent,
     DrawerOverlay,
     Flex,
@@ -111,9 +110,8 @@ const SidebarDrawer = ({ selected, isOpen, onClose }) => (
         isOpen={isOpen}
     >
         <DrawerOverlay />
-        <DrawerContent bg="accent-dark">
+        <DrawerContent bg="accent-dark" onClick={onClose}>
             <SidebarContent selected={selected} />
-            <DrawerBody onClick={onClose}></DrawerBody>
         </DrawerContent>
     </Drawer>
 );
