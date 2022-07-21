@@ -13,7 +13,7 @@ export default function BudgetDelete() {
             toast.closeAll();
             await deleteBudget().unwrap();
             toast({
-                title: "Transaction deleted.",
+                title: "Budget deleted!",
                 status: "success",
             });
             navigate("../");
@@ -32,7 +32,7 @@ export default function BudgetDelete() {
             heading="Are you sure you want to delete your budget?"
             subheading="This action cannot be undone."
             cancelText="No, don't delete it"
-            submitText="Yes, delete transaction"
+            submitText="Yes, delete budget"
             initialValues={{}}
             onSubmit={handleSubmit}
         />

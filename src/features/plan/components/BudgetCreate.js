@@ -15,7 +15,7 @@ export default function BudgetCreate() {
         try {
             await createBudget({ ...values }).unwrap();
             toast({
-                title: "Budget updated!",
+                title: "Budget created!",
                 status: "success",
             });
             navigate("../");

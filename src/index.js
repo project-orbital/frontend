@@ -21,8 +21,8 @@ import Learn from "./features/learn/Learn";
 import ContributionCreate from "./features/learn/components/ContributionCreate";
 import ContributionReport from "./features/learn/components/ReportContribution";
 
-import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
-import AmendBudget from "./features/plan/components/AmendBudget";
+import BudgetDeleteModal from "./features/plan/components/BudgetDelete";
+import BudgetUpdate from "./features/plan/components/BudgetUpdate";
 import BudgetCreate from "./features/plan/components/BudgetCreate";
 
 // TODO: Replace the remaining routes by creating "__Routes.js" in their respective folders and linking them here.
@@ -61,7 +61,7 @@ const routes = (
         >
             <Route path="create-budget" element={<BudgetCreate />} />
             <Route path="delete-budget" element={<BudgetDeleteModal />} />
-            <Route path="amend-budget" element={<AmendBudget />} />
+            <Route path="update-budget" element={<BudgetUpdate />} />
         </Route>
     </Routes>
 );

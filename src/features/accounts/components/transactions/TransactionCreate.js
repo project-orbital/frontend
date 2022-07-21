@@ -20,6 +20,9 @@ export default function TransactionCreate({ type }) {
     async function handleSubmit(values, { setErrors }) {
         toast.closeAll();
         try {
+            if (type === "withdrawal") {
+                values.amount = -values.amount;
+            }
             await createTransaction({ ...values, accountId }).unwrap();
             toast({
                 title: "Transaction added!",
@@ -57,9 +60,13 @@ export default function TransactionCreate({ type }) {
         </SelectControl>
     );
 
+    const title =
+        type === "withdrawal"
+            ? "Adding your withdrawal transaction..."
+            : "Adding your deposit transaction...";
     return (
         <FormModal
-            title="Adding your transaction..."
+            title={title}
             heading="We need some details about this transaction."
             subheading="The transaction will be added under this account. If
                         this is incorrect, you can edit the transaction later."

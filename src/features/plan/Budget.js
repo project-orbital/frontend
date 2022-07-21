@@ -58,7 +58,7 @@ export default function Plan() {
     }
 
     console.log(budget);
-
+    console.log(transactions);
     if (!isBudgetLoading && budget.length === 0) {
         return (
             <PageTemplate page="plan">
@@ -93,9 +93,9 @@ export default function Plan() {
     } else {
         const start_date = parseISO(budget.start_date);
         const end_date = parseISO(budget.end_date);
-        const budget_amount = budget.budget;
+        const budget_amount = budget.budget.toFixed(2);
 
-        const SpendingTransactions = transactions
+        const spendingTransactions = transactions
             .filter((transaction) => transaction.amount < 0)
             .filter(
                 (transaction) =>
@@ -107,10 +107,9 @@ export default function Plan() {
             .sort((a, b) => compareAsc(a.date, b.date))
             .reverse();
 
-        const totalExpenses = SpendingTransactions.reduce(
-            (total, t) => total - t.amount,
-            0
-        ).toFixed(2);
+        const totalExpenses = spendingTransactions
+            .reduce((total, t) => total - t.amount, 0)
+            .toFixed(2);
 
         const remaining = (budget_amount - totalExpenses).toFixed(2);
         const percentage = ((totalExpenses / budget_amount) * 100).toFixed(1);
@@ -119,11 +118,12 @@ export default function Plan() {
             return account.nickname;
         };
 
-        const displayedTransactions = SpendingTransactions.map((t) => ({
+        const tabledTransactions = spendingTransactions.map((t) => ({
             "account nickname": accountNickname(t.accountId),
+            description: t.description,
             date: format(t.date, "dd LLLL yyyy"),
             category: t.category,
-            amount: -t.amount.toFixed(2),
+            amount: t.amount.format({ symbol: "" }),
         }));
 
         const totalDays = differenceInCalendarDays(start_date, end_date);
@@ -138,16 +138,17 @@ export default function Plan() {
             "Others",
         ];
 
-        const spendingsData = spendingCategories.map((spending) => ({
-            key: spending,
+        const spendingsData = spendingCategories.map((c) => ({
+            key: c,
             value: Math.floor(
-                SpendingTransactions.filter(
-                    (t) => t.category === spending
-                ).reduce((total, t) => total + t.amount, 0)
+                spendingTransactions
+                    .filter((t) => t.category === c)
+                    .reduce((total, t) => total - t.amount, 0)
             ),
         }));
+
         const SpendingTransactionsCard = () => {
-            if (transactions.length === 0) {
+            if (spendingTransactions.length === 0) {
                 return (
                     <Card
                         isCentered
@@ -159,19 +160,19 @@ export default function Plan() {
                 return (
                     <Card heading="Imported spending transactions">
                         <Card isNested>
-                            <Table values={displayedTransactions} />
+                            <Table values={tabledTransactions} />
                         </Card>
                     </Card>
                 );
             }
         };
 
-        const DeleteBudgetCard = () => {
+        const BudgetManagementCard = () => {
             return (
                 <Card heading="Budget management">
                     <NavButton
-                        to="./amend-budget"
-                        text="Amend budget"
+                        to="./update-budget"
+                        text="Update budget"
                         bg="bg-danger"
                         c="fg-danger"
                     />
@@ -288,40 +289,44 @@ export default function Plan() {
                             </Card>
                         </Card>
                     </GridItem>
-                    <Card heading="Progress (Budget)">
-                        <Card isNested>
-                            <AspectRatio ratio={16 / 9}>
-                                <CircularProgressbar
-                                    value={percentage}
-                                    text={`${percentage}% spent`}
-                                    styles={buildStyles({
-                                        pathColor:
-                                            percentage > 100
-                                                ? "#DC2626"
-                                                : percentage > 80
-                                                ? "#f6ae3b"
-                                                : "#3b82f6",
-                                        trailColor: "#f5f5f5",
-                                        textColor:
-                                            percentage > 100
-                                                ? "#DC2626"
-                                                : percentage > 80
-                                                ? "#f6ae3b"
-                                                : "#3b82f6",
-                                        textSize: "10px",
-                                    })}
-                                />
-                            </AspectRatio>
+                    {!(spendingTransactions.length === 0) && (
+                        <Card heading="Progress (Budget)">
+                            <Card isNested>
+                                <AspectRatio ratio={16 / 9}>
+                                    <CircularProgressbar
+                                        value={percentage}
+                                        text={`${percentage}% spent`}
+                                        styles={buildStyles({
+                                            pathColor:
+                                                percentage > 100
+                                                    ? "#DC2626"
+                                                    : percentage > 80
+                                                    ? "#f6ae3b"
+                                                    : "#3b82f6",
+                                            trailColor: "#f5f5f5",
+                                            textColor:
+                                                percentage > 100
+                                                    ? "#DC2626"
+                                                    : percentage > 80
+                                                    ? "#f6ae3b"
+                                                    : "#3b82f6",
+                                            textSize: "10px",
+                                        })}
+                                    />
+                                </AspectRatio>
+                            </Card>
                         </Card>
-                    </Card>
+                    )}
                     <GridItem>
-                        <ExpensesCategoryCard data={spendingsData} />
+                        {!(spendingTransactions.length === 0) && (
+                            <ExpensesCategoryCard data={spendingsData} />
+                        )}
                     </GridItem>
                     <GridItem colSpan={2}>
                         <SpendingTransactionsCard />
                     </GridItem>
                     <GridItem>
-                        <DeleteBudgetCard />
+                        <BudgetManagementCard />
                     </GridItem>
                 </Grid>
                 <Outlet />
