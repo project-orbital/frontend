@@ -27,7 +27,16 @@ const code = `
     TL;DR: You can now use our Budget Planner in the Plan tab.
 </blockquote>
 <p>
-    Section to be completed.
+All of us know the importance of budget planning. A user can set a timeframe and a budgeted amount to create a budget plan. 
+For Milestone 3, made two key improvements for this feature.
+</p>
+<p>
+We fully utilise visual aids (circular progress bar, piechart & table) to present relevant information neatly to the user.
+</p>
+<p>
+Do you have to create spending transactions for the budget planner? Nope. 
+Your spending transactions across all the accounts you have in DollarPlanner will be imported here 
+and used to track your budget.
 </p>
 
 <h3>Community-contributed Financial Resources</h3>
@@ -35,7 +44,13 @@ const code = `
     TL;DR: You can now publicly share links to financial literacy resources with the community in the Learn tab.
 </blockquote>
 <p>
-    Section to be completed.
+This is a feature that we are very excited about because users can have excellent resources on financial literacy that they want to share! 
+</p>
+<p>
+To do so, they simply have to submit a form and the page will be updated with the post.
+</p>
+<p>
+On top of that, we have implemented Like, Unlike and Report functionalities that make the feature a more complete one.
 </p>
 
 <h3>Data Synchronization</h3>
