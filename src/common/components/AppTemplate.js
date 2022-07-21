@@ -47,7 +47,7 @@ const SidebarButton = ({ onOpen }) => (
     </Show>
 );
 
-const MobileHeader = ({ page, onOpen }) => (
+const MobileHeader = ({ title, onOpen }) => (
     <HStack
         pos="fixed"
         w="100vw"
@@ -60,27 +60,27 @@ const MobileHeader = ({ page, onOpen }) => (
     >
         <SidebarButton onOpen={onOpen} />
         <Heading size={["lg", "xl", null, "2xl"]} textTransform="capitalize">
-            {page}
+            {title}
         </Heading>
     </HStack>
 );
 
-const DesktopHeader = ({ page }) => (
+const DesktopHeader = ({ path, links, title }) => (
     <VStack align="start">
-        <Breadcrumbs path="Home/Learn" links={["/dashboard", "/learn"]} />
+        <Breadcrumbs path={path} links={links} />
         <Heading size={["lg", "xl", null, "2xl"]} textTransform="capitalize">
-            {page}
+            {title}
         </Heading>
     </VStack>
 );
 
-export default function AppTemplate({ page }) {
+export default function AppTemplate({ page, path, links, title }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <>
             <Sidebar selected={page} isOpen={isOpen} onClose={onClose} />
             <Show below="lg">
-                <MobileHeader page={page} onOpen={onOpen} />
+                <MobileHeader title={title} onOpen={onOpen} />
             </Show>
             <VStack
                 pos="absolute"
@@ -94,7 +94,7 @@ export default function AppTemplate({ page }) {
                 spacing={8}
             >
                 <Show above="lg">
-                    <DesktopHeader page={page} />
+                    <DesktopHeader path={path} links={links} title={title} />
                 </Show>
                 <RequireAuth>
                     <Box w="stretch" p={0}>

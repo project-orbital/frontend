@@ -12,6 +12,7 @@ export default function DashboardRoutes() {
                         page="dashboard"
                         path="Home/Dashboard"
                         links={["/dashboard", "/dashboard"]}
+                        title="Dashboard"
                     />
                 }
             >
