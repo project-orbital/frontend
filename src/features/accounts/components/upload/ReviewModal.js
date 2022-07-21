@@ -5,17 +5,20 @@ import {
     HStack,
     Input,
     Text,
+    useToast,
 } from "@chakra-ui/react";
 import { Field, FieldArray, Form, Formik } from "formik";
 import { BsFillCaretRightFill } from "react-icons/bs";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllFiles, selectFiles } from "../../state/files";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Modal from "../../../../common/components/Modal";
+import { useCreateTransactionsFromStatementsMutation } from "../../../../app/api";
 
 export default function ReviewModal() {
     const { id } = useParams();
+    const [upload] = useCreateTransactionsFromStatementsMutation();
+    const toast = useToast();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const files = useSelector(selectFiles);
@@ -48,12 +51,7 @@ export default function ReviewModal() {
         navigate("./cancel");
     };
 
-    const handleSubmit = (data) => {
-        let headers = {
-            Authorization: "token",
-            "Content-Type": "multipart/form-data",
-        };
-
+    const handleSubmit = async (data) => {
         const submission = data.selections
             .filter((row) => row.isSelected)
             .reduce((prev, curr) => {
@@ -61,18 +59,27 @@ export default function ReviewModal() {
                 prev.append("passwords", curr.password);
                 return prev;
             }, new FormData());
-
-        return axios
-            .post(`${process.env.REACT_APP_BACKEND}/api/upload`, submission, {
-                headers,
-            })
-            .then(() => {
-                dispatch(deleteAllFiles());
-                navigate("../");
-            })
-            .catch((err) => {
-                console.log(err);
+        toast.closeAll();
+        try {
+            await upload({
+                id: id,
+                data: submission,
+            }).unwrap();
+            toast({
+                title: "Documents parsed successfully.",
+                description: "Your transactions have been added.",
+                status: "success",
             });
+        } catch (error) {
+            toast({
+                ...error,
+                status: "error",
+                duration: 10000,
+            });
+        } finally {
+            dispatch(deleteAllFiles());
+            navigate("../");
+        }
     };
 
     const CustomBodyFormRow = ({ file, index }) => {

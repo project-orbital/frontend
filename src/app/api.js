@@ -7,7 +7,7 @@ import currency from "currency.js";
 // we can use their abstraction instead.
 const kyBaseQuery =
     ({ baseUrl } = { baseUrl: "" }) =>
-    async ({ url, method, data, params, headers }) => {
+    async ({ url, method, data, params, headers, body }) => {
         try {
             const response = await ky(url, {
                 prefixUrl: baseUrl,
@@ -16,6 +16,7 @@ const kyBaseQuery =
                 credentials: "include",
                 searchParams: params,
                 headers: headers,
+                body: body,
             }).json();
             return { data: response };
         } catch (error) {
@@ -142,6 +143,14 @@ export const api = createApi({
             }),
             invalidatesTags: ["Transactions"],
         }),
+        createTransactionsFromStatements: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `api/upload/${id}`,
+                method: "post",
+                body: data,
+            }),
+            invalidatesTags: ["Transactions", "Transaction"],
+        }),
         readTransaction: builder.query({
             query: (id) => ({
                 url: `transactions/${id}`,
@@ -200,6 +209,7 @@ export const {
     useDeleteAccountMutation,
     // Transactions
     useCreateTransactionMutation,
+    useCreateTransactionsFromStatementsMutation,
     useReadTransactionQuery,
     useReadTransactionsQuery,
     useReadTransactionsInAccountQuery,
