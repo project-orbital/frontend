@@ -1,8 +1,6 @@
 import { Box, GridItem, Text } from "@chakra-ui/react";
 import TransactionsCard from "./components/TransactionsCard";
 import NetWorthCard from "./components/NetWorthCard";
-import Breadcrumbs from "../../common/components/Breadcrumbs";
-import PageTemplate from "../../common/components/PageTemplate";
 import AssetAllocationCard from "./components/AssetAllocationCard";
 import * as rand from "../../common/utils/rand";
 import { useReadAccountsQuery } from "../../app/api";
@@ -26,28 +24,22 @@ export default function Dashboard() {
 
     if (!isLoading && accounts.length === 0) {
         return (
-            <PageTemplate page="dashboard">
-                <Breadcrumbs
-                    path="Home/Dashboard"
-                    links={["/dashboard", "/dashboard"]}
+            <BaseCard>
+                <Box>
+                    <Text fontSize="xl" fontWeight="bold">
+                        {"You haven't created an account yet."}
+                    </Text>
+                    <Text>
+                        Once you've created an account, you'll see your
+                        transactions and net worth here.
+                    </Text>
+                </Box>
+                <NavButton
+                    to="/accounts/create"
+                    text="Create an account"
+                    p={8}
                 />
-                <BaseCard>
-                    <Box>
-                        <Text fontSize="xl" fontWeight="bold">
-                            {"You haven't created an account yet."}
-                        </Text>
-                        <Text>
-                            Once you've created an account, you'll see your
-                            transactions and net worth here.
-                        </Text>
-                    </Box>
-                    <NavButton
-                        to="/accounts/create"
-                        text="Create an account"
-                        p={8}
-                    />
-                </BaseCard>
-            </PageTemplate>
+            </BaseCard>
         );
     }
 

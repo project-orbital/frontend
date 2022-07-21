@@ -90,11 +90,11 @@ const SidebarInline = ({ selected }) => (
     <Flex
         pos="fixed"
         w="160px"
+        minH="100vh"
         pb={[20, 24]}
         zIndex={16}
         align="start"
         overflowY="auto"
-        flex={1}
     >
         <SidebarContent selected={selected} />
     </Flex>
