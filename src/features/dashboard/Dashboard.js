@@ -1,4 +1,4 @@
-import { Box, GridItem, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, GridItem, Text } from "@chakra-ui/react";
 import TransactionsCard from "./components/TransactionsCard";
 import NetWorthCard from "./components/NetWorthCard";
 import Breadcrumbs from "../../common/components/Breadcrumbs";
@@ -52,12 +52,12 @@ export default function Dashboard() {
     }
 
     return (
-        <SimpleGrid spacing={8} w="100%">
+        <>
             <NetWorthCard />
             <AssetAllocationCard data={assetsData} />
-            <GridItem colSpan={2}>
+            <GridItem colSpan={[1, null, 2]}>
                 <TransactionsCard />
             </GridItem>
-        </SimpleGrid>
+        </>
     );
 }

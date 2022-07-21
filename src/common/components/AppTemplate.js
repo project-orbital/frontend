@@ -1,11 +1,12 @@
 import Sidebar from "./sidebar/Sidebar";
 import { Navigate, Outlet } from "react-router-dom";
 import {
-    Container,
+    Box,
     Heading,
     HStack,
     IconButton,
     Show,
+    SimpleGrid,
     useDisclosure,
     VStack,
 } from "@chakra-ui/react";
@@ -47,7 +48,16 @@ const SidebarButton = ({ onOpen }) => (
 );
 
 const MobileHeader = ({ page, onOpen }) => (
-    <HStack align="center" spacing={4}>
+    <HStack
+        pos="fixed"
+        w="100vw"
+        h={["70px", "85px", "100px"]}
+        px={[4, 6, 8]}
+        align="center"
+        spacing={4}
+        zIndex={32}
+        bg="bg-translucent"
+    >
         <SidebarButton onOpen={onOpen} />
         <Heading size={["lg", "xl", null, "2xl"]} textTransform="capitalize">
             {page}
@@ -69,26 +79,29 @@ export default function AppTemplate({ page }) {
     return (
         <>
             <Sidebar selected={page} isOpen={isOpen} onClose={onClose} />
+            <Show below="lg">
+                <MobileHeader page={page} onOpen={onOpen} />
+            </Show>
             <VStack
                 pos="absolute"
-                left={[0, 0, 0, "160px"]}
+                left={[0, null, null, "160px"]}
+                top={["70px", "85px", "100px", "0px"]}
                 w="stretch"
-                h="100vh"
-                p={[4, 6, 8, 10]}
+                minH="100vh"
+                py={[0, null, null, 10]}
+                px={[4, 6, 8, 12]}
                 align="start"
                 spacing={8}
-                border="1px solid red"
             >
                 <Show above="lg">
                     <DesktopHeader page={page} />
                 </Show>
-                <Show below="lg">
-                    <MobileHeader page={page} onOpen={onOpen} />
-                </Show>
                 <RequireAuth>
-                    <Container w="100vw" h="100%" p={0} border="1px solid blue">
-                        <Outlet />
-                    </Container>
+                    <Box w="stretch" p={0}>
+                        <SimpleGrid spacing={8} columns={[1, null, 2]}>
+                            <Outlet />
+                        </SimpleGrid>
+                    </Box>
                 </RequireAuth>
             </VStack>
         </>

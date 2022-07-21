@@ -119,7 +119,6 @@ const SidebarDrawer = ({ selected, isOpen, onClose }) => (
 );
 
 export default function Sidebar({ selected, isOpen, onClose }) {
-    console.log("re");
     return (
         <>
             <Show above="lg">
