@@ -6,6 +6,7 @@ import { CgDarkMode } from "react-icons/cg";
 import { TbEraser } from "react-icons/tb";
 import { AiOutlineUserDelete } from "react-icons/ai";
 import BaseCard from "../../common/components/cards/BaseCard";
+import { Outlet } from "react-router-dom";
 
 export default function Settings() {
     const toast = useToast();
@@ -84,6 +85,7 @@ export default function Settings() {
                     w="100%"
                 />
             </BaseCard>
+            <Outlet />
         </>
     );
 }
