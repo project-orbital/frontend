@@ -1,5 +1,5 @@
 import Sidebar from "./sidebar/Sidebar";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import {
     Box,
     Heading,
@@ -75,12 +75,26 @@ const DesktopHeader = ({ path, links, title }) => (
 );
 
 export default function AppTemplate({ page, path, links, title }) {
+    // ALlow the sidebar to be opened and closed.
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    // Allow titles to be generated dynamically from within the nested route
+    // instead of being defined in the route itself (using the `title` prop).
+    const [customTitle, setCustomTitle] = useState(undefined);
+    const fullPath = customTitle ? [...path, customTitle] : path;
+    const fullLinks = customTitle ? [...links, "./"] : links;
+
+    // Reset the custom title when the page changes.
+    const { pathname } = useLocation();
+    useEffect(() => {
+        setCustomTitle(undefined);
+    }, [pathname]);
+
     return (
         <>
             <Sidebar selected={page} isOpen={isOpen} onClose={onClose} />
             <Show below="lg">
-                <MobileHeader title={title} onOpen={onOpen} />
+                <MobileHeader title={customTitle ?? title} onOpen={onOpen} />
             </Show>
             <VStack
                 pos="absolute"
@@ -94,12 +108,16 @@ export default function AppTemplate({ page, path, links, title }) {
                 spacing={8}
             >
                 <Show above="lg">
-                    <DesktopHeader path={path} links={links} title={title} />
+                    <DesktopHeader
+                        path={fullPath}
+                        links={fullLinks}
+                        title={customTitle ?? title}
+                    />
                 </Show>
                 <RequireAuth>
                     <Box w="stretch" p={0}>
                         <SimpleGrid spacing={8} columns={[1, null, 2]}>
-                            <Outlet />
+                            <Outlet context={[setCustomTitle]} />
                         </SimpleGrid>
                     </Box>
                 </RequireAuth>
