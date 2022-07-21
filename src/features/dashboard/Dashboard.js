@@ -52,18 +52,12 @@ export default function Dashboard() {
     }
 
     return (
-        <PageTemplate page="dashboard">
-            <Breadcrumbs
-                path="Home/Dashboard"
-                links={["/dashboard", "/dashboard"]}
-            />
-            <SimpleGrid spacing={8}>
-                <NetWorthCard />
-                <AssetAllocationCard data={assetsData} />
-                <GridItem colSpan={2}>
-                    <TransactionsCard />
-                </GridItem>
-            </SimpleGrid>
-        </PageTemplate>
+        <SimpleGrid spacing={8} w="100%">
+            <NetWorthCard />
+            <AssetAllocationCard data={assetsData} />
+            <GridItem colSpan={2}>
+                <TransactionsCard />
+            </GridItem>
+        </SimpleGrid>
     );
 }

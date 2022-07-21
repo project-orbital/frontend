@@ -1,4 +1,4 @@
-import { Box, Skeleton, VStack } from "@chakra-ui/react";
+import { Box, Skeleton, useDisclosure, VStack } from "@chakra-ui/react";
 import Sidebar from "./sidebar/Sidebar";
 import Card from "./Card";
 import Navbar from "./navbar/Navbar";
@@ -25,6 +25,7 @@ export default function PageTemplate({
     buttons = [],
     page,
 }) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
     if (variant === "auth") {
         return (
             <VStack>
@@ -48,7 +49,7 @@ export default function PageTemplate({
     }
     return (
         <Box>
-            <Sidebar selected={page} />
+            <Sidebar selected={page} isOpen={isOpen} onClose={onClose} />
             <VStack
                 pos="absolute"
                 left="160px" // accounts for the width of the sidebar

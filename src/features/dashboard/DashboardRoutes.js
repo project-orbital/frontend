@@ -1,6 +1,6 @@
 import Dashboard from "./Dashboard";
 import { Route, Routes } from "react-router-dom";
-import RequireAuth from "../../common/components/RequireAuth";
+import AppTemplate from "../../common/components/AppTemplate";
 
 export default function DashboardRoutes() {
     return (
@@ -8,11 +8,15 @@ export default function DashboardRoutes() {
             <Route
                 path="/"
                 element={
-                    <RequireAuth>
-                        <Dashboard />
-                    </RequireAuth>
+                    <AppTemplate
+                        page="dashboard"
+                        path="Home/Dashboard"
+                        links={["/dashboard", "/dashboard"]}
+                    />
                 }
-            />
+            >
+                <Route path="/" element={<Dashboard />} />
+            </Route>
         </Routes>
     );
 }

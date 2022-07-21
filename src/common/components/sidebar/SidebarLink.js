@@ -1,5 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
-import { Link, Text, VStack } from "@chakra-ui/react";
+import { Link, Stack, Text } from "@chakra-ui/react";
 
 /**
  * Clickable link component with an optional icon for the sidebar.
@@ -13,9 +13,13 @@ import { Link, Text, VStack } from "@chakra-ui/react";
 export default function SidebarLink({ to, icon, text, isSelected }) {
     return (
         <Link w="100%" as={RouterLink} to={to} color="white">
-            <VStack
+            <Stack
+                direction={["row", null, null, "column"]}
+                align="center"
+                justify="start"
+                px={[8, null, null, 0]}
                 py="18px"
-                spacing="8px"
+                spacing={[4, null, null, 2]}
                 bgColor={isSelected ? "whiteAlpha.100" : null}
                 borderLeft={isSelected ? "4px solid white" : null}
             >
@@ -23,7 +27,7 @@ export default function SidebarLink({ to, icon, text, isSelected }) {
                 <Text fontSize="xs" fontWeight="semibold" casing="uppercase">
                     {text}
                 </Text>
-            </VStack>
+            </Stack>
         </Link>
     );
 }

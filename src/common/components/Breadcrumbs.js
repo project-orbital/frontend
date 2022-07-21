@@ -4,7 +4,6 @@ import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
-    Heading,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -38,9 +37,6 @@ export default function Breadcrumbs({ path, links, title }) {
                     </BreadcrumbItem>
                 ))}
             </Breadcrumb>
-            <Heading as="h1" size="2xl" pt="10px">
-                {title || crumbs[crumbs.length - 1]}
-            </Heading>
         </Box>
     );
 }

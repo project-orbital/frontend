@@ -9,6 +9,7 @@ export default function Logo({ direction, color, size, link, hasBorder }) {
             to={link || "/"}
             direction={direction || "row"}
             align="center"
+            px={[8, null, null, 4]}
         >
             <Box color={color || "fg"} w={[6, 7, 8]}>
                 <BsCurrencyExchange size="100%" />
