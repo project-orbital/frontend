@@ -19,31 +19,40 @@ export default function NetWorthCard() {
         isError,
     } = useReadTransactionsQuery();
 
+    if (isLoading || transactions.length === 0) {
+        return null;
+    }
     if (isError) {
         return;
     }
 
+    function computeHistory() {
+        const months = groupBy(transactions, "accountId")
+            .flatMap((account) =>
+                discretize(account, (a, b) => isSameMonth(a.date, b.date))
+            )
+            .map((tx) => ({
+                ...tx,
+                label: format(tx.date, "LLLL yyyy"),
+            }));
+        return groupBy(months, "label")
+            .sort((a, b) => compareAsc(a[0].date, b[0].date))
+            .map((month) => ({
+                x: month[0].label,
+                y: parseFloat(
+                    month.reduce((acc, tx) => acc.add(tx.balance), currency(0))
+                ),
+            }));
+    }
+
     const NetWorth = () => {
-        const isSameAccount = (a, b) => a.accountId === b.accountId;
-        const lastTransactions =
-            isLoading || transactions.length === 0
-                ? []
-                : discretize(transactions, isSameAccount);
-        const asOf =
-            isLoading || transactions.length === 0
-                ? new Date()
-                : newest(lastTransactions).date;
-        const netWorth =
-            isLoading || transactions.length === 0
-                ? currency(0)
-                : lastTransactions.reduce(
-                      (acc, tx) => acc.add(tx.balance),
-                      currency(0)
-                  );
+        const history = computeHistory();
+        const netWorth = history[history.length - 1].y;
+        const asOf = newest(transactions).date;
         return (
             <Box>
                 <Heading bgGradient={accentGradient} bgClip="text">
-                    {netWorth.format({ symbol: "SGD " })}
+                    {`SGD ${netWorth.toFixed(2)}`}
                 </Heading>
                 <Text fontSize="sm" color="fg-light">
                     {`as of ${formatDistanceToNow(asOf, {
@@ -55,30 +64,9 @@ export default function NetWorthCard() {
     };
 
     const History = () => {
-        if (isLoading || transactions.length === 0) {
-            return (
-                <Box w="100%">
-                    <AreaChart data={{}} />
-                </Box>
-            );
-        }
-        const months = groupBy(transactions, "accountId")
-            .flatMap((account) => discretize(account, isSameMonth))
-            .map((tx) => ({
-                ...tx,
-                label: format(tx.date, "LLLL yyyy"),
-            }));
-        const history = groupBy(months, "label")
-            .sort((a, b) => compareAsc(a[0].date, b[0].date))
-            .map((month) => ({
-                x: month[0].label,
-                y: parseFloat(
-                    month.reduce((acc, tx) => acc.add(tx.balance), currency(0))
-                ),
-            }));
         return (
             <Box w="100%">
-                <AreaChart data={history} />
+                <AreaChart data={computeHistory()} />
             </Box>
         );
     };

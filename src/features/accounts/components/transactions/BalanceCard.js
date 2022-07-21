@@ -34,10 +34,12 @@ export default function BalanceCard() {
         : newest(transactions);
     const monthEndBalances = isLoading
         ? {}
-        : discretize(transactions, isSameMonth).map((tx) => ({
-              x: format(tx.date, "LLLL yyyy"),
-              y: parseFloat(tx.balance),
-          }));
+        : discretize(transactions, (a, b) => isSameMonth(a.date, b.date)).map(
+              (tx) => ({
+                  x: format(tx.date, "LLLL yyyy"),
+                  y: parseFloat(tx.balance),
+              })
+          );
 
     return (
         <BaseCard title="Balance" isLoading={isLoading}>
