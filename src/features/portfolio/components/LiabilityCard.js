@@ -32,14 +32,14 @@ export default function LiabilityCard({ liability, payments }) {
     const Controls = () => (
         <HStack>
             <NavButton
-                to={`./assets/${liability.id}/update`}
+                to={`./liabilities/${liability.id}/update`}
                 variant="tertiary"
                 leftIcon={<MdOutlineEdit size="18px" />}
             >
                 Edit
             </NavButton>
             <NavButton
-                to={`./assets/${liability.id}/delete`}
+                to={`./liabilities/${liability.id}/delete`}
                 variant="tertiary"
                 leftIcon={<MdOutlineDelete size="20px" />}
             >

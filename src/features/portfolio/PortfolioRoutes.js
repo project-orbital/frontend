@@ -7,6 +7,8 @@ import OrderCreate from "./components/OrderCreate";
 import AssetUpdate from "./components/AssetUpdate";
 import AssetDelete from "./components/AssetDelete";
 import PaymentCreate from "./components/PaymentCreate";
+import LiabilityUpdate from "./components/LiabilityUpdate";
+import LiabilityDelete from "./components/LiabilityDelete";
 
 export default function PortfolioRoutes() {
     return (
@@ -45,8 +47,14 @@ export default function PortfolioRoutes() {
                     <Route path="liabilities">
                         <Route path="create" element={<LiabilityCreate />} />
                         <Route path=":liabilityId">
-                            <Route path="update" element={<AssetUpdate />} />
-                            <Route path="delete" element={<AssetDelete />} />
+                            <Route
+                                path="update"
+                                element={<LiabilityUpdate />}
+                            />
+                            <Route
+                                path="delete"
+                                element={<LiabilityDelete />}
+                            />
                             <Route path="payments">
                                 <Route
                                     path="create"
