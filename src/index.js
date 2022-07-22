@@ -13,14 +13,18 @@ import UserRoutes from "./site/user/UserRoutes";
 import DashboardRoutes from "./features/dashboard/DashboardRoutes";
 import AccountsRoutes from "./features/accounts/AccountsRoutes";
 import SettingsRoutes from "./features/settings/SettingsRoutes";
+import DocsRoutes from "./site/docs/DocsRoutes";
 
 import Portfolio from "./features/portfolio/Portfolio";
-import Plan from "./features/plan/Plan";
+import Plan from "./features/plan/Budget";
+
 import Learn from "./features/learn/Learn";
-import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
-import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
-import AmendBudget from "./features/plan/components/AmendBudget";
-import DocsRoutes from "./site/docs/DocsRoutes";
+import ContributionCreate from "./features/learn/components/ContributionCreate";
+import ContributionReport from "./features/learn/components/ReportContribution";
+
+import BudgetDeleteModal from "./features/plan/components/BudgetDelete";
+import BudgetUpdate from "./features/plan/components/BudgetUpdate";
+import BudgetCreate from "./features/plan/components/BudgetCreate";
 
 // TODO: Replace the remaining routes by creating "__Routes.js" in their respective folders and linking them here.
 const routes = (
@@ -31,13 +35,16 @@ const routes = (
         <Route path="/accounts/*" element={<AccountsRoutes />} />
         <Route path="/settings/*" element={<SettingsRoutes />} />
         <Route
-            path="learn"
+            path="/learn/"
             element={
                 <RequireAuth>
                     <Learn />
                 </RequireAuth>
             }
-        ></Route>
+        >
+            <Route path="contribute" element={<ContributionCreate />} />
+            <Route path="report/:id" element={<ContributionReport />} />
+        </Route>
         <Route
             path="portfolio"
             element={
@@ -54,9 +61,9 @@ const routes = (
                 </RequireAuth>
             }
         >
-            <Route path="create-budget" element={<CreateBudgetModal />} />
+            <Route path="create-budget" element={<BudgetCreate />} />
             <Route path="delete-budget" element={<BudgetDeleteModal />} />
-            <Route path="amend-budget" element={<AmendBudget />} />
+            <Route path="update-budget" element={<BudgetUpdate />} />
         </Route>
     </Routes>
 );

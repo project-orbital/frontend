@@ -63,13 +63,10 @@ export default function Settings() {
         const prefersDarkMode = colorMode !== "dark";
         toggleColorMode();
         try {
-            ky.post(
-                `${process.env.REACT_APP_BACKEND}/users/preferences/dark-mode`,
-                {
-                    json: { prefersDarkMode: prefersDarkMode },
-                    credentials: "include",
-                }
-            );
+            ky.post(`${process.env.REACT_APP_BACKEND}/learn`, {
+                json: { prefersDarkMode: prefersDarkMode },
+                credentials: "include",
+            });
         } catch {
             toast({
                 title: `Dark mode preference could not be saved.`,
