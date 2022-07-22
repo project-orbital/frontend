@@ -65,10 +65,18 @@ export default function Portfolio() {
                         </Text>
                     </VStack>
                     <VStack align="start" spacing={4}>
-                        <NavButton to="./assets/create" variant="primary">
+                        <NavButton
+                            to="./assets/create"
+                            variant="primary"
+                            withArrow
+                        >
                             Add an asset
                         </NavButton>
-                        <NavButton to="./liabilities/create" variant="primary">
+                        <NavButton
+                            to="./liabilities/create"
+                            variant="primary"
+                            withArrow
+                        >
                             Add a liability
                         </NavButton>
                     </VStack>
@@ -89,10 +97,14 @@ export default function Portfolio() {
                 </Text>
             </VStack>
             <VStack align="start" spacing={4}>
-                <NavButton to="./assets/create" variant="primary">
+                <NavButton to="./assets/create" variant="primary" withArrow>
                     Add an asset
                 </NavButton>
-                <NavButton to="./liabilities/create" variant="primary">
+                <NavButton
+                    to="./liabilities/create"
+                    variant="primary"
+                    withArrow
+                >
                     Add a liability
                 </NavButton>
             </VStack>

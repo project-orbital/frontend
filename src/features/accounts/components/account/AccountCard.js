@@ -2,7 +2,8 @@ import NavButton from "../../../../common/components/buttons/NavButton";
 import {
     Box,
     Heading,
-    HStack,
+    Show,
+    Stack,
     Text,
     useColorModeValue,
 } from "@chakra-ui/react";
@@ -35,22 +36,26 @@ export default function AccountCard({ account }) {
     );
 
     const EditButton = () => (
-        <HStack>
+        <Stack
+            direction={["column", null, null, "row"]}
+            align="end"
+            spacing={1}
+        >
             <NavButton
                 to={`../update/${accountId}`}
                 variant="tertiary"
                 leftIcon={<MdOutlineEdit size="18px" />}
             >
-                Edit
+                <Show above="lg">Edit</Show>
             </NavButton>
             <NavButton
                 to={`../delete/${accountId}`}
                 variant="tertiary"
                 leftIcon={<MdOutlineDelete size="20px" />}
             >
-                Delete
+                <Show above="lg">Delete</Show>
             </NavButton>
-        </HStack>
+        </Stack>
     );
 
     if (isError) {

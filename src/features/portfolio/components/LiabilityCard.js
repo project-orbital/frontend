@@ -1,4 +1,4 @@
-import { Badge, HStack, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Badge, Show, SimpleGrid, Stack, VStack } from "@chakra-ui/react";
 import NavButton from "../../../common/components/buttons/NavButton";
 import {
     MdOutlineDelete,
@@ -11,9 +11,6 @@ import currency from "currency.js";
 import { formatDistanceToNow } from "date-fns";
 
 export default function LiabilityCard({ liability, payments }) {
-    console.log(liability);
-    console.log(payments);
-
     const stats = payments.reduce(
         (acc, payment) => ({
             paid: acc.paid.add(payment.amount),
@@ -30,22 +27,26 @@ export default function LiabilityCard({ liability, payments }) {
     );
 
     const Controls = () => (
-        <HStack>
+        <Stack
+            direction={["column", null, null, "row"]}
+            align="end"
+            spacing={1}
+        >
             <NavButton
                 to={`./liabilities/${liability.id}/update`}
                 variant="tertiary"
                 leftIcon={<MdOutlineEdit size="18px" />}
             >
-                Edit
+                <Show above="lg">Edit</Show>
             </NavButton>
             <NavButton
                 to={`./liabilities/${liability.id}/delete`}
                 variant="tertiary"
                 leftIcon={<MdOutlineDelete size="20px" />}
             >
-                Delete
+                <Show above="lg">Delete</Show>
             </NavButton>
-        </HStack>
+        </Stack>
     );
 
     return (

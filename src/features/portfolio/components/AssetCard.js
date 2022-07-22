@@ -1,6 +1,6 @@
 import BaseCard from "../../../common/components/cards/BaseCard";
 import NavButton from "../../../common/components/buttons/NavButton";
-import { HStack, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Show, SimpleGrid, Stack, VStack } from "@chakra-ui/react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import Stat from "../../../common/components/Stat";
@@ -29,22 +29,26 @@ export default function AssetCard({ asset, orders }) {
     );
 
     const Controls = () => (
-        <HStack>
+        <Stack
+            direction={["column", null, null, "row"]}
+            align="end"
+            spacing={1}
+        >
             <NavButton
                 to={`./assets/${asset.id}/update`}
                 variant="tertiary"
                 leftIcon={<MdOutlineEdit size="18px" />}
             >
-                Edit
+                <Show above="lg">Edit</Show>
             </NavButton>
             <NavButton
                 to={`./assets/${asset.id}/delete`}
                 variant="tertiary"
                 leftIcon={<MdOutlineDelete size="20px" />}
             >
-                Delete
+                <Show above="lg">Delete</Show>
             </NavButton>
-        </HStack>
+        </Stack>
     );
 
     return (
