@@ -1,18 +1,11 @@
 import { StrictMode } from "react";
 import { ChakraProvider, ColorModeScript, CSSReset } from "@chakra-ui/react";
-import {
-    BrowserRouter,
-    Outlet,
-    Route,
-    Routes,
-    useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import * as ReactDOMClient from "react-dom/client";
 import { persistor, store } from "./app/store";
 import { theme } from "./app/theme";
-import { motion } from "framer-motion";
 import AppTemplate from "./common/components/AppTemplate";
 
 import UserRoutes from "./site/user/UserRoutes";
@@ -20,8 +13,6 @@ import DashboardRoutes from "./features/dashboard/DashboardRoutes";
 import AccountsRoutes from "./features/accounts/AccountsRoutes";
 import SettingsRoutes from "./features/settings/SettingsRoutes";
 import DocsRoutes from "./site/docs/DocsRoutes";
-
-import Portfolio from "./features/portfolio/Portfolio";
 import Plan from "./features/plan/Budget";
 
 import Learn from "./features/learn/Learn";
@@ -31,6 +22,7 @@ import ContributionReport from "./features/learn/components/ReportContribution";
 import BudgetDeleteModal from "./features/plan/components/BudgetDelete";
 import BudgetUpdate from "./features/plan/components/BudgetUpdate";
 import BudgetCreate from "./features/plan/components/BudgetCreate";
+import PortfolioRoutes from "./features/portfolio/PortfolioRoutes";
 
 const pageVariants = {
     initial: {
@@ -51,17 +43,17 @@ const pageTransition = {
 };
 
 const AnimationLayout = () => {
-    const { pathname } = useLocation();
+    // const { pathname } = useLocation();
     return (
-        <motion.div
-            key={pathname}
-            initial="initial"
-            animate="in"
-            variants={pageVariants}
-            transition={pageTransition}
-        >
-            <Outlet />
-        </motion.div>
+        // <motion.div
+        //     key={pathname}
+        //     initial="initial"
+        //     animate="in"
+        //     variants={pageVariants}
+        //     transition={pageTransition}
+        // >
+        <Outlet />
+        // </motion.div>
     );
 };
 
@@ -73,6 +65,7 @@ const routes = (
             <Route path="/docs/*" element={<DocsRoutes />} />
             <Route path="/dashboard/*" element={<DashboardRoutes />} />
             <Route path="/accounts/*" element={<AccountsRoutes />} />
+            <Route path="/portfolio/*" element={<PortfolioRoutes />} />
             <Route path="/settings/*" element={<SettingsRoutes />} />
             <Route
                 path="learn"
@@ -89,19 +82,6 @@ const routes = (
                     <Route path="contribute" element={<ContributionCreate />} />
                     <Route path="report/:id" element={<ContributionReport />} />
                 </Route>
-            </Route>
-            <Route
-                path="portfolio"
-                element={
-                    <AppTemplate
-                        page="portfolio"
-                        path={["Home", "Portfolio"]}
-                        links={["/dashboard", "/portfolio"]}
-                        title="Portfolio"
-                    />
-                }
-            >
-                <Route path="" element={<Portfolio />} />
             </Route>
             <Route
                 path="plan"
