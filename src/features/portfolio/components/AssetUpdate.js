@@ -1,7 +1,7 @@
 import FormModal from "../../../common/components/form/FormModal";
 import * as Yup from "yup";
-import { useCreateAssetMutation } from "../../../app/api";
-import { useNavigate } from "react-router-dom";
+import { useReadAssetQuery, useUpdateAssetMutation } from "../../../app/api";
+import { useNavigate, useParams } from "react-router-dom";
 import { FormControl, FormHelperText, useToast } from "@chakra-ui/react";
 import {
     InputControl,
@@ -9,19 +9,26 @@ import {
     SelectControl,
 } from "formik-chakra-ui";
 
-export default function AssetCreate() {
-    const [createAsset] = useCreateAssetMutation();
+export default function AssetUpdate() {
+    const { assetId } = useParams();
+    const { data: asset, isLoading, isError } = useReadAssetQuery(assetId);
+    const [updateAsset] = useUpdateAssetMutation();
     const navigate = useNavigate();
     const toast = useToast();
+
+    if (isLoading) {
+        return null;
+    }
+    if (isError) {
+        return null;
+    }
 
     async function handleSubmit(values, { setErrors }) {
         try {
             toast.closeAll();
-            await createAsset(values).unwrap();
+            await updateAsset({ id: assetId, ...values }).unwrap();
             toast({
-                title: "Asset added.",
-                description:
-                    "You can now record your buy and sell orders for this asset.",
+                title: "Asset updated.",
                 status: "success",
             });
             navigate("../");
@@ -36,17 +43,17 @@ export default function AssetCreate() {
 
     return (
         <FormModal
-            title="Adding your asset..."
-            heading="We need some details about this asset."
-            subheading="Please fill out the form below to add your asset."
-            cancelText={`Cancel asset creation`}
-            submitText={`Add asset`}
+            title="Editing asset records..."
+            heading={`What do you wish to update for ${asset.name}?`}
+            subheading="The existing asset information has been pre-filled for you."
+            cancelText={`Cancel update`}
+            submitText={`Update asset`}
             initialValues={{
-                name: "",
-                symbol: "",
-                category: "",
-                price: "",
-                yield: "",
+                name: asset.name,
+                symbol: asset.symbol,
+                category: asset.category,
+                price: asset.price,
+                yield: asset.yield,
             }}
             validationSchema={Yup.object({
                 name: Yup.string()

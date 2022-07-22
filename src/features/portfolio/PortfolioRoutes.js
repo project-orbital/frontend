@@ -4,6 +4,8 @@ import Portfolio from "./Portfolio";
 import AssetCreate from "./components/AssetCreate";
 import LiabilityCreate from "./components/LiabilityCreate";
 import OrderCreate from "./components/OrderCreate";
+import AssetUpdate from "./components/AssetUpdate";
+import AssetDelete from "./components/AssetDelete";
 
 export default function PortfolioRoutes() {
     return (
@@ -23,6 +25,8 @@ export default function PortfolioRoutes() {
                     <Route path="assets">
                         <Route path="create" element={<AssetCreate />} />
                         <Route path=":assetId">
+                            <Route path="update" element={<AssetUpdate />} />
+                            <Route path="delete" element={<AssetDelete />} />
                             <Route path="orders">
                                 <Route path="create">
                                     <Route

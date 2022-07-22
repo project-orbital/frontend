@@ -24,7 +24,7 @@ export default function AssetCard({ asset, orders }) {
             value: currency(0),
             buys: 0,
             sells: 0,
-            last: "",
+            last: "-",
         }
     );
 
@@ -56,7 +56,9 @@ export default function AssetCard({ asset, orders }) {
             <Stat
                 variant="primary"
                 value={stats.value.format({ symbol: "SGD " })}
-                label={`≈ ${stats.amount.value} ${asset.symbol}`}
+                label={`${stats.amount.intValue === 0 ? "=" : "≈"} ${
+                    stats.amount.value
+                } ${asset.symbol}`}
             />
             <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
                 <Stat
@@ -65,9 +67,13 @@ export default function AssetCard({ asset, orders }) {
                 />
                 <Stat
                     label="Average Price"
-                    value={stats.value
-                        .divide(stats.amount)
-                        .format({ symbol: "SGD " })}
+                    value={
+                        stats.amount.intValue === 0
+                            ? "-"
+                            : stats.value
+                                  .divide(stats.amount)
+                                  .format({ symbol: "SGD " })
+                    }
                 />
                 <Stat
                     label="Annual Yield"
@@ -77,7 +83,7 @@ export default function AssetCard({ asset, orders }) {
                 <Stat label="Buy Orders" value={stats.buys} />
                 <Stat label="Sell Orders" value={stats.sells} />
             </SimpleGrid>
-            <VStack align="start" spacing={4}>
+            <VStack align="start" spacing={4} pt={2}>
                 <NavButton
                     to={`./assets/${asset.id}/orders/create/buy`}
                     variant="primary"

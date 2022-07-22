@@ -85,7 +85,24 @@ export default function Portfolio() {
                 />
             ))}
             <CreateCard />
-            <Outlet />
+            <Outlet
+                context={{
+                    assets: assets,
+                    liabilities: liabilities,
+                    orders: orders,
+                    payments: payments,
+                    isLoading:
+                        isAssetsLoading ||
+                        isLiabilitiesLoading ||
+                        isOrdersLoading ||
+                        isPaymentsLoading,
+                    isError:
+                        isAssetsError ||
+                        isLiabilitiesError ||
+                        isOrdersError ||
+                        isPaymentsError,
+                }}
+            />
         </>
     );
 }
