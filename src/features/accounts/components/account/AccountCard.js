@@ -67,21 +67,17 @@ export default function AccountCard({ account }) {
             <BaseCard
                 title={account.name}
                 subtitle={account.nickname}
+                heading="You haven't added any transactions to this account yet."
+                subheading="Once you've added a transaction, you'll see it and the
+                        account balance here."
                 button={<EditButton />}
                 link={`/accounts/${accountId}`}
             >
-                <Box>
-                    <Text fontSize="xl" fontWeight="bold">
-                        {
-                            "You haven't added any transactions to this account yet."
-                        }
-                    </Text>
-                    <Text>
-                        Once you've added a transaction, you'll see it and the
-                        account balance here.
-                    </Text>
-                </Box>
-                <NavButton to={`./${accountId}`} text="Go to account" />
+                <NavButton
+                    to={`./${accountId}`}
+                    text="Go to account"
+                    withArrow
+                />
             </BaseCard>
         );
     }

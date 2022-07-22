@@ -1,4 +1,4 @@
-import { Box, GridItem, Text } from "@chakra-ui/react";
+import { GridItem } from "@chakra-ui/react";
 import TransactionsCard from "./components/TransactionsCard";
 import NetWorthCard from "./components/NetWorthCard";
 import AssetAllocationCard from "./components/AssetAllocationCard";
@@ -24,20 +24,15 @@ export default function Dashboard() {
 
     if (!isLoading && accounts.length === 0) {
         return (
-            <BaseCard>
-                <Box>
-                    <Text fontSize="xl" fontWeight="bold">
-                        {"You haven't created an account yet."}
-                    </Text>
-                    <Text>
-                        Once you've created an account, you'll see your
-                        transactions and net worth here.
-                    </Text>
-                </Box>
+            <BaseCard
+                heading="You haven't created an account yet."
+                subheading="Once you've created an account, you'll see your
+                        transactions and net worth here."
+            >
                 <NavButton
                     to="/accounts/create"
                     text="Create an account"
-                    p={8}
+                    withArrow
                 />
             </BaseCard>
         );

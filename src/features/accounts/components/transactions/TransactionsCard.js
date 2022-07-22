@@ -44,6 +44,7 @@ export default function TransactionsCard() {
                         to="./transactions/create/withdrawal"
                         icon={<MdOutlineCallMade color="white" size="20px" />}
                         text="Add a withdrawal transaction"
+                        withArrow
                     />
                     <NavButton
                         to="./transactions/create/deposit"
@@ -51,6 +52,7 @@ export default function TransactionsCard() {
                             <MdOutlineCallReceived color="white" size="20px" />
                         }
                         text="Add a deposit transaction"
+                        withArrow
                     />
                 </VStack>
             </BaseCard>
@@ -132,11 +134,13 @@ export default function TransactionsCard() {
                     to="./transactions/create/withdrawal"
                     icon={<MdOutlineCallMade color="white" size="20px" />}
                     text="Add a withdrawal transaction"
+                    withArrow
                 />
                 <NavButton
                     to="./transactions/create/deposit"
                     icon={<MdOutlineCallReceived color="white" size="20px" />}
                     text="Add a deposit transaction"
+                    withArrow
                 />
             </VStack>
         </TableCard>
