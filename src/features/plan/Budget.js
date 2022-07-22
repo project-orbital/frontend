@@ -1,11 +1,18 @@
-import { AspectRatio, Box, GridItem, VStack } from "@chakra-ui/react";
-import Card from "../../common/components/Card";
+import {
+    AspectRatio,
+    Box,
+    CircularProgress,
+    CircularProgressLabel,
+    GridItem,
+    SimpleGrid,
+    VStack,
+} from "@chakra-ui/react";
 import {
     compareAsc,
     differenceInCalendarDays,
     differenceInDays,
     format,
-    formatDistanceStrict,
+    formatDistance,
     isAfter,
     isBefore,
     isEqual,
@@ -13,11 +20,7 @@ import {
     parseISO,
 } from "date-fns";
 import NavButton from "../../common/components/buttons/NavButton";
-import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
 import { Outlet } from "react-router-dom";
-import LightTable from "../../common/components/visuals/LightTable";
-import BudgetAlert from "./components/BudgetAlert";
 import {
     useReadAccountsQuery,
     useReadBudgetQuery,
@@ -27,6 +30,8 @@ import BaseCard from "../../common/components/cards/BaseCard";
 import TableCard from "../../common/components/cards/TableCard";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import PieChart from "../../common/components/visuals/PieChart";
+import Stat from "../../common/components/Stat";
+import BudgetAlert from "./components/BudgetAlert";
 
 export default function Plan() {
     const {
@@ -95,8 +100,8 @@ export default function Plan() {
         .reduce((total, t) => total - t.amount, 0)
         .toFixed(2);
 
-    const remaining = (budget_amount - totalExpenses).toFixed(2);
-    const percentage = ((totalExpenses / budget_amount) * 100).toFixed(1);
+    const remaining = budget_amount - totalExpenses;
+    const percentage = Math.ceil((totalExpenses / budget_amount) * 100);
     const accountNickname = (id) => {
         const account = accounts.find((acc) => acc._id === id);
         return account.nickname;
@@ -112,7 +117,7 @@ export default function Plan() {
 
     const totalDays = differenceInCalendarDays(start_date, end_date);
     const daysFromStart = differenceInDays(start_date, new Date());
-    const progress = ((daysFromStart / totalDays) * 100).toFixed(0);
+    const progress = Math.ceil((daysFromStart / totalDays) * 100);
     const spendingCategories = [
         "Dining",
         "Shopping",
@@ -131,35 +136,18 @@ export default function Plan() {
         ),
     }));
 
-    const DetailsCard = () => (
-        <Card heading="Budget Details">
-            <Card isNested>
-                <LightTable
-                    headers={[
-                        "Start Date",
-                        "End Date",
-                        "Duration",
-                        "Time left",
-                    ]}
-                    primary={[
-                        format(start_date, "dd LLLL yyyy"),
-                        format(end_date, "dd LLLL yyyy"),
-                        `${formatDistanceStrict(end_date, start_date)}`,
-                        !isPast(end_date) &&
-                            `${formatDistanceStrict(new Date(), end_date)}`,
-                    ]}
-                />
-            </Card>
-            <Card isNested>
-                <LightTable
-                    headers={["Budget", "Spent thus far", "Remaining"]}
-                    primary={[
-                        `$${budget_amount}`,
-                        `$${totalExpenses}`,
-                        `$${remaining}`,
-                    ]}
-                />
-            </Card>
+    const BudgetCard = () => (
+        <BaseCard title="Budget">
+            <Stat
+                variant="primary"
+                value={
+                    isPast(end_date)
+                        ? "-"
+                        : `SGD ${Math.abs(remaining)} ${
+                              remaining < 0 ? "over" : "under"
+                          } budget`
+                }
+            />
             <Box>
                 {progress >= 100 && percentage <= 100 ? (
                     <BudgetAlert isComplete />
@@ -171,116 +159,91 @@ export default function Plan() {
                     <BudgetAlert isOnTrack />
                 )}
             </Box>
-        </Card>
+            <CircularProgress
+                capIsRound
+                value={percentage}
+                size="200px"
+                thickness="4px"
+                color={
+                    percentage > 100
+                        ? "#DC2626"
+                        : percentage > 80
+                        ? "#f6ae3b"
+                        : "#3b82f6"
+                }
+            >
+                <CircularProgressLabel fontSize="lg">
+                    {isPast(end_date) ? "-" : `${percentage}% spent`}
+                </CircularProgressLabel>
+            </CircularProgress>
+            <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
+                <Stat label="Budget" value={`SGD ${budget_amount}`} />
+                <Stat label="Total Spent" value={`SGD ${totalExpenses}`} />
+            </SimpleGrid>
+        </BaseCard>
     );
 
     const ProgressCard = () => (
-        <Card heading="Progress (Time)">
-            <Card isNested>
-                <AspectRatio ratio={16 / 9}>
-                    <CircularProgressbar
-                        value={progress}
-                        text={
-                            progress >= 100 ? "Over!" : `${progress}% complete`
-                        }
-                        styles={buildStyles({
-                            pathColor:
-                                progress >= 100 && percentage > 100
-                                    ? "#DC2626"
-                                    : progress >= 100 && percentage <= 100
-                                    ? "#2fdc26"
-                                    : progress > 80
-                                    ? "#f6ae3b"
-                                    : "#3b82f6",
-                            trailColor: "#f5f5f5",
-                            textColor:
-                                progress >= 100 && percentage > 100
-                                    ? "#DC2626"
-                                    : progress >= 100 && percentage <= 100
-                                    ? "#2fdc26"
-                                    : progress > 80
-                                    ? "#f6ae3b"
-                                    : "#3b82f6",
-                            textSize: "10px",
-                        })}
-                    />
-                </AspectRatio>
-            </Card>
-        </Card>
+        <BaseCard title="Progress">
+            <Stat
+                variant="primary"
+                value={
+                    isPast(end_date)
+                        ? "-"
+                        : `${formatDistance(new Date(), end_date)} remaining`
+                }
+            />
+            <CircularProgress
+                capIsRound
+                value={progress}
+                size="200px"
+                thickness="4px"
+                color={
+                    progress >= 100 && percentage > 100
+                        ? "#DC2626"
+                        : progress >= 100 && percentage <= 100
+                        ? "#2fdc26"
+                        : progress > 80
+                        ? "#f6ae3b"
+                        : "#3b82f6"
+                }
+            >
+                <CircularProgressLabel fontSize="lg">
+                    {isPast(end_date) ? "-" : `${progress}% elapsed`}
+                </CircularProgressLabel>
+            </CircularProgress>
+            <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
+                <Stat
+                    label="Start Date"
+                    value={format(start_date, "dd LLLL yyyy")}
+                />
+                <Stat
+                    label="End Date"
+                    value={format(end_date, "dd LLLL yyyy")}
+                />
+                <Stat
+                    label="Total Duration"
+                    value={`${formatDistance(end_date, start_date)}`}
+                />
+            </SimpleGrid>
+        </BaseCard>
     );
 
-    const RemainderCard = () => {
-        if (spendingTransactions.length === 0) {
-            return null;
-        }
-        return (
-            <Card heading="Progress (Budget)">
-                <Card isNested>
-                    <AspectRatio ratio={16 / 9}>
-                        <CircularProgressbar
-                            value={percentage}
-                            text={`${percentage}% spent`}
-                            styles={buildStyles({
-                                pathColor:
-                                    percentage > 100
-                                        ? "#DC2626"
-                                        : percentage > 80
-                                        ? "#f6ae3b"
-                                        : "#3b82f6",
-                                trailColor: "#f5f5f5",
-                                textColor:
-                                    percentage > 100
-                                        ? "#DC2626"
-                                        : percentage > 80
-                                        ? "#f6ae3b"
-                                        : "#3b82f6",
-                                textSize: "10px",
-                            })}
-                        />
-                    </AspectRatio>
-                </Card>
-            </Card>
-        );
-    };
+    const ExpensesCard = () => (
+        <TableCard
+            title="Expenses"
+            subtitle="We only import the expenses which occur over the course of this budget."
+            tableProps={{
+                values: tabledTransactions,
+            }}
+        >
+            <AspectRatio ratio={16 / 9}>
+                <PieChart data={spendingsData} />
+            </AspectRatio>
+        </TableCard>
+    );
 
-    const CategoriesCard = () => {
-        if (spendingTransactions.length === 0) {
-            return null;
-        }
-        return (
-            <Card heading="Expenses by Category">
-                <Card isNested>
-                    <AspectRatio ratio={16 / 9}>
-                        <PieChart data={spendingsData} />
-                    </AspectRatio>
-                </Card>
-            </Card>
-        );
-    };
-
-    const SpendingTransactionsCard = () => {
-        if (spendingTransactions.length === 0) {
-            return (
-                <BaseCard
-                    heading="No relevant expenses were found for the duration of this budget."
-                    subheading="We automatically import your expenses from your accounts, but didn't find any."
-                >
-                    <NavButton to="/accounts" text="Go to accounts" withArrow />
-                </BaseCard>
-            );
-        }
-        return (
-            <TableCard
-                title="Expenses"
-                subtitle="We only import the expenses which occur over the course of this budget."
-                tableProps={{
-                    values: tabledTransactions,
-                }}
-            />
-        );
-    };
-
-    const BudgetManagementCard = () => {
+    const SettingsCard = () => {
         return (
             <BaseCard
                 title="Settings"
@@ -305,17 +268,31 @@ export default function Plan() {
         );
     };
 
+    if (spendingTransactions.length === 0) {
+        return (
+            <>
+                <BaseCard
+                    heading="No relevant expenses were found for the duration of this budget."
+                    subheading="We automatically import your expenses from your accounts, but didn't find any."
+                >
+                    <NavButton to="/accounts" text="Go to accounts" withArrow />
+                </BaseCard>
+                <BudgetCard />
+                <ProgressCard />
+                <SettingsCard />
+            </>
+        );
+    }
+
     return (
         <>
-            <DetailsCard />
+            <BudgetCard />
             <ProgressCard />
-            <RemainderCard />
-            <CategoriesCard />
             <GridItem colSpan={[1, null, 2]}>
-                <SpendingTransactionsCard />
+                <ExpensesCard />
             </GridItem>
             <GridItem colSpan={[1, null, 2]}>
-                <BudgetManagementCard />
+                <SettingsCard />
             </GridItem>
             <Outlet />
         </>
