@@ -105,6 +105,10 @@ export const api = createApi({
                 "Contributions",
                 "ReportedContributions",
                 "Budget",
+                "Assets",
+                "Liabilities",
+                "Orders",
+                "Payments",
             ],
         }),
         signOut: builder.mutation({
@@ -121,6 +125,10 @@ export const api = createApi({
                 "Contributions",
                 "ReportedContributions",
                 "Budget",
+                "Assets",
+                "Liabilities",
+                "Orders",
+                "Payments",
             ],
         }),
         deleteUserData: builder.mutation({
@@ -140,6 +148,10 @@ export const api = createApi({
                 "Contributions",
                 "ReportedContributions",
                 "Budget",
+                "Assets",
+                "Liabilities",
+                "Orders",
+                "Payments",
             ],
         }),
         // === === ===
