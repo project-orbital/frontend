@@ -3,7 +3,7 @@ import { compareDesc, format } from "date-fns";
 import TableCard from "../../../common/components/cards/TableCard";
 import ActionButton from "../../../common/components/buttons/ActionButton";
 import { MdModeEditOutline } from "react-icons/md";
-import { Box, Skeleton, Text } from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
 import BaseCard from "../../../common/components/cards/BaseCard";
 import NavButton from "../../../common/components/buttons/NavButton";
 
@@ -39,17 +39,12 @@ export default function TransactionsCard() {
 
     if (transactions.length === 0) {
         return (
-            <BaseCard>
-                <Box>
-                    <Text fontSize="xl" fontWeight="bold">
-                        {"You haven't added any transactions yet."}
-                    </Text>
-                    <Text>
-                        Once you've added a transaction to an account, you'll
-                        see your transactions here.
-                    </Text>
-                </Box>
-                <NavButton to="/accounts" text="Go to accounts" />
+            <BaseCard
+                heading="You haven't added any transactions yet."
+                subheading="Once you've added a transaction to an account, you'll
+                        see your transactions here."
+            >
+                <NavButton to="/accounts" text="Go to accounts" withArrow />
             </BaseCard>
         );
     }

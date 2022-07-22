@@ -6,7 +6,7 @@ import { compareDesc, format } from "date-fns";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import BaseCard from "../../../../common/components/cards/BaseCard";
-import { Box, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
+import { HStack, IconButton, VStack } from "@chakra-ui/react";
 import TableCard from "../../../../common/components/cards/TableCard";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 
@@ -29,21 +29,17 @@ export default function TransactionsCard() {
     // Unique card to be displayed when no transactions are found.
     if (!isLoading && transactions.length === 0) {
         return (
-            <BaseCard>
-                <Box>
-                    <Text fontSize="xl" fontWeight="bold">
-                        {"You haven't added any transactions yet."}
-                    </Text>
-                    <Text>
-                        Once you've added a transaction, you'll see it and your
-                        account balance here.
-                    </Text>
-                </Box>
+            <BaseCard
+                heading="You haven't added any transactions yet."
+                subheading="Once you've added a transaction, you'll see it and your
+                        account balance here."
+            >
                 <VStack align="start" spacing={4}>
                     <NavButton
                         to="./transactions/create/withdrawal"
                         icon={<MdOutlineCallMade color="white" size="20px" />}
                         text="Add a withdrawal transaction"
+                        bgGradient="linear(to-br, red.400, red.600)"
                         withArrow
                     />
                     <NavButton
@@ -52,6 +48,7 @@ export default function TransactionsCard() {
                             <MdOutlineCallReceived color="white" size="20px" />
                         }
                         text="Add a deposit transaction"
+                        bgGradient="linear(to-br, blue.400, blue.600)"
                         withArrow
                     />
                 </VStack>
@@ -134,12 +131,14 @@ export default function TransactionsCard() {
                     to="./transactions/create/withdrawal"
                     icon={<MdOutlineCallMade color="white" size="20px" />}
                     text="Add a withdrawal transaction"
+                    bgGradient="linear(to-br, red.400, red.600)"
                     withArrow
                 />
                 <NavButton
                     to="./transactions/create/deposit"
                     icon={<MdOutlineCallReceived color="white" size="20px" />}
                     text="Add a deposit transaction"
+                    bgGradient="linear(to-br, blue.400, blue.600)"
                     withArrow
                 />
             </VStack>
