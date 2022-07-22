@@ -40,6 +40,19 @@ const transformTransaction = (tx) => ({
 });
 const transformTransactions = (response) => response.map(transformTransaction);
 
+const transformContribution = (c) => ({
+    _id: c._id,
+    header: c.header,
+    summary: c.summary,
+    link: c.link,
+    submissionDate: parseISO(c.submissionDate),
+    username: c.username,
+    likedBy: c.likedBy,
+});
+
+const transformContributions = (response) =>
+    response.map(transformContribution);
+
 // Define a service using a base URL and expected endpoints.
 // Tags are used to group related data together, and allow for cache invalidation
 // of the groups of data with the same tag. This is needed for automatic
@@ -49,7 +62,16 @@ const transformTransactions = (response) => response.map(transformTransaction);
 export const api = createApi({
     reducerPath: "api",
     baseQuery: kyBaseQuery({ baseUrl: process.env.REACT_APP_BACKEND }),
-    tagTypes: ["Account", "Accounts", "Transaction", "Transactions"],
+    tagTypes: [
+        "Account",
+        "Accounts",
+        "Transaction",
+        "Transactions",
+        "Contribution",
+        "Contributions",
+        "ReportedContributions",
+        "Budget",
+    ],
     endpoints: (builder) => ({
         // === === ===
         // User
@@ -62,10 +84,14 @@ export const api = createApi({
                 },
             }),
             invalidatesTags: [
-                "Transaction",
-                "Transactions",
                 "Account",
                 "Accounts",
+                "Transaction",
+                "Transactions",
+                "Contribution",
+                "Contributions",
+                "ReportedContributions",
+                "Budget",
             ],
         }),
         signOut: builder.mutation({
@@ -74,10 +100,14 @@ export const api = createApi({
                 method: "get",
             }),
             invalidatesTags: [
-                "Transaction",
-                "Transactions",
                 "Account",
                 "Accounts",
+                "Transaction",
+                "Transactions",
+                "Contribution",
+                "Contributions",
+                "ReportedContributions",
+                "Budget",
             ],
         }),
         deleteUserData: builder.mutation({
@@ -89,10 +119,14 @@ export const api = createApi({
                 },
             }),
             invalidatesTags: [
-                "Transaction",
-                "Transactions",
                 "Account",
                 "Accounts",
+                "Transaction",
+                "Transactions",
+                "Contribution",
+                "Contributions",
+                "ReportedContributions",
+                "Budget",
             ],
         }),
         // === === ===
@@ -106,11 +140,17 @@ export const api = createApi({
             invalidatesTags: ["Accounts"],
         }),
         readAccount: builder.query({
-            query: (id) => ({ url: `accounts/${id}`, method: "get" }),
+            query: (id) => ({
+                url: `accounts/${id}`,
+                method: "get",
+            }),
             providesTags: ["Account"],
         }),
         readAccounts: builder.query({
-            query: () => ({ url: "accounts", method: "get" }),
+            query: () => ({
+                url: "accounts",
+                method: "get",
+            }),
             providesTags: ["Accounts"],
         }),
         updateAccount: builder.mutation({
@@ -191,6 +231,95 @@ export const api = createApi({
             }),
             invalidatesTags: ["Transaction", "Transactions"],
         }),
+        // === === ===
+        // Contributions
+        createContribution: builder.mutation({
+            query: (values) => ({
+                url: "learn/contribute",
+                method: "post",
+                data: values,
+            }),
+            invalidatesTags: ["Contribution", "Contributions"],
+        }),
+        readContributions: builder.query({
+            query: () => ({
+                url: "learn",
+                method: "get",
+            }),
+            transformResponse: transformContributions,
+            providesTags: ["Contributions"],
+        }),
+        likeContribution: builder.mutation({
+            query: ({ id }) => ({
+                url: `learn/like/${id}`,
+                method: "put",
+                params: { id: id },
+            }),
+            invalidatesTags: ["Contributions"],
+        }),
+        unlikeContribution: builder.mutation({
+            query: ({ id }) => ({
+                url: `learn/unlike/${id}`,
+                method: "put",
+                params: { id: id },
+            }),
+            invalidatesTags: ["Contributions"],
+        }),
+        reportContribution: builder.mutation({
+            query: ({ id, ...values }) => ({
+                url: `learn/report/${id}`,
+                method: "put",
+                data: values,
+                params: { id: id },
+            }),
+            invalidatesTags: ["Contributions"],
+        }),
+        readReports: builder.query({
+            query: () => ({
+                url: "learn/reactions/reports",
+                method: "get",
+            }),
+            providesTags: ["Contributions"],
+        }),
+        readLikes: builder.query({
+            query: () => ({
+                url: "learn/reactions/likes",
+                method: "get",
+            }),
+            providesTags: ["Contributions"],
+        }),
+        // === === ===
+        // Budgeting
+        createBudget: builder.mutation({
+            query: (values) => ({
+                url: "budget",
+                method: "post",
+                data: values,
+            }),
+            invalidatesTags: ["Budget"],
+        }),
+        deleteBudget: builder.mutation({
+            query: () => ({
+                url: "budget",
+                method: "delete",
+            }),
+            invalidatesTags: ["Budget"],
+        }),
+        updateBudget: builder.mutation({
+            query: (values) => ({
+                url: "budget/update",
+                method: "put",
+                data: values,
+            }),
+            invalidatesTags: ["Budget"],
+        }),
+        readBudget: builder.query({
+            query: () => ({
+                url: "budget",
+                method: "get",
+            }),
+            providesTags: ["Budget"],
+        }),
     }),
 });
 
@@ -215,4 +344,17 @@ export const {
     useReadTransactionsInAccountQuery,
     useUpdateTransactionMutation,
     useDeleteTransactionMutation,
+    // Contributions
+    useCreateContributionMutation,
+    useReadContributionsQuery,
+    useLikeContributionMutation,
+    useUnlikeContributionMutation,
+    useReportContributionMutation,
+    useReadReportsQuery,
+    useReadLikesQuery,
+    // Budgets
+    useCreateBudgetMutation,
+    useDeleteBudgetMutation,
+    useUpdateBudgetMutation,
+    useReadBudgetQuery,
 } = api;

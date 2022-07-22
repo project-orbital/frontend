@@ -4,6 +4,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "./api";
 import filesReducer from "../features/accounts/state/files";
 import budgetsReducer from "../features/plan/state/budgets";
+import contributionsReducer from "../features/learn/state/contributions";
 import preferencesReducer from "../features/settings/state/preferences";
 import storage from "redux-persist/lib/storage";
 
@@ -23,6 +24,7 @@ const combinedReducer = combineReducers({
     files: filesReducer,
     preferences: preferencesReducer,
     budgets: budgetsReducer,
+    contributions: contributionsReducer,
     // Add the generated reducer as a specific top-level slice.
     [api.reducerPath]: api.reducer,
 });

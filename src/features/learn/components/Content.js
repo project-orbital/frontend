@@ -1,6 +1,5 @@
 import {
-    Button,
-    Stack,
+    SimpleGrid,
     Tab,
     TabList,
     TabPanel,
@@ -8,83 +7,105 @@ import {
     Tabs,
 } from "@chakra-ui/react";
 import BlogPostCard from "./BlogPostCard";
-import CollegeStudent from "../assets/collegestudent.jpeg";
-import YoungAdult from "../assets/youngadult.jpeg";
-import WorkingAdult from "../assets/workingadult.jpeg";
-import Parents from "../assets/parents.jpeg";
-import newbie from "../assets/newbie.jpeg";
-import WarrenBuffett from "../assets/warrenbuffett.png";
-import Longterm from "../assets/longterm.jpeg";
+import NavButton from "../../../common/components/buttons/NavButton";
+import Pic1 from "../assets/set1/a.jpeg";
+import Pic2 from "../assets/set1/b.jpeg";
+import Pic3 from "../assets/set1/c.jpeg";
+import Pic4 from "../assets/set1/d.jpeg";
+import { Outlet } from "react-router-dom";
+import { format } from "date-fns";
+import {
+    useReadContributionsQuery,
+    useReadLikesQuery,
+    useReadReportsQuery,
+} from "../../../app/api";
+import BudgetingTab from "./BudgetingTab";
+import InvestmentTab from "./InvestmentTab";
+import BaseCard from "../../../common/components/cards/BaseCard";
 
 export default function Content() {
+    // Grab the contributions and reactions from the API.
+    const {
+        data: contributions,
+        isLoading: isContributionsLoading,
+        isError: isContributionsError,
+    } = useReadContributionsQuery();
+
+    const {
+        data: reportedContributions,
+        isLoading: isReportsLoading,
+        isError: isReportsError,
+    } = useReadReportsQuery();
+
+    const {
+        data: likedContributions,
+        isLoading: isLikesLoading,
+        isError: isLikesError,
+    } = useReadLikesQuery();
+
+    // Wait for the API to return data.
+    if (isContributionsLoading || isReportsLoading || isLikesLoading) {
+        // We need this check to ensure that we don't get `undefined` data.
+        return null;
+    }
+    if (isContributionsError || isReportsError || isLikesError) {
+        // Ideally, we want to display some form of error message here,
+        // but in the interest of time, we'll just return null and display nothing.
+        return null;
+    }
+
+    const pics = [Pic4, Pic3, Pic2, Pic1];
+    const cards = contributions.map((contribution, index) => (
+        <BlogPostCard
+            id={contribution._id}
+            Picture={pics[index % 4]}
+            Header={contribution.header}
+            Summary={contribution.summary}
+            Link={contribution.link}
+            ContributedBy={contribution.username}
+            SubmissionDate={format(contribution.submissionDate, "dd LLLL yyyy")}
+            LikeButton
+            ReportButton
+            isLiked={likedContributions.includes(contribution._id)}
+            isReported={reportedContributions.includes(contribution._id)}
+            likeCount={contribution.likedBy.length}
+        />
+    ));
+
+    const SubmitArticleCard = () => (
+        <BaseCard
+            heading="Contribute useful resources."
+            subheading="Have some gems to share with the community?"
+        >
+            <NavButton to="./contribute" text="Contribute an article" />
+        </BaseCard>
+    );
+    const CommunityContributedTab = () => (
+        <SimpleGrid columns={4} spacing={8}>
+            {cards}
+            <SubmitArticleCard />
+        </SimpleGrid>
+    );
+
     return (
-        <Tabs size="sm">
-            <TabList>
-                <Tab>
-                    <Button>Budgeting</Button>
-                </Tab>
-                <Tab>
-                    <Button>Investment</Button>
-                </Tab>
-                <Tab>
-                    <Button>Community Contributed</Button>
-                </Tab>
+        <Tabs size="lg" colorScheme="gray">
+            <TabList mx={4} gap={4}>
+                <Tab>Budgeting</Tab>
+                <Tab>Investment</Tab>
+                <Tab>Community Contributed</Tab>
             </TabList>
-            <TabPanels>
+            <TabPanels pt={4}>
                 <TabPanel>
-                    <Stack direction={"row"} spacing={10} align={"center"}>
-                        <BlogPostCard
-                            Header="For college students"
-                            Summary="6 important tips on how to manage money for college students with little to no income."
-                            Link="https://www.forbes.com/sites/jimwang/2019/10/09/6-crucial-money-tips-for-college-students/?sh=5f1f04b33aaf"
-                            Picture={CollegeStudent}
-                        />
-                        <BlogPostCard
-                            Header="For young adults"
-                            Summary="8 essential budgeting tips on how to spend less and save more. "
-                            Link="https://smartwealth.sg/50-30-20-budget-rule/"
-                            Picture={YoungAdult}
-                        />
-                        <BlogPostCard
-                            Header="For working adults"
-                            Summary="Learn more about the 50/30/20 Budgeting Rule to allocate your monthly salary better."
-                            Link="https://smartwealth.sg/50-30-20-budget-rule/"
-                            Picture={WorkingAdult}
-                        />
-                        <BlogPostCard
-                            Header="For parents"
-                            Summary="Start early and teach your children the smart money habits."
-                            Link="https://www.investopedia.com/guide-allowances-and-kids-5217591"
-                            Picture={Parents}
-                        />
-                    </Stack>
+                    <BudgetingTab />
                 </TabPanel>
                 <TabPanel>
-                    <Stack direction={"row"} spacing={10} align={"center"}>
-                        <BlogPostCard
-                            Header="For newbies"
-                            Summary="It's important to know you what you are doing even before you get started."
-                            Link="https://www.strawberryinvest.com/knowledge-hub/top-10-tips-for-first-time-investors/"
-                            Picture={newbie}
-                        />
-                        <BlogPostCard
-                            Header="From Warren Buffett"
-                            Summary="Let's hear from one of the most successful investors in the world. "
-                            Link="https://www.simplysafedividends.com/intelligent-income/posts/37-top-10-pieces-of-investment-advice-from-warren-buffett"
-                            Picture={WarrenBuffett}
-                        />
-                        <BlogPostCard
-                            Header="Long term investing"
-                            Summary="For the majority of us, we should think about long term when it comes to investing."
-                            Link="https://www.investopedia.com/articles/00/082100.asp "
-                            Picture={Longterm}
-                        />
-                    </Stack>
+                    <InvestmentTab />
                 </TabPanel>
                 <TabPanel>
-                    <p>Feature coming soon!</p>
+                    <CommunityContributedTab />
                 </TabPanel>
             </TabPanels>
+            <Outlet />
         </Tabs>
     );
 }

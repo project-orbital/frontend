@@ -13,20 +13,24 @@ import * as ReactDOMClient from "react-dom/client";
 import { persistor, store } from "./app/store";
 import { theme } from "./app/theme";
 import { motion } from "framer-motion";
+import AppTemplate from "./common/components/AppTemplate";
 
 import UserRoutes from "./site/user/UserRoutes";
 import DashboardRoutes from "./features/dashboard/DashboardRoutes";
 import AccountsRoutes from "./features/accounts/AccountsRoutes";
 import SettingsRoutes from "./features/settings/SettingsRoutes";
+import DocsRoutes from "./site/docs/DocsRoutes";
 
 import Portfolio from "./features/portfolio/Portfolio";
-import Plan from "./features/plan/Plan";
+import Plan from "./features/plan/Budget";
+
 import Learn from "./features/learn/Learn";
-import CreateBudgetModal from "./features/plan/components/CreateBudgetModal";
-import BudgetDeleteModal from "./features/plan/components/DeleteBudgetModal";
-import AmendBudget from "./features/plan/components/AmendBudget";
-import DocsRoutes from "./site/docs/DocsRoutes";
-import AppTemplate from "./common/components/AppTemplate";
+import ContributionCreate from "./features/learn/components/ContributionCreate";
+import ContributionReport from "./features/learn/components/ReportContribution";
+
+import BudgetDeleteModal from "./features/plan/components/BudgetDelete";
+import BudgetUpdate from "./features/plan/components/BudgetUpdate";
+import BudgetCreate from "./features/plan/components/BudgetCreate";
 
 const pageVariants = {
     initial: {
@@ -81,7 +85,10 @@ const routes = (
                     />
                 }
             >
-                <Route path="" element={<Learn />} />
+                <Route path="" element={<Learn />}>
+                    <Route path="contribute" element={<ContributionCreate />} />
+                    <Route path="report/:id" element={<ContributionReport />} />
+                </Route>
             </Route>
             <Route
                 path="portfolio"
@@ -108,15 +115,12 @@ const routes = (
                 }
             >
                 <Route path="" element={<Plan />}>
-                    <Route
-                        path="create-budget"
-                        element={<CreateBudgetModal />}
-                    />
+                    <Route path="create-budget" element={<BudgetCreate />} />
                     <Route
                         path="delete-budget"
                         element={<BudgetDeleteModal />}
                     />
-                    <Route path="amend-budget" element={<AmendBudget />} />
+                    <Route path="update-budget" element={<BudgetUpdate />} />
                 </Route>
             </Route>
         </Route>

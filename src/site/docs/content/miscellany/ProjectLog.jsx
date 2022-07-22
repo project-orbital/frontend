@@ -5,11 +5,6 @@ import { Prose } from "@nikolovlazar/chakra-ui-prose";
 // The raw HTML can be found in Tools > Source code in the app above.
 const code = `
 <h1>Project Log</h1>
-<h2>Zhizhou</h2>
-<p>
-    Section to be completed.
-</p>
-
 <h2>Jonathan</h2>
 <div>
 <table>
@@ -344,6 +339,200 @@ const code = `
 <tr>
 <td><span><strong>MILESTONE 2 SUB-TOTAL</strong></span></td>
 <td colspan=2><span><strong>98 hours</strong></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2>Zhizhou</h2>
+<div>
+<table>
+<thead>
+<tr>
+<th>
+<p><span><strong>ACTIVITY</strong></span></p>
+</th>
+<th>
+<p><span><strong>DATE</strong></span></p>
+</th>
+<th>
+<p><span><strong>DURATION</strong></span></p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span>Milestone 1 documentation &amp; meeting</span></td>
+<td><span>9 May</span></td>
+<td><span>2 hours</span></td>
+</tr>
+<tr>
+<td><span>Brainstorming and project poster</span></td>
+<td><span>9 May</span></td>
+<td><span>2 hours</span></td>
+</tr>
+<tr>
+<td><span>Project video</span></td>
+<td><span>12 May</span></td>
+<td><span>1 hour</span></td>
+</tr>
+<tr>
+<td><span>React course on Scrimba</span></td>
+<td><span>22 - 26 May</span></td>
+<td><span>12 hours</span></td>
+</tr>
+<tr>
+<td><span>Work review</span></td>
+<td><span>24- 28 May</span></td>
+<td><span>2 hour</span></td>
+</tr>
+<tr>
+<td><span>Update of project poster and project video</span></td>
+<td><span>29 May</span></td>
+<td><span>2 hours</span></td>
+</tr>
+<tr>
+<td><span><strong>MILESTONE 1 SUB-TOTAL</strong></span></td>
+<td colspan=2><span><strong>21 hours</strong></span></td>
+</tr>
+<tr>
+<tr>
+<td><span>Watch Orbital React workshop</span></td>
+<td><span>1 - 2 June</span></td>
+<td><span>5 hours</span></td>
+</tr>
+<td><span>Team meeting</span></td>
+<td><span>6 June</span></td>
+<td><span>3 hours</span></td>
+</tr>
+<tr>
+<td><span>Initial implementation of  email verification feature</span></td>
+<td><span>6 - 9 June</span></td>
+<td><span>17 hours</span></td>
+</tr>
+<tr>
+<td><span>Team Meeting</span></td>
+<td><span>9 June</span></td>
+<td><span>2 hours</span></td>
+</tr>
+<tr>
+<tr>
+<td><span>Troubleshoot  errors due to the different tech stack used by our team</span></td>
+<td><span>14 - 15 June</span></td>
+<td><span>6 hours</span></td>
+</tr>
+<tr>
+<tr>
+<td><span>Team Meeting</span></td>
+<td><span>15 June</span></td>
+<td><span>2 hours</span></td>
+</tr>
+<tr>
+<td><span>Finalising email verification feature</span></td>
+<td><span>15 - 16 June</span></td>
+<td><span>6hours</span></td>
+</tr>
+<tr>
+<td><span>Initial implementation of password reset feature on backend</span></td>
+<td><span>16 - 17 June</span></td>
+<td><span>4 hours</span></td>
+</tr>
+<tr>
+<td><span>Finalising password reset feature on frontend</span></td>
+<td><span>17 June</span></td>
+<td><span>4 hours</span></td>
+</tr>
+<tr>
+<td><span>Team Meeting</span></td>
+<td><span>20 June</span></td>
+<td><span>2 hour</span></td>
+</tr>
+<tr>
+<td><span>Implement Modal abstraction</span></td>
+<td><span>20 June</span></td>
+<td><span>3 hours</span></td>
+</tr>
+<tr>
+<td><span>Implement Orbital banner and made some UI changes</span></td>
+<td><span>21 June</span></td>
+<td><span>1 hour</span></td>
+</tr>
+<tr>
+<td><span>Implement Page not Founds</span></td>
+<td><span>21 June</span></td>
+<td><span>2 hour</span></td>
+</tr>
+<tr>
+<td><span>Implement Learn page</span></td>
+<td><span>22 - 23 June</span></td>
+<td><span>6 hours</span></td>
+</tr>
+<tr>
+<td><span>Brainstorm and research on “Plan your budget” feature</span></td>
+<td><span>23 June</span></td>
+<td><span>6 hour</span></td>
+</tr>
+<tr>
+<td><span>Enhance transactions feature to reflect type of transaction and categories of spending</span></td>
+<td><span>23 - 24 June</span></td>
+<td><span>3 hours</span></td>
+</tr>
+<tr>
+<td><span>Work on Budget Planner feature</span></td>
+<td><span>24 June</span></td>
+<td><span>3 hours</span></td>
+</tr>
+<tr>
+<td><span>Debug current features</span></td>
+<td><span>24 June</span></td>
+<td><span>3 hour</span></td>
+</tr>
+<tr>
+<td><span>Team meeting</span></td>
+<td><span>24 June</span></td>
+<td><span>2 hours</span></td>
+</tr>
+<tr>
+<td><span>Implement Budget Planner feature - Milestone 2 ver.</span></td>
+<td><span>26 June</span></td>
+<td><span>2 hours</span></td>
+</tr>
+<tr>
+<td><span>Writing documentation</span></td>
+<td><span>26 June</span></td>
+<td><span>1 hour</span></td>
+</tr>
+<tr>
+<td><span>Edit poster for Milestone 2</span></td>
+<td><span>27 June</span></td>
+<td><span>1 hour</span></td>
+</tr>
+<tr>
+<td><span>Team meeting</span></td>
+<td><span>15 June</span></td>
+<td><span>2 hours</span></td>
+</tr>
+<tr>
+<td><span>Video for Milestone 2</span></td>
+<td><span>27 June</span></td>
+<td><span>1 hour</span></td>
+</tr>
+<tr>
+<tr>
+<td><span><strong>MILESTONE 2 SUB-TOTAL</strong></span></td>
+<td colspan=2><span><strong>86 hours</strong></span></td>
+<tr>
+<td><span>Improve Budget Planner feature</span></td>
+<td><span>4 - 8 July</span></td>
+<td><span>30 hours</span></td>
+</tr>
+<tr>
+<td><span>Implement Learn - Community Contributed feature</span></td>
+<td><span>11 - 15 July</span></td>
+<td><span>30 hours</span></td>
+</tr>
+
+
 </tr>
 </tbody>
 </table>
