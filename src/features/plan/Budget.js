@@ -1,6 +1,5 @@
 import {
     AspectRatio,
-    Box,
     CircularProgress,
     CircularProgressLabel,
     GridItem,
@@ -103,9 +102,7 @@ export default function Plan() {
         .toFixed(2);
     const totalBudget = budget.budget.toFixed(2);
     const remainingBudget = totalBudget - totalExpenses;
-    const percentageSpentBudget = Math.ceil(
-        (totalExpenses / totalBudget) * 100
-    );
+    const percentage = Math.ceil((totalExpenses / totalBudget) * 100);
 
     // Tabulation
     const accountNickname = (id) => {
@@ -150,32 +147,24 @@ export default function Plan() {
                           } budget`
                 }
             />
-            <Box>
-                {progress >= 100 && percentageSpentBudget <= 100 ? (
-                    <BudgetAlert isComplete />
-                ) : percentageSpentBudget > 100 ? (
-                    <BudgetAlert HasOverSpent />
-                ) : percentageSpentBudget - progress > 0 ? (
-                    <BudgetAlert IsOverspending />
-                ) : (
-                    <BudgetAlert isOnTrack />
-                )}
-            </Box>
+            <BudgetAlert progress={progress} percentage={percentage} />
             <CircularProgress
                 capIsRound
-                value={percentageSpentBudget}
+                value={percentage}
                 size="200px"
                 thickness="4px"
                 color={
-                    percentageSpentBudget > 100
-                        ? "#DC2626"
-                        : percentageSpentBudget > 80
-                        ? "#f6ae3b"
-                        : "#3b82f6"
+                    percentage > 100
+                        ? "red.500"
+                        : percentage > progress
+                        ? "orange.400"
+                        : percentage > 80
+                        ? "yellow.400"
+                        : "green.400"
                 }
             >
                 <CircularProgressLabel fontSize="lg">
-                    {isPast(endDate) ? "-" : `${percentageSpentBudget}% spent`}
+                    {isPast(endDate) ? "-" : `${percentage}% spent`}
                 </CircularProgressLabel>
             </CircularProgress>
             <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
@@ -201,13 +190,11 @@ export default function Plan() {
                 size="200px"
                 thickness="4px"
                 color={
-                    progress >= 100 && percentageSpentBudget > 100
-                        ? "#DC2626"
-                        : progress >= 100 && percentageSpentBudget <= 100
-                        ? "#2fdc26"
-                        : progress > 80
-                        ? "#f6ae3b"
-                        : "#3b82f6"
+                    progress >= 100 && percentage > 100
+                        ? "red.500"
+                        : progress >= 100 && percentage <= 100
+                        ? "green.400"
+                        : "accent"
                 }
             >
                 <CircularProgressLabel fontSize="lg">

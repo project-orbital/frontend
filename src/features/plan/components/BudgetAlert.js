@@ -4,73 +4,64 @@ import {
     AlertIcon,
     AlertTitle,
     Box,
-    Spacer,
+    VStack,
 } from "@chakra-ui/react";
 import NavButton from "../../../common/components/buttons/NavButton";
 
-export default function BudgetAlert({
-    isComplete,
-    isOnTrack,
-    IsOverspending,
-    HasOverSpent,
-}) {
-    if (isComplete) {
+export default function BudgetAlert({ progress, percentage }) {
+    if (progress >= 100 && percentage <= 100) {
         return (
-            <Alert status="success" borderRadius="10px">
-                <AlertIcon />
-                <Box>
-                    <AlertTitle>Good job!</AlertTitle>
-                    <AlertDescription>
-                        You have successfully completed your budgeting plan.
-                    </AlertDescription>
-                </Box>
-                <Spacer />
+            <VStack spacing={4}>
+                <Alert status="success" borderRadius="lg">
+                    <AlertIcon />
+                    <Box pl={1}>
+                        <AlertTitle>Great job!</AlertTitle>
+                        <AlertDescription>
+                            You have completed your budget successfully!
+                        </AlertDescription>
+                    </Box>
+                </Alert>
                 <NavButton to="./create-budget" text="Create another budget" />
-            </Alert>
+            </VStack>
         );
     }
-
-    if (isOnTrack) {
+    if (percentage > 100) {
         return (
-            <Alert status="success" borderRadius="10px">
+            <Alert status="error" borderRadius="lg">
                 <AlertIcon />
-                <Box>
-                    <AlertTitle>Good Work</AlertTitle>
-                    <AlertDescription>
-                        You are currently on track with your budgeting!
-                    </AlertDescription>
-                </Box>
-            </Alert>
-        );
-    }
-
-    if (IsOverspending) {
-        return (
-            <Alert status="warning" borderRadius="10px">
-                <AlertIcon />
-                <Box>
+                <Box pl={1}>
                     <AlertTitle>Oh no...</AlertTitle>
                     <AlertDescription>
-                        It appears that you are spending a little too much!
-                        Reduce your spending or adjust your budget!
+                        You have exceeded your budget. You can increase the
+                        budget or delete it.
                     </AlertDescription>
                 </Box>
             </Alert>
         );
     }
-
-    if (HasOverSpent) {
+    if (percentage > progress) {
         return (
-            <Alert status="error" borderRadius="10px">
+            <Alert status="warning" borderRadius="lg">
                 <AlertIcon />
-                <Box>
-                    <AlertTitle>Oops!</AlertTitle>
+                <Box pl={1}>
+                    <AlertTitle>Heads up!</AlertTitle>
                     <AlertDescription>
-                        You have currently exceeded your budget, you can amend
-                        the budgeted amount or delete the budget.
+                        You may be spending your budget too fast. Consider
+                        reducing your expenditure.
                     </AlertDescription>
                 </Box>
             </Alert>
         );
     }
+    return (
+        <Alert status="success" borderRadius="lg">
+            <AlertIcon />
+            <Box pl={1}>
+                <AlertTitle>Good job!</AlertTitle>
+                <AlertDescription>
+                    You are currently on track with your budget.
+                </AlertDescription>
+            </Box>
+        </Alert>
+    );
 }
