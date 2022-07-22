@@ -17,7 +17,6 @@ export default function LiabilityCreate() {
 
     async function handleSubmit(values, { setErrors }) {
         try {
-            console.log("hello");
             toast.closeAll();
             await createLiability(values).unwrap();
             toast({

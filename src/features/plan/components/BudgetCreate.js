@@ -3,7 +3,9 @@ import FormTextField from "../../../common/components/form/FormTextField";
 import FormModal from "../../../common/components/form/FormModal";
 import { useCreateBudgetMutation } from "../../../app/api";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
+import { FormControl, FormHelperText, useToast } from "@chakra-ui/react";
+import { add, format } from "date-fns";
+import { NumberInputControl } from "formik-chakra-ui";
 
 export default function BudgetCreate() {
     const [createBudget] = useCreateBudgetMutation();
@@ -30,27 +32,28 @@ export default function BudgetCreate() {
 
     return (
         <FormModal
-            title="Set your budget..."
-            heading="Please set a start date, end date and budget amount for
-                        your budget."
+            title="Creating your budget..."
             submitText="Create budget"
             initialValues={{
-                start_date: new Date(),
-                end_date: new Date(),
-                budget: 0,
+                start_date: format(new Date(), "yyyy-MM-dd"),
+                end_date: format(add(new Date(), { months: 1 }), "yyyy-MM-dd"),
+                budget: "",
             }}
             validationSchema={Yup.object().shape({
                 start_date: Yup.date().required("Please provide a date."),
                 end_date: Yup.date()
                     .min(
                         Yup.ref("start_date"),
-                        "End date should be later than start date and current date"
+                        "Please provide a date after the starting date."
                     )
                     .required("Please provide a date."),
                 budget: Yup.number()
                     .typeError("Please provide a numeric value.")
-                    .min(1)
-                    .required("Please provide a balance."),
+                    .min(
+                        0.01,
+                        "Please provide a positive value greater than 0."
+                    )
+                    .required("Please provide an amount."),
             })}
             onSubmit={handleSubmit}
         >
@@ -59,23 +62,30 @@ export default function BudgetCreate() {
                 isRequired
                 isDate
                 withErrorMessage
-                labelText="Start date"
+                labelText="Start Date"
             />
             <FormTextField
                 id="end_date"
                 isDate
                 isRequired
                 withErrorMessage
-                labelText="End date"
+                labelText="End Date"
             />
-            <FormTextField
-                id="budget"
-                isRequired
-                withErrorMessage
-                labelText="Budgeted Amount"
-                placeholderText="1000"
-                helperText="You can still change this later."
-            />
+            <FormControl>
+                <NumberInputControl
+                    isRequired
+                    name="budget"
+                    label="Budgeted Amount"
+                    numberInputProps={{
+                        precision: 2,
+                        step: 0.01,
+                        min: 0.01,
+                    }}
+                />
+                <FormHelperText>
+                    You can always change this later.
+                </FormHelperText>
+            </FormControl>
         </FormModal>
     );
 }

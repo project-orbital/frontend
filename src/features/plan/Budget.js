@@ -1,4 +1,4 @@
-import { AspectRatio, Box, GridItem } from "@chakra-ui/react";
+import { AspectRatio, Box, GridItem, VStack } from "@chakra-ui/react";
 import Card from "../../common/components/Card";
 import {
     compareAsc,
@@ -12,9 +12,7 @@ import {
     isPast,
     parseISO,
 } from "date-fns";
-import Table from "../../common/components/visuals/Table";
 import NavButton from "../../common/components/buttons/NavButton";
-import ExpensesCategoryCard from "./components/ExpensesCategoryCard";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Outlet } from "react-router-dom";
@@ -26,6 +24,9 @@ import {
     useReadTransactionsQuery,
 } from "../../app/api";
 import BaseCard from "../../common/components/cards/BaseCard";
+import TableCard from "../../common/components/cards/TableCard";
+import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
+import PieChart from "../../common/components/visuals/PieChart";
 
 export default function Plan() {
     const {
@@ -130,166 +131,190 @@ export default function Plan() {
         ),
     }));
 
+    const DetailsCard = () => (
+        <Card heading="Budget Details">
+            <Card isNested>
+                <LightTable
+                    headers={[
+                        "Start Date",
+                        "End Date",
+                        "Duration",
+                        "Time left",
+                    ]}
+                    primary={[
+                        format(start_date, "dd LLLL yyyy"),
+                        format(end_date, "dd LLLL yyyy"),
+                        `${formatDistanceStrict(end_date, start_date)}`,
+                        !isPast(end_date) &&
+                            `${formatDistanceStrict(new Date(), end_date)}`,
+                    ]}
+                />
+            </Card>
+            <Card isNested>
+                <LightTable
+                    headers={["Budget", "Spent thus far", "Remaining"]}
+                    primary={[
+                        `$${budget_amount}`,
+                        `$${totalExpenses}`,
+                        `$${remaining}`,
+                    ]}
+                />
+            </Card>
+            <Box>
+                {progress >= 100 && percentage <= 100 ? (
+                    <BudgetAlert isComplete />
+                ) : percentage > 100 ? (
+                    <BudgetAlert HasOverSpent />
+                ) : percentage - progress > 0 ? (
+                    <BudgetAlert IsOverspending />
+                ) : (
+                    <BudgetAlert isOnTrack />
+                )}
+            </Box>
+        </Card>
+    );
+
+    const ProgressCard = () => (
+        <Card heading="Progress (Time)">
+            <Card isNested>
+                <AspectRatio ratio={16 / 9}>
+                    <CircularProgressbar
+                        value={progress}
+                        text={
+                            progress >= 100 ? "Over!" : `${progress}% complete`
+                        }
+                        styles={buildStyles({
+                            pathColor:
+                                progress >= 100 && percentage > 100
+                                    ? "#DC2626"
+                                    : progress >= 100 && percentage <= 100
+                                    ? "#2fdc26"
+                                    : progress > 80
+                                    ? "#f6ae3b"
+                                    : "#3b82f6",
+                            trailColor: "#f5f5f5",
+                            textColor:
+                                progress >= 100 && percentage > 100
+                                    ? "#DC2626"
+                                    : progress >= 100 && percentage <= 100
+                                    ? "#2fdc26"
+                                    : progress > 80
+                                    ? "#f6ae3b"
+                                    : "#3b82f6",
+                            textSize: "10px",
+                        })}
+                    />
+                </AspectRatio>
+            </Card>
+        </Card>
+    );
+
+    const RemainderCard = () => {
+        if (spendingTransactions.length === 0) {
+            return null;
+        }
+        return (
+            <Card heading="Progress (Budget)">
+                <Card isNested>
+                    <AspectRatio ratio={16 / 9}>
+                        <CircularProgressbar
+                            value={percentage}
+                            text={`${percentage}% spent`}
+                            styles={buildStyles({
+                                pathColor:
+                                    percentage > 100
+                                        ? "#DC2626"
+                                        : percentage > 80
+                                        ? "#f6ae3b"
+                                        : "#3b82f6",
+                                trailColor: "#f5f5f5",
+                                textColor:
+                                    percentage > 100
+                                        ? "#DC2626"
+                                        : percentage > 80
+                                        ? "#f6ae3b"
+                                        : "#3b82f6",
+                                textSize: "10px",
+                            })}
+                        />
+                    </AspectRatio>
+                </Card>
+            </Card>
+        );
+    };
+
+    const CategoriesCard = () => {
+        if (spendingTransactions.length === 0) {
+            return null;
+        }
+        return (
+            <Card heading="Expenses by Category">
+                <Card isNested>
+                    <AspectRatio ratio={16 / 9}>
+                        <PieChart data={spendingsData} />
+                    </AspectRatio>
+                </Card>
+            </Card>
+        );
+    };
+
     const SpendingTransactionsCard = () => {
         if (spendingTransactions.length === 0) {
             return (
-                <Card
-                    isCentered
-                    heading="No transactions to display."
-                    subheading="There is no spending transaction in your accounts to import."
-                />
-            );
-        } else {
-            return (
-                <Card heading="Imported spending transactions">
-                    <Card isNested>
-                        <Table values={tabledTransactions} />
-                    </Card>
-                </Card>
+                <BaseCard
+                    heading="No relevant expenses were found for the duration of this budget."
+                    subheading="We automatically import your expenses from your accounts, but didn't find any."
+                >
+                    <NavButton to="/accounts" text="Go to accounts" withArrow />
+                </BaseCard>
             );
         }
+        return (
+            <TableCard
+                title="Expenses"
+                subtitle="We only import the expenses which occur over the course of this budget."
+                tableProps={{
+                    values: tabledTransactions,
+                }}
+            />
+        );
     };
 
     const BudgetManagementCard = () => {
         return (
-            <Card heading="Budget management">
-                <NavButton
-                    to="./update-budget"
-                    text="Update budget"
-                    bg="bg-danger"
-                    c="fg-danger"
-                />
-                <NavButton
-                    to="./delete-budget"
-                    text="Delete budget"
-                    bg="bg-danger"
-                    c="fg-danger"
-                />
-            </Card>
+            <BaseCard
+                title="Settings"
+                subtitle="You can manage your budget here."
+            >
+                <VStack align="start" spacing={4}>
+                    <NavButton
+                        to="./update-budget"
+                        text="Edit budget"
+                        bg="bg-danger"
+                        c="fg-danger"
+                        icon={<MdOutlineEdit size="18px" />}
+                    />
+                    <NavButton
+                        to="./delete-budget"
+                        text="Delete budget"
+                        bgGradient="linear(to-br, red.400, red.600)"
+                        icon={<MdOutlineDelete size="20px" />}
+                    />
+                </VStack>
+            </BaseCard>
         );
     };
+
     return (
         <>
-            <GridItem>
-                <Card heading="Budget Details">
-                    <Card isNested>
-                        <LightTable
-                            headers={[
-                                "Start Date",
-                                "End Date",
-                                "Duration",
-                                "Time left",
-                            ]}
-                            primary={[
-                                format(start_date, "dd LLLL yyyy"),
-                                format(end_date, "dd LLLL yyyy"),
-                                `${formatDistanceStrict(end_date, start_date)}`,
-                                !isPast(end_date) &&
-                                    `${formatDistanceStrict(
-                                        new Date(),
-                                        end_date
-                                    )}`,
-                            ]}
-                        />
-                    </Card>
-                    <Card isNested>
-                        <LightTable
-                            headers={["Budget", "Spent thus far", "Remaining"]}
-                            primary={[
-                                `$${budget_amount}`,
-                                `$${totalExpenses}`,
-                                `$${remaining}`,
-                            ]}
-                        />
-                    </Card>
-                    <Box>
-                        {progress >= 100 && percentage <= 100 ? (
-                            <BudgetAlert isComplete />
-                        ) : percentage > 100 ? (
-                            <BudgetAlert HasOverSpent />
-                        ) : percentage - progress > 0 ? (
-                            <BudgetAlert IsOverspending />
-                        ) : (
-                            <BudgetAlert isOnTrack />
-                        )}
-                    </Box>
-                </Card>
-            </GridItem>
-            <GridItem>
-                <Card heading="Progress (Time)">
-                    <Card isNested>
-                        <AspectRatio ratio={16 / 9}>
-                            <CircularProgressbar
-                                value={progress}
-                                text={
-                                    progress >= 100
-                                        ? "Over!"
-                                        : `${progress}% complete`
-                                }
-                                styles={buildStyles({
-                                    pathColor:
-                                        progress >= 100 && percentage > 100
-                                            ? "#DC2626"
-                                            : progress >= 100 &&
-                                              percentage <= 100
-                                            ? "#2fdc26"
-                                            : progress > 80
-                                            ? "#f6ae3b"
-                                            : "#3b82f6",
-                                    trailColor: "#f5f5f5",
-                                    textColor:
-                                        progress >= 100 && percentage > 100
-                                            ? "#DC2626"
-                                            : progress >= 100 &&
-                                              percentage <= 100
-                                            ? "#2fdc26"
-                                            : progress > 80
-                                            ? "#f6ae3b"
-                                            : "#3b82f6",
-                                    textSize: "10px",
-                                })}
-                            />
-                        </AspectRatio>
-                    </Card>
-                </Card>
-            </GridItem>
-            {!(spendingTransactions.length === 0) && (
-                <Card heading="Progress (Budget)">
-                    <Card isNested>
-                        <AspectRatio ratio={16 / 9}>
-                            <CircularProgressbar
-                                value={percentage}
-                                text={`${percentage}% spent`}
-                                styles={buildStyles({
-                                    pathColor:
-                                        percentage > 100
-                                            ? "#DC2626"
-                                            : percentage > 80
-                                            ? "#f6ae3b"
-                                            : "#3b82f6",
-                                    trailColor: "#f5f5f5",
-                                    textColor:
-                                        percentage > 100
-                                            ? "#DC2626"
-                                            : percentage > 80
-                                            ? "#f6ae3b"
-                                            : "#3b82f6",
-                                    textSize: "10px",
-                                })}
-                            />
-                        </AspectRatio>
-                    </Card>
-                </Card>
-            )}
-            <GridItem>
-                {!(spendingTransactions.length === 0) && (
-                    <ExpensesCategoryCard data={spendingsData} />
-                )}
-            </GridItem>
-            <GridItem colSpan={2}>
+            <DetailsCard />
+            <ProgressCard />
+            <RemainderCard />
+            <CategoriesCard />
+            <GridItem colSpan={[1, null, 2]}>
                 <SpendingTransactionsCard />
             </GridItem>
-            <GridItem>
+            <GridItem colSpan={[1, null, 2]}>
                 <BudgetManagementCard />
             </GridItem>
             <Outlet />

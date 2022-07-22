@@ -20,8 +20,6 @@ export default function TransactionsCard() {
         isError,
     } = useReadTransactionsInAccountQuery(accountId);
 
-    console.log(transactions);
-
     if (isError) {
         return;
     }
