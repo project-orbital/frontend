@@ -30,8 +30,9 @@ export default function UserContribute() {
 
     return (
         <FormModal
-            title="Contribute an article..."
-            heading="Submit this form to contirbute an article..."
+            title="Sharing an article..."
+            heading="Please be respectful and considerate of other users. "
+            subheading="Do not share inappropriate content."
             submitText="Contribute article"
             initialValues={{
                 header: "",
@@ -39,9 +40,9 @@ export default function UserContribute() {
                 link: "",
             }}
             validationSchema={Yup.object({
-                header: Yup.string().required("Please provide a text."),
-                summary: Yup.string().required("Please provide a text."),
-                link: Yup.string().required("Please provide a text."),
+                header: Yup.string().required("Please provide a title."),
+                summary: Yup.string().required("Please provide a summary."),
+                link: Yup.string().required("Please provide a link."),
             })}
             onSubmit={handleSubmit}
         >
@@ -49,20 +50,23 @@ export default function UserContribute() {
                 id="header"
                 isRequired
                 withErrorMessage
-                labelText="Header of your post"
+                labelText="Title"
+                placeholderText="Enter a short title"
             />
             <FormTextField
                 isMultiline
                 id="summary"
                 isRequired
                 withErrorMessage
-                labelText="Summary of the article"
+                labelText="Summary"
+                placeholderText="Enter a brief summary of the article."
             />
             <FormTextField
                 id="link"
                 isRequired
                 withErrorMessage
-                labelText="Link for the article"
+                labelText="Link"
+                placeholderText="Enter a link to the article"
             />
         </FormModal>
     );
