@@ -68,11 +68,11 @@ export default function LiabilityCard({ liability, payments }) {
                     label="Percentage Repaid"
                     value={`${
                         stats.paid.divide(liability.amount).multiply(100).value
-                    }%`}
+                    }% of total`}
                 />
                 <Stat
                     label="Annual Interest Rate"
-                    value={`${liability.interest}%`}
+                    value={`${liability.interest}% p.a.`}
                 />
                 <Stat label="Last Repayment" value={stats.last} />
                 <Stat label="Last Repayment Date" value={stats.asOf} />

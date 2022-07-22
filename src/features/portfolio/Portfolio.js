@@ -9,7 +9,7 @@ import AssetCard from "./components/AssetCard";
 import LiabilityCard from "./components/LiabilityCard";
 import BaseCard from "../../common/components/cards/BaseCard";
 import NavButton from "../../common/components/buttons/NavButton";
-import { VStack } from "@chakra-ui/react";
+import { Text, VStack } from "@chakra-ui/react";
 
 export default function Portfolio() {
     const {
@@ -51,8 +51,43 @@ export default function Portfolio() {
         return null;
     }
 
+    if (assets.length === 0 && liabilities.length === 0) {
+        return (
+            <>
+                <BaseCard>
+                    <VStack align="start" w="100%" spacing={0}>
+                        <Text fontSize="xl" fontWeight="bold" w="100%">
+                            You haven't added any assets or liabilities yet.
+                        </Text>
+                        <Text w="100%">
+                            Once you've added an asset or liability, you'll see
+                            it here.
+                        </Text>
+                    </VStack>
+                    <VStack align="start" spacing={4}>
+                        <NavButton to="./assets/create" variant="primary">
+                            Add an asset
+                        </NavButton>
+                        <NavButton to="./liabilities/create" variant="primary">
+                            Add a liability
+                        </NavButton>
+                    </VStack>
+                </BaseCard>
+                <Outlet />
+            </>
+        );
+    }
+
     const CreateCard = () => (
-        <BaseCard heading="Want to add another asset or liability?">
+        <BaseCard>
+            <VStack align="start" w="100%" spacing={0}>
+                <Text fontSize="xl" fontWeight="bold" w="100%">
+                    You can add more assets or liabilities here.
+                </Text>
+                <Text w="100%">
+                    Once you've added an asset or liability, you'll see it here.
+                </Text>
+            </VStack>
             <VStack align="start" spacing={4}>
                 <NavButton to="./assets/create" variant="primary">
                     Add an asset
