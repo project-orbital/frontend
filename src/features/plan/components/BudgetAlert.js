@@ -67,7 +67,7 @@ export default function BudgetAlert({
                     <AlertTitle>Oops!</AlertTitle>
                     <AlertDescription>
                         You have currently exceeded your budget, you can amend
-                        the budgeted amount or create a new budget.
+                        the budgeted amount or delete the budget.
                     </AlertDescription>
                 </Box>
             </Alert>

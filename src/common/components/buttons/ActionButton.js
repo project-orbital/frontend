@@ -52,6 +52,55 @@ export default function ActionButton({
         );
     }
 
+    if (variant === "report") {
+        return (
+            <Button
+                h={10}
+                p={4}
+                bg="bg-danger"
+                color="fg-danger"
+                isLoading={delay && isLoading}
+                onClick={handleClick}
+                transition="transform .1s"
+                _hover={{
+                    transform: "scale(1.05)",
+                    bg: "bg-danger",
+                }}
+                _active={{
+                    bg: "bg-danger",
+                }}
+                {...props}
+            >
+                {children}
+            </Button>
+        );
+    }
+
+    if (variant === "like") {
+        return (
+            <Button
+                h={10}
+                p={4}
+                bg="bg-blue"
+                color="white"
+                isLoading={delay && isLoading}
+                onClick={handleClick}
+                transition="transform .1s"
+                _hover={{
+                    transform: "scale(1.05)",
+                    bg: "bg-blue",
+                }}
+                _active={{
+                    bg: "bg-blue",
+                    color: "bg-blue",
+                }}
+                {...props}
+            >
+                {children}
+            </Button>
+        );
+    }
+
     return (
         <Button
             h="60px"

@@ -79,12 +79,13 @@ export default function NavButton({
     return (
         <Button
             as={Link}
-            to={to}
+            to={props.isDisabled ? "./" : to}
             px={16}
             py={8}
             rightIcon={withArrow && <BsFillCaretRightFill />}
             transition="transform .1s"
             {...buttonProps}
+            _hover={props.isDisabled ? {} : buttonProps._hover}
             {...props}
         >
             {icon && <Box pr="8px">{icon}</Box>}
