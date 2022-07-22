@@ -8,7 +8,7 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import {
-    compareAsc,
+    compareDesc,
     differenceInCalendarDays,
     differenceInDays,
     format,
@@ -19,19 +19,19 @@ import {
     isPast,
     parseISO,
 } from "date-fns";
-import NavButton from "../../common/components/buttons/NavButton";
 import { Outlet } from "react-router-dom";
 import {
     useReadAccountsQuery,
     useReadBudgetQuery,
     useReadTransactionsQuery,
 } from "../../app/api";
+import NavButton from "../../common/components/buttons/NavButton";
 import BaseCard from "../../common/components/cards/BaseCard";
 import TableCard from "../../common/components/cards/TableCard";
-import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import PieChart from "../../common/components/visuals/PieChart";
 import Stat from "../../common/components/Stat";
 import BudgetAlert from "./components/BudgetAlert";
+import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 
 export default function Plan() {
     const {
@@ -58,7 +58,6 @@ export default function Plan() {
     }
 
     if (isBudgetError || isTransactionsError || isAccountsError) {
-        // We need this check to ensure that we don't get `undefined` data.
         return null;
     }
 
@@ -80,34 +79,40 @@ export default function Plan() {
             </>
         );
     }
-    const start_date = parseISO(budget.start_date);
-    const end_date = parseISO(budget.end_date);
-    const budget_amount = budget.budget.toFixed(2);
 
-    const spendingTransactions = transactions
-        .filter((transaction) => transaction.amount < 0)
+    // Progress
+    const startDate = parseISO(budget.start_date);
+    const endDate = parseISO(budget.end_date);
+    const totalDuration = differenceInCalendarDays(startDate, endDate);
+    const elapsedDuration = differenceInDays(startDate, new Date());
+    const progress = Math.ceil((elapsedDuration / totalDuration) * 100);
+
+    // Budget
+    const expenses = transactions
         .filter(
             (transaction) =>
-                isEqual(start_date, transaction.date) ||
-                isEqual(end_date, transaction.date) ||
-                (isAfter(transaction.date, start_date) &&
-                    isBefore(transaction.date, end_date))
+                (transaction.amount < 0 &&
+                    isEqual(startDate, transaction.date)) ||
+                isEqual(endDate, transaction.date) ||
+                (isAfter(transaction.date, startDate) &&
+                    isBefore(transaction.date, endDate))
         )
-        .sort((a, b) => compareAsc(a.date, b.date))
-        .reverse();
-
-    const totalExpenses = spendingTransactions
+        .sort((a, b) => compareDesc(a.date, b.date));
+    const totalExpenses = expenses
         .reduce((total, t) => total - t.amount, 0)
         .toFixed(2);
+    const totalBudget = budget.budget.toFixed(2);
+    const remainingBudget = totalBudget - totalExpenses;
+    const percentageSpentBudget = Math.ceil(
+        (totalExpenses / totalBudget) * 100
+    );
 
-    const remaining = budget_amount - totalExpenses;
-    const percentage = Math.ceil((totalExpenses / budget_amount) * 100);
+    // Tabulation
     const accountNickname = (id) => {
         const account = accounts.find((acc) => acc._id === id);
         return account.nickname;
     };
-
-    const tabledTransactions = spendingTransactions.map((t) => ({
+    const tabledTransactions = expenses.map((t) => ({
         "account nickname": accountNickname(t.accountId),
         description: t.description,
         date: format(t.date, "dd LLLL yyyy"),
@@ -115,10 +120,8 @@ export default function Plan() {
         amount: t.amount.format({ symbol: "" }),
     }));
 
-    const totalDays = differenceInCalendarDays(start_date, end_date);
-    const daysFromStart = differenceInDays(start_date, new Date());
-    const progress = Math.ceil((daysFromStart / totalDays) * 100);
-    const spendingCategories = [
+    // Categorization
+    const categories = [
         "Dining",
         "Shopping",
         "Entertainment",
@@ -126,13 +129,12 @@ export default function Plan() {
         "Education",
         "Others",
     ];
-
-    const spendingsData = spendingCategories.map((c) => ({
-        key: c,
+    const categoryExpenditure = categories.map((category) => ({
+        key: category,
         value: Math.floor(
-            spendingTransactions
-                .filter((t) => t.category === c)
-                .reduce((total, t) => total - t.amount, 0)
+            expenses
+                .filter((tx) => tx.category === category)
+                .reduce((total, tx) => total - tx.amount, 0)
         ),
     }));
 
@@ -141,19 +143,19 @@ export default function Plan() {
             <Stat
                 variant="primary"
                 value={
-                    isPast(end_date)
+                    isPast(endDate)
                         ? "-"
-                        : `SGD ${Math.abs(remaining)} ${
-                              remaining < 0 ? "over" : "under"
+                        : `SGD ${Math.abs(remainingBudget)} ${
+                              remainingBudget < 0 ? "over" : "under"
                           } budget`
                 }
             />
             <Box>
-                {progress >= 100 && percentage <= 100 ? (
+                {progress >= 100 && percentageSpentBudget <= 100 ? (
                     <BudgetAlert isComplete />
-                ) : percentage > 100 ? (
+                ) : percentageSpentBudget > 100 ? (
                     <BudgetAlert HasOverSpent />
-                ) : percentage - progress > 0 ? (
+                ) : percentageSpentBudget - progress > 0 ? (
                     <BudgetAlert IsOverspending />
                 ) : (
                     <BudgetAlert isOnTrack />
@@ -161,23 +163,23 @@ export default function Plan() {
             </Box>
             <CircularProgress
                 capIsRound
-                value={percentage}
+                value={percentageSpentBudget}
                 size="200px"
                 thickness="4px"
                 color={
-                    percentage > 100
+                    percentageSpentBudget > 100
                         ? "#DC2626"
-                        : percentage > 80
+                        : percentageSpentBudget > 80
                         ? "#f6ae3b"
                         : "#3b82f6"
                 }
             >
                 <CircularProgressLabel fontSize="lg">
-                    {isPast(end_date) ? "-" : `${percentage}% spent`}
+                    {isPast(endDate) ? "-" : `${percentageSpentBudget}% spent`}
                 </CircularProgressLabel>
             </CircularProgress>
             <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
-                <Stat label="Budget" value={`SGD ${budget_amount}`} />
+                <Stat label="Budget" value={`SGD ${totalBudget}`} />
                 <Stat label="Total Spent" value={`SGD ${totalExpenses}`} />
             </SimpleGrid>
         </BaseCard>
@@ -188,9 +190,9 @@ export default function Plan() {
             <Stat
                 variant="primary"
                 value={
-                    isPast(end_date)
+                    isPast(endDate)
                         ? "-"
-                        : `${formatDistance(new Date(), end_date)} remaining`
+                        : `${formatDistance(new Date(), endDate)} remaining`
                 }
             />
             <CircularProgress
@@ -199,9 +201,9 @@ export default function Plan() {
                 size="200px"
                 thickness="4px"
                 color={
-                    progress >= 100 && percentage > 100
+                    progress >= 100 && percentageSpentBudget > 100
                         ? "#DC2626"
-                        : progress >= 100 && percentage <= 100
+                        : progress >= 100 && percentageSpentBudget <= 100
                         ? "#2fdc26"
                         : progress > 80
                         ? "#f6ae3b"
@@ -209,21 +211,21 @@ export default function Plan() {
                 }
             >
                 <CircularProgressLabel fontSize="lg">
-                    {isPast(end_date) ? "-" : `${progress}% elapsed`}
+                    {isPast(endDate) ? "-" : `${progress}% elapsed`}
                 </CircularProgressLabel>
             </CircularProgress>
             <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
                 <Stat
                     label="Start Date"
-                    value={format(start_date, "dd LLLL yyyy")}
+                    value={format(startDate, "dd LLLL yyyy")}
                 />
                 <Stat
                     label="End Date"
-                    value={format(end_date, "dd LLLL yyyy")}
+                    value={format(endDate, "dd LLLL yyyy")}
                 />
                 <Stat
                     label="Total Duration"
-                    value={`${formatDistance(end_date, start_date)}`}
+                    value={`${formatDistance(endDate, startDate)}`}
                 />
             </SimpleGrid>
         </BaseCard>
@@ -238,7 +240,7 @@ export default function Plan() {
             }}
         >
             <AspectRatio ratio={16 / 9}>
-                <PieChart data={spendingsData} />
+                <PieChart data={categoryExpenditure} />
             </AspectRatio>
         </TableCard>
     );
@@ -268,7 +270,7 @@ export default function Plan() {
         );
     };
 
-    if (spendingTransactions.length === 0) {
+    if (expenses.length === 0) {
         return (
             <>
                 <BaseCard
@@ -280,6 +282,7 @@ export default function Plan() {
                 <BudgetCard />
                 <ProgressCard />
                 <SettingsCard />
+                <Outlet />
             </>
         );
     }
