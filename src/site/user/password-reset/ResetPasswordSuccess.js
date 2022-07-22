@@ -1,5 +1,5 @@
 import { Center, Text } from "@chakra-ui/react";
-import PageTemplate from "../../PageTemplate";
+import PageTemplate from "../../components/PageTemplate";
 import NavButton from "../../../common/components/buttons/NavButton";
 
 export default function EmailVerified() {

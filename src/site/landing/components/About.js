@@ -1,5 +1,5 @@
 import { Box, Heading, SimpleGrid, VStack } from "@chakra-ui/react";
-import Card from "../../../common/components/Card";
+import Card from "../../components/Card";
 import { MdMenuBook, MdPersonSearch } from "react-icons/md";
 import { GiMoonOrbit } from "react-icons/gi";
 import { FaGithub } from "react-icons/fa";

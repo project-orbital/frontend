@@ -14,7 +14,7 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import ky from "ky";
-import PageTemplate from "../../PageTemplate";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function SignIn() {
     // === === ===

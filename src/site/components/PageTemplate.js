@@ -1,6 +1,6 @@
 import { Box, VStack } from "@chakra-ui/react";
-import Card from "../common/components/Card";
-import Navbar from "../common/components/navbar/Navbar";
+import Card from "./Card";
+import Navbar from "../../common/components/navbar/Navbar";
 
 /**
  * Template component for a page with the sidebar included.

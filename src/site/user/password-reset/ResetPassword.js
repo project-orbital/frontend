@@ -10,7 +10,7 @@ import {
     useToast,
     VStack,
 } from "@chakra-ui/react";
-import PageTemplate from "../../PageTemplate";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function ResetPassword() {
     const { userId, resetString } = useParams();
