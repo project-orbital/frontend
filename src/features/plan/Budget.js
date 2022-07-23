@@ -142,11 +142,15 @@ export default function Plan() {
                 value={
                     isPast(endDate)
                         ? "-"
-                        : `SGD ${Math.abs(remainingBudget)} ${
+                        : `SGD ${Math.abs(remainingBudget).toFixed(2)} ${
                               remainingBudget < 0 ? "over" : "under"
                           } budget`
                 }
             />
+            <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
+                <Stat label="Budget" value={`SGD ${totalBudget}`} />
+                <Stat label="Total Spent" value={`SGD ${totalExpenses}`} />
+            </SimpleGrid>
             <BudgetAlert progress={progress} percentage={percentage} />
             <CircularProgress
                 capIsRound
@@ -167,10 +171,6 @@ export default function Plan() {
                     {isPast(endDate) ? "-" : `${percentage}% spent`}
                 </CircularProgressLabel>
             </CircularProgress>
-            <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
-                <Stat label="Budget" value={`SGD ${totalBudget}`} />
-                <Stat label="Total Spent" value={`SGD ${totalExpenses}`} />
-            </SimpleGrid>
         </BaseCard>
     );
 
@@ -184,6 +184,20 @@ export default function Plan() {
                         : `${formatDistance(new Date(), endDate)} remaining`
                 }
             />
+            <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
+                <Stat
+                    label="Start Date"
+                    value={format(startDate, "dd LLLL yyyy")}
+                />
+                <Stat
+                    label="End Date"
+                    value={format(endDate, "dd LLLL yyyy")}
+                />
+                <Stat
+                    label="Total Duration"
+                    value={`${formatDistance(endDate, startDate)}`}
+                />
+            </SimpleGrid>
             <CircularProgress
                 capIsRound
                 value={progress}
@@ -201,20 +215,6 @@ export default function Plan() {
                     {isPast(endDate) ? "-" : `${progress}% elapsed`}
                 </CircularProgressLabel>
             </CircularProgress>
-            <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
-                <Stat
-                    label="Start Date"
-                    value={format(startDate, "dd LLLL yyyy")}
-                />
-                <Stat
-                    label="End Date"
-                    value={format(endDate, "dd LLLL yyyy")}
-                />
-                <Stat
-                    label="Total Duration"
-                    value={`${formatDistance(endDate, startDate)}`}
-                />
-            </SimpleGrid>
         </BaseCard>
     );
 
@@ -226,7 +226,7 @@ export default function Plan() {
                 values: tabledTransactions,
             }}
         >
-            <AspectRatio ratio={16 / 9}>
+            <AspectRatio ratio={32 / 9} my={32}>
                 <PieChart data={categoryExpenditure} />
             </AspectRatio>
         </TableCard>
