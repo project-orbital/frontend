@@ -1,15 +1,24 @@
-import { Text, useColorMode, useToast } from "@chakra-ui/react";
+import {
+    Text,
+    useColorMode,
+    useColorModeValue,
+    useToast,
+} from "@chakra-ui/react";
 import NavButton from "../../common/components/buttons/NavButton";
 import ky from "ky";
 import ActionButton from "../../common/components/buttons/ActionButton";
-import { CgDarkMode } from "react-icons/cg";
 import { TbEraser } from "react-icons/tb";
 import { AiOutlineUserDelete } from "react-icons/ai";
 import BaseCard from "../../common/components/cards/BaseCard";
 import { Outlet } from "react-router-dom";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 export default function Settings() {
     const toast = useToast();
+    const darkModeIcon = useColorModeValue(
+        <MoonIcon boxSize={[4]} />,
+        <SunIcon boxSize={[4]} />
+    );
 
     // Dark mode toggle
     const { colorMode, toggleColorMode } = useColorMode();
@@ -36,8 +45,13 @@ export default function Settings() {
                 title="Appearance"
                 subtitle="You can change how the app looks here."
             >
-                <ActionButton onClick={handleColorModeToggle} bg="bg" w="100%">
-                    <CgDarkMode size="25px" />
+                <ActionButton
+                    onClick={handleColorModeToggle}
+                    bgGradient="linear(to-br, gray.400, gray.600)"
+                    color="white"
+                    w="100%"
+                >
+                    {darkModeIcon}
                     <Text pl="10px">
                         {colorMode === "light" ? "Enable" : "Disable"} dark mode
                     </Text>
@@ -60,7 +74,7 @@ export default function Settings() {
             <BaseCard
                 title="Account Management"
                 subtitle="You can update your profile and/or your password here."
-                spacing={4}
+                spacing={6}
             >
                 <NavButton
                     variant="secondary"

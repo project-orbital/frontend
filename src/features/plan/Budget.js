@@ -242,8 +242,8 @@ export default function Plan() {
                     <NavButton
                         to="./update-budget"
                         text="Edit budget"
-                        bg="bg-danger"
-                        c="fg-danger"
+                        bgGradient="linear(to-br, gray.400, gray.600)"
+                        c="white"
                         icon={<MdOutlineEdit size="18px" />}
                     />
                     <NavButton

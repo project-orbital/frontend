@@ -46,7 +46,8 @@ export default function NavButton({
         textProps = { color: "white" };
     } else if (variant === "secondary") {
         buttonProps = {
-            bg: "bg",
+            bgGradient: "linear(to-br, gray.400, gray.600)",
+            color: "white",
             _hover: { transform: "scale(1.05)" },
         };
         textProps = { color: "fg" };
@@ -69,8 +70,8 @@ export default function NavButton({
         textProps = { color: "gray.200" };
     } else if (variant === "danger") {
         buttonProps = {
-            bg: "bg-danger",
-            color: "fg-danger",
+            bgGradient: "linear(to-br, red.400, red.600)",
+            color: "white",
             _hover: { transform: "scale(1.05)" },
         };
         textProps = { color: "fg-danger" };
