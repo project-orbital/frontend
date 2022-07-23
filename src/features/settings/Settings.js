@@ -48,8 +48,8 @@ export default function Settings() {
                 <ActionButton
                     onClick={handleColorModeToggle}
                     bgGradient="linear(to-br, gray.400, gray.600)"
+                    px={8}
                     color="white"
-                    w="100%"
                 >
                     {darkModeIcon}
                     <Text pl="10px">
@@ -68,7 +68,6 @@ export default function Settings() {
                     icon={<TbEraser size="25px" color="white" />}
                     to="erase-data"
                     text="Erase data"
-                    w="100%"
                 />
             </BaseCard>
             <BaseCard
@@ -80,20 +79,17 @@ export default function Settings() {
                     variant="secondary"
                     to="update-profile"
                     text="Update profile"
-                    w="100%"
                 />
                 <NavButton
                     variant="secondary"
                     to="./change-password"
                     text="Change password"
-                    w="100%"
                 />
                 <NavButton
                     variant="danger"
                     icon={<AiOutlineUserDelete size="25px" color="white" />}
                     to="delete-account"
                     text="Delete account"
-                    w="100%"
                 />
             </BaseCard>
             <Outlet />
