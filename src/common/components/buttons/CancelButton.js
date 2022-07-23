@@ -24,11 +24,16 @@ export default function CancelButton({ isNonDestructive, text, ...props }) {
         <Button
             h="60px"
             w="100%"
-            bg={isNonDestructive ? "dim" : "bg-danger"}
-            color={isNonDestructive ? "fg" : "fg-danger"}
+            bgGradient={
+                isNonDestructive
+                    ? "linear(to-br, gray.400, gray.600)"
+                    : "linear(to-br, red.400, red.600)"
+            }
+            color="white"
+            shadow="md"
             transition="transform .08s"
             _hover={{
-                transform: "scale(1.06)",
+                transform: "scale(1.03)",
             }}
             {...props}
         >

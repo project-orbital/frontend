@@ -93,8 +93,9 @@ export default function PieChart(props) {
                     data={props.data}
                     cx="50%"
                     cy="50%"
-                    innerRadius={40}
-                    outerRadius={90}
+                    innerRadius="50%"
+                    outerRadius="70%"
+                    margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
                     fill={props.color || "#662B42"}
                     nameKey="key"
                     dataKey="value"

@@ -2,12 +2,22 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import ky from "ky";
 import { parseISO } from "date-fns";
 import currency from "currency.js";
+import {
+    transformAsset,
+    transformAssets,
+    transformLiabilities,
+    transformLiability,
+    transformOrder,
+    transformOrders,
+    transformPayment,
+    transformPayments,
+} from "./transformers";
 
 // Nothing against the Fetch API, but since we're already using the `ky` library,
 // we can use their abstraction instead.
 const kyBaseQuery =
     ({ baseUrl } = { baseUrl: "" }) =>
-    async ({ url, method, data, params }) => {
+    async ({ url, method, data, params, headers, body }) => {
         try {
             const response = await ky(url, {
                 prefixUrl: baseUrl,
@@ -15,6 +25,8 @@ const kyBaseQuery =
                 json: data,
                 credentials: "include",
                 searchParams: params,
+                headers: headers,
+                body: body,
             }).json();
             return { data: response };
         } catch (error) {
@@ -47,7 +59,6 @@ const transformContribution = (c) => ({
     username: c.username,
     likedBy: c.likedBy,
 });
-
 const transformContributions = (response) =>
     response.map(transformContribution);
 
@@ -69,8 +80,80 @@ export const api = createApi({
         "Contributions",
         "ReportedContributions",
         "Budget",
+        "Assets",
+        "Liabilities",
+        "Orders",
+        "Payments",
     ],
     endpoints: (builder) => ({
+        // === === ===
+        // User
+        deleteUserAccount: builder.mutation({
+            query: (password) => ({
+                url: `users/preferences/delete-account`,
+                method: "delete",
+                headers: {
+                    password: password,
+                },
+            }),
+            invalidatesTags: [
+                "Account",
+                "Accounts",
+                "Transaction",
+                "Transactions",
+                "Contribution",
+                "Contributions",
+                "ReportedContributions",
+                "Budget",
+                "Assets",
+                "Liabilities",
+                "Orders",
+                "Payments",
+            ],
+        }),
+        signOut: builder.mutation({
+            query: () => ({
+                url: `users/sign-out`,
+                method: "get",
+            }),
+            invalidatesTags: [
+                "Account",
+                "Accounts",
+                "Transaction",
+                "Transactions",
+                "Contribution",
+                "Contributions",
+                "ReportedContributions",
+                "Budget",
+                "Assets",
+                "Liabilities",
+                "Orders",
+                "Payments",
+            ],
+        }),
+        deleteUserData: builder.mutation({
+            query: (password) => ({
+                url: `users/preferences/erase-data`,
+                method: "delete",
+                headers: {
+                    password: password,
+                },
+            }),
+            invalidatesTags: [
+                "Account",
+                "Accounts",
+                "Transaction",
+                "Transactions",
+                "Contribution",
+                "Contributions",
+                "ReportedContributions",
+                "Budget",
+                "Assets",
+                "Liabilities",
+                "Orders",
+                "Payments",
+            ],
+        }),
         // === === ===
         // Accounts
         createAccount: builder.mutation({
@@ -124,6 +207,14 @@ export const api = createApi({
                 data: values,
             }),
             invalidatesTags: ["Transactions"],
+        }),
+        createTransactionsFromStatements: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `api/upload/${id}`,
+                method: "post",
+                body: data,
+            }),
+            invalidatesTags: ["Transactions", "Transaction"],
         }),
         readTransaction: builder.query({
             query: (id) => ({
@@ -254,12 +345,198 @@ export const api = createApi({
             }),
             providesTags: ["Budget"],
         }),
+        // === === ===
+        // Assets
+        createAsset: builder.mutation({
+            query: (values) => ({
+                url: "assets",
+                method: "post",
+                data: values,
+            }),
+            invalidatesTags: ["Assets"],
+        }),
+        readAsset: builder.query({
+            query: (id) => ({
+                url: `assets/${id}`,
+                method: "get",
+            }),
+            transformResponse: transformAsset,
+            providesTags: ["Assets"],
+        }),
+        readAssets: builder.query({
+            query: () => ({
+                url: "assets",
+                method: "get",
+            }),
+            transformResponse: transformAssets,
+            providesTags: ["Assets"],
+        }),
+        updateAsset: builder.mutation({
+            query: ({ id, ...values }) => ({
+                url: `assets/${id}`,
+                method: "put",
+                data: values,
+            }),
+            invalidatesTags: ["Assets"],
+        }),
+        deleteAsset: builder.mutation({
+            query: (id) => ({
+                url: `assets/${id}`,
+                method: "delete",
+            }),
+            invalidatesTags: ["Assets", "Orders"],
+        }),
+        // === === ===
+        // Liabilities
+        createLiability: builder.mutation({
+            query: (values) => ({
+                url: "liabilities",
+                method: "post",
+                data: values,
+            }),
+            invalidatesTags: ["Liabilities"],
+        }),
+        readLiability: builder.query({
+            query: (id) => ({
+                url: `liabilities/${id}`,
+                method: "get",
+            }),
+            transformResponse: transformLiability,
+            providesTags: ["Liabilities"],
+        }),
+        readLiabilities: builder.query({
+            query: () => ({
+                url: "liabilities",
+                method: "get",
+            }),
+            transformResponse: transformLiabilities,
+            providesTags: ["Liabilities"],
+        }),
+        updateLiability: builder.mutation({
+            query: ({ id, ...values }) => ({
+                url: `liabilities/${id}`,
+                method: "put",
+                data: values,
+            }),
+            invalidatesTags: ["Liabilities"],
+        }),
+        deleteLiability: builder.mutation({
+            query: (id) => ({
+                url: `liabilities/${id}`,
+                method: "delete",
+            }),
+            invalidatesTags: ["Liabilities", "Payments"],
+        }),
+        // === === ===
+        // Orders
+        createOrder: builder.mutation({
+            query: (values) => ({
+                url: "orders",
+                method: "post",
+                data: values,
+            }),
+            invalidatesTags: ["Orders"],
+        }),
+        readOrder: builder.query({
+            query: (id) => ({
+                url: `orders/${id}`,
+                method: "get",
+            }),
+            transformResponse: transformOrder,
+            providesTags: ["Orders"],
+        }),
+        readOrders: builder.query({
+            query: () => ({
+                url: "orders",
+                method: "get",
+            }),
+            transformResponse: transformOrders,
+            providesTags: ["Orders"],
+        }),
+        readAssetOrders: builder.query({
+            query: (id) => ({
+                url: "orders",
+                method: "get",
+                params: { assetId: id },
+            }),
+            transformResponse: transformOrders,
+            providesTags: ["Orders"],
+        }),
+        updateOrder: builder.mutation({
+            query: ({ id, ...values }) => ({
+                url: `orders/${id}`,
+                method: "put",
+                data: values,
+            }),
+            invalidatesTags: ["Orders"],
+        }),
+        deleteOrder: builder.mutation({
+            query: (id) => ({
+                url: `orders/${id}`,
+                method: "delete",
+            }),
+            invalidatesTags: ["Orders"],
+        }),
+        // === === ===
+        // Payments
+        createPayment: builder.mutation({
+            query: (values) => ({
+                url: "payments",
+                method: "post",
+                data: values,
+            }),
+            invalidatesTags: ["Payments"],
+        }),
+        readPayment: builder.query({
+            query: (id) => ({
+                url: `payments/${id}`,
+                method: "get",
+            }),
+            transformResponse: transformPayment,
+            providesTags: ["Payments"],
+        }),
+        readPayments: builder.query({
+            query: () => ({
+                url: "payments",
+                method: "get",
+            }),
+            transformResponse: transformPayments,
+            providesTags: ["Payments"],
+        }),
+        readLiabilityPayments: builder.query({
+            query: (id) => ({
+                url: "payments",
+                method: "get",
+                params: { liabilityId: id },
+            }),
+            transformResponse: transformPayments,
+            providesTags: ["Payments"],
+        }),
+        updatePayment: builder.mutation({
+            query: ({ id, ...values }) => ({
+                url: `payments/${id}`,
+                method: "put",
+                data: values,
+            }),
+            invalidatesTags: ["Payments"],
+        }),
+        deletePayment: builder.mutation({
+            query: (id) => ({
+                url: `payments/${id}`,
+                method: "delete",
+            }),
+            invalidatesTags: ["Payments"],
+        }),
     }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints.
 export const {
+    // User
+    useDeleteUserDataMutation,
+    useDeleteUserAccountMutation,
+    useSignOutMutation,
     // Accounts
     useCreateAccountMutation,
     useReadAccountQuery,
@@ -268,6 +545,7 @@ export const {
     useDeleteAccountMutation,
     // Transactions
     useCreateTransactionMutation,
+    useCreateTransactionsFromStatementsMutation,
     useReadTransactionQuery,
     useReadTransactionsQuery,
     useReadTransactionsInAccountQuery,
@@ -286,4 +564,30 @@ export const {
     useDeleteBudgetMutation,
     useUpdateBudgetMutation,
     useReadBudgetQuery,
+    // Assets
+    useCreateAssetMutation,
+    useReadAssetQuery,
+    useReadAssetsQuery,
+    useUpdateAssetMutation,
+    useDeleteAssetMutation,
+    // Liabilities
+    useCreateLiabilityMutation,
+    useReadLiabilityQuery,
+    useReadLiabilitiesQuery,
+    useUpdateLiabilityMutation,
+    useDeleteLiabilityMutation,
+    // Orders
+    useCreateOrderMutation,
+    useReadOrderQuery,
+    useReadOrdersQuery,
+    useReadAssetOrdersQuery,
+    useUpdateOrderMutation,
+    useDeleteOrderMutation,
+    // Payments
+    useCreatePaymentMutation,
+    useReadPaymentQuery,
+    useReadPaymentsQuery,
+    useReadLiabilityPaymentsQuery,
+    useUpdatePaymentMutation,
+    useDeletePaymentMutation,
 } = api;

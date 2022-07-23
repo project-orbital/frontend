@@ -2,17 +2,19 @@ import NavButton from "../../../../common/components/buttons/NavButton";
 import {
     Box,
     Heading,
-    HStack,
+    Show,
+    SimpleGrid,
+    Stack,
     Text,
     useColorModeValue,
 } from "@chakra-ui/react";
 import { useReadTransactionsInAccountQuery } from "../../../../app/api";
 import { newest } from "../../../../common/utils/chrono";
-import LightTable from "../../../../common/components/visuals/LightTable";
-import { format, formatDistanceToNow } from "date-fns";
+import { format } from "date-fns";
 import BaseCard from "../../../../common/components/cards/BaseCard";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import currency from "currency.js";
+import Stat from "../../../../common/components/Stat";
 
 /**
  * The card component which displays a summary of a specified account.
@@ -35,22 +37,26 @@ export default function AccountCard({ account }) {
     );
 
     const EditButton = () => (
-        <HStack>
+        <Stack
+            direction={["column", null, null, "row"]}
+            align="end"
+            spacing={1}
+        >
             <NavButton
                 to={`../update/${accountId}`}
                 variant="tertiary"
                 leftIcon={<MdOutlineEdit size="18px" />}
             >
-                Edit
+                <Show above="lg">Edit</Show>
             </NavButton>
             <NavButton
                 to={`../delete/${accountId}`}
                 variant="tertiary"
                 leftIcon={<MdOutlineDelete size="20px" />}
             >
-                Delete
+                <Show above="lg">Delete</Show>
             </NavButton>
-        </HStack>
+        </Stack>
     );
 
     if (isError) {
@@ -62,21 +68,17 @@ export default function AccountCard({ account }) {
             <BaseCard
                 title={account.name}
                 subtitle={account.nickname}
+                heading="You haven't added any transactions to this account yet."
+                subheading="Once you've added a transaction, you'll see it and the
+                        account balance here."
                 button={<EditButton />}
                 link={`/accounts/${accountId}`}
             >
-                <Box>
-                    <Text fontSize="xl" fontWeight="bold">
-                        {
-                            "You haven't added any transactions to this account yet."
-                        }
-                    </Text>
-                    <Text>
-                        Once you've added a transaction, you'll see it and the
-                        account balance here.
-                    </Text>
-                </Box>
-                <NavButton to={`./${accountId}`} text="Go to account" />
+                <NavButton
+                    to={`./${accountId}`}
+                    text="Go to account"
+                    withArrow
+                />
             </BaseCard>
         );
     }
@@ -108,28 +110,17 @@ export default function AccountCard({ account }) {
                     {`as of ${format(date, "dd LLLL yyyy")}`}
                 </Text>
             </Box>
-            <LightTable
-                headers={[
-                    "date",
-                    "description",
-                    amount >= 0 ? "deposit" : "withdrawal",
-                    "balance",
-                ]}
-                primary={[
-                    format(date, "dd LLLL yyyy"),
-                    lines[0] ?? "None",
-                    amount.format({ symbol: "SGD " }),
-                    balance.format({ symbol: "SGD " }),
-                ]}
-                secondary={[
-                    formatDistanceToNow(date, {
-                        addSuffix: true,
-                    }),
-                    lines.slice(1).join("\n"),
-                    null,
-                    null,
-                ]}
-            />
+            <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
+                <Stat
+                    label="Last Transaction"
+                    value={format(date, "dd LLLL yyyy")}
+                />
+                <Stat label="Description" value={lines[0] ?? "None"} />
+                <Stat
+                    label={amount >= 0 ? "deposit" : "withdrawal"}
+                    value={amount.format({ symbol: "SGD " })}
+                />
+            </SimpleGrid>
         </BaseCard>
     );
 }

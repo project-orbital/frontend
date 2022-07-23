@@ -1,20 +1,18 @@
 import { StrictMode } from "react";
 import { ChakraProvider, ColorModeScript, CSSReset } from "@chakra-ui/react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import * as ReactDOMClient from "react-dom/client";
-
-import RequireAuth from "./common/components/RequireAuth";
 import { persistor, store } from "./app/store";
 import { theme } from "./app/theme";
+import AppTemplate from "./common/components/AppTemplate";
 
 import UserRoutes from "./site/user/UserRoutes";
 import DashboardRoutes from "./features/dashboard/DashboardRoutes";
 import AccountsRoutes from "./features/accounts/AccountsRoutes";
 import SettingsRoutes from "./features/settings/SettingsRoutes";
-
-import Portfolio from "./features/portfolio/Portfolio";
+import DocsRoutes from "./site/docs/DocsRoutes";
 import Plan from "./features/plan/Budget";
 
 import Learn from "./features/learn/Learn";
@@ -24,44 +22,87 @@ import ContributionReport from "./features/learn/components/ReportContribution";
 import BudgetDeleteModal from "./features/plan/components/BudgetDelete";
 import BudgetUpdate from "./features/plan/components/BudgetUpdate";
 import BudgetCreate from "./features/plan/components/BudgetCreate";
+import PortfolioRoutes from "./features/portfolio/PortfolioRoutes";
+
+const pageVariants = {
+    initial: {
+        opacity: 0,
+    },
+    in: {
+        opacity: 1,
+    },
+    out: {
+        opacity: 0,
+    },
+};
+
+const pageTransition = {
+    type: "tween",
+    ease: [0.17, 0.67, 0.83, 0.67],
+    duration: 0.3,
+};
+
+const AnimationLayout = () => {
+    // const { pathname } = useLocation();
+    return (
+        // <motion.div
+        //     key={pathname}
+        //     initial="initial"
+        //     animate="in"
+        //     variants={pageVariants}
+        //     transition={pageTransition}
+        // >
+        <Outlet />
+        // </motion.div>
+    );
+};
 
 // TODO: Replace the remaining routes by creating "__Routes.js" in their respective folders and linking them here.
 const routes = (
     <Routes>
-        <Route path="/*" element={<UserRoutes />} />
-        <Route path="/dashboard/*" element={<DashboardRoutes />} />
-        <Route path="/accounts/*" element={<AccountsRoutes />} />
-        <Route path="/settings/*" element={<SettingsRoutes />} />
-        <Route
-            path="/learn/"
-            element={
-                <RequireAuth>
-                    <Learn />
-                </RequireAuth>
-            }
-        >
-            <Route path="contribute" element={<ContributionCreate />} />
-            <Route path="report/:id" element={<ContributionReport />} />
-        </Route>
-        <Route
-            path="portfolio"
-            element={
-                <RequireAuth>
-                    <Portfolio />
-                </RequireAuth>
-            }
-        ></Route>
-        <Route
-            path="plan"
-            element={
-                <RequireAuth>
-                    <Plan />
-                </RequireAuth>
-            }
-        >
-            <Route path="create-budget" element={<BudgetCreate />} />
-            <Route path="delete-budget" element={<BudgetDeleteModal />} />
-            <Route path="update-budget" element={<BudgetUpdate />} />
+        <Route element={<AnimationLayout />}>
+            <Route path="/*" element={<UserRoutes />} />
+            <Route path="/docs/*" element={<DocsRoutes />} />
+            <Route path="/dashboard/*" element={<DashboardRoutes />} />
+            <Route path="/accounts/*" element={<AccountsRoutes />} />
+            <Route path="/portfolio/*" element={<PortfolioRoutes />} />
+            <Route path="/settings/*" element={<SettingsRoutes />} />
+            <Route
+                path="learn"
+                element={
+                    <AppTemplate
+                        page="learn"
+                        path={["Home", "Learn"]}
+                        links={["/dashboard", "/learn"]}
+                        title="Learn"
+                    />
+                }
+            >
+                <Route path="" element={<Learn />}>
+                    <Route path="contribute" element={<ContributionCreate />} />
+                    <Route path="report/:id" element={<ContributionReport />} />
+                </Route>
+            </Route>
+            <Route
+                path="plan"
+                element={
+                    <AppTemplate
+                        page="plan"
+                        path={["Home", "Plan"]}
+                        links={["/dashboard", "/plan"]}
+                        title="Plan"
+                    />
+                }
+            >
+                <Route path="" element={<Plan />}>
+                    <Route path="create-budget" element={<BudgetCreate />} />
+                    <Route
+                        path="delete-budget"
+                        element={<BudgetDeleteModal />}
+                    />
+                    <Route path="update-budget" element={<BudgetUpdate />} />
+                </Route>
+            </Route>
         </Route>
     </Routes>
 );

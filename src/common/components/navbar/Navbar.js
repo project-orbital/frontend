@@ -4,13 +4,22 @@ import {
     IconButton,
     Spacer,
     useColorMode,
+    useColorModeValue,
 } from "@chakra-ui/react";
 import Logo from "./Logo";
 import NavButton from "../buttons/NavButton";
-import { CgDarkMode } from "react-icons/cg";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-export default function Navbar({ hasSignInButton, hasSignUpButton }) {
+export default function Navbar({
+    hasSignInButton,
+    hasSignUpButton,
+    buttons = [],
+}) {
     const { toggleColorMode } = useColorMode();
+    const darkModeIcon = useColorModeValue(
+        <MoonIcon boxSize={[4]} />,
+        <SunIcon boxSize={[4]} />
+    );
 
     const SignIn = () => {
         return (
@@ -43,25 +52,31 @@ export default function Navbar({ hasSignInButton, hasSignUpButton }) {
 
     return (
         <HStack
-            position="absolute"
+            position="fixed"
+            spacing={0}
             w="100%"
-            h="90px"
-            px="5%"
+            h={[20, 24]}
+            pl={[6, 6, 8, 16]}
+            pr={[2, 4, 6, 12]}
             bg="bg-translucent"
             zIndex={1}
+            overflowX="hidden"
         >
             <Logo />
             <Spacer />
             {hasSignInButton && <SignIn />}
             {hasSignUpButton && <SignUp />}
-            <Box pl="40px">
+            <HStack pl={[2, 4, 6, 8, 8]}>
                 <IconButton
                     bg="none"
                     aria-label="Toggle dark mode"
                     onClick={toggleColorMode}
-                    icon={<CgDarkMode size="25px" />}
+                    icon={darkModeIcon}
                 />
-            </Box>
+                {buttons?.map((bt, i) => (
+                    <Box key={i}>{bt}</Box>
+                ))}
+            </HStack>
         </HStack>
     );
 }

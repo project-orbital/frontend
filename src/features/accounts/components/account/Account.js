@@ -1,7 +1,9 @@
-import PageTemplate from "../../../../common/components/PageTemplate";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
-import Breadcrumbs from "../../../../common/components/Breadcrumbs";
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import {
+    Outlet,
+    useNavigate,
+    useOutletContext,
+    useParams,
+} from "react-router-dom";
 import { useReadAccountQuery } from "../../../../app/api";
 import TransactionsCard from "../transactions/TransactionsCard";
 import BalanceCard from "../transactions/BalanceCard";
@@ -12,6 +14,7 @@ import ParseCard from "../transactions/ParseCard";
  * Distinct from `AccountCard` which only displays a brief summary of the account.
  */
 export default function Account() {
+    const [setCustomTitle] = useOutletContext();
     const navigate = useNavigate();
     const accountId = useParams().id;
     const {
@@ -24,21 +27,18 @@ export default function Account() {
     if (isError) {
         navigate("/accounts/not-found", { replace: true });
     }
+    if (!isLoading) {
+        setCustomTitle(
+            nickname == null || nickname.length === 0 ? name : nickname
+        );
+    }
 
     return (
-        <PageTemplate isLoading={isLoading} page="accounts">
-            <Breadcrumbs
-                path={`Home/Accounts/${name}`}
-                links={["/dashboard", "/accounts", `.`]}
-            />
-            <Box h="100%" w="100%">
-                <SimpleGrid minChildWidth="550px" spacing="30px" mb="40px">
-                    <BalanceCard />
-                    <TransactionsCard />
-                    <ParseCard />
-                </SimpleGrid>
-            </Box>
+        <>
+            <BalanceCard />
+            <TransactionsCard />
+            <ParseCard />
             <Outlet context={[accountId, name, nickname]} />
-        </PageTemplate>
+        </>
     );
 }

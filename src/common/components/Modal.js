@@ -35,7 +35,6 @@ import { useNavigate } from "react-router-dom";
  * @param isDestructive (optional, default: false) whether the action executed by the modal will be destructive
  * @param isSubmitting (optional, default: false) whether a spinning indicator should be shown on the submit button
  * @param hasBackButton (optional, default: true) whether the modal should have a back button
- * @param size (optional, default: "xl") the size of the modal: "sm", "md", "lg", or "xl"
  * @param title the title of the modal displayed in bold at the top of the modal
  * @param heading the heading of the modal displayed below the title
  * @param subheading the subheading of the modal displayed below the heading
@@ -53,7 +52,6 @@ export default function Modal({
     isDestructive,
     isSubmitting,
     hasBackButton,
-    size,
     title,
     heading,
     subheading,
@@ -75,14 +73,23 @@ export default function Modal({
             <ModalHeader>
                 <HStack align="center">
                     {hasBackButton === false || <BackButton />}
-                    <Heading as="h3" size="md" fontWeight="semibold">
+                    <Heading size={["sm", "md"]} fontWeight="semibold">
                         {title}
                     </Heading>
                 </HStack>
-                <Text fontSize="md" fontWeight="medium" mt="20px" color="fg">
+                <Text
+                    fontSize={["sm", "md"]}
+                    fontWeight="medium"
+                    mt="20px"
+                    color="fg"
+                >
                     {heading}
                 </Text>
-                <Text fontSize="sm" fontWeight="normal" color="fg-light">
+                <Text
+                    fontSize={["xs", "sm"]}
+                    fontWeight="normal"
+                    color="gray.500"
+                >
                     {subheading}
                 </Text>
             </ModalHeader>
@@ -95,7 +102,7 @@ export default function Modal({
 
     const Footer = () => {
         return (
-            <ModalFooter gap="20px">
+            <ModalFooter pt={6} gap={4} flexDirection={["column", null, "row"]}>
                 {cancelButton || (
                     <CancelButton
                         // This is correct - the cancellation is non-destructive if
@@ -125,7 +132,7 @@ export default function Modal({
             closeOnOverlayClick={false}
             scrollBehavior="inside"
             isCentered
-            size={size || "xl"}
+            size={["xs", "md", "xl"]}
             motionPreset="slideInBottom"
         >
             <ModalOverlay bg={overlayColor} />

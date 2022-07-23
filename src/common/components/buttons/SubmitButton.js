@@ -24,12 +24,17 @@ export default function SubmitButton({ text, isDestructive, ...props }) {
             type="submit"
             h="60px"
             w="100%"
-            bg={isDestructive ? "bg-danger" : "dim"}
-            color={isDestructive ? "fg-danger" : "fg"}
+            bgGradient={
+                isDestructive
+                    ? "linear(to-br, red.400, red.600)"
+                    : "linear(to-br, gray.400, gray.600)"
+            }
+            color="white"
+            shadow="md"
             rightIcon={<BsFillCaretRightFill />}
             transition="transform .08s"
             _hover={{
-                transform: "scale(1.06)",
+                transform: "scale(1.03)",
             }}
             {...props}
         >

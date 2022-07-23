@@ -10,7 +10,7 @@ import {
     useToast,
     VStack,
 } from "@chakra-ui/react";
-import PageTemplate from "../../../common/components/PageTemplate";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function RequestPasswordReset() {
     const navigate = useNavigate();

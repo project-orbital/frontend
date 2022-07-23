@@ -1,4 +1,4 @@
-import PageTemplate from "../../../common/components/PageTemplate";
+import PageTemplate from "../../components/PageTemplate";
 import { Center, Text } from "@chakra-ui/react";
 import NavButton from "../../../common/components/buttons/NavButton";
 

@@ -2,7 +2,7 @@ import { Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import PageTemplate from "../../../common/components/PageTemplate";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function VerifyEmail() {
     const navigate = useNavigate();

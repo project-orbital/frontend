@@ -1,5 +1,5 @@
 import BaseCard from "../../../common/components/cards/BaseCard";
-import { Text, VStack, Box, HStack } from "@chakra-ui/react";
+import { Box, HStack, Text, useToast, VStack } from "@chakra-ui/react";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import NavButton from "../../../common/components/buttons/NavButton";
@@ -7,7 +7,6 @@ import {
     useLikeContributionMutation,
     useUnlikeContributionMutation,
 } from "../../../app/api";
-import { useToast } from "@chakra-ui/react";
 
 export default function BlogPostCard({
     Header,
@@ -72,7 +71,7 @@ export default function BlogPostCard({
                     <NavButton
                         to={`./`}
                         onClick={isLiked ? unlikeOnClick : likeOnClick}
-                        variant="secondary"
+                        variant="primary"
                         w="100%"
                         leftIcon={isLiked ? <AiFillLike /> : <AiOutlineLike />}
                     >

@@ -17,6 +17,15 @@ export function newest(data, dateExtractorFn = (elem) => elem.date) {
     if (data.length === 0) {
         return null;
     }
+    // Check for internal type errors.
+    for (const e of data) {
+        if (!(e instanceof Object)) {
+            throw new TypeError("data must be an array of objects");
+        }
+        if (!(dateExtractorFn(e) instanceof Date)) {
+            throw new TypeError("dateExtractorFn must return a Date object");
+        }
+    }
     return data.reduce(
         (acc, elem) =>
             dateExtractorFn(elem) > dateExtractorFn(acc) ? elem : acc,
@@ -27,6 +36,7 @@ export function newest(data, dateExtractorFn = (elem) => elem.date) {
 /**
  * Returns a new array with only the chronologically newest elements in the
  * original array which meet the condition specified by a boundary function.
+ * The returned array is sorted chronologically.
  *
  * For example if we have an array of dates called `dates`,
  * `discretize(dates, isSameMonth)` will return an array of only the latest days
@@ -55,13 +65,22 @@ export function discretize(
     if (data.length === 0) {
         return null;
     }
+    // Check for internal type errors.
+    for (const e of data) {
+        if (!(e instanceof Object)) {
+            throw new TypeError("data must be an array of objects");
+        }
+        if (!(dateExtractorFn(e) instanceof Date)) {
+            throw new TypeError("dateExtractorFn must return a Date object");
+        }
+    }
     const sorted = data
         .slice()
         .sort((a, b) => compareAsc(dateExtractorFn(a), dateExtractorFn(b)));
-    return sorted.reduce(
+    return sorted.slice(1).reduce(
         (acc, elem) => {
             const last = acc[acc.length - 1];
-            if (boundaryFn(dateExtractorFn(last), dateExtractorFn(elem))) {
+            if (boundaryFn(last, elem)) {
                 acc[acc.length - 1] = elem;
             } else {
                 acc.push(elem);

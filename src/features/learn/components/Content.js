@@ -8,16 +8,16 @@ import {
 } from "@chakra-ui/react";
 import BlogPostCard from "./BlogPostCard";
 import NavButton from "../../../common/components/buttons/NavButton";
-import Pic1 from "../assets/set1/a.jpeg";
-import Pic2 from "../assets/set1/b.jpeg";
-import Pic3 from "../assets/set1/c.jpeg";
-import Pic4 from "../assets/set1/d.jpeg";
+import Pic1 from "../assets/set1/a.png";
+import Pic2 from "../assets/set1/b.png";
+import Pic3 from "../assets/set1/c.png";
+import Pic4 from "../assets/set1/d.png";
 import { Outlet } from "react-router-dom";
 import { format } from "date-fns";
 import {
     useReadContributionsQuery,
-    useReadReportsQuery,
     useReadLikesQuery,
+    useReadReportsQuery,
 } from "../../../app/api";
 import BudgetingTab from "./BudgetingTab";
 import InvestmentTab from "./InvestmentTab";
@@ -74,25 +74,25 @@ export default function Content() {
 
     const SubmitArticleCard = () => (
         <BaseCard
-            heading="Contribute useful resources."
-            subheading="Have some gems to share with the community?"
+            heading="Have some gems to share with the community?"
+            subheading="Contribute to the community with financial literacy resources."
         >
             <NavButton to="./contribute" text="Contribute an article" />
         </BaseCard>
     );
     const CommunityContributedTab = () => (
-        <SimpleGrid columns={4} spacing={8}>
+        <SimpleGrid columns={[1, null, 2, null, 3, 4]} spacing={8}>
             {cards}
             <SubmitArticleCard />
         </SimpleGrid>
     );
 
     return (
-        <Tabs size="lg" colorScheme="gray">
-            <TabList mx={4} gap={4}>
+        <Tabs size={["sm", "md", "lg"]} colorScheme="gray">
+            <TabList gap={[0, null, 4]}>
                 <Tab>Budgeting</Tab>
                 <Tab>Investment</Tab>
-                <Tab>Community Contributed</Tab>
+                <Tab>Community Contributions</Tab>
             </TabList>
             <TabPanels pt={4}>
                 <TabPanel>

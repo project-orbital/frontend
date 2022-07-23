@@ -1,5 +1,5 @@
 import { Badge, Box, Heading, SimpleGrid, VStack } from "@chakra-ui/react";
-import Card from "../../../common/components/Card";
+import Card from "../../components/Card";
 import {
     MdDarkMode,
     MdDocumentScanner,

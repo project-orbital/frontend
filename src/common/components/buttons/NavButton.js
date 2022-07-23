@@ -1,4 +1,4 @@
-import { Box, Button, Text, useColorMode } from "@chakra-ui/react";
+import { Box, Button, HStack, Text, useColorMode } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { BsFillCaretRightFill } from "react-icons/bs";
 
@@ -46,14 +46,16 @@ export default function NavButton({
         textProps = { color: "white" };
     } else if (variant === "secondary") {
         buttonProps = {
-            bg: "bg",
+            bgGradient: "linear(to-br, gray.400, gray.600)",
+            color: "white",
             _hover: { transform: "scale(1.05)" },
         };
         textProps = { color: "fg" };
     } else if (variant === "tertiary") {
         buttonProps = {
             h: 10,
-            p: 4,
+            px: 4,
+            py: 2,
             bg: "none",
             color: "gray.200",
             _hover: {
@@ -68,8 +70,8 @@ export default function NavButton({
         textProps = { color: "gray.200" };
     } else if (variant === "danger") {
         buttonProps = {
-            bg: "bg-danger",
-            color: "fg-danger",
+            bgGradient: "linear(to-br, red.400, red.600)",
+            color: "white",
             _hover: { transform: "scale(1.05)" },
         };
         textProps = { color: "fg-danger" };
@@ -80,7 +82,8 @@ export default function NavButton({
         <Button
             as={Link}
             to={props.isDisabled ? "./" : to}
-            px={16}
+            w={["100%", null, null, "auto"]}
+            px={[6, 8, 10, 12]}
             py={8}
             rightIcon={withArrow && <BsFillCaretRightFill />}
             transition="transform .1s"
@@ -88,15 +91,21 @@ export default function NavButton({
             _hover={props.isDisabled ? {} : buttonProps._hover}
             {...props}
         >
-            {icon && <Box pr="8px">{icon}</Box>}
-            <Text
-                {...textProps}
-                fontWeight={fontWeight}
-                fontSize={fontSize}
-                color={color}
-            >
-                {children ?? text}
-            </Text>
+            <HStack spacing={4}>
+                {icon && <Box>{icon}</Box>}
+                <Text
+                    {...textProps}
+                    fontWeight={fontWeight}
+                    fontSize={fontSize}
+                    color={color}
+                    style={{
+                        whiteSpace: "normal",
+                        wordWrap: "break-word",
+                    }}
+                >
+                    {children ?? text}
+                </Text>
+            </HStack>
         </Button>
     );
 }
