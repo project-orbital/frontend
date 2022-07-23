@@ -40,6 +40,7 @@ export default function TransactionsCard() {
     if (transactions.length === 0) {
         return (
             <BaseCard
+                title="Transactions"
                 heading="You haven't added any transactions yet."
                 subheading="Once you've added a transaction to an account, you'll
                         see your transactions here."

@@ -6,6 +6,7 @@ import { groupBy } from "../../../common/utils/arrays";
 import AreaChart from "../../../common/components/visuals/AreaChart";
 import BaseCard from "../../../common/components/cards/BaseCard";
 import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import Stat from "../../../common/components/Stat";
 
 export default function NetWorthCard() {
     const accentGradient = useColorModeValue(
@@ -19,11 +20,26 @@ export default function NetWorthCard() {
         isError,
     } = useReadTransactionsQuery();
 
-    if (isLoading || transactions.length === 0) {
+    if (isLoading) {
         return null;
     }
     if (isError) {
         return;
+    }
+
+    if (transactions.length === 0) {
+        return (
+            <BaseCard title="Net Worth">
+                <Stat
+                    variant="primary"
+                    value="SGD 0.00"
+                    label={`as of ${format(new Date(), "dd LLLL yyyy")}`}
+                />
+                <Box w="50%">
+                    <AreaChart data={{}} />
+                </Box>
+            </BaseCard>
+        );
     }
 
     function computeHistory() {
