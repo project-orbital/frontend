@@ -4,7 +4,6 @@ import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
-    Heading,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -25,22 +24,19 @@ import { Link } from "react-router-dom";
  * @param title an optional string containing the title of the current page
  * @return the breadcrumb trail element
  */
-export default function Breadcrumbs({ path, links, title }) {
-    const crumbs = path.split("/");
+export default function Breadcrumbs({ path, links }) {
+    const crumbs = path instanceof Array ? path : path.split("/");
     return (
         <Box>
             <Breadcrumb spacing="2px" separator={<RiArrowRightSLine />}>
-                {crumbs.map((crumb, index) => (
+                {crumbs.map((page, index) => (
                     <BreadcrumbItem key={index}>
                         <BreadcrumbLink as={Link} to={links[index]}>
-                            {crumb}
+                            {page}
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                 ))}
             </Breadcrumb>
-            <Heading as="h1" size="2xl" pt="10px">
-                {title || crumbs[crumbs.length - 1]}
-            </Heading>
         </Box>
     );
 }

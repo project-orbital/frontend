@@ -9,13 +9,14 @@ export default function Logo({ direction, color, size, link, hasBorder }) {
             to={link || "/"}
             direction={direction || "row"}
             align="center"
+            px={[8, null, null, 4]}
         >
-            <Box color={color || "fg"}>
-                <BsCurrencyExchange size="30px" />
+            <Box color={color || "fg"} w={[6, 7, 8]}>
+                <BsCurrencyExchange size="100%" />
             </Box>
             <Heading
                 color={color || "fg"}
-                size={size || "lg"}
+                size={size || ["md", null, null, null, "lg"]}
                 fontWeight="bold"
                 pb={hasBorder && "15px"}
                 borderBottom={hasBorder && "1.5px solid white"}

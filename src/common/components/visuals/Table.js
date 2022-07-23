@@ -3,85 +3,128 @@ import {
     TableContainer,
     Tbody,
     Td,
+    Text,
     Th,
     Thead,
     Tr,
 } from "@chakra-ui/react";
 
 /**
- * Wrapper component for creating `ChakraTable`s from data.
+ * `Table` composes Chakra UI's `Table` and its associated components
+ * to facilitate table creation from an array of objects.
  *
- * The table is populated from an array of objects, each object forming a row,
- * with its keys contributing to the table headers and its values as cells.
+ * Each element of this array of objects, passed to the `values` prop,
+ * will be rendered as a row in the table.
+ *
+ * If headers are not passed in the `headers` prop, the keys of the
+ * elements of the array of objects will be aggregated and used as the headers.
+ *
+ * In each row, if the object has a key that matches a header, the value of
+ * that key will be rendered in that column, otherwise the cell will be empty.
  *
  * e.g. [{a: 1, b: 2}, {b: 3, c: 4}] creates a table with 2 rows and 3 columns:
  * | a    | b    | c    |
  * | 1    | 2    | null |
  * | null | 3    | 4    |
  *
- * @param values the array of objects
- * @param rowLimit an optional maximum number of table rows to create
- * @return a new, populated table component
+ * @param values the array of objects to render as rows in the table
+ * @param headers (optional) an array of strings to render as headers for the table
+ * @param isNumeric (optional) an array of boolean values to determine if the
+ * @param rowLimit (optional) an optional maximum number of table rows to render
+ * corresponding column should be right-aligned
  */
-export default function Table({ values, rowLimit }) {
-    // Get and de-duplicate all the keys to use them as headers.
-    const headers = [...new Set(values.flatMap((obj) => Object.keys(obj)))];
-
-    // Converts an object to an array of its values with respect to the headers.
-    // If the object does not have a header element as one of its keys, that cell will be null.
-    const objToRow = (obj) => headers.map((header) => obj[header] || null);
-
-    return (
-        <TableContainer w="100%">
-            <ChakraTable size="sm" placement="top">
-                {createTableHeaders(headers)}
-                {createTableBody(values.map(objToRow), rowLimit)}
-            </ChakraTable>
-        </TableContainer>
-    );
-}
-
-/**
- * Creates a table header row from an array.
- *
- * @param headers an array of strings to create headers from
- * @return the `<Thead>` table header JSX element
- */
-function createTableHeaders(headers) {
-    return (
+export default function Table({
+    values,
+    headers: headerKeys,
+    isNumeric = [],
+    offset = 4,
+    rowLimit,
+    ...props
+}) {
+    // If the headers are unspecified, we extract all possible keys in the data
+    // to use as headers.
+    const headers = headerKeys ?? [
+        ...new Set(values.flatMap((obj) => Object.keys(obj))),
+    ];
+    const TableHeaders = () => (
         <Thead>
-            <Tr>
+            <Tr height={12}>
                 {headers.map((header, x) => (
-                    <Th key={x} fontFamily="body">
+                    <Th
+                        key={x}
+                        // Pad the first and last columns as specified.
+                        pl={x === 0 ? offset : 2}
+                        pr={x === headers.length - 1 ? offset : 2}
+                        isNumeric={isNumeric[x]}
+                        fontFamily="body"
+                    >
                         {header}
                     </Th>
                 ))}
             </Tr>
         </Thead>
     );
-}
 
-/**
- * Creates a table body from a 2D array.
- *
- * @param body a 2D array to populate the table in row-major order
- * @param rowLimit an optional maximum number of table rows to create
- * @return the `<Tbody>` table body JSX element
- */
-function createTableBody(body, rowLimit) {
-    if (!body || rowLimit <= 0) {
-        return <Tbody></Tbody>;
-    }
-    const rowToJSX = (row, y) => (
-        <Tr key={y}>
-            {row.map((cell, x) => (
-                <Td key={x} bg={y % 2 === 0 ? "dim" : "bg-light"}>
-                    {cell}
-                </Td>
-            ))}
-        </Tr>
+    // Convert the values into a 2D array based on the headers.
+    // If the object does not have a header element as one of its keys, that cell will be null.
+    const body = values.map((obj) =>
+        headers.map((header) => obj[header] || null)
     );
+    const Cell = ({ content }) => {
+        if (content === null) {
+            return <Text />;
+        } else if (typeof content === "object") {
+            return content;
+        } else {
+            return (
+                <Text
+                    style={
+                        content.length < 20
+                            ? null
+                            : {
+                                  whiteSpace: "normal",
+                                  wordWrap: "break-word",
+                              }
+                    }
+                >
+                    {content}
+                </Text>
+            );
+        }
+    };
+    const TableBody = () => {
+        if (!body || rowLimit <= 0) {
+            return <Tbody></Tbody>;
+        }
+        const rowToJSX = (row, y) => (
+            <Tr key={y} height={16}>
+                {row.map((content, x) => (
+                    <Td
+                        key={x}
+                        isNumeric={isNumeric[x]}
+                        // Pad the first and last columns as specified.
+                        pl={x === 0 ? offset : 2}
+                        pr={x === headers.length - 1 ? offset : 2}
+                        bg={y % 2 === 0 ? "whiteAlpha.500" : "none"}
+                    >
+                        <Cell content={content} />
+                    </Td>
+                ))}
+            </Tr>
+        );
+        return (
+            <Tbody>
+                {body.slice(0, rowLimit || body.length).map(rowToJSX)}
+            </Tbody>
+        );
+    };
+
     return (
-        <Tbody>{body.slice(0, rowLimit || body.length).map(rowToJSX)}</Tbody>
+        <TableContainer w="100%" {...props}>
+            <ChakraTable size="sm" placement="top">
+                <TableHeaders />
+                <TableBody />
+            </ChakraTable>
+        </TableContainer>
     );
 }
