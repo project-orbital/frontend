@@ -10,7 +10,7 @@ const code = `
     <a href="" target="_blank">Video</a>
 </p>
 <p>
-    <a href="" target="_blank">Project Log</a>
+    <a href="/docs/miscellany/project-log" target="_blank">Project Log</a>
 </p>
 <h2>Source Code</h2>
 <p>
