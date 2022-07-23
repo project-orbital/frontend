@@ -24,37 +24,8 @@ import BudgetUpdate from "./features/plan/components/BudgetUpdate";
 import BudgetCreate from "./features/plan/components/BudgetCreate";
 import PortfolioRoutes from "./features/portfolio/PortfolioRoutes";
 
-const pageVariants = {
-    initial: {
-        opacity: 0,
-    },
-    in: {
-        opacity: 1,
-    },
-    out: {
-        opacity: 0,
-    },
-};
-
-const pageTransition = {
-    type: "tween",
-    ease: [0.17, 0.67, 0.83, 0.67],
-    duration: 0.3,
-};
-
 const AnimationLayout = () => {
-    // const { pathname } = useLocation();
-    return (
-        // <motion.div
-        //     key={pathname}
-        //     initial="initial"
-        //     animate="in"
-        //     variants={pageVariants}
-        //     transition={pageTransition}
-        // >
-        <Outlet />
-        // </motion.div>
-    );
+    return <Outlet />;
 };
 
 // TODO: Replace the remaining routes by creating "__Routes.js" in their respective folders and linking them here.
