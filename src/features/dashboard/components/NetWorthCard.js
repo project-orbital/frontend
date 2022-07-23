@@ -1,33 +1,65 @@
-import { useReadTransactionsQuery } from "../../../app/api";
+import {
+    useReadLiabilitiesQuery,
+    useReadOrdersQuery,
+    useReadPaymentsQuery,
+    useReadTransactionsQuery,
+} from "../../../app/api";
 import { discretize, newest } from "../../../common/utils/chrono";
 import { compareAsc, format, formatDistanceToNow, isSameMonth } from "date-fns";
 import currency from "currency.js";
 import { groupBy } from "../../../common/utils/arrays";
 import AreaChart from "../../../common/components/visuals/AreaChart";
 import BaseCard from "../../../common/components/cards/BaseCard";
-import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 import Stat from "../../../common/components/Stat";
 
 export default function NetWorthCard() {
-    const accentGradient = useColorModeValue(
-        "linear(to-t, accent, fg)",
-        "linear(to-t, fg, fg)"
-    );
-
     const {
         data: transactions,
-        isLoading,
-        isError,
+        isLoading: isTransactionsLoading,
+        isError: isTransactionsError,
     } = useReadTransactionsQuery();
 
-    if (isLoading) {
+    const {
+        data: orders,
+        isLoading: isOrdersLoading,
+        isError: isOrdersError,
+    } = useReadOrdersQuery();
+
+    const {
+        data: liabilities,
+        isLoading: isLiabilitiesLoading,
+        isError: isLiabilitiesError,
+    } = useReadLiabilitiesQuery();
+
+    const {
+        data: payments,
+        isLoading: isPaymentsLoading,
+        isError: isPaymentsError,
+    } = useReadPaymentsQuery();
+
+    if (
+        isTransactionsLoading ||
+        isOrdersLoading ||
+        isLiabilitiesLoading ||
+        isPaymentsLoading
+    ) {
         return null;
     }
-    if (isError) {
+    if (
+        isTransactionsError ||
+        isOrdersError ||
+        isLiabilitiesError ||
+        isPaymentsError
+    ) {
         return;
     }
 
-    if (transactions.length === 0) {
+    if (
+        transactions.length === 0 &&
+        orders.length === 0 &&
+        liabilities.length === 0
+    ) {
         return (
             <BaseCard title="Net Worth">
                 <Stat
@@ -42,7 +74,7 @@ export default function NetWorthCard() {
         );
     }
 
-    function computeHistory() {
+    function computeAccountsHistory() {
         const months = groupBy(transactions, "accountId")
             .flatMap((account) =>
                 discretize(account, (a, b) => isSameMonth(a.date, b.date))
@@ -58,22 +90,59 @@ export default function NetWorthCard() {
                 y: month.reduce((acc, tx) => acc.add(tx.balance), currency(0)),
             }));
     }
+    const accountsHistory = computeAccountsHistory();
+    const accountsValue =
+        accountsHistory[accountsHistory.length - 1]?.y ?? currency(0);
+
+    const assetsValue = orders.reduce(
+        (acc, order) =>
+            acc.add(order.price.multiply(order.amount)).subtract(order.fee),
+        currency(0)
+    );
+
+    const liabilitiesValue = liabilities
+        .reduce((acc, liability) => acc.add(liability.amount), currency(0))
+        .subtract(
+            payments.reduce(
+                (acc, payment) => acc.add(payment.amount),
+                currency(0)
+            )
+        );
 
     const NetWorth = () => {
-        const history = computeHistory();
-        const netWorth = history[history.length - 1].y;
-        const asOf = newest(transactions).date;
+        const netWorth = accountsValue
+            .add(assetsValue)
+            .subtract(liabilitiesValue);
+        const asOf = newest(transactions)?.date ?? new Date();
         return (
-            <Box>
-                <Heading bgGradient={accentGradient} bgClip="text">
-                    {netWorth.format({ symbol: "SGD " })}
-                </Heading>
-                <Text fontSize="sm" color="fg-light">
-                    {`as of ${formatDistanceToNow(asOf, {
-                        addSuffix: true,
-                    })}, on ${format(asOf, "dd LLLL yyyy")}`}
-                </Text>
-            </Box>
+            <Stat
+                variant="primary"
+                value={netWorth.format({ symbol: "SGD " })}
+                label={`as of ${formatDistanceToNow(asOf, {
+                    addSuffix: true,
+                })}, on ${format(asOf, "dd LLLL yyyy")}`}
+            />
+        );
+    };
+
+    const Stats = () => {
+        return (
+            <SimpleGrid spacing={8} columns={[2, null, null, 3]}>
+                <Stat
+                    label="From Accounts"
+                    value={accountsValue.format({ symbol: "SGD " })}
+                />
+                <Stat
+                    label="From Assets"
+                    value={assetsValue.format({ symbol: "SGD " })}
+                />
+                <Stat
+                    label="From Liabilities"
+                    value={liabilitiesValue
+                        .multiply(-1)
+                        .format({ symbol: "SGD " })}
+                />
+            </SimpleGrid>
         );
     };
 
@@ -81,7 +150,7 @@ export default function NetWorthCard() {
         return (
             <Box w="100%">
                 <AreaChart
-                    data={computeHistory().map((tx) => ({
+                    data={accountsHistory.map((tx) => ({
                         x: tx.x,
                         y: parseFloat(tx.y),
                     }))}
@@ -93,10 +162,10 @@ export default function NetWorthCard() {
     return (
         <BaseCard
             title="Net Worth"
-            subtitle="The sum of your account balances."
-            isLoading={isLoading}
+            subtitle="The sum of your account balances and assets, minus your liabilities."
         >
             <NetWorth />
+            <Stats />
             <History />
         </BaseCard>
     );
