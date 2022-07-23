@@ -48,7 +48,8 @@ const code = `
 </blockquote>
 <p>
     We've updated the dark mode toggle in Settings to store a user's dark mode preference in the database, which is then
-    retrieved after signing in.
+    retrieved after signing in. We rely on Chakra UI's color mode hook for persistence between page refreshes and tabs
+    on the website.
 </p>
 
 <h2>New Features</h2>
