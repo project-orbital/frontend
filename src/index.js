@@ -2,9 +2,8 @@ import { StrictMode } from "react";
 import { ChakraProvider, ColorModeScript, CSSReset } from "@chakra-ui/react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 import * as ReactDOMClient from "react-dom/client";
-import { persistor, store } from "./app/store";
+import { store } from "./app/store";
 import { theme } from "./app/theme";
 import AppTemplate from "./common/components/AppTemplate";
 
@@ -81,15 +80,13 @@ const routes = (
 const element = (
     <StrictMode>
         <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <ChakraProvider theme={theme}>
-                    <CSSReset />
-                    <ColorModeScript
-                        initialColorMode={theme.config.initialColorMode}
-                    />
-                    <BrowserRouter>{routes}</BrowserRouter>
-                </ChakraProvider>
-            </PersistGate>
+            <ChakraProvider theme={theme}>
+                <CSSReset />
+                <ColorModeScript
+                    initialColorMode={theme.config.initialColorMode}
+                />
+                <BrowserRouter>{routes}</BrowserRouter>
+            </ChakraProvider>
         </Provider>
     </StrictMode>
 );
