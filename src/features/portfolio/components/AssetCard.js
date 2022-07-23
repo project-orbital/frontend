@@ -10,9 +10,7 @@ export default function AssetCard({ asset, orders }) {
     const stats = orders.reduce(
         (acc, order) => ({
             amount: acc.amount.add(order.amount),
-            value: acc.value
-                .add(order.price.multiply(order.amount))
-                .subtract(order.fee),
+            value: acc.value.add(asset.price.multiply(order.amount)),
             buys: order.amount.intValue > 0 ? acc.buys + 1 : acc.buys,
             sells: order.amount.intValue < 0 ? acc.sells + 1 : acc.sells,
             last: `${order.amount.value} ${asset.symbol} @ ${order.price.format(
@@ -84,8 +82,10 @@ export default function AssetCard({ asset, orders }) {
                     value={`${asset.yield.value}% p.a.`}
                 />
                 <Stat label="Last Order" value={stats.last} />
-                <Stat label="Buy Orders" value={stats.buys} />
-                <Stat label="Sell Orders" value={stats.sells} />
+                <Stat
+                    label="Buy / Sell Orders"
+                    value={`${stats.buys} / ${stats.sells}`}
+                />
             </SimpleGrid>
             <VStack align="start" spacing={4} pt={2}>
                 <NavButton
