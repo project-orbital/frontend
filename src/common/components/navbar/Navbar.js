@@ -29,6 +29,7 @@ export default function Navbar({
                 fontWeight="normal"
                 fontSize="sm"
                 color="fg-light"
+                w="auto"
             >
                 Sign in
             </NavButton>
@@ -44,8 +45,10 @@ export default function Navbar({
                 text="Sign up"
                 fontWeight="semibold"
                 fontSize="sm"
-                bg="fg"
-                color="bg"
+                bg="fg-light"
+                bgGradient="none"
+                color="white"
+                w="auto"
             />
         );
     };
@@ -56,8 +59,7 @@ export default function Navbar({
             spacing={0}
             w="100%"
             h={[20, 24]}
-            pl={[6, 6, 8, 16]}
-            pr={[2, 4, 6, 12]}
+            px={[2, 4, 6, 12]}
             bg="bg-translucent"
             zIndex={1}
             overflowX="hidden"
