@@ -7,20 +7,6 @@ test.describe("user authentication", () => {
         await page.goto("http://localhost:3000/");
     });
 
-    test("user can sign in and then sign out", async ({ page }) => {
-        // Sign-in.
-        await page.locator("text=Sign in").first().click();
-        await expect(page).toHaveURL("http://localhost:3000/sign-in");
-        await page.fill("text=Username", process.env.TESTING_USERNAME);
-        await page.fill("text=Password", process.env.TESTING_PASSWORD);
-        await page.locator('button:has-text("Sign in")').click();
-
-        // Sign-out.
-        await expect(page).toHaveURL("http://localhost:3000/dashboard");
-        await page.locator('div:has-text("sign out")').nth(3).click();
-        await expect(page).toHaveURL("http://localhost:3000/");
-    });
-
     test("user cannot sign in with a wrong password", async ({ page }) => {
         // Attempt sign-in.
         await page.locator("text=Sign in").first().click();
