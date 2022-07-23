@@ -71,7 +71,7 @@ export default function BlogPostCard({
                     <NavButton
                         to={`./`}
                         onClick={isLiked ? unlikeOnClick : likeOnClick}
-                        variant="secondary"
+                        variant="primary"
                         w="100%"
                         leftIcon={isLiked ? <AiFillLike /> : <AiOutlineLike />}
                     >
