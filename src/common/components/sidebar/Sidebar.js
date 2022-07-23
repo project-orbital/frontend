@@ -85,6 +85,9 @@ const SidebarContent = ({ selected }) => (
             text="sign out"
             icon={<RiLogoutBoxLine size="24px" />}
         />
+        <Show below="lg">
+            <Spacer />
+        </Show>
     </VStack>
 );
 
