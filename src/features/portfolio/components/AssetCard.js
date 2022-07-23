@@ -10,6 +10,7 @@ export default function AssetCard({ asset, orders }) {
     const stats = orders.reduce(
         (acc, order) => ({
             amount: acc.amount.add(order.amount),
+            cost: acc.cost.add(order.amount.multiply(order.price)),
             value: acc.value.add(asset.price.multiply(order.amount)),
             buys: order.amount.intValue > 0 ? acc.buys + 1 : acc.buys,
             sells: order.amount.intValue < 0 ? acc.sells + 1 : acc.sells,
@@ -19,6 +20,7 @@ export default function AssetCard({ asset, orders }) {
         }),
         {
             amount: currency(0),
+            cost: currency(0),
             value: currency(0),
             buys: 0,
             sells: 0,
@@ -68,7 +70,7 @@ export default function AssetCard({ asset, orders }) {
                     value={asset.price.format({ symbol: "SGD " })}
                 />
                 <Stat
-                    label="Average Price"
+                    label="Average Buy Price"
                     value={
                         stats.amount.intValue === 0
                             ? "-"
@@ -76,6 +78,12 @@ export default function AssetCard({ asset, orders }) {
                                   .divide(stats.amount)
                                   .format({ symbol: "SGD " })
                     }
+                />
+                <Stat
+                    label="Unrealized Profit / Loss"
+                    value={stats.value
+                        .subtract(stats.cost)
+                        .format({ symbol: "SGD " })}
                 />
                 <Stat
                     label="Annual Yield"
