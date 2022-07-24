@@ -59,7 +59,7 @@ export default function Navbar({
             spacing={0}
             w="100%"
             h={[20, 24]}
-            px={[2, 4, 6, 12]}
+            px={hasSignInButton && hasSignUpButton ? [2, 4, 6, 12] : [4, 6, 12]}
             bg="bg-translucent"
             zIndex={1}
             overflowX="hidden"

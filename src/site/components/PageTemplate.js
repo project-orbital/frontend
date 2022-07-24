@@ -18,11 +18,13 @@ export default function PageTemplate({ heading, children, buttons = [] }) {
         <VStack>
             <Navbar buttons={buttons} />
             <VStack
-                pt={[20, 24]}
+                pos="absolute"
+                top={[20, 24]}
+                pt={16}
                 justify="center"
                 spacing="0"
                 w="100%"
-                minH="100vh"
+                h="stretch"
                 overflowX="hidden"
             >
                 <Box w={["100vw", "100vw", "100vw", "80vw", "60vw"]}>
