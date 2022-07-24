@@ -11,6 +11,7 @@ import NavButton from "../buttons/NavButton";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 export default function Navbar({
+    isFloating = false,
     hasSignInButton,
     hasSignUpButton,
     buttons = [],
@@ -55,7 +56,7 @@ export default function Navbar({
 
     return (
         <HStack
-            position="fixed"
+            position={isFloating ? "fixed" : "static"}
             spacing={0}
             w="100%"
             h={[20, 24]}

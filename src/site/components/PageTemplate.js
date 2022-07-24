@@ -27,7 +27,7 @@ export default function PageTemplate({ heading, children, buttons = [] }) {
                 h="stretch"
                 overflowX="hidden"
             >
-                <Box w={["100vw", "100vw", "100vw", "80vw", "60vw"]}>
+                <Box w={["100vw", "100vw", "100vw", "80vw", "60vw"]} px={[2]}>
                     <Card isCentered isStandalone heading={heading}>
                         {children}
                     </Card>
