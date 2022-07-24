@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import ky from "ky";
 import PageTemplate from "../../components/PageTemplate";
+import { BsFillCaretRightFill } from "react-icons/bs";
 
 export default function SignIn() {
     // === === ===
@@ -136,7 +137,8 @@ export default function SignIn() {
             type="submit"
             h="60px"
             w="100%"
-            bg="accent"
+            bgGradient="linear(to-br, accent, accent-dark)"
+            rightIcon={<BsFillCaretRightFill />}
             color="white"
             transition="transform .1s"
             _hover={{
@@ -169,10 +171,7 @@ export default function SignIn() {
     // Form component.
 
     return (
-        <PageTemplate
-            variant="auth"
-            heading="Sign in to your DollarPlanner account."
-        >
+        <PageTemplate heading="Sign in to your DollarPlanner account.">
             <form onSubmit={handleSubmit(signIn)}>
                 <VStack spacing="20px">
                     {usernameField}

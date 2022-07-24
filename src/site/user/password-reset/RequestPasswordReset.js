@@ -11,6 +11,7 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import PageTemplate from "../../components/PageTemplate";
+import { BsFillCaretRightFill } from "react-icons/bs";
 
 export default function RequestPasswordReset() {
     const navigate = useNavigate();
@@ -77,7 +78,8 @@ export default function RequestPasswordReset() {
             type="submit"
             h="60px"
             w="100%"
-            bg="accent"
+            bgGradient="linear(to-br, accent, accent-dark)"
+            rightIcon={<BsFillCaretRightFill />}
             color="white"
             transition="transform .1s"
             _hover={{

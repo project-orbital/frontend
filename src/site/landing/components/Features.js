@@ -12,10 +12,10 @@ import {
 export default function FeatureCard() {
     return (
         <VStack w="100%" pt="50px" pb="80px" bg="bg">
-            <Heading py="50px" size="4xl" fontWeight="bold">
+            <Heading py="50px" size={["2xl", "3xl", "4xl"]} fontWeight="bold">
                 Features
             </Heading>
-            <Box w="65%">
+            <Box px={[8, 12, 16, 32, 64]}>
                 <SimpleGrid spacing="30px" columns={[1, null, 2, null, 3]}>
                     <Card
                         isCentered
@@ -55,7 +55,9 @@ export default function FeatureCard() {
                     />
                 </SimpleGrid>
             </Box>
-            <Heading pt="40px">...and much more.</Heading>
+            <Heading pt="40px" size={["lg", "xl", "2xl"]}>
+                ...and much more.
+            </Heading>
         </VStack>
     );
 }

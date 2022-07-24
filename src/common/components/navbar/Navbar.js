@@ -46,7 +46,7 @@ export default function Navbar({
                 text="Sign up"
                 fontWeight="semibold"
                 fontSize="sm"
-                bg="fg-light"
+                bg="accent-dark"
                 bgGradient="none"
                 color="white"
                 w="auto"
@@ -60,12 +60,14 @@ export default function Navbar({
             spacing={0}
             w="100%"
             h={[20, 24]}
-            px={hasSignInButton && hasSignUpButton ? [2, 4, 6, 12] : [4, 6, 12]}
+            px={hasSignInButton && hasSignUpButton ? [2, 4, 6, 12] : 2}
             bg="bg-translucent"
             zIndex={1}
             overflowX="hidden"
         >
-            <Logo />
+            <Logo
+                direction={hasSignInButton && hasSignUpButton ? null : "row"}
+            />
             <Spacer />
             {hasSignInButton && <SignIn />}
             {hasSignUpButton && <SignUp />}

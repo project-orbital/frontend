@@ -7,10 +7,10 @@ import { FaGithub } from "react-icons/fa";
 export default function About() {
     return (
         <VStack w="100%" pt="50px" pb="260px" bg="bg">
-            <Heading py="50px" size="4xl" fontWeight="bold">
+            <Heading py="50px" size={["2xl", "3xl", "4xl"]} fontWeight="bold">
                 About Us
             </Heading>
-            <Box w="65%">
+            <Box px={[8, 12, 16, 32, 64]}>
                 <SimpleGrid spacing="30px" columns={[1, null, 2]}>
                     <Card
                         isCentered
