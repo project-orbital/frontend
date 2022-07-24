@@ -21,8 +21,9 @@ export default function PasswordResetEmailSent() {
                     to="/sign-in"
                     text="Sign in"
                     w="100%"
-                    bg="accent"
+                    bgGradient="linear(to-br, accent, accent-dark)"
                     color="white"
+                    withArrow
                 ></NavButton>
             </Center>
         </PageTemplate>

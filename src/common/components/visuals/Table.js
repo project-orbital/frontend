@@ -85,6 +85,7 @@ export default function Table({
         } else {
             return (
                 <Text
+                    fontSize={["xs", "sm"]}
                     style={
                         content.length < 20
                             ? null

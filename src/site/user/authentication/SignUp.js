@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import ky from "ky";
 import PageTemplate from "../../components/PageTemplate";
+import { BsFillCaretRightFill } from "react-icons/bs";
 
 export default function SignUp() {
     // === === ===
@@ -169,7 +170,8 @@ export default function SignUp() {
             type="submit"
             h="60px"
             w="100%"
-            bg="accent"
+            bgGradient="linear(to-br, accent, accent-dark)"
+            rightIcon={<BsFillCaretRightFill />}
             color="white"
             transition="transform .1s"
             _hover={{
