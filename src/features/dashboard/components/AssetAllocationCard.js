@@ -49,11 +49,8 @@ export default function AssetAllocationCard() {
         const value = orders
             .filter((order) => order.assetId === asset.id)
             .reduce(
-                (acc, order) =>
-                    acc
-                        .add(order.price.multiply(order.amount))
-                        .subtract(order.fee),
-                currency(0)
+                (acc, order) => acc.add(order.price.multiply(order.amount)),
+                currency(0, { precision: 4 })
             );
         if (categories[asset.category] === undefined) {
             categories[asset.category] = value;
