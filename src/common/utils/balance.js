@@ -1,4 +1,5 @@
 import { compareDesc } from "date-fns";
+import { groupBy } from "./arrays";
 
 /**
  * Returns an array of transactions sorted by date in descending order (newest first),
@@ -21,42 +22,46 @@ export function computeBalances(transactions) {
         return transactions;
     }
 
-    // Sort the transactions so the newest one is first (index 0).
-    const txs = transactions
-        .slice()
-        .sort((a, b) => compareDesc(a.date, b.date));
+    const accounts = groupBy(transactions, "accountId");
+    const result = [];
 
-    // Find the index of the most recent non-zero balance.
-    let basis = txs.length - 1;
-    for (let i = 0; i < txs.length; i++) {
-        if (txs[i].balance.intValue !== 0) {
-            basis = i;
-            break;
+    for (const account of accounts) {
+        // Sort the transactions so the newest one is first (index 0).
+        const txs = account.slice().sort((a, b) => compareDesc(a.date, b.date));
+
+        // Find the index of the most recent non-zero balance.
+        let basis = txs.length - 1;
+        for (let i = 0; i < txs.length; i++) {
+            if (txs[i].balance.intValue !== 0) {
+                basis = i;
+                break;
+            }
         }
-    }
 
-    // Compute the balances starting from the most recent non-zero balance, to the newest transaction.
-    let balance = txs[basis].balance;
-    for (let i = basis - 1; i >= 0; i--) {
-        balance = balance.add(txs[i].amount);
-        txs[i].balance = balance;
-    }
-
-    // Compute the balances working backwards from the most recent transaction, to the oldest transaction.
-    // We have to be careful here, since the balance for a transaction `i` takes into account the balance
-    // and amount from transaction `i-1`, not transaction `i`.
-    balance = txs[basis].balance;
-    for (let i = basis + 1; i < txs.length; i++) {
-        if (txs[i].balance.intValue !== 0) {
-            // We can skip it and use it as our new basis.
-            balance = txs[i].balance;
-            continue;
+        // Compute the balances starting from the most recent non-zero balance, to the newest transaction.
+        let balance = txs[basis].balance;
+        for (let i = basis - 1; i >= 0; i--) {
+            balance = balance.add(txs[i].amount);
+            txs[i].balance = balance;
         }
-        const amount = txs[i - 1].amount; // Won't be out of bounds, since there are at least two transactions.
-        balance = balance.subtract(amount);
-        txs[i].balance = balance;
-    }
 
-    // Return the transactions, now sorted in descending order - newest first.
-    return txs;
+        // Compute the balances working backwards from the most recent transaction, to the oldest transaction.
+        // We have to be careful here, since the balance for a transaction `i` takes into account the balance
+        // and amount from transaction `i-1`, not transaction `i`.
+        balance = txs[basis].balance;
+        for (let i = basis + 1; i < txs.length; i++) {
+            if (txs[i].balance.intValue !== 0) {
+                // We can skip it and use it as our new basis.
+                balance = txs[i].balance;
+                continue;
+            }
+            const amount = txs[i - 1].amount; // Won't be out of bounds, since there are at least two transactions.
+            balance = balance.subtract(amount);
+            txs[i].balance = balance;
+        }
+
+        // Return the transactions, now sorted in descending order - newest first.
+        result.push(...txs);
+    }
+    return result;
 }
