@@ -93,6 +93,7 @@ export default function LiabilityCreate() {
                 <option value="Others">Others</option>
             </SelectControl>
             <NumberInputControl
+                isRequired
                 name="amount"
                 label="Amount Due"
                 numberInputProps={{
@@ -102,6 +103,7 @@ export default function LiabilityCreate() {
             />
             <FormControl>
                 <NumberInputControl
+                    isRequired
                     name="interest"
                     label="Annual Interest Rate"
                     numberInputProps={{
