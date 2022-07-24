@@ -5,7 +5,7 @@ import {
     useReadTransactionsQuery,
 } from "../../../app/api";
 import { discretize, newest } from "../../../common/utils/chrono";
-import { compareAsc, format, formatDistanceToNow, isSameMonth } from "date-fns";
+import { compareAsc, format, isSameMonth } from "date-fns";
 import currency from "currency.js";
 import { groupBy } from "../../../common/utils/arrays";
 import AreaChart from "../../../common/components/visuals/AreaChart";
@@ -118,9 +118,7 @@ export default function NetWorthCard() {
             <Stat
                 variant="primary"
                 value={netWorth.format({ symbol: "SGD " })}
-                label={`as of ${formatDistanceToNow(asOf, {
-                    addSuffix: true,
-                })}, on ${format(asOf, "dd LLLL yyyy")}`}
+                label={`as of ${format(asOf, "dd LLLL yyyy")}`}
             />
         );
     };

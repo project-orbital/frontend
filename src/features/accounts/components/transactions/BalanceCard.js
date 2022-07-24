@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useReadTransactionsInAccountQuery } from "../../../../app/api";
 import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
-import { format, formatDistanceToNow, isSameMonth } from "date-fns";
+import { format, isSameMonth } from "date-fns";
 import AreaChart from "../../../../common/components/visuals/AreaChart";
 import { discretize, newest } from "../../../../common/utils/chrono";
 import BaseCard from "../../../../common/components/cards/BaseCard";
@@ -48,9 +48,7 @@ export default function BalanceCard() {
                     {balance.format({ symbol: "SGD " })}
                 </Heading>
                 <Text fontSize="sm" color="fg-light">
-                    {`as of ${formatDistanceToNow(date, {
-                        addSuffix: true,
-                    })}, on ${format(date, "dd LLLL yyyy")}`}
+                    {`as of ${format(date, "dd LLLL yyyy")}`}
                 </Text>
             </Box>
             <AreaChart data={monthEndBalances} />
