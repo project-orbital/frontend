@@ -46,8 +46,9 @@ export default function BudgetAlert({ progress, percentage }) {
                 <Box pl={1}>
                     <AlertTitle>Heads up!</AlertTitle>
                     <AlertDescription>
-                        You may be spending your budget too fast. Consider
-                        reducing your expenditure.
+                        You may be spending your budget too fast, relative to
+                        the time elapsed. Consider reducing your short-term
+                        expenditure.
                     </AlertDescription>
                 </Box>
             </Alert>
