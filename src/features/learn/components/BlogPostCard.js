@@ -82,7 +82,7 @@ export default function BlogPostCard({
                     <NavButton
                         to={`./report/${id}`}
                         isDisabled={isReported}
-                        variant="secondary"
+                        variant="danger"
                         w="100%"
                         leftIcon={<MdOutlineReportGmailerrorred />}
                     >
