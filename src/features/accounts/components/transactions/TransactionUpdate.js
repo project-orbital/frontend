@@ -11,7 +11,7 @@ import {
     SelectControl,
     TextareaControl,
 } from "formik-chakra-ui";
-import { useToast } from "@chakra-ui/react";
+import { FormControl, FormHelperText, useToast } from "@chakra-ui/react";
 import { format } from "date-fns";
 
 export default function TransactionUpdate() {
@@ -87,23 +87,35 @@ export default function TransactionUpdate() {
                 label="Transaction Date"
                 inputProps={{ type: "date" }}
             />
-            <NumberInputControl
-                isRequired
-                name="amount"
-                label="Amount"
-                numberInputProps={{
-                    precision: 2,
-                    step: 0.01,
-                }}
-            />
-            <NumberInputControl
-                name="balance"
-                label="Balance"
-                numberInputProps={{
-                    precision: 2,
-                    step: 0.01,
-                }}
-            />
+            <FormControl>
+                <NumberInputControl
+                    isRequired
+                    name="amount"
+                    label="Amount"
+                    numberInputProps={{
+                        precision: 2,
+                        step: 0.01,
+                    }}
+                />
+                <FormHelperText>
+                    This should be negative for withdrawals and positive for
+                    deposits.
+                </FormHelperText>
+            </FormControl>
+            <FormControl>
+                <NumberInputControl
+                    name="balance"
+                    label="Balance"
+                    numberInputProps={{
+                        precision: 2,
+                        step: 0.01,
+                    }}
+                />
+                <FormHelperText>
+                    Leave this blank if you want us to infer the balance from
+                    your other transactions.
+                </FormHelperText>
+            </FormControl>
             <SelectControl isRequired name="category" label="Category">
                 <option value="">Please select</option>
                 <option value="Dining">Dining</option>
