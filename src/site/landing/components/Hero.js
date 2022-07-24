@@ -15,9 +15,10 @@ export default function Hero() {
     );
 
     return (
-        <VStack w="100%" px={[4, 8, 16, 32, 64]} pt={[16, 32]} bg="bg">
+        <VStack w="100%" px={[4, 8, 16, 32, 64]} pt={[16, 24]} bg="bg">
             <Heading
                 as="h1"
+                pb={4}
                 align="center"
                 bgGradient={value}
                 bgClip="text"
@@ -29,7 +30,7 @@ export default function Hero() {
             <Text
                 w="60%"
                 minW="300px"
-                pt="50px"
+                pt={[4, 6, 8, 10, 12]}
                 align="center"
                 color="fg-light"
                 fontSize={["lg", "xl", "2xl"]}
