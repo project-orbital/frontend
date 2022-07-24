@@ -76,7 +76,7 @@ export default function OrderCreate({ type }) {
                     name="price"
                     label={`${type === "buy" ? "Purchase" : "Sell"} Price`}
                     numberInputProps={{
-                        precision: 2,
+                        precision: 4,
                         step: 1,
                     }}
                 />
@@ -89,7 +89,7 @@ export default function OrderCreate({ type }) {
                 name="amount"
                 label="Amount"
                 numberInputProps={{
-                    precision: 2,
+                    precision: 4,
                     step: 1,
                 }}
             />

@@ -89,7 +89,7 @@ export default function Settings() {
                     variant="danger"
                     icon={<AiOutlineUserDelete size="25px" color="white" />}
                     to="delete-account"
-                    text="Delete account"
+                    text="Delete user account"
                 />
             </BaseCard>
             <Outlet />

@@ -19,7 +19,7 @@ export default function AssetCard({ asset, orders }) {
             )}`,
         }),
         {
-            amount: currency(0),
+            amount: currency(0, { precision: 4 }),
             cost: currency(0),
             value: currency(0),
             buys: 0,

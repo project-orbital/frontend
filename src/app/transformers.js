@@ -7,7 +7,7 @@ export const transformAsset = (asset) => ({
     name: asset.name,
     symbol: asset.symbol,
     category: asset.category,
-    price: currency(asset.price["$numberDecimal"]),
+    price: currency(asset.price["$numberDecimal"], { precision: 4 }),
     yield: currency(asset.yield["$numberDecimal"]),
 });
 export const transformAssets = (response) => response.map(transformAsset);
@@ -29,8 +29,8 @@ export const transformOrder = (order) => ({
     assetId: order.asset_id,
     createdAt: parseISO(order.createdAt),
     date: parseISO(order.date),
-    amount: currency(order.amount["$numberDecimal"]),
-    price: currency(order.price["$numberDecimal"]),
+    amount: currency(order.amount["$numberDecimal"], { precision: 4 }),
+    price: currency(order.price["$numberDecimal"], { precision: 4 }),
     fee: currency(order.fee["$numberDecimal"]),
 });
 export const transformOrders = (response) => response.map(transformOrder);

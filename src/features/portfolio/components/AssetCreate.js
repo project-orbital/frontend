@@ -17,7 +17,10 @@ export default function AssetCreate() {
     async function handleSubmit(values, { setErrors }) {
         try {
             toast.closeAll();
-            await createAsset(values).unwrap();
+            await createAsset({
+                ...values,
+                yield: values.yield === "" ? 0 : values.yield,
+            }).unwrap();
             toast({
                 title: "Asset added.",
                 description:
@@ -100,7 +103,7 @@ export default function AssetCreate() {
                     name="price"
                     label="Market Price"
                     numberInputProps={{
-                        precision: 2,
+                        precision: 4,
                         step: 1,
                     }}
                 />

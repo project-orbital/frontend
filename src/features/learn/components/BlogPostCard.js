@@ -63,7 +63,11 @@ export default function BlogPostCard({
             heading={Header}
             subheading={Summary}
             image={Picture}
-            link={Link.startsWith("http://") ? Link : `http://${Link}`}
+            link={
+                Link.startsWith("http://") || Link.startsWith("https://")
+                    ? Link
+                    : `https://${Link}`
+            }
             isExternal
         >
             <VStack align="center" spacing={4}>

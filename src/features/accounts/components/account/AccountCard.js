@@ -7,12 +7,18 @@ import {
     Stack,
     Text,
     useColorModeValue,
+    VStack,
 } from "@chakra-ui/react";
 import { useReadTransactionsInAccountQuery } from "../../../../app/api";
 import { newest } from "../../../../common/utils/chrono";
 import { format } from "date-fns";
 import BaseCard from "../../../../common/components/cards/BaseCard";
-import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
+import {
+    MdOutlineCallMade,
+    MdOutlineCallReceived,
+    MdOutlineDelete,
+    MdOutlineEdit,
+} from "react-icons/md";
 import currency from "currency.js";
 import Stat from "../../../../common/components/Stat";
 
@@ -74,11 +80,24 @@ export default function AccountCard({ account }) {
                 button={<EditButton />}
                 link={`/accounts/${accountId}`}
             >
-                <NavButton
-                    to={`./${accountId}`}
-                    text="Go to account"
-                    withArrow
-                />
+                <VStack align="start" spacing={4}>
+                    <NavButton
+                        to={`./${accountId}/transactions/create/withdrawal`}
+                        icon={<MdOutlineCallMade color="white" size="20px" />}
+                        text="Add a withdrawal transaction"
+                        bgGradient="linear(to-br, red.400, red.600)"
+                        withArrow
+                    />
+                    <NavButton
+                        to={`./${accountId}/transactions/create/deposit`}
+                        icon={
+                            <MdOutlineCallReceived color="white" size="20px" />
+                        }
+                        text="Add a deposit transaction"
+                        bgGradient="linear(to-br, blue.400, blue.600)"
+                        withArrow
+                    />
+                </VStack>
             </BaseCard>
         );
     }
