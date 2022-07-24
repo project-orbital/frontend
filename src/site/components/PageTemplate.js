@@ -15,24 +15,19 @@ import Navbar from "../../common/components/navbar/Navbar";
  */
 export default function PageTemplate({ heading, children, buttons = [] }) {
     return (
-        <VStack>
+        <VStack
+            justify="center"
+            spacing="0"
+            w="100%"
+            minH="100vh"
+            overflowX="hidden"
+        >
             <Navbar buttons={buttons} />
-            <VStack
-                pos="absolute"
-                top={[20, 24]}
-                pt={16}
-                justify="center"
-                spacing="0"
-                w="100%"
-                h="stretch"
-                overflowX="hidden"
-            >
-                <Box w={["100vw", "100vw", "100vw", "80vw", "60vw"]} px={[2]}>
-                    <Card isCentered isStandalone heading={heading}>
-                        {children}
-                    </Card>
-                </Box>
-            </VStack>
+            <Box w={["100vw", "100vw", "100vw", "80vw", "60vw"]} px={[2]}>
+                <Card isCentered isStandalone heading={heading}>
+                    {children}
+                </Card>
+            </Box>
         </VStack>
     );
 }
