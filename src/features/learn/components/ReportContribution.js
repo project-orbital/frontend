@@ -32,13 +32,15 @@ export default function UserContribute() {
     return (
         <FormModal
             isDestructive
-            title="Report this submission..."
+            title="Reporting this submission..."
+            heading="Let us know what's wrong with this submission."
+            subheading="We will review this submission and take any necessary action."
             submitText="Report submission"
             initialValues={{
                 text: "",
             }}
             validationSchema={Yup.object({
-                text: Yup.string().required("Please provide a text."),
+                text: Yup.string().required("Please provide a reason."),
             })}
             onSubmit={handleSubmit}
         >
@@ -47,7 +49,7 @@ export default function UserContribute() {
                 id="text"
                 isRequired
                 withErrorMessage
-                labelText="Let us know what's wrong."
+                labelText="Reason"
                 placeholderText="Example: Link is not working."
             />
         </FormModal>

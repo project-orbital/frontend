@@ -65,6 +65,7 @@ export default function UserContribute() {
                 id="link"
                 isRequired
                 withErrorMessage
+                leftAddon="https://"
                 labelText="Link"
                 placeholderText="Enter a link to the article"
             />

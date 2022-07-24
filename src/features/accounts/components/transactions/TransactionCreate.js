@@ -7,7 +7,7 @@ import {
     TextareaControl,
 } from "formik-chakra-ui";
 import { useNavigate, useParams } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
+import { FormControl, FormHelperText, useToast } from "@chakra-ui/react";
 import { useCreateTransactionMutation } from "../../../../app/api";
 import { format } from "date-fns";
 
@@ -22,6 +22,9 @@ export default function TransactionCreate({ type }) {
         try {
             if (type === "withdrawal") {
                 values.amount = -values.amount;
+            }
+            if (values.balance === "") {
+                values.balance = 0;
             }
             await createTransaction({ ...values, accountId }).unwrap();
             toast({
@@ -68,14 +71,13 @@ export default function TransactionCreate({ type }) {
         <FormModal
             title={title}
             heading="We need some details about this transaction."
-            subheading="The transaction will be added under this account. If
-                        this is incorrect, you can edit the transaction later."
+            subheading="You can always edit them later."
             cancelText="Cancel transaction addition"
             submitText="Add transaction"
             initialValues={{
                 date: format(new Date(), "yyyy-MM-dd"),
                 amount: 0,
-                balance: 0,
+                balance: "",
                 category: "Others",
                 description: `Some ${type}`,
             }}
@@ -109,14 +111,20 @@ export default function TransactionCreate({ type }) {
                     min: 0,
                 }}
             />
-            <NumberInputControl
-                name="balance"
-                label="Balance"
-                numberInputProps={{
-                    precision: 2,
-                    step: 1,
-                }}
-            />
+            <FormControl>
+                <NumberInputControl
+                    name="balance"
+                    label="Balance"
+                    numberInputProps={{
+                        precision: 2,
+                        step: 1,
+                    }}
+                />
+                <FormHelperText>
+                    Leave this blank if you want us to infer the balance from
+                    your other transactions.
+                </FormHelperText>
+            </FormControl>
             {type === "withdrawal" ? <WithdrawalOptions /> : <DepositOptions />}
             <TextareaControl
                 name={"description"}

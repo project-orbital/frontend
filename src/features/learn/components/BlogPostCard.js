@@ -63,7 +63,7 @@ export default function BlogPostCard({
             heading={Header}
             subheading={Summary}
             image={Picture}
-            link={Link}
+            link={Link.startsWith("http://") ? Link : `http://${Link}`}
             isExternal
         >
             <VStack align="center" spacing={4}>
@@ -82,7 +82,7 @@ export default function BlogPostCard({
                     <NavButton
                         to={`./report/${id}`}
                         isDisabled={isReported}
-                        variant="secondary"
+                        variant="danger"
                         w="100%"
                         leftIcon={<MdOutlineReportGmailerrorred />}
                     >

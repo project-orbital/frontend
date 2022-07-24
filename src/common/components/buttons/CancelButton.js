@@ -26,7 +26,7 @@ export default function CancelButton({ isNonDestructive, text, ...props }) {
             w="100%"
             bgGradient={
                 isNonDestructive
-                    ? "linear(to-br, gray.400, gray.600)"
+                    ? "linear(to-br, gray.500, gray.600)"
                     : "linear(to-br, red.400, red.600)"
             }
             color="white"

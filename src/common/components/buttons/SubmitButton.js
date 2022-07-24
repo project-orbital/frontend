@@ -27,7 +27,7 @@ export default function SubmitButton({ text, isDestructive, ...props }) {
             bgGradient={
                 isDestructive
                     ? "linear(to-br, red.400, red.600)"
-                    : "linear(to-br, gray.400, gray.600)"
+                    : "linear(to-br, blue.300, blue.600)"
             }
             color="white"
             shadow="md"

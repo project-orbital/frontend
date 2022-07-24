@@ -4,6 +4,8 @@ import {
     FormHelperText,
     FormLabel,
     Input,
+    InputGroup,
+    InputLeftAddon,
     Textarea,
 } from "@chakra-ui/react";
 import { Field } from "formik";
@@ -63,6 +65,7 @@ export default function FormTextField({
     isMultiline,
     isPassword,
     isDate,
+    leftAddon,
     withErrorMessage,
     id,
     labelText,
@@ -87,15 +90,21 @@ export default function FormTextField({
                             {...props}
                         />
                     ) : (
-                        <Input
-                            {...field}
-                            id={id}
-                            type={
-                                (isPassword && "password") || (isDate && "date")
-                            }
-                            placeholder={placeholderText || ""}
-                            {...props}
-                        />
+                        <InputGroup>
+                            {leftAddon && (
+                                <InputLeftAddon children={leftAddon} />
+                            )}
+                            <Input
+                                {...field}
+                                id={id}
+                                type={
+                                    (isPassword && "password") ||
+                                    (isDate && "date")
+                                }
+                                placeholder={placeholderText || ""}
+                                {...props}
+                            />
+                        </InputGroup>
                     )}
                     {withErrorMessage && (
                         <FormErrorMessage>{form.errors[id]}</FormErrorMessage>

@@ -21,12 +21,11 @@ export default function PasswordChange() {
             );
             toast({
                 title: "Password changed successfully.",
-                description: "Please sign in with your new password.",
                 status: "success",
                 duration: null,
                 isClosable: true,
             });
-            navigate("/sign-out");
+            navigate("../");
         } catch (error) {
             const errors = await error.response.json();
             setErrors(errors);

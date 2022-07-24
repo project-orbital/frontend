@@ -18,10 +18,11 @@ export default function OrderCreate({ type }) {
             await createOrder({
                 ...values,
                 amount: type === "sell" ? -values.amount : values.amount,
+                fee: values.fee === "" ? 0 : values.fee,
                 assetId: assetId,
             }).unwrap();
             toast({
-                title: `${type} order recorded.`,
+                title: `${type === "buy" ? "Buy" : "Sell"} order recorded.`,
                 status: "success",
             });
             navigate("../");
@@ -73,14 +74,14 @@ export default function OrderCreate({ type }) {
                 <NumberInputControl
                     isRequired
                     name="price"
-                    label="Purchase Price"
+                    label={`${type === "buy" ? "Purchase" : "Sell"} Price`}
                     numberInputProps={{
                         precision: 2,
                         step: 1,
                     }}
                 />
                 <FormHelperText>
-                    The market price of the asset at the time of purchase.
+                    {`The market price of the asset at the time of the ${type} order.`}
                 </FormHelperText>
             </FormControl>
             <NumberInputControl

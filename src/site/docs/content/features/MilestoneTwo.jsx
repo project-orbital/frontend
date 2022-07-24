@@ -3,11 +3,6 @@ import { Prose } from "@nikolovlazar/chakra-ui-prose";
 const code = `
 <h1>Milestone II</h1>
 
-<h2>Changes from Feedback</h2>
-<p>
-    Section to be completed.
-</p>
-
 <h2>New Features</h2>
 <h3>Email Verification and Password Reset</h3>
 <p>

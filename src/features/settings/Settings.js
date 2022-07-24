@@ -47,7 +47,7 @@ export default function Settings() {
             >
                 <ActionButton
                     onClick={handleColorModeToggle}
-                    bgGradient="linear(to-br, gray.400, gray.600)"
+                    bgGradient="linear(to-br, accent, accent-dark)"
                     px={8}
                     color="white"
                 >
@@ -76,12 +76,12 @@ export default function Settings() {
                 spacing={6}
             >
                 <NavButton
-                    variant="secondary"
+                    variant="primary"
                     to="update-profile"
                     text="Update profile"
                 />
                 <NavButton
-                    variant="secondary"
+                    variant="primary"
                     to="./change-password"
                     text="Change password"
                 />

@@ -7,6 +7,7 @@ import {
     Th,
     Thead,
     Tr,
+    useColorModeValue,
 } from "@chakra-ui/react";
 
 /**
@@ -41,6 +42,11 @@ export default function Table({
     rowLimit,
     ...props
 }) {
+    const alternateRowMask = useColorModeValue(
+        "blackAlpha.50",
+        "whiteAlpha.200"
+    );
+
     // If the headers are unspecified, we extract all possible keys in the data
     // to use as headers.
     const headers = headerKeys ?? [
@@ -57,6 +63,7 @@ export default function Table({
                         pr={x === headers.length - 1 ? offset : 2}
                         isNumeric={isNumeric[x]}
                         fontFamily="body"
+                        border="none"
                     >
                         {header}
                     </Th>
@@ -105,7 +112,8 @@ export default function Table({
                         // Pad the first and last columns as specified.
                         pl={x === 0 ? offset : 2}
                         pr={x === headers.length - 1 ? offset : 2}
-                        bg={y % 2 === 0 ? "whiteAlpha.500" : "none"}
+                        bg={y % 2 === 0 ? alternateRowMask : "none"}
+                        border="none"
                     >
                         <Cell content={content} />
                     </Td>

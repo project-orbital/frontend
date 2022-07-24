@@ -67,7 +67,11 @@ export default function Card({
             borderColor="fg-light"
             spacing={0}
         >
-            {icon && <Box color="fg">{icon}</Box>}
+            {icon && (
+                <Box color="fg" py={4}>
+                    {icon}
+                </Box>
+            )}
             {badge}
             {heading && isStandalone ? ( // If this card is standalone, render it in serif.
                 <Heading
