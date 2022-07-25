@@ -59,16 +59,16 @@ export default function Card({
 
     const header = (
         <VStack
-            width="stretch"
+            width="100%"
             pb={children ? "20px" : "0px"}
             mb={children && !isNested ? "20px" : "0px"}
-            align={isCentered ? "center" : "start"}
+            align={["start", "center"]}
             borderBottom={isNested || isCentered ? "none" : "1px solid"}
             borderColor="fg-light"
             spacing={0}
         >
             {icon && (
-                <Box color="fg" py={4}>
+                <Box boxSize={[8, 12, 16]} m={0} color="fg" my={[6, 4]}>
                     {icon}
                 </Box>
             )}
@@ -85,9 +85,9 @@ export default function Card({
                 </Heading> // Otherwise, render it in sans-serif (regular text).
             ) : (
                 <Text
-                    align={isCentered ? "center" : "start"}
+                    align={["start", "center"]}
                     fontWeight="bold"
-                    fontSize={isNested ? "md" : "xl"}
+                    fontSize={["sm", "md"]}
                     pt={badge ? "10px" : "0px"}
                     pb={subheading ? "2px" : children ? "0px" : "20px"}
                 >
@@ -96,10 +96,10 @@ export default function Card({
             )}
             {subheading && (
                 <Text
-                    fontSize="sm"
+                    fontSize={["xs", "sm"]}
                     pb={children ? "0px" : "15px"}
                     mb="20px"
-                    align={isCentered ? "center" : "start"}
+                    align={["start", "center"]}
                 >
                     {subheading}
                 </Text>
