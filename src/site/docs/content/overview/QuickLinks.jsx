@@ -4,6 +4,9 @@ const code = `
 <h1>Quick Links</h1>
 <h2>Deliverables</h2>
 <p>
+    <a href="https://www.dollarplanner.live" target="_blank">Website</a>
+</p>
+<p>
     <a href="" target="_blank">Poster</a>
 </p>
 <p>

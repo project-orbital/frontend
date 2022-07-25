@@ -10,6 +10,9 @@ const code = `
     With DollarPlanner, you can easily track your expenses, plan
     a budget, and keep tabs on all your bank accounts.
 </p>
+<p>
+    Visit us at <a href="https://www.dollarplanner.live" target="_blank"/>https://www.dollarplanner.live</a>.
+</p>
 <h2>Motivation</h2>
 <p>
     Creating accounts at financial institutions has never been easier.
