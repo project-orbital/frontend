@@ -39,7 +39,7 @@ export default function LiabilityUpdate() {
                 title: "Liability updated.",
                 status: "success",
             });
-            navigate("../");
+            navigate("../../../");
         } catch (error) {
             setErrors(error);
             toast({

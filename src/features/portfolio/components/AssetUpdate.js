@@ -35,7 +35,7 @@ export default function AssetUpdate() {
                 title: "Asset updated.",
                 status: "success",
             });
-            navigate("../");
+            navigate("../../../");
         } catch (error) {
             setErrors(error);
             toast({

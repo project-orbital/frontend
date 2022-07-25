@@ -32,7 +32,7 @@ export default function LiabilityDelete() {
                 title: "Liability deleted.",
                 status: "success",
             });
-            navigate("../../");
+            navigate("../../../");
         } catch (error) {
             toast({
                 ...error,
