@@ -18,7 +18,7 @@ const code = `
     @Diamond Hands, Crowded Cow, Budgie, modtree, and our adviser Rayner:
 </p>
 <p>
-    Thank you for your kind feedback and comments on the previous release.
+    Thanks for your feedback and comments on the previous release!
     We'd like to address the following suggestions:
 </p>
 <blockquote>
