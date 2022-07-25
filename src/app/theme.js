@@ -135,9 +135,6 @@ export const theme = extendTheme(
             td: {
                 fontSize: "0.8rem",
             },
-            img: {
-                borderRadius: "10px",
-            },
         },
     })
 );
