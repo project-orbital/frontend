@@ -151,7 +151,7 @@ export default function BaseCard({
     if (!link) {
         // If the card isn't clickable, then we don't need to wrap it with a link overlay.
         return (
-            <VStack spacing={0} w="100%">
+            <VStack spacing={0} w="100%" h="100%">
                 <Title />
                 <Body />
             </VStack>
@@ -160,7 +160,7 @@ export default function BaseCard({
     // Make the entire card clickable with a hover animation.
     return (
         <LinkCard>
-            <VStack spacing={0} w="100%">
+            <VStack spacing={0} w="100%" h="100%">
                 <Title />
                 <Body />
             </VStack>
