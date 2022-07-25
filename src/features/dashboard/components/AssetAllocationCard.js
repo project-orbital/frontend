@@ -1,9 +1,9 @@
 import PieChart from "../../../common/components/visuals/PieChart";
-import { Center } from "@chakra-ui/react";
 import BaseCard from "../../../common/components/cards/BaseCard";
 import { useReadAssetsQuery, useReadOrdersQuery } from "../../../app/api";
 import NavButton from "../../../common/components/buttons/NavButton";
 import currency from "currency.js";
+import { AspectRatio } from "@chakra-ui/react";
 
 export default function AssetAllocationCard() {
     const {
@@ -43,6 +43,25 @@ export default function AssetAllocationCard() {
         );
     }
 
+    if (orders.length === 0) {
+        return (
+            <BaseCard
+                title="Asset Allocation"
+                heading={`You've added ${assets.length} ${
+                    assets.length === 1 ? "asset" : "assets"
+                }, but you haven't recorded any orders for them yet.`}
+                subheading="Once you've recorded your buy or sell orders in your portfolio, we'll show your asset allocation here."
+            >
+                <NavButton
+                    to="/portfolio"
+                    variant="primary"
+                    text="Go to portfolio"
+                    withArrow
+                />
+            </BaseCard>
+        );
+    }
+
     const categories = {};
     for (const asset of assets) {
         // Plenty of room for optimization here.
@@ -70,10 +89,11 @@ export default function AssetAllocationCard() {
         <BaseCard
             title="Asset Allocation"
             subtitle="For more information, check out your portfolio."
+            justify="center"
         >
-            <Center h="100%" minH="400px" alignSelf="center">
+            <AspectRatio ratio={16 / 9} pb={8}>
                 <PieChart data={data} />
-            </Center>
+            </AspectRatio>
         </BaseCard>
     );
 }
