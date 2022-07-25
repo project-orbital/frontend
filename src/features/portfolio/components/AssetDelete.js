@@ -25,7 +25,7 @@ export default function AssetDelete() {
                 title: "Asset deleted.",
                 status: "success",
             });
-            navigate("../../");
+            navigate("../../../");
         } catch (error) {
             toast({
                 ...error,

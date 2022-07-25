@@ -5,14 +5,11 @@ const code = `
 
 <h2>Parser</h2>
 <p>
-    We didn't manage to implement an improved parser as promised. Here's why.
+    We didn't manage to implement an improved parser as promised.
 </p>
 <p>
-    The two of us together have a combined sample of bank statements from just DBS, OCBC, and Standard Chartered.
-</p>
-<p>
-    This would be sufficient to get a working parser for <emph>some</emph> of the bank statements,
-    but is insufficient for catching edge cases that we otherwise could with more samples to test on.
+    The two of us together have a limited sample of bank statements from DBS, OCBC, and Standard Chartered
+    which is insufficient for catching edge cases that we otherwise could with more samples to test on.
 </p>
 <p>
     We considered crowd-sourcing more bank statements (not from strangers, but from people who could trust us with their data),

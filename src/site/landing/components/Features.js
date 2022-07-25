@@ -19,37 +19,37 @@ export default function FeatureCard() {
                 <SimpleGrid spacing="30px" columns={[1, null, 2, null, 3]}>
                     <Card
                         isCentered
-                        icon={<MdPrivacyTip size="80px" />}
+                        icon={<MdPrivacyTip size="100%" />}
                         heading="Privacy first."
                         subheading="You can delete your data and account anytime you wish."
                     />
                     <Card
                         isCentered
-                        icon={<MdSwitchAccount size="80px" />}
+                        icon={<MdSwitchAccount size="100%" />}
                         heading="Multiple accounts."
                         subheading="We've made it incredibly easy to create and switch between accounts."
                     />
                     <Card
                         isCentered
-                        icon={<MdNoteAlt size="80px" />}
+                        icon={<MdNoteAlt size="100%" />}
                         heading="Plan for the future."
                         subheading="Create a budget, track your assets, and stay on top of your liabilities with us."
                     />
                     <Card
                         isCentered
-                        icon={<MdPhonelink size="80px" />}
+                        icon={<MdPhonelink size="100%" />}
                         heading="Responsive design."
                         subheading="Use DollarPlanner anywhere — even on your phone!"
                     />
                     <Card
                         isCentered
-                        icon={<MdSchool size="80px" />}
+                        icon={<MdSchool size="100%" />}
                         heading="Learn as you go."
                         subheading="We curate financial literacy resources for you, and you can also share them with the community."
                     />
                     <Card
                         isCentered
-                        icon={<MdDarkMode size="80px" />}
+                        icon={<MdDarkMode size="100%" />}
                         heading="Dark mode."
                         subheading="Planning your finances in the dark? No problem!"
                     />

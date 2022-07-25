@@ -18,7 +18,7 @@ const code = `
     @Diamond Hands, Crowded Cow, Budgie, modtree, and our adviser Rayner:
 </p>
 <p>
-    Thank you for your kind feedback and comments on the previous release.
+    Thanks for your feedback and comments on the previous release!
     We'd like to address the following suggestions:
 </p>
 <blockquote>
@@ -32,7 +32,7 @@ const code = `
     The poster is simple, but should have more detail on how the tech stacks are used.</br> - Crowded Cow
 </blockquote>
 <p>
-    We've updated our poster (and documentation) with this information.
+    We've updated documentation with this information.
     Check out the new <a href="/docs/overview/tech-stack">tech stack</a> section.
 </p>
 <blockquote>
