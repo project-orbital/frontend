@@ -600,22 +600,62 @@ const code = `
 <td><span><strong>MILESTONE 2 SUB-TOTAL</strong></span></td>
 <td colspan=2><span><strong>86 hours</strong></span></td>
 <tr>
-<td><span>Improve Budget Planner feature</span></td>
-<td><span>4 - 8 July</span></td>
-<td><span>30 hours</span></td>
+    <td><span>Improve budget planner</span></td>
+    <td><span>5 - 13 July</span></td>
+    <td><span>18 hours</span></td>
 </tr>
 <tr>
-<td><span>Implement Learn - Community Contributed feature</span></td>
-<td><span>11 - 15 July</span></td>
-<td><span>30 hours</span></td>
+    <td><span>Add alerts to budget planner</span></td>
+    <td><span>14 July</span></td>
+    <td><span>6 hours</span></td>
+</tr>
+<tr>
+    <td><span>Add budget editing to budget planner</span></td>
+    <td><span>15 July</span></td>
+    <td><span>4 hours</span></td>
+</tr>
+<tr>
+    <td><span>Implement learn community contributions</span></td>
+    <td><span>16 - 18 July</span></td>
+    <td><span>17 hours</span></td>
+</tr>
+<tr>
+    <td><span>Add like system for community contributions</span></td>
+    <td><span>19 July</span></td>
+    <td><span>5 hours</span></td>
+</tr>
+<tr>
+    <td><span>Implement unliking</span></td>
+    <td><span>20 July</span></td>
+    <td><span>4 hours</span></td>
+</tr>
+<tr>
+    <td><span>UI polish for Learn and Plan</span></td>
+    <td><span>21 July</span></td>
+    <td><span>5 hours</span></td>
+</tr>
+<tr>
+    <td><span>Create project poster</span></td>
+    <td><span>22 - 23 July</span></td>
+    <td><span>4 hours</span></td>
+</tr>
+<tr>
+    <td><span>Plan project video, script</span></td>
+    <td><span>24 July</span></td>
+    <td><span>5 hours</span></td>
+</tr>
+<tr>
+    <td><span>Create project video</span></td>
+    <td><span>11 - 15 July</span></td>
+    <td><span>2 hours</span></td>
 </tr>
 <tr>
     <td><strong>MILESTONE 3 SUB-TOTAL</strong></td>
-    <td colspan=2><strong>60 hours</strong></td>
+    <td colspan=2><strong>70 hours</strong></td>
 </tr>
 <tr>
     <td><strong>TOTAL</strong></td>
-    <td colspan=2><strong>167 hours</strong></td>
+    <td colspan=2><strong>177 hours</strong></td>
 </tr>
 </tr>
 </tbody>

@@ -32,7 +32,7 @@ const code = `
     The poster is simple, but should have more detail on how the tech stacks are used.</br> - Crowded Cow
 </blockquote>
 <p>
-    We've updated our poster (and documentation) with this information.
+    We've updated documentation with this information.
     Check out the new <a href="/docs/overview/tech-stack">tech stack</a> section.
 </p>
 <blockquote>
