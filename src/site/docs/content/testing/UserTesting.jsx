@@ -3,7 +3,16 @@ import { Prose } from "@nikolovlazar/chakra-ui-prose";
 const code = `
 <h1>User Testing</h1>
 
-<h2>Changes from Findings</h2>
+<h2>Methodology</h2>
+<p>
+    We sent our live website to our friends and family for them to evaluate, and we got written feedback from them.
+</p>
+<p>
+    We also sat down with a smaller group (n = 3) for a focused, unguided demonstration of how they used and interacted with the application,
+    taking notes on their interactions, and interviewing them after the session.
+</p>
+
+<h2>Findings (and changes)</h2>
 <h3>Language</h3>
 <p>
     Some of our users found some of the terminology used in the application

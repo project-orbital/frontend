@@ -11,6 +11,7 @@ const code = `
     <li><strong>[Settings]</strong> You can now delete your account and/or your data, and change your username/password/etc. in the Settings tab.</li>
     <li><strong>[Data Synchronization]</strong> You can now use DollarPlanner across all your devices — your data will be there. </li>
     <li><strong>[Responsive Design]</strong> You can now use DollarPlanner on any device, regardless of screen size.</li>
+    <li><strong>[Going Forward]</strong> Please read our <a href="/docs/miscellany/limitations/">Limitations</a> section for our assessment of features for future releases.</li>
 </ul>
 
 <h2>Changes from Feedback</h2>
