@@ -25,7 +25,7 @@ export default function AssetDelete() {
                 title: "Asset deleted.",
                 status: "success",
             });
-            navigate("../../");
+            navigate("../../../");
         } catch (error) {
             toast({
                 ...error,
@@ -39,8 +39,8 @@ export default function AssetDelete() {
             isDestructive
             title="Deleting asset records..."
             heading={`Are you sure you want to delete all records for ${asset.name}?`}
-            subheading="This action cannot be undone."
-            cancelText="No, don't delete it"
+            subheading="This will also delete all buy and sell orders recorded. This action cannot be undone."
+            cancelText="No, don't delete them"
             submitText="Yes, delete records"
             initialValues={{}}
             onSubmit={handleSubmit}

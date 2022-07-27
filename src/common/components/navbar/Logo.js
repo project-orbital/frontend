@@ -7,11 +7,11 @@ export default function Logo({ direction, color, size, link, hasBorder }) {
         <Stack
             as={Link}
             to={link || "/"}
-            direction={direction || "row"}
+            direction={direction || ["column", "row"]}
             align="center"
-            px={[8, null, null, 4]}
+            pl={[2, null, null, 4]}
         >
-            <Box color={color || "fg"} w={[6, 7, 8]}>
+            <Box color={color || "fg"} w={[5, 6, 7, 8]}>
                 <BsCurrencyExchange size="100%" />
             </Box>
             <Heading

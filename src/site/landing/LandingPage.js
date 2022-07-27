@@ -8,7 +8,7 @@ import Navbar from "../../common/components/navbar/Navbar";
 export default function LandingPage() {
     return (
         <VStack spacing="0" bg="bg">
-            <Navbar hasSignInButton hasSignUpButton />
+            <Navbar isFloating hasSignInButton hasSignUpButton />
             <VStack minH="100vh" spacing="0" pt="max(90px, 5%)">
                 <Hero />
                 <Features />

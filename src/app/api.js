@@ -12,6 +12,7 @@ import {
     transformPayment,
     transformPayments,
 } from "./transformers";
+import { computeBalances } from "../common/utils/balance";
 
 // Nothing against the Fetch API, but since we're already using the `ky` library,
 // we can use their abstraction instead.
@@ -48,7 +49,8 @@ const transformTransaction = (tx) => ({
     description: tx.description,
     accountId: tx.account_id,
 });
-const transformTransactions = (response) => response.map(transformTransaction);
+const transformTransactions = (response) =>
+    computeBalances(response.map(transformTransaction));
 
 const transformContribution = (c) => ({
     _id: c._id,

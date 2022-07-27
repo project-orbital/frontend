@@ -100,7 +100,7 @@ export default function AppTemplate({ page, path, links, title }) {
                 pos="absolute"
                 left={[0, null, null, "160px"]}
                 top={["70px", "85px", "100px", "0px"]}
-                w="stretch"
+                w={["100vw", null, null, "calc(100% - 160px)"]}
                 minH="100vh"
                 pt={[0, null, null, 10]}
                 pb={10}
@@ -116,7 +116,7 @@ export default function AppTemplate({ page, path, links, title }) {
                     />
                 </Show>
                 <RequireAuth>
-                    <Box w="stretch" p={0}>
+                    <Box w="full" p={0}>
                         <SimpleGrid spacing={8} columns={[1, null, 2]}>
                             <Outlet context={[setCustomTitle]} />
                         </SimpleGrid>

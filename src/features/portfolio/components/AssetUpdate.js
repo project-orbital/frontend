@@ -26,12 +26,16 @@ export default function AssetUpdate() {
     async function handleSubmit(values, { setErrors }) {
         try {
             toast.closeAll();
-            await updateAsset({ id: assetId, ...values }).unwrap();
+            await updateAsset({
+                id: assetId,
+                ...values,
+                yield: values.yield === "" ? 0 : values.yield,
+            }).unwrap();
             toast({
                 title: "Asset updated.",
                 status: "success",
             });
-            navigate("../");
+            navigate("../../../");
         } catch (error) {
             setErrors(error);
             toast({

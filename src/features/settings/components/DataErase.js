@@ -33,7 +33,7 @@ export default function DataErase() {
             isDestructive
             title="Erasing your data..."
             heading="Are you absolutely sure you want to erase your data?"
-            subheading="This cannot be undone. You will lose all your data except for your account."
+            subheading="This cannot be undone. You will lose all your data except for your user account."
             cancelText="Cancel data erasure"
             submitText="Erase data"
             initialValues={{

@@ -1,5 +1,10 @@
-import { Box, VStack } from "@chakra-ui/react";
-import Card from "./Card";
+import {
+    Box,
+    Heading,
+    Spacer,
+    useColorModeValue,
+    VStack,
+} from "@chakra-ui/react";
 import Navbar from "../../common/components/navbar/Navbar";
 
 /**
@@ -14,23 +19,36 @@ import Navbar from "../../common/components/navbar/Navbar";
  * @return the page populated with the sidebar and children elements
  */
 export default function PageTemplate({ heading, children, buttons = [] }) {
+    const accentGradient = useColorModeValue(
+        "linear(to-t, accent, fg)",
+        "linear(to-t, fg, fg)"
+    );
     return (
-        <VStack>
+        <VStack
+            justify="start"
+            spacing="0"
+            w="100vw"
+            minH="100vh"
+            px={[4, 8, 16, 32, 64]}
+            overflowX="hidden"
+        >
             <Navbar buttons={buttons} />
-            <VStack
-                pt={[20, 24]}
-                justify="center"
-                spacing="0"
-                w="100%"
-                minH="100vh"
-                overflowX="hidden"
+            <Spacer />
+            <Spacer />
+            <Heading
+                pb={16}
+                align="center"
+                lineHeight={["1.75em", "1.5em", "1.25em"]}
+                bgGradient={accentGradient}
+                bgClip="text"
+                size={["xl", "2xl", "3xl"]}
             >
-                <Box w={["100vw", "100vw", "100vw", "80vw", "60vw"]}>
-                    <Card isCentered isStandalone heading={heading}>
-                        {children}
-                    </Card>
-                </Box>
-            </VStack>
+                {heading}
+            </Heading>
+            <Box>{children}</Box>
+            <Spacer />
+            <Spacer />
+            <Spacer />
         </VStack>
     );
 }

@@ -24,7 +24,6 @@
         "react-router-dom": "^6.3.0",
         "react-scripts": "^5.0.1",
         "recharts": "^2.1.12",
-        "redux-persist": "^6.0.0",
         "web-vitals": "^2.1.4",
         "yup": "^0.32.11"
     },
@@ -32,7 +31,7 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "eject": "react-scripts eject",
-        "test": "NODE_OPTIONS=--experimental-vm-modules jest && npx playwright test",
+        "test": "NODE_OPTIONS=--experimental-vm-modules jest",
         "prepare": "husky install"
     },
     "eslintConfig": {

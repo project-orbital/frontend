@@ -11,6 +11,7 @@ import NavButton from "../buttons/NavButton";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 export default function Navbar({
+    isFloating = false,
     hasSignInButton,
     hasSignUpButton,
     buttons = [],
@@ -29,6 +30,7 @@ export default function Navbar({
                 fontWeight="normal"
                 fontSize="sm"
                 color="fg-light"
+                w="auto"
             >
                 Sign in
             </NavButton>
@@ -44,25 +46,28 @@ export default function Navbar({
                 text="Sign up"
                 fontWeight="semibold"
                 fontSize="sm"
-                bg="fg"
-                color="bg"
+                bg="accent-dark"
+                bgGradient="none"
+                color="white"
+                w="auto"
             />
         );
     };
 
     return (
         <HStack
-            position="fixed"
+            position={isFloating ? "fixed" : "static"}
             spacing={0}
             w="100%"
             h={[20, 24]}
-            pl={[6, 6, 8, 16]}
-            pr={[2, 4, 6, 12]}
+            px={hasSignInButton && hasSignUpButton ? [2, 4, 6, 12] : 2}
             bg="bg-translucent"
             zIndex={1}
             overflowX="hidden"
         >
-            <Logo />
+            <Logo
+                direction={hasSignInButton && hasSignUpButton ? null : "row"}
+            />
             <Spacer />
             {hasSignInButton && <SignIn />}
             {hasSignUpButton && <SignUp />}

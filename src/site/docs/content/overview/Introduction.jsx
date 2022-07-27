@@ -10,6 +10,9 @@ const code = `
     With DollarPlanner, you can easily track your expenses, plan
     a budget, and keep tabs on all your bank accounts.
 </p>
+<p>
+    Visit us at <a href="https://www.dollarplanner.live" target="_blank"/>https://www.dollarplanner.live</a>.
+</p>
 <h2>Motivation</h2>
 <p>
     Creating accounts at financial institutions has never been easier.
@@ -23,7 +26,7 @@ const code = `
 </p>
 <p>
     Owning more accounts with different banks is a great way to reap different
-    benefits and rewards, but this comes at the cost higher cognitive load.
+    benefits and rewards, but this comes at the cost of higher cognitive load.
 </p>
 <p>
     To keep track of your transactions and balances, you have to go through the
@@ -46,9 +49,12 @@ const code = `
 </p>
 <p>
     You can also create as many accounts in DollarPlanner as you have bank 
-    accounts, all under a single user account. We also let you consolidate
-    all your accounts in a single interface, where you can analyze and
-    visualize various metrics.
+    accounts, all under a single user account.
+</p>
+<p>   
+    We also let you consolidate
+    all your accounts and assets in a single interface, where you can analyze and
+    visualize various metrics, such as your net worth and asset allocation.
 </p>
 `;
 

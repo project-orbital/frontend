@@ -4,6 +4,23 @@ import "@fontsource/dm-serif-display/400.css";
 
 export const theme = extendTheme(
     {
+        components: {
+            Text: {
+                baseStyle: {
+                    fontSize: ["sm", "md"],
+                },
+            },
+            FormLabel: {
+                baseStyle: {
+                    fontSize: ["sm", "md"],
+                },
+            },
+            FormHelperText: {
+                baseStyle: {
+                    size: ["xs", "sm"],
+                },
+            },
+        },
         fonts: {
             heading: "DM Serif Display, serif",
         },
@@ -117,6 +134,9 @@ export const theme = extendTheme(
             },
             td: {
                 fontSize: "0.8rem",
+            },
+            img: {
+                borderRadius: "8px",
             },
         },
     })

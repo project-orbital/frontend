@@ -340,6 +340,84 @@ const code = `
 <td><span><strong>MILESTONE 2 SUB-TOTAL</strong></span></td>
 <td colspan=2><span><strong>98 hours</strong></span></td>
 </tr>
+<tr>
+    <td>Implement dark mode toggle and preference saving</td>
+    <td>6 July</td>
+    <td>4 hours</td>
+</tr>
+<tr>
+    <td>Implement rest of Settings page (account deletion, data deletion, profile updating)</td>
+    <td>7-8 July</td>
+    <td>9 hours</td>
+</tr>
+<tr>
+    <td>Implement data management (eventually coalesced into data synchronization)</td>
+    <td>9-11 July</td>
+    <td>11 hours</td>
+</tr>
+<tr>
+    <td>Research and set up RTK Query for data synchronization and client-side API request caching</td>
+    <td>12 July</td>
+    <td>3 hours</td>
+</tr>
+<tr>
+    <td>Implement data synchronization across devices</td>
+    <td>12-13 July</td>
+    <td>9 hours</td>
+</tr>
+<tr>
+    <td>Create utilities and fix UI issues</td>
+    <td>14-16 July</td>
+    <td>6 hours</td>
+</tr>
+<tr>
+    <td>Integrate Playwright, Jest (ES6), React Testing Library for testing</td>
+    <td>17 July</td>
+    <td>4 hours</td>
+</tr>
+<tr>
+    <td>Create documentation pages and move documentation over to the site</td>
+    <td>18 July</td>
+    <td>7 hours</td>
+</tr>
+<tr>
+    <td>Improve Learn tab UI and help to fix user contributions</td>
+    <td>20 July</td>
+    <td>4 hours</td>
+</tr>
+<tr>
+    <td>Planning implementation of Portfolio page</td>
+    <td>21 July</td>
+    <td>1 hour</td>
+</tr>
+<tr>
+    <td>Sprint to implement Portfolio page and REST API endpoints</td>
+    <td>22 July</td>
+    <td>11 hours</td>
+</tr>
+<tr>
+    <td>Fix outstanding responsive UI issues and dashboard computations post-sprint</td>
+    <td>23 July</td>
+    <td>3 hours</td>
+</tr>
+<tr>
+    <td>Deploy release candidate 1</td>
+    <td>23 July</td>
+    <td>0 hours (CD automated)</td>
+</tr>
+<tr>
+    <td>Update documentation for new features and project log</td>
+    <td>23 July</td>
+    <td>2 hours</td>
+</tr>
+<tr>
+    <td><strong>MILESTONE 3 SUB-TOTAL</strong></td>
+    <td colspan=2><strong>74 hours</strong></td>
+</tr>
+<tr>
+    <td><strong>TOTAL</strong></td>
+    <td colspan=2><strong>227 hours</strong></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -522,17 +600,63 @@ const code = `
 <td><span><strong>MILESTONE 2 SUB-TOTAL</strong></span></td>
 <td colspan=2><span><strong>86 hours</strong></span></td>
 <tr>
-<td><span>Improve Budget Planner feature</span></td>
-<td><span>4 - 8 July</span></td>
-<td><span>30 hours</span></td>
+    <td><span>Improve budget planner</span></td>
+    <td><span>5 - 13 July</span></td>
+    <td><span>18 hours</span></td>
 </tr>
 <tr>
-<td><span>Implement Learn - Community Contributed feature</span></td>
-<td><span>11 - 15 July</span></td>
-<td><span>30 hours</span></td>
+    <td><span>Add alerts to budget planner</span></td>
+    <td><span>14 July</span></td>
+    <td><span>6 hours</span></td>
 </tr>
-
-
+<tr>
+    <td><span>Add budget editing to budget planner</span></td>
+    <td><span>15 July</span></td>
+    <td><span>4 hours</span></td>
+</tr>
+<tr>
+    <td><span>Implement learn community contributions</span></td>
+    <td><span>16 - 18 July</span></td>
+    <td><span>17 hours</span></td>
+</tr>
+<tr>
+    <td><span>Add like system for community contributions</span></td>
+    <td><span>19 July</span></td>
+    <td><span>5 hours</span></td>
+</tr>
+<tr>
+    <td><span>Implement unliking</span></td>
+    <td><span>20 July</span></td>
+    <td><span>4 hours</span></td>
+</tr>
+<tr>
+    <td><span>UI polish for Learn and Plan</span></td>
+    <td><span>21 July</span></td>
+    <td><span>5 hours</span></td>
+</tr>
+<tr>
+    <td><span>Create project poster</span></td>
+    <td><span>22 - 23 July</span></td>
+    <td><span>4 hours</span></td>
+</tr>
+<tr>
+    <td><span>Plan project video, script</span></td>
+    <td><span>24 July</span></td>
+    <td><span>5 hours</span></td>
+</tr>
+<tr>
+    <td><span>Create project video</span></td>
+    <td><span>11 - 15 July</span></td>
+    <td><span>2 hours</span></td>
+</tr>
+<tr>
+    <td><strong>MILESTONE 3 SUB-TOTAL</strong></td>
+    <td colspan=2><strong>70 hours</strong></td>
+</tr>
+<tr>
+    <td><strong>TOTAL</strong></td>
+    <td colspan=2><strong>177 hours</strong></td>
+</tr>
 </tr>
 </tbody>
 </table>

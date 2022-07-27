@@ -12,7 +12,6 @@ import Pic1 from "../assets/set1/a.png";
 import Pic2 from "../assets/set1/b.png";
 import Pic3 from "../assets/set1/c.png";
 import Pic4 from "../assets/set1/d.png";
-import { Outlet } from "react-router-dom";
 import { format } from "date-fns";
 import {
     useReadContributionsQuery,
@@ -105,7 +104,7 @@ export default function Content() {
                     <CommunityContributedTab />
                 </TabPanel>
             </TabPanels>
-            <Outlet />
+            {/*<Outlet />*/}
         </Tabs>
     );
 }

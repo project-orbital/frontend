@@ -1,6 +1,7 @@
 import PageTemplate from "../../components/PageTemplate";
 import { Center, Text } from "@chakra-ui/react";
 import NavButton from "../../../common/components/buttons/NavButton";
+import { BsFillCaretRightFill } from "react-icons/bs";
 
 export default function EmailSent() {
     return (
@@ -21,7 +22,8 @@ export default function EmailSent() {
                     to="/sign-in"
                     text="Sign in"
                     w="100%"
-                    bg="accent"
+                    bgGradient="linear(to-br, accent, accent-dark)"
+                    rightIcon={<BsFillCaretRightFill />}
                     color="white"
                 ></NavButton>
             </Center>

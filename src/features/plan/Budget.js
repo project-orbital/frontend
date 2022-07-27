@@ -86,16 +86,21 @@ export default function Plan() {
     const elapsedDuration = differenceInDays(startDate, new Date());
     const progress = Math.ceil((elapsedDuration / totalDuration) * 100);
 
+    function isExpense(transaction) {
+        if (transaction.amount.intValue >= 0) {
+            return false;
+        }
+        return (
+            isEqual(startDate, transaction.date) ||
+            isEqual(endDate, transaction.date) ||
+            (isAfter(transaction.date, startDate) &&
+                isBefore(transaction.date, endDate))
+        );
+    }
+
     // Budget
     const expenses = transactions
-        .filter(
-            (transaction) =>
-                (transaction.amount < 0 &&
-                    isEqual(startDate, transaction.date)) ||
-                isEqual(endDate, transaction.date) ||
-                (isAfter(transaction.date, startDate) &&
-                    isBefore(transaction.date, endDate))
-        )
+        .filter(isExpense)
         .sort((a, b) => compareDesc(a.date, b.date));
     const totalExpenses = expenses
         .reduce((total, t) => total - t.amount, 0)
@@ -242,8 +247,7 @@ export default function Plan() {
                     <NavButton
                         to="./update-budget"
                         text="Edit budget"
-                        bgGradient="linear(to-br, gray.400, gray.600)"
-                        c="white"
+                        variant="primary"
                         icon={<MdOutlineEdit size="18px" />}
                     />
                     <NavButton

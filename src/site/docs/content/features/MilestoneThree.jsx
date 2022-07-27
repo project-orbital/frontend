@@ -2,25 +2,77 @@ import { Prose } from "@nikolovlazar/chakra-ui-prose";
 
 const code = `
 <h1>Milestone III</h1>
-<p>
-    With this milestone, we focused on expanding and polishing existing features, and
-    adding more quality-of-life features.
-</p>
 
 <h2>TL;DR</h2>
 <ul>
-    <li>You can now use DollarPlanner across any and all your devices — your data will be there. </li>
-    <li>You can now plan a budget in the Plan tab.</li>
-    <li>You can now publicly share links to financial literacy resources with the community in the Learn tab.</li>
-    <li>You can now delete your account and/or your data, and change your username/password/etc. in the Settings tab.</li>
+    <li><strong>[Portfolio]</strong> You can now record your assets and liabilities in the Portfolio tab.</li>
+    <li><strong>[Plan]</strong> You can now plan a budget in the Plan tab.</li>
+    <li><strong>[Learn]</strong> You can now publicly share links to financial literacy resources with the community in the Learn tab.</li>
+    <li><strong>[Settings]</strong> You can now delete your account and/or your data, and change your username/password/etc. in the Settings tab.</li>
+    <li><strong>[Data Synchronization]</strong> You can now use DollarPlanner across all your devices — your data will be there. </li>
+    <li><strong>[Responsive Design]</strong> You can now use DollarPlanner on any device, regardless of screen size.</li>
+    <li><strong>[Going Forward]</strong> Please read our <a href="/docs/miscellany/limitations/">Limitations</a> section for our assessment of features for future releases.</li>
 </ul>
 
 <h2>Changes from Feedback</h2>
 <p>
-    Section to be completed.
+    @Diamond Hands, Crowded Cow, Budgie, modtree, and our adviser Rayner:
+</p>
+<p>
+    Thanks for your feedback and comments on the previous release!
+    We'd like to address the following suggestions:
+</p>
+<blockquote>
+    [Account] balance could be different after another transaction.</br> - Diamond Hands</br></br>
+    Seems like an interesting decision to ask the user to record the balance in their bank account after every transaction, would be good to elaborate on why such a decision was made.</br> - Rayner
+</blockquote>
+<p>
+    We've updated the accounts to automatically compute your balance for each transaction, as long as one transaction has a balance specified.</li>
+</p>
+<blockquote>
+    The poster is simple, but should have more detail on how the tech stacks are used.</br> - Crowded Cow
+</blockquote>
+<p>
+    We've updated documentation with this information.
+    Check out the new <a href="/docs/overview/tech-stack">tech stack</a> section.
+</p>
+<blockquote>
+    There doesn't seem to be any way to parse a pdf file after building the rust project.</br> - modtree
+</blockquote>
+<p>
+    The parser actually takes in a string of text extracted by the backend, so the Rust project
+    doesn't handle any PDF files directly. We looked into several pdf crates, but all of them are either
+    severely lacking in documentation (pdf), or too low level (lopdf).
+</p>
+<blockquote>
+    Do note that the mode resets upon refreshing the page so you might want to store the state in the localstorage or profile data.</br> - Rayner
+</blockquote>
+<p>
+    We've updated the dark mode toggle in Settings to store a user's dark mode preference in the database, which is then
+    retrieved after signing in. We rely on Chakra UI's color mode hook for persistence between page refreshes and tabs
+    on the website.
 </p>
 
 <h2>New Features</h2>
+
+<h3>Assets and Liabilities</h3>
+<blockquote>
+    TL;DR: You can now record your assets and liabilities in the Portfolio tab, and view your asset allocation on the dashboard.</br>
+</blockquote>
+<p>
+    We've updated our Portfolio page to allow you to record assets and liabilities.
+</p>
+<p>
+    Buy and sell orders can also be recorded for each asset, giving you greater insight into each of your assets
+    with stats such as your average purchase price for an asset.
+</p>
+<p>
+    Asset classes are also a great way to group relevant assets together, and we take this information to the dashboard,
+    where your asset allocation is shown in a pie chart.
+</p>
+<p>
+    You can also record your repayments of your outstanding liabilities to track your progress toward eliminating them.
+</p>
 
 <h3>Improved Budgeting</h3>
 <blockquote>
@@ -31,7 +83,7 @@ All of us know the importance of budget planning. A user can set a timeframe and
 For Milestone 3, made two key improvements for this feature.
 </p>
 <p>
-We fully utilise visual aids (circular progress bar, piechart & table) to present relevant information neatly to the user.
+We fully utilise visual aids (circular progress bar, pie chart & table) to present relevant information neatly to the user.
 </p>
 <p>
 Do you have to create spending transactions for the budget planner? Nope. 
@@ -50,7 +102,7 @@ This is a feature that we are very excited about because users can have excellen
 To do so, they simply have to submit a form and the page will be updated with the post.
 </p>
 <p>
-On top of that, we have implemented Like, Unlike and Report functionalities that make the feature a more complete one.
+On top of that, we have implemented Like, Unlike and Report functionalities that make the feature more complete.
 </p>
 
 <h3>Data Synchronization</h3>
@@ -133,22 +185,6 @@ On top of that, we have implemented Like, Unlike and Report functionalities that
 </p>
 
 <h2>Scrapped Features</h2>
-<p>
-    We had the following features in mind, but alas, we were constrained by the time
-    we had for this milestone.
-</p>
-
-<h3>Portfolios</h3>
-<p>
-    We wanted to implement a tab where you could track all your assets, like investments,
-    as well as your liabilities.
-</p>
-<p>
-    We also considered supporting a parser for brokerage statements.
-</p>
-<p>
-    Well, those turned out to be a little too ambitious with the limited time we had. Whoops.
-</p>
 
 <h3>Improved Document Parser</h3>
 <p>
@@ -161,6 +197,15 @@ On top of that, we have implemented Like, Unlike and Report functionalities that
 </p>
 <p>
     For more details, see the <a href="/docs/miscellany/limitations">Limitations</a> section.
+</p>
+
+<h3>App Theming</h3>
+<p>
+    This feature had the lowest priority among all the features we had in mind, due to its purely aesthetic nature,
+    and also as suggested by our adviser.
+</p>
+<p>
+    In the end, we scrapped it for time.
 </p>
 `;
 
