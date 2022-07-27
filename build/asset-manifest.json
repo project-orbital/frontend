@@ -1,23 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.871c3b40.css",
-    "main.js": "/static/js/main.7f314173.js",
-    "static/media/warrenbuffett.png": "/static/media/warrenbuffett.fe5b1dde9275c451d215.png",
-    "static/media/youngadult.jpeg": "/static/media/youngadult.e51be245f2a069b9c30b.jpeg",
-    "static/media/longterm.jpeg": "/static/media/longterm.902ba579bd35b803de53.jpeg",
+    "main.css": "/static/css/main.47939e4a.css",
+    "main.js": "/static/js/main.a03afa31.js",
+    "static/media/d.png": "/static/media/d.b62ce6bfd62ffbe8f9b5.png",
+    "static/media/workingadult.png": "/static/media/workingadult.e15681a2183ac1e4f273.png",
+    "static/media/newbie.png": "/static/media/newbie.829997372935141eeaec.png",
+    "static/media/c.png": "/static/media/c.d262ec95c4d5c7ce0e0c.png",
+    "static/media/a.png": "/static/media/a.d84f607179f06fcbddb5.png",
+    "static/media/b.png": "/static/media/b.056d1050b947197f1e23.png",
+    "static/media/warrenbuffett.png": "/static/media/warrenbuffett.b7333f3371fecb064361.png",
+    "static/media/parents.png": "/static/media/parents.c846ff372fad7c26a86f.png",
+    "static/media/longterm.png": "/static/media/longterm.b2ec7e6da42fabbbd837.png",
+    "static/media/collegestudent.png": "/static/media/collegestudent.f2eef39420f35a3fdab6.png",
+    "static/media/youngadult.png": "/static/media/youngadult.fe5cce1d2bd63ddf2313.png",
+    "static/media/dbs.png": "/static/media/dbs.334879de6812db08cc4b.png",
     "static/media/dm-serif-display-all-400-normal.woff": "/static/media/dm-serif-display-all-400-normal.390b775bda284f6c75bb.woff",
-    "static/media/workingadult.jpeg": "/static/media/workingadult.e405571a66061124a3f2.jpeg",
-    "static/media/parents.jpeg": "/static/media/parents.d72c8a623befb802ef4b.jpeg",
     "static/media/dm-serif-display-latin-400-normal.woff2": "/static/media/dm-serif-display-latin-400-normal.48631b1f1c0f8649c924.woff2",
-    "static/media/collegestudent.jpeg": "/static/media/collegestudent.0aafec985ad8b9dbc8be.jpeg",
-    "static/media/newbie.jpeg": "/static/media/newbie.b9a5e68d0868e23b80cf.jpeg",
     "static/media/dm-serif-display-latin-ext-400-normal.woff2": "/static/media/dm-serif-display-latin-ext-400-normal.2f3c97e4ec370d80449d.woff2",
     "index.html": "/index.html",
-    "main.871c3b40.css.map": "/static/css/main.871c3b40.css.map",
-    "main.7f314173.js.map": "/static/js/main.7f314173.js.map"
+    "main.47939e4a.css.map": "/static/css/main.47939e4a.css.map",
+    "main.a03afa31.js.map": "/static/js/main.a03afa31.js.map"
   },
   "entrypoints": [
-    "static/css/main.871c3b40.css",
-    "static/js/main.7f314173.js"
+    "static/css/main.47939e4a.css",
+    "static/js/main.a03afa31.js"
   ]
 }
